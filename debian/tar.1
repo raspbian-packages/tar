@@ -1,5 +1,5 @@
 .\" @(#)tar.1 1.11.1 93/19/22 PJV;
-.TH TAR 1 "29 Aug 2007"
+.TH TAR 1 "24 Feb 2009"
 .SH NAME
 tar \- The GNU version of the tar archiving utility
 .SH SYNOPSIS
@@ -169,7 +169,7 @@ keep existing files; don't overwrite them from archive
 .B \-K, \-\-starting\-file F	
 begin at file F in the archive
 .TP
-.B \-\-lzma
+.B \-J, \-\-lzma
 selects LZMA compression algorithm
 .TP
 .B \-l, \-\-check\-links
@@ -177,6 +177,9 @@ print a message if not all links are dumped
 .TP
 .B \-L, \-\-tape\-length N	
 change tapes after writing N*1024 bytes
+.TP
+.B \-\-lzop
+filter the archive through lzop
 .TP
 .B \-m, \-\-touch
 don't extract file modified time
@@ -205,8 +208,14 @@ only store files whose contents have changed after DATE
 .B \-\-no\-anchored
 allow exclusion patterns to match any substring (the default)
 .TP
+.B \-\-no\-auto\-compress
+Cancels the effect of previous \-\-auto\-compress options
+.TP
 .B \-\-no\-ignore\-case
 match patterns case sensitively (the default)
+.TP
+.B \-\-no\-null
+cancels the effect of previous \-\-null option
 .TP
 .B \-\-no\-recursion
 do not recurse into subdirectories
