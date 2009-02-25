@@ -1,6 +1,6 @@
 /* Report a save- or restore-cwd failure in our openat replacement and then exit.
 
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2006, 2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 
 #include <config.h>
 
+#include "openat.h"
+
 #include <stdlib.h>
 
 #include "error.h"
@@ -27,9 +29,9 @@
 #define N_(msgid) msgid
 
 void
-openat_save_fail (int errno)
+openat_save_fail (int errnum)
 {
-  error (exit_failure, errno,
+  error (exit_failure, errnum,
 	 _("unable to record current working directory"));
 
   /* The `noreturn' attribute cannot be applied to error, since it returns
@@ -40,9 +42,9 @@ openat_save_fail (int errno)
 }
 
 void
-openat_restore_fail (int errno)
+openat_restore_fail (int errnum)
 {
-  error (exit_failure, errno,
+  error (exit_failure, errnum,
 	 _("failed to return to initial working directory"));
 
   /* As above.  */

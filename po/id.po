@@ -1,29 +1,31 @@
-# tar-1.13.25 (Indonesian)
+# Pesan bahasa indonesia untuk tar
 # Copyright (C) 1999, 2002 Free Software Foundation, Inc.
+# This file is distributed under the same license as the tar package.
 # Tedi Heriyanto <tedi_h@gmx.net>, 1999, 2002.
+# Arif E. Nugroho <arif_endro@yahoo.com>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.13.25\n"
+"Project-Id-Version: tar 1.20\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2008-04-14 15:09+0300\n"
-"PO-Revision-Date: 2002-07-24 22:02GMT+0700\n"
-"Last-Translator: Tedi Heriyanto <tedi_h@gmx.net>\n"
+"POT-Creation-Date: 2008-12-27 00:44+0200\n"
+"PO-Revision-Date: 2008-11-09 16:15+0700\n"
+"Last-Translator: Arif E. Nugroho <arif_endro@yahoo.com>\n"
 "Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: lib/argmatch.c:133
 #, c-format
 msgid "invalid argument %s for %s"
-msgstr "argumen tidak valid %s untuk %s"
+msgstr "argumen %s untuk %s tidak valid"
 
 #: lib/argmatch.c:134
 #, c-format
 msgid "ambiguous argument %s for %s"
-msgstr "argumen rancu %s untuk %s"
+msgstr "argumen %s untuk %s ambigu"
 
 #: lib/argmatch.c:153
 #, c-format
@@ -33,180 +35,177 @@ msgstr "Argumen yang valid adalah:"
 #: lib/argp-help.c:147
 #, c-format
 msgid "ARGP_HELP_FMT: %s value is less than or equal to %s"
-msgstr ""
+msgstr "ARGP_HELP_FMT: %s nilai lebih kecil atau sama dengan %s"
 
 #: lib/argp-help.c:220
 #, c-format
 msgid "%.*s: ARGP_HELP_FMT parameter requires a value"
-msgstr ""
+msgstr "%.*s: ARGP_HELP_FMT parameter membutuhkan sebuah nilai"
 
 #: lib/argp-help.c:226
 #, c-format
 msgid "%.*s: ARGP_HELP_FMT parameter must be positive"
-msgstr ""
+msgstr "%.*s: ARGP_HELP_FMT parameter harus positif"
 
 #: lib/argp-help.c:235
 #, c-format
 msgid "%.*s: Unknown ARGP_HELP_FMT parameter"
-msgstr ""
+msgstr "%.*s: Parameter ARGP_HELP_FMT tidak diketahui"
 
 #: lib/argp-help.c:247
 #, c-format
 msgid "Garbage in ARGP_HELP_FMT: %s"
-msgstr ""
+msgstr "Sampah dalam ARGP_HELP_FMT: %s"
 
 #: lib/argp-help.c:1246
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr ""
+"Argumen wajib atau opsional ke opsi panjang juga wajib atau opsional untuk "
+"argumen pendek yang berkorespondennya."
 
 #: lib/argp-help.c:1639
 msgid "Usage:"
-msgstr ""
+msgstr "Penggunaan:"
 
 #: lib/argp-help.c:1643
 msgid "  or: "
-msgstr ""
+msgstr "  atau: "
 
 #: lib/argp-help.c:1655
-#, fuzzy
 msgid " [OPTION...]"
-msgstr ""
-"\n"
-"Gunakan: %s [OPTION]...\n"
+msgstr " [OPSI...]"
 
 #: lib/argp-help.c:1682
-#, fuzzy, c-format
+#, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
-msgstr "Ketik `%s --help' untuk informasi lebih lengkap.\n"
+msgstr "Coba `%s --help' atau `%s --usage' untuk informasi lebih lanjut.\n"
 
-#: lib/argp-help.c:1710 src/tar.c:1230
-#, fuzzy, c-format
+#: lib/argp-help.c:1710 src/tar.c:1255
+#, c-format
 msgid "Report bugs to %s.\n"
-msgstr ""
-"\n"
-"Laporkan bug kepada <bug-tar@gnu.org>.\n"
+msgstr "Laporkan bug ke %s.\n"
 
 #: lib/argp-help.c:1929 lib/error.c:125
 msgid "Unknown system error"
 msgstr "Kesalahan sistem tidak dikenal"
 
-#: lib/argp-parse.c:81 src/tar.c:763
+#: lib/argp-parse.c:81 src/tar.c:773
 msgid "give this help list"
-msgstr ""
+msgstr "berikan daftar bantuan ini"
 
-#: lib/argp-parse.c:82 src/tar.c:764
+#: lib/argp-parse.c:82 src/tar.c:774
 msgid "give a short usage message"
-msgstr ""
+msgstr "berikan sebuah pesan penggunaan singkat"
 
-#: lib/argp-parse.c:83 src/tar.c:467 src/tar.c:469 src/tar.c:538
+#: lib/argp-parse.c:83 src/tar.c:469 src/tar.c:471 src/tar.c:540
 #: tests/genfile.c:129
 msgid "NAME"
-msgstr ""
+msgstr "NAMA"
 
 #: lib/argp-parse.c:83
 msgid "set the program name"
-msgstr ""
+msgstr "set nama aplikasi"
 
 #: lib/argp-parse.c:84
 msgid "SECS"
-msgstr ""
+msgstr "SECS"
 
-#: lib/argp-parse.c:85 src/tar.c:769
+#: lib/argp-parse.c:85 src/tar.c:779
 msgid "hang for SECS seconds (default 3600)"
-msgstr ""
+msgstr "berhenti untuk DETIK detik (baku 3600)"
 
-#: lib/argp-parse.c:142 src/tar.c:765
+#: lib/argp-parse.c:142 src/tar.c:775
 msgid "print program version"
-msgstr ""
+msgstr "tampilkan versi aplikasi"
 
 #: lib/argp-parse.c:158
 #, c-format
 msgid "(PROGRAM ERROR) No version known!?"
-msgstr ""
+msgstr "(APLIKASI ERROR) Tidak ada versi yang dikenal!?"
 
 #: lib/argp-parse.c:611
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Too many arguments\n"
-msgstr "%s: option `%s' membutuhkan sebuah argumen\n"
+msgstr "%s: Terlalu banyak argumen\n"
 
 #: lib/argp-parse.c:754
 msgid "(PROGRAM ERROR) Option should have been recognized!?"
-msgstr ""
+msgstr "(APLIKASI ERROR) Opsi seharusnya telah dikenali!?"
 
-#: lib/closeout.c:73
+#: lib/closeout.c:112
 msgid "write error"
-msgstr ""
+msgstr "error menulis"
 
 #: lib/getopt.c:526 lib/getopt.c:542
 #, c-format
 msgid "%s: option `%s' is ambiguous\n"
-msgstr "%s: option `%s' rancu\n"
+msgstr "%s: opsi `%s' ambigu\n"
 
 #: lib/getopt.c:575 lib/getopt.c:579
 #, c-format
 msgid "%s: option `--%s' doesn't allow an argument\n"
-msgstr "%s: option `--%s' tidak membolehkan sebuah argumen\n"
+msgstr "%s: opsi `--%s' tidak mengijinkan sebuah argumen\n"
 
 #: lib/getopt.c:588 lib/getopt.c:593
 #, c-format
 msgid "%s: option `%c%s' doesn't allow an argument\n"
-msgstr "%s: option `%c%s' tidak membolehkan sebuah argumen\n"
+msgstr "%s: opsi `%c%s' tidak mengijinkan sebuah argumen\n"
 
 #: lib/getopt.c:636 lib/getopt.c:655 lib/getopt.c:971 lib/getopt.c:990
 #, c-format
 msgid "%s: option `%s' requires an argument\n"
-msgstr "%s: option `%s' membutuhkan sebuah argumen\n"
+msgstr "%s: opsi `%s' membutuhkan sebuah argumen\n"
 
 #: lib/getopt.c:693 lib/getopt.c:696
 #, c-format
 msgid "%s: unrecognized option `--%s'\n"
-msgstr "%s: option tidak dikenal `--%s'\n"
+msgstr "%s: opsi tidak dikenal `--%s'\n"
 
 #: lib/getopt.c:704 lib/getopt.c:707
 #, c-format
 msgid "%s: unrecognized option `%c%s'\n"
-msgstr "%s: option tidak dikenal `%c%s'\n"
+msgstr "%s: opsi tidak dikenal `%c%s'\n"
 
 #: lib/getopt.c:759 lib/getopt.c:762
 #, c-format
 msgid "%s: illegal option -- %c\n"
-msgstr "%s: option ilegal -- %c\n"
+msgstr "%s: opsi -- %c tidak legal\n"
 
 #: lib/getopt.c:768 lib/getopt.c:771
 #, c-format
 msgid "%s: invalid option -- %c\n"
-msgstr "%s: option tidak valid -- %c\n"
+msgstr "%s: opsi -- %c tidak valid\n"
 
 #: lib/getopt.c:823 lib/getopt.c:839 lib/getopt.c:1043 lib/getopt.c:1061
 #, c-format
 msgid "%s: option requires an argument -- %c\n"
-msgstr "%s: option membutuhkan sebuah argumen -- %c\n"
+msgstr "%s: opsi membutuhkan sebuah argumen -- %c\n"
 
 #: lib/getopt.c:892 lib/getopt.c:908
 #, c-format
 msgid "%s: option `-W %s' is ambiguous\n"
-msgstr "%s: option `-W %s' rancu\n"
+msgstr "%s: opsi `-W %s' ambigu\n"
 
 #: lib/getopt.c:932 lib/getopt.c:950
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: option `-W %s' tidak membolehkan sebuah argumen\n"
+msgstr "%s: opsi `-W %s' tidak mengijinkan sebuah argumen\n"
 
-#: lib/obstack.c:423 lib/obstack.c:425 lib/xalloc-die.c:34 src/extract.c:1377
+#: lib/obstack.c:423 lib/obstack.c:425 lib/xalloc-die.c:34 src/extract.c:1374
 msgid "memory exhausted"
-msgstr "Memory habis"
+msgstr "kehabisan memori"
 
-#: lib/openat-die.c:33
-#, fuzzy, c-format
+#: lib/openat-die.c:35
+#, c-format
 msgid "unable to record current working directory"
-msgstr "Tidak bisa pindah direktori kerja"
+msgstr "tidak dapat menyimpan direktori kerja sekarang"
 
-#: lib/openat-die.c:46
-#, fuzzy, c-format
+#: lib/openat-die.c:48
+#, c-format
 msgid "failed to return to initial working directory"
-msgstr "Tidak dapat menyimpan direktori kerja"
+msgstr "gagal untuk kembali ke direktori kerja inisial"
 
 #. TRANSLATORS: %s after `Cannot' is a function name, e.g. `Cannot open'.
 #. Directly translating this to another language will not work, first because
@@ -242,18 +241,18 @@ msgid "%s: Cannot hard link to %s"
 msgstr "%s: Tidak dapat membuat hard link ke %s"
 
 #: lib/paxerror.c:179 lib/paxerror.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Read error at byte %s, while reading %lu byte"
 msgid_plural "%s: Read error at byte %s, while reading %lu bytes"
-msgstr[0] "%s:Kesalahan pembacaan pada byte %s, terbaca %lu byte"
-msgstr[1] "%s:Kesalahan pembacaan pada byte %s, terbaca %lu byte"
+msgstr[0] "%s: Error pembacaan di byte %s, ketika membaca %lu byte"
+msgstr[1] "%s: Error pembacaan di byte %s, ketika membaca %lu byte"
 
 #: lib/paxerror.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Warning: Read error at byte %s, while reading %lu byte"
 msgid_plural "%s: Warning: Read error at byte %s, while reading %lu bytes"
-msgstr[0] "%s: Peringatan: Kesalahan pembacaan pada byte %s, terbaca %lu byte"
-msgstr[1] "%s: Peringatan: Kesalahan pembacaan pada byte %s, terbaca %lu byte"
+msgstr[0] "%s: Peringatan: Error pembacaan di byte %s, ketika membaca %lu byte"
+msgstr[1] "%s: Peringatan: Error pembacaan di byte %s, ketika membaca %lu byte"
 
 #: lib/paxerror.c:259
 #, c-format
@@ -271,30 +270,29 @@ msgid "%s: Cannot create symlink to %s"
 msgstr "%s: Tidak dapat membuat symlink ke %s"
 
 #: lib/paxerror.c:349
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Wrote only %lu of %lu byte"
 msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Hanya dapat menulis %lu dari %lu byte"
 msgstr[1] "%s: Hanya dapat menulis %lu dari %lu byte"
 
 #: lib/paxnames.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Removing leading `%s' from member names"
-msgstr "Menghilangkan awalan `%.*s' dari nama anggota"
+msgstr "Menghilangkan awalan `%s' dari nama anggota"
 
 #: lib/paxnames.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "Removing leading `%s' from hard link targets"
-msgstr "Menghilangkan awalan `%.*s' dari nama anggota"
+msgstr "Menghilangkan awalan `%s' dari target hard link"
 
 #: lib/paxnames.c:169
-#, fuzzy
 msgid "Substituting `.' for empty member name"
-msgstr "Menghilangkan awalan `%.*s' dari nama anggota"
+msgstr "Mengganti `.' untuk nama anggota kosong"
 
 #: lib/paxnames.c:170
 msgid "Substituting `.' for empty hard link target"
-msgstr ""
+msgstr "Mengganti `.' untuk target hard link kosong"
 
 #. TRANSLATORS:
 #. Get translations for open and closing quotation marks.
@@ -323,13 +321,25 @@ msgstr "`"
 msgid "'"
 msgstr "'"
 
-#: lib/rpmatch.c:69
+#. TRANSLATORS: A regular expression testing for an affirmative answer
+#. (english: "yes").  Testing the first character may be sufficient.
+#. Take care to consider upper and lower case.
+#. To enquire the regular expression that your system uses for this
+#. purpose, you can use the command
+#. locale -k LC_MESSAGES | grep '^yesexpr='
+#: lib/rpmatch.c:147
 msgid "^[yY]"
-msgstr ""
+msgstr "^[yY]"
 
-#: lib/rpmatch.c:72
+#. TRANSLATORS: A regular expression testing for a negative answer
+#. (english: "no").  Testing the first character may be sufficient.
+#. Take care to consider upper and lower case.
+#. To enquire the regular expression that your system uses for this
+#. purpose, you can use the command
+#. locale -k LC_MESSAGES | grep '^noexpr='
+#: lib/rpmatch.c:160
 msgid "^[nN]"
-msgstr ""
+msgstr "^[nN]"
 
 #: lib/rtapelib.c:299
 #, c-format
@@ -356,7 +366,7 @@ msgstr "Tidak dapat menjalankan remote shell"
 #. locale.  Otherwise, do not translate "(C)"; leave it as-is.
 #: lib/version-etc.c:65
 msgid "(C)"
-msgstr ""
+msgstr "(C)"
 
 #: lib/version-etc.c:67
 msgid ""
@@ -367,24 +377,32 @@ msgid ""
 "There is NO WARRANTY, to the extent permitted by law.\n"
 "\n"
 msgstr ""
+"\n"
+"Lisensi GPLv3+: GNU GPL versi 3 atau lebih <http://gnu.org/licenses/gpl."
+"html>\n"
+"Ini adalah aplikasi bebas: anda bebas untuk mengubah dan "
+"mendistribusikannya.\n"
+"TIDAK ADA GARANSI disini, sampai batas yang diijinkan oleh hukum yang "
+"berlaku.\n"
+"\n"
 
 #. TRANSLATORS: %s denotes an author name.
 #: lib/version-etc.c:83
-#, fuzzy, c-format
+#, c-format
 msgid "Written by %s.\n"
-msgstr "Ditulis oleh F. Pinard"
+msgstr "Ditulis oleh %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #: lib/version-etc.c:87
-#, fuzzy, c-format
+#, c-format
 msgid "Written by %s and %s.\n"
-msgstr "Ditulis oleh F. Pinard"
+msgstr "Ditulis oleh %s dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #: lib/version-etc.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "Written by %s, %s, and %s.\n"
-msgstr "Ditulis oleh F. Pinard"
+msgstr "Ditulis oleh %s, %s, dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -395,6 +413,8 @@ msgid ""
 "Written by %s, %s, %s,\n"
 "and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -405,6 +425,8 @@ msgid ""
 "Written by %s, %s, %s,\n"
 "%s, and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -415,6 +437,8 @@ msgid ""
 "Written by %s, %s, %s,\n"
 "%s, %s, and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, %s, dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -425,6 +449,8 @@ msgid ""
 "Written by %s, %s, %s,\n"
 "%s, %s, %s, and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, %s, %s, dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -436,6 +462,9 @@ msgid ""
 "%s, %s, %s, %s,\n"
 "and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -447,6 +476,9 @@ msgid ""
 "%s, %s, %s, %s,\n"
 "%s, and %s.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, dan %s.\n"
 
 #. TRANSLATORS: Each %s denotes an author name.
 #. You can use line breaks, estimating that each author name occupies
@@ -458,14 +490,17 @@ msgid ""
 "%s, %s, %s, %s,\n"
 "%s, %s, and others.\n"
 msgstr ""
+"Ditulis oleh %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s, dan yang lainnya.\n"
 
 #: rmt/rmt.c:142
 msgid "Input string too long"
-msgstr ""
+msgstr "Masukan string terlalu panjang"
 
 #: rmt/rmt.c:161
 msgid "Number syntax error"
-msgstr ""
+msgstr "Sintaks jumlah error"
 
 #: rmt/rmt.c:180
 msgid "rmtd: Cannot allocate buffer space\n"
@@ -478,10 +513,10 @@ msgstr "Tidak dapat mengalokasi buffer space"
 #: rmt/rmt.c:304
 #, c-format
 msgid "Try `%s --help' for more information.\n"
-msgstr "Ketik `%s --help' untuk informasi lebih lengkap.\n"
+msgstr "Coba `%s --help' untuk informasi lebih lanjut.\n"
 
 #: rmt/rmt.c:308
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Usage: %s [OPTION]\n"
 "Manipulate a tape drive, accepting commands from a remote process.\n"
@@ -489,33 +524,32 @@ msgid ""
 "  --version  Output version info.\n"
 "  --help     Output this help.\n"
 msgstr ""
-"Penggunaan: %s [OPTION]\n"
+"Penggunaan: %s [OPSI]\n"
 "Manipulasi sebuah tape drive, menerima perintah dari proses remote.\n"
 "\n"
-"  --version  Tampilkan info versi.\n"
-"  --help  Tampilkan bantuan ini.\n"
+"  --version  Tampilkan informasi versi.\n"
+"  --help     Tampilkan bantuan ini.\n"
 
 #: rmt/rmt.c:315
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Report bugs to <%s>.\n"
 msgstr ""
 "\n"
-"Laporkan bug kepada <bug-tar@gnu.org>.\n"
+"Laporkan bug ke <%s>.\n"
 
 #: rmt/rmt.c:397
-#, fuzzy
 msgid "Seek offset error"
-msgstr "Offset pencarian di luar batasan"
+msgstr "Offset pencarian error"
 
 #: rmt/rmt.c:406 rmt/rmt.c:547 rmt/rmt.c:557
 msgid "Seek offset out of range"
-msgstr "Offset pencarian di luar batasan"
+msgstr "Offset pencarian di luar jangkauan"
 
 #: rmt/rmt.c:428
 msgid "Seek direction out of range"
-msgstr "Arah pencarian di luar batasan"
+msgstr "Arah pencarian di luar jangkauan"
 
 #: rmt/rmt.c:472
 msgid "rmtd: Premature eof\n"
@@ -523,186 +557,193 @@ msgstr "rmtd: EOF prematur\n"
 
 #: rmt/rmt.c:474
 msgid "Premature end of file"
-msgstr "Akhir file prematur"
+msgstr "Akhir dari berkas prematur"
 
 #: rmt/rmt.c:672
 msgid "Garbage command"
-msgstr "Command tidak terpakai"
+msgstr "Perintah sampah"
 
-#: src/buffer.c:281 src/buffer.c:520 src/buffer.c:1106 src/delete.c:210
-#: src/list.c:167 src/update.c:165
+#: src/buffer.c:288 src/buffer.c:293 src/buffer.c:539 src/buffer.c:1126
+#: src/delete.c:210 src/list.c:167 src/update.c:165
 msgid "This does not look like a tar archive"
-msgstr "Sepertinya bukan tar archive"
+msgstr "Ini sepertinya bukan sebuah tar archive"
 
-#: src/buffer.c:333 src/buffer.c:342
-#, fuzzy
+#: src/buffer.c:352 src/buffer.c:361
 msgid "Total bytes written"
-msgstr "Total byte ditulis: %s (%sB, %sB/s)\n"
+msgstr "Total byte ditulis"
 
-#: src/buffer.c:340 src/buffer.c:354
+#: src/buffer.c:359 src/buffer.c:373
 msgid "Total bytes read"
-msgstr ""
+msgstr "Total byte dibaca"
 
-#: src/buffer.c:344
-#, fuzzy, c-format
+#: src/buffer.c:363
+#, c-format
 msgid "Total bytes deleted: %s\n"
-msgstr "Total byte ditulis: %s (%sB, %sB/s)\n"
+msgstr "Total byte dihapus: %s\n"
 
-#: src/buffer.c:433
+#: src/buffer.c:452
 msgid "(pipe)"
 msgstr "(pipe)"
 
-#: src/buffer.c:456
+#: src/buffer.c:475
 msgid "Invalid value for record_size"
-msgstr "Nilai record_size salah"
+msgstr "Nilai record_size tidak valid"
 
-#: src/buffer.c:459
+#: src/buffer.c:478
 msgid "No archive name given"
 msgstr "Tidak diberikan nama archive"
 
-#: src/buffer.c:503
+#: src/buffer.c:522
 msgid "Cannot verify stdin/stdout archive"
-msgstr "Tidak dapat verifikasi stdin/stdout archive"
+msgstr "Tidak dapat memverifikasi stdin/stdout archive"
 
-#: src/buffer.c:517
+#: src/buffer.c:536
 #, c-format
 msgid "Archive is compressed. Use %s option"
-msgstr ""
+msgstr "Archive terkompres. Gunakan %s opsi"
 
-#: src/buffer.c:566 src/tar.c:2279
+#: src/buffer.c:591 src/tar.c:2318
 msgid "Cannot update compressed archives"
 msgstr "Tidak dapat update compressed archives"
 
-#: src/buffer.c:644
+#: src/buffer.c:670
 msgid "At beginning of tape, quitting now"
-msgstr "Berada pada awal tape, keluar"
+msgstr "Berada pada awal tape, berhenti sekarang"
 
-#: src/buffer.c:650
+#: src/buffer.c:676
 msgid "Too many errors, quitting"
-msgstr "Terlalu banyak kesalahan, keluar"
+msgstr "Terlalu banyak errors, berhenti"
 
-#: src/buffer.c:678
-#, fuzzy, c-format
-msgid "Unaligned block (%lu byte) in archive"
-msgid_plural "Unaligned block (%lu bytes) in archive"
-msgstr[0] "Blok tidak sesuai (%lu byte) dalam arsip"
-msgstr[1] "Blok tidak sesuai (%lu byte) dalam arsip"
-
-#: src/buffer.c:698
-#, fuzzy, c-format
+#: src/buffer.c:695
+#, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "Ukuran record = %lu blok"
 msgstr[1] "Ukuran record = %lu blok"
 
-#: src/buffer.c:771
+#: src/buffer.c:716
+#, c-format
+msgid "Unaligned block (%lu byte) in archive"
+msgid_plural "Unaligned block (%lu bytes) in archive"
+msgstr[0] "Blok tidak sesuai (%lu byte) dalam arsip"
+msgstr[1] "Blok tidak sesuai (%lu byte) dalam arsip"
+
+#: src/buffer.c:793
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr ""
 "Tidak dapat backspace file archives; kemungkinan tidak bisa dibaca tanpa -i"
 
-#: src/buffer.c:803
+#: src/buffer.c:825
 msgid "rmtlseek not stopped at a record boundary"
-msgstr ""
+msgstr "rmtlseek tidak dapat berhenti di sebuah batas rekaman"
 
-#: src/buffer.c:859
+#: src/buffer.c:879
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: berisi nomor volum yang tidak valid"
 
-#: src/buffer.c:894
+#: src/buffer.c:914
 msgid "Volume number overflow"
 msgstr "Nomor volum overflow"
 
-#: src/buffer.c:909
+#: src/buffer.c:929
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "Mempersiapkan volume #%d untuk %s dan tekan return: "
 
-#: src/buffer.c:915
+#: src/buffer.c:935
 msgid "EOF where user reply was expected"
 msgstr "EOF pada saat user reply diharapkan"
 
-#: src/buffer.c:920 src/buffer.c:952
+#: src/buffer.c:940 src/buffer.c:972
 msgid "WARNING: Archive is incomplete"
 msgstr "PERINGATAN: Archive tidak lengkap"
 
-#: src/buffer.c:934
-#, fuzzy, c-format
+#: src/buffer.c:954
+#, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
 " q             Abort tar\n"
 " y or newline  Continue operation\n"
 msgstr ""
-" n [name]   Memberi nama baru pada file untuk volume selanjutnya\n"
-" q          Batalkan tar\n"
-" !          Spawn subshell\n"
-" ?          Cetak keterangn ini\n"
+" n nama        Memberi sebuah nama berkas baru untuk volume selanjutnya (dan "
+"seterusnya)\n"
+" q             Batalkan tar\n"
+" y or newline  Lanjutkan operasi\n"
 
-#: src/buffer.c:939
+#: src/buffer.c:959
 #, c-format
 msgid " !             Spawn a subshell\n"
-msgstr ""
+msgstr " !             Spawn sebuah subshell\n"
 
-#: src/buffer.c:940
+#: src/buffer.c:960
 #, c-format
 msgid " ?             Print this list\n"
-msgstr ""
+msgstr " ?             Tampilkan daftar ini\n"
 
-#: src/buffer.c:947
+#: src/buffer.c:967
 msgid "No new volume; exiting.\n"
 msgstr "Tidak ada new volume; keluar.\n"
 
-#: src/buffer.c:980
+#: src/buffer.c:1000
 msgid "File name not specified. Try again.\n"
-msgstr ""
+msgstr "Nama berkas tidak dispesifikasikan. Coba lagi.\n"
 
-#: src/buffer.c:993
+#: src/buffer.c:1013
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
-msgstr ""
+msgstr "Masukan tidak valid. Ketik ? untuk bantuan.\n"
 
-#: src/buffer.c:1044
-#, fuzzy, c-format
+#: src/buffer.c:1064
+#, c-format
 msgid "%s command failed"
-msgstr "Perintah `%s' gagal"
+msgstr "Perintah %s gagal"
 
-#: src/buffer.c:1199
-#, fuzzy, c-format
+#: src/buffer.c:1219
+#, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
-msgstr "%s tidak dilanjutkan pada volume ini"
+msgstr "%s mungkin dilanjutkan di volume ini: header berisi nama terpotong"
 
-#: src/buffer.c:1203
+#: src/buffer.c:1223
 #, c-format
 msgid "%s is not continued on this volume"
-msgstr "%s tidak dilanjutkan pada volume ini"
+msgstr "%s tidak dilanjutkan di volume ini"
 
-#: src/buffer.c:1217
+#: src/buffer.c:1237
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s adalah ukuran yang salah (%s != %s + %s)"
 
-#: src/buffer.c:1227
-msgid "This volume is out of sequence"
+#: src/buffer.c:1251
+#, fuzzy, c-format
+msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Volume ini di luar urutan"
 
-#: src/buffer.c:1273
+#: src/buffer.c:1301
 #, c-format
 msgid "Archive not labeled to match %s"
-msgstr "Label archive tidak cocok dengan '%s'"
+msgstr "Label archive tidak cocok dengan %s"
 
-#: src/buffer.c:1276
+#: src/buffer.c:1304
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "Volume %s tidak sesuai dengan %s"
 
-#: src/buffer.c:1372
+#: src/buffer.c:1400
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
 msgstr ""
+"%s: nama berkas terlalu panjang untuk diurutkan dalam sebuah GNU multivolume "
+"header, dipotong"
+
+#: src/buffer.c:1619
+#, fuzzy
+msgid "write did not end on a block boundary"
+msgstr "rmtlseek tidak dapat berhenti di sebuah batas rekaman"
 
 #: src/compare.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "Could only read %lu of %lu byte"
 msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Hanya dapat membaca %lu dari %lu byte"
@@ -712,14 +753,14 @@ msgstr[1] "Hanya dapat membaca %lu dari %lu byte"
 msgid "Contents differ"
 msgstr "Isi berbeda"
 
-#: src/compare.c:132 src/extract.c:790 src/incremen.c:1329 src/list.c:372
-#: src/list.c:1314
+#: src/compare.c:132 src/extract.c:790 src/incremen.c:1389 src/list.c:372
+#: src/list.c:1323
 msgid "Unexpected EOF in archive"
 msgstr "Unexpected EOF dalam archive"
 
 #: src/compare.c:180 src/compare.c:196 src/compare.c:314 src/compare.c:412
 msgid "File type differs"
-msgstr "Tipe file berbeda"
+msgstr "Tipe berkas berbeda"
 
 #: src/compare.c:183 src/compare.c:203 src/compare.c:328
 msgid "Mode differs"
@@ -752,7 +793,7 @@ msgstr "Symlink berbeda"
 
 #: src/compare.c:322
 msgid "Device number differs"
-msgstr "Nomor device berbeda"
+msgstr "Nomor perangkat berbeda"
 
 #: src/compare.c:462
 #, c-format
@@ -760,79 +801,80 @@ msgid "Verify "
 msgstr "Verifikasi "
 
 #: src/compare.c:469
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
-msgstr "%s:File type '%c' tidak dikenal, lakukan diff sebagai file normal"
+msgstr "%s: Tipe berkas '%c' tidak dikenal, lakukan diff sebagai berkas normal"
 
 #: src/compare.c:524
 msgid "Archive contains file names with leading prefixes removed."
-msgstr ""
+msgstr "Archive berisi nama berkas dengan awalan dihapus."
 
 #: src/compare.c:526
 msgid "Verification may fail to locate original files."
-msgstr ""
+msgstr "Verifikasi mungkin gagal untuk menemukan berkas orisinil."
 
 #: src/compare.c:596
-#, fuzzy, c-format
+#, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
-msgstr[0] "GAGAL VERIFIKASI: ditemukan %d invalid header"
-msgstr[1] "GAGAL VERIFIKASI: ditemukan %d invalid header"
+msgstr[0] "GAGAL VERIFIKASI: header %d tidak valid terdeteksi"
+msgstr[1] "GAGAL VERIFIKASI: header %d tidak valid terdeteksi"
 
 #: src/compare.c:612 src/list.c:144
 #, c-format
 msgid "A lone zero block at %s"
-msgstr ""
+msgstr "Sebuah lone blok nol di %s"
 
 #: src/create.c:67
 #, c-format
 msgid "%s: contains a cache directory tag %s; %s"
-msgstr ""
+msgstr "%s: berisi sebuah cache direktori tag %s; %s"
 
 #: src/create.c:272
 #, c-format
 msgid "value %s out of %s range %s..%s; substituting %s"
-msgstr "nilai %s dari %s di luar daerah %s..%s; mengganti %s"
+msgstr "nilai %s dari %s di luar jangkauan %s..%s; menggantikan %s"
 
 #: src/create.c:278
 #, c-format
 msgid "value %s out of %s range %s..%s"
-msgstr "nilai %s dari %s di luar daerah %s..%s"
+msgstr "nilai %s dari %s di luar dari jangkauan %s..%s"
 
 #: src/create.c:338
 msgid "Generating negative octal headers"
 msgstr "Membuat header oktal negatif"
 
 #: src/create.c:624 src/create.c:687
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file name is too long (max %d); not dumped"
-msgstr "%s: file tidak berubah; tidak di-dump"
+msgstr "%s: nama berkas terlalu panjang (maksimal %d); tidak di-dump"
 
 #: src/create.c:634
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
-msgstr "%s: file tidak berubah; tidak di-dump"
+msgstr ""
+"%s: nama berkas terlalu panjang (tidak dapat memisahkan); tidak di-dump"
 
 #: src/create.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "%s: link name is too long; not dumped"
-msgstr "%s: file tidak berubah; tidak di-dump"
+msgstr "%s: nama link terlalu panjang; tidak di-dump"
 
 #: src/create.c:1076
-#, fuzzy, c-format
+#, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
-msgstr[0] "%s: File diperkecil %s byte, dipadding dengan nol"
-msgstr[1] "%s: File diperkecil %s byte, dipadding dengan nol"
+msgstr[0] "%s: File diperkecil %s byte; dipadding dengan nol"
+msgstr[1] "%s: File diperkecil %s byte; dipadding dengan nol"
 
 #: src/create.c:1177
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: file berada pada filesistem yang berbeda; tidak di-dump"
 
-#: src/create.c:1221 src/create.c:1232 src/incremen.c:482 src/incremen.c:488
+#: src/create.c:1221 src/create.c:1232 src/incremen.c:543 src/incremen.c:549
 msgid "contents not dumped"
-msgstr ""
+msgstr "isi tidak didump"
 
 #: src/create.c:1361
 #, c-format
@@ -840,33 +882,33 @@ msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Tipe file tidak dikenal; file diabaikan"
 
 #: src/create.c:1464
-#, fuzzy, c-format
+#, c-format
 msgid "Missing links to %s.\n"
-msgstr " link ke %s\n"
+msgstr "Hilang link ke %s.\n"
 
 #: src/create.c:1535
 #, c-format
 msgid "%s: file is unchanged; not dumped"
-msgstr "%s: file tidak berubah; tidak di-dump"
+msgstr "%s: berkas tidak berubah; tidak di-dump"
 
 #: src/create.c:1543
 #, c-format
 msgid "%s: file is the archive; not dumped"
-msgstr "%s: file adalah archive; tidak di-dump"
+msgstr "%s: berkas adalah archive; tidak di-dump"
 
 #: src/create.c:1573
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: File dihapus sebelum kita membacanya"
 
-#: src/create.c:1591 src/incremen.c:474
+#: src/create.c:1591 src/incremen.c:535
 msgid "directory not dumped"
-msgstr ""
+msgstr "direktori tidak didump"
 
 #: src/create.c:1659
 #, c-format
 msgid "%s: file changed as we read it"
-msgstr "%s: file berubah saat kita membacanya"
+msgstr "%s: berkas berubah saat kita membacanya"
 
 #: src/create.c:1739
 #, c-format
@@ -889,12 +931,12 @@ msgstr "Menghapus non-header dari archive"
 #: src/extract.c:198
 #, c-format
 msgid "%s: implausibly old time stamp %s"
-msgstr ""
+msgstr "%s: implausibly penanda waktu lama %s"
 
 #: src/extract.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "%s: time stamp %s is %s s in the future"
-msgstr "%s: time stamp %s adalah %lu dalam masa datang"
+msgstr "%s: penanda %s adalah %s dalam masa datang"
 
 #: src/extract.c:395
 #, c-format
@@ -910,168 +952,166 @@ msgstr "%s: Direktori diganti nama sebelum statusnya dapat diperoleh"
 msgid "Extracting contiguous files as regular files"
 msgstr "Sedang extract contiguous file sebagai regular file"
 
-#: src/extract.c:1000
+#: src/extract.c:997
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Mencoba extract symbolic link sebagai hard link"
 
-#: src/extract.c:1057
+#: src/extract.c:1054
 #, c-format
 msgid "Reading %s\n"
 msgstr "Membaca %s\n"
 
-#: src/extract.c:1146
+#: src/extract.c:1143
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
-msgstr "%s: Tidak dapat mengekstrak -- file adalah kelanjutan dari volume lain"
+msgstr ""
+"%s: Tidak dapat mengekstrak -- berkas adalah kelanjutan dari volume lain"
 
-#: src/extract.c:1153 src/list.c:1081
-#, fuzzy
+#: src/extract.c:1150 src/list.c:1090
 msgid "Unexpected long name header"
-msgstr "Unexpected EOF dalam mangled names"
+msgstr "Tidak terduga nama header panjang"
 
-#: src/extract.c:1159
-#, fuzzy, c-format
+#: src/extract.c:1156
+#, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
-msgstr "%s: Tipe file tidak dikenal '%c', diekstraksi sebagai file normal"
+msgstr "%s: Tipe berkas tidak dikenal '%c', diekstraksi sebagai berkas normal"
 
-#: src/extract.c:1184
+#: src/extract.c:1181
 #, c-format
 msgid "Current %s is newer or same age"
-msgstr ""
+msgstr "Saat ini %s adalah lebih baru atau berumuran sama"
 
-#: src/extract.c:1230
+#: src/extract.c:1227
 #, c-format
 msgid "%s: Was unable to backup this file"
-msgstr "%s: Tidak dapat melakukan backup file ini"
+msgstr "%s: Tidak dapat melakukan backup berkas ini"
 
-#: src/extract.c:1358
-#, fuzzy, c-format
+#: src/extract.c:1355
+#, c-format
 msgid "Cannot rename %s to %s"
-msgstr "%s:Tidak dapat mengganti nama ke %s"
+msgstr "Tidak dapat mengubah nama %s ke %s"
 
-#: src/extract.c:1370
+#: src/extract.c:1367
 #, c-format
 msgid "Error is not recoverable: exiting now"
-msgstr "Kesalahan tidak dapat diperbaiki, keluar"
+msgstr "Error tidak dapat diperbaiki: keluar sekarang"
 
-#: src/incremen.c:390 src/incremen.c:430
-#, fuzzy, c-format
+#: src/incremen.c:445 src/incremen.c:489
+#, c-format
 msgid "%s: Directory has been renamed from %s"
-msgstr "%s: Direktori telah diganti nama"
+msgstr "%s: Direktori telah diubah nama dari %s"
 
-#: src/incremen.c:400
+#: src/incremen.c:457
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Direktori telah diganti nama"
 
-#: src/incremen.c:441
+#: src/incremen.c:502
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Direktori adalah baru"
 
-#: src/incremen.c:833 src/incremen.c:850
+#: src/incremen.c:893 src/incremen.c:910
 msgid "Invalid time stamp"
 msgstr "Time stamp tidak valid"
 
-#: src/incremen.c:889
-#, fuzzy
+#: src/incremen.c:949
 msgid "Invalid modification time (seconds)"
-msgstr "Mode tidak tepat diberikan pada opsi"
+msgstr "Waktu modifikasi (detik) tidak valid"
 
-#: src/incremen.c:904
+#: src/incremen.c:964
 msgid "Invalid modification time (nanoseconds)"
-msgstr ""
+msgstr "waktu modifikasi (nano detik) tidak valid"
 
-#: src/incremen.c:924
+#: src/incremen.c:984
 msgid "Invalid device number"
-msgstr "Nomor device tidak valid"
+msgstr "Nomor perangkat tidak valid"
 
-#: src/incremen.c:939
+#: src/incremen.c:999
 msgid "Invalid inode number"
 msgstr "Nomor inode tidak valid"
 
-#: src/incremen.c:990 src/incremen.c:1027
+#: src/incremen.c:1050 src/incremen.c:1087
 msgid "Field too long while reading snapshot file"
-msgstr ""
+msgstr "Field terlalu panjang ketika membaca berkas snapshot"
 
-#: src/incremen.c:997 src/incremen.c:1035
+#: src/incremen.c:1057 src/incremen.c:1095
 msgid "Read error in snapshot file"
-msgstr ""
+msgstr "Pembacaan error dalam berkas snapshot"
 
-#: src/incremen.c:999 src/incremen.c:1039 src/incremen.c:1091
-#: src/incremen.c:1149
-#, fuzzy
+#: src/incremen.c:1059 src/incremen.c:1099 src/incremen.c:1151
+#: src/incremen.c:1209
 msgid "Unexpected EOF in snapshot file"
-msgstr "Unexpected EOF dalam archive"
+msgstr "Tidak terduga EOF dalam berkas snapshot"
 
-#: src/incremen.c:1006 src/incremen.c:1046
+#: src/incremen.c:1066 src/incremen.c:1106
 msgid "Unexpected field value in snapshot file"
-msgstr ""
+msgstr "Tidak terduga nilai field dalam berkas snapshot"
 
-#: src/incremen.c:1141
+#: src/incremen.c:1201
 msgid "Missing record terminator"
-msgstr ""
+msgstr "Hilang pengakhir rekaman"
 
-#: src/incremen.c:1192 src/incremen.c:1195
+#: src/incremen.c:1252 src/incremen.c:1255
 msgid "Bad incremental file format"
-msgstr ""
+msgstr "Format berkas incremental buruk"
 
-#: src/incremen.c:1214
+#: src/incremen.c:1274
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
-msgstr ""
+msgstr "Versi format incremental tidak didukung: %<PRIuMAX>"
 
-#: src/incremen.c:1369
+#: src/incremen.c:1429
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
-msgstr ""
+msgstr "Salah bentuk dumpdir: diduga '%c' tetapi ditemukan %#3o"
 
-#: src/incremen.c:1379
+#: src/incremen.c:1439
 msgid "Malformed dumpdir: 'X' duplicated"
-msgstr ""
+msgstr "Salah bentuk dumpdir: 'X' terduplikasi"
 
-#: src/incremen.c:1392
+#: src/incremen.c:1452
 msgid "Malformed dumpdir: empty name in 'R'"
-msgstr ""
+msgstr "Salah bentuk dumpdir: nama kosong dalam 'R'"
 
-#: src/incremen.c:1405
+#: src/incremen.c:1465
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
-msgstr ""
+msgstr "Salah bentuk dumpdir: 'T' tidak diawali oleh 'R'"
 
-#: src/incremen.c:1411
+#: src/incremen.c:1471
 msgid "Malformed dumpdir: empty name in 'T'"
-msgstr ""
+msgstr "Salah bentuk dumpdir: nama kosong dalam 'T'"
 
-#: src/incremen.c:1431
+#: src/incremen.c:1491
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
-msgstr ""
+msgstr "Salah bentuk dumpdir: diduga '%c' tetapi ditemukan akhir dari data"
 
-#: src/incremen.c:1437
+#: src/incremen.c:1497
 msgid "Malformed dumpdir: 'X' never used"
-msgstr ""
+msgstr "Salah bentuk dumpdir: 'X' tidak pernah digunakan"
 
-#: src/incremen.c:1481
-#, fuzzy, c-format
+#: src/incremen.c:1541
+#, c-format
 msgid "Cannot create temporary directory using template %s"
-msgstr "Tidak dapat mengalokasi memori untuk faktor blocking %d"
+msgstr "Tidak dapat membuat direktori sementara menggunakan template %s"
 
-#: src/incremen.c:1543
+#: src/incremen.c:1603
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
-msgstr ""
+msgstr "%s: Tidak menghapus direktori: tidak dapat memperoleh statistik"
 
-#: src/incremen.c:1556
-#, fuzzy, c-format
+#: src/incremen.c:1616
+#, c-format
 msgid "%s: directory is on a different device: not purging"
-msgstr "%s: file berada pada filesistem yang berbeda; tidak di-dump"
+msgstr "%s: direktori berada di perangkat yang berbeda: tidak menghapus"
 
-#: src/incremen.c:1564
+#: src/incremen.c:1624
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Menghapus %s\n"
 
-#: src/incremen.c:1569
+#: src/incremen.c:1629
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Tidak dapat menghapus"
@@ -1079,98 +1119,98 @@ msgstr "%s: Tidak dapat menghapus"
 #: src/list.c:113
 #, c-format
 msgid "%s: Omitting"
-msgstr "%s: Menghilangkan"
+msgstr "%s: Mengabaikan"
 
 #: src/list.c:131
 #, c-format
 msgid "block %s: ** Block of NULs **\n"
-msgstr "blok %s: ** Block NULs **\n"
+msgstr "blok %s: ** Blok dari KOSONG **\n"
 
 #: src/list.c:155
 #, c-format
 msgid "block %s: ** End of File **\n"
-msgstr "blok %s: ** Akhir file **\n"
+msgstr "blok %s: ** Akhir dari Berkas **\n"
 
-#: src/list.c:178 src/list.c:1054 src/list.c:1282
+#: src/list.c:178 src/list.c:1063 src/list.c:1291
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t, etc.)
-#: src/list.c:662
+#: src/list.c:671
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
-msgstr "Blank dalam header saat diharapkan nilai %s numerik"
+msgstr "Kosong dalam header saat diharapkan nilai %s numerik"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:717
+#: src/list.c:726
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr "Nilai oktal arsip %.*s di luar batasan %s; asumsikan komplemen dua"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:728
+#: src/list.c:737
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Nilai oktal arsip %.*s di luar batasan %s"
 
-#: src/list.c:749
+#: src/list.c:758
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arsip berisikan header base-64 yang kadaluarsas"
 
-#: src/list.c:763
+#: src/list.c:772
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arsip yang ditandatangahi dengan string base-64 %s di luar batasan %s"
 
-#: src/list.c:794
+#: src/list.c:803
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Nilai arsip base-256 di luar batasan %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:823
+#: src/list.c:832
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arsip berisikan %.*s ketika nilai numerik %s diharapkan"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:845
+#: src/list.c:854
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Nilai arsip %s dari %s di luar batasan %s..%s"
 
-#: src/list.c:1217
+#: src/list.c:1226
 #, c-format
 msgid " link to %s\n"
 msgstr " link ke %s\n"
 
-#: src/list.c:1225
+#: src/list.c:1234
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " tipe file tidak dikenal %s\n"
 
-#: src/list.c:1243
+#: src/list.c:1252
 #, c-format
 msgid "--Long Link--\n"
-msgstr ""
+msgstr "--Link Panjang--\n"
 
-#: src/list.c:1247
+#: src/list.c:1256
 #, c-format
 msgid "--Long Name--\n"
-msgstr ""
+msgstr "--Nama Panjang--\n"
 
-#: src/list.c:1251
+#: src/list.c:1260
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Volume Header--\n"
 
-#: src/list.c:1259
+#: src/list.c:1268
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Diteruskan pada byte %s--\n"
 
-#: src/list.c:1287
+#: src/list.c:1296
 msgid "Creating directory:"
 msgstr "Membuat direktori:"
 
@@ -1207,37 +1247,39 @@ msgstr "saluran interproses"
 
 #. TRANSLATORS: The following three msgids form a single sentence.
 #.
-#: src/names.c:599
+#: src/names.c:593
 msgid "Pattern matching characters used in file names. Please,"
-msgstr ""
+msgstr "Pola pencocokan karakter digunakan dalam nama berkas. Mohon,"
 
-#: src/names.c:601
+#: src/names.c:595
 msgid "use --wildcards to enable pattern matching, or --no-wildcards to"
 msgstr ""
+"gunakan --wildcards untuk mengaktifkan pencocokan pola, atau --no-wildcards "
+"untuk"
 
-#: src/names.c:603
+#: src/names.c:597
 msgid "suppress this warning."
-msgstr ""
+msgstr "menekan peringatan ini."
 
-#: src/names.c:618 src/names.c:636
+#: src/names.c:612 src/names.c:630
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Tidak ditemukan dalam archive"
 
-#: src/names.c:621
-#, fuzzy, c-format
+#: src/names.c:615
+#, c-format
 msgid "%s: Required occurrence not found in archive"
-msgstr "%s: Tidak ditemukan dalam archive"
+msgstr "%s: Kejadian yang diinginkan tidak ditemukan dalam archive"
 
 #: src/tar.c:79
 #, c-format
 msgid "Options `-%s' and `-%s' both want standard input"
-msgstr "Opsi `-%s' dan `-%s' membutuhkan standard input"
+msgstr "Opsi `-%s' dan `-%s' membutuhkan standard masukan"
 
 #: src/tar.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Invalid archive format"
-msgstr "%s: grup tidak valid"
+msgstr "%s: Format archive tidak valid"
 
 #: src/tar.c:180
 msgid "GNU features wanted on incompatible archive format"
@@ -1248,9 +1290,10 @@ msgstr "Feature GNU dibutuhkan untuk format archive yang tidak kompatibel"
 msgid ""
 "Unknown quoting style `%s'. Try `%s --quoting-style=help' to get a list."
 msgstr ""
+"Gaya quoting `%s' tidak diketahui. Coba `%s --quoting-style=help' untuk "
+"memperoleh daftar."
 
-#: src/tar.c:334
-#, fuzzy
+#: src/tar.c:336
 msgid ""
 "GNU `tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1260,17 +1303,17 @@ msgid ""
 "  tar -tvf archive.tar         # List all files in archive.tar verbosely.\n"
 "  tar -xf archive.tar          # Extract all files from archive.tar.\n"
 msgstr ""
-"\n"
-"Penggunaan: %s [OPTION]... [FILE]...\n"
+"GNU `tar' menyimpan beberapa berkas bersama dalam sebuah tape tunggal atau "
+"disk archive, dan dapat dikembalikan ke berkas individu dari archive "
+"tersebut.\n"
 "\n"
 "Contoh:\n"
-"  %s -cf archive.tar foo bar  # Buat archive.tar dari file foo dan bar.\n"
-"  %s -tvf archive.tar         # Tampilkan semua file dalam archive.tar "
+"  tar -cf archive.tar foo bar  # Buat archive.tar dari berkas foo dan bar.\n"
+"  tar -tvf archive.tar         # Tampilkan semua berkas dalam archive.tar "
 "secara rinci.\n"
-"  %s -xf archive.tar          # Bongkar semua file dari archive.tar.\n"
+"  tar -xf archive.tar          # Bongkar semua berkas dari archive.tar.\n"
 
-#: src/tar.c:343
-#, fuzzy
+#: src/tar.c:345
 msgid ""
 "The backup suffix is `~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1281,1261 +1324,1338 @@ msgid ""
 "  nil, existing   numbered if numbered backups exist, simple otherwise\n"
 "  never, simple   always make simple backups\n"
 msgstr ""
-"\n"
 "Akhiran dari backup adalah `~', kecuali bila diset dengan --suffix atau "
 "SIMPLE_BACKUP_SUFFIX.\n"
-"Version control dapat diset dengan -backup atau VERSION_CONTROL, nilainya:\n"
+"Version control dapat diset dengan --backup atau VERSION_CONTROL, nilainya:\n"
 "\n"
-"  t, numbered     gunakan numbered backups\n"
-"  nil, existing   beri nomor bila nomor backup telah ada, simple sebaliknya\n"
-"  never, simple   selalu buat simple backups\n"
+"  none, off       tidak pernah membuat backups\n"
+"  t, numbered     membuat backups bernomor\n"
+"  nil, existing   beri nomor bila nomor backup telah ada, sederhana "
+"sebaliknya\n"
+"  never, simple   selalu buat sederhana backups\n"
 
-#: src/tar.c:369
+#: src/tar.c:371
 msgid "Main operation mode:"
-msgstr ""
-
-#: src/tar.c:372
-msgid "list the contents of an archive"
-msgstr ""
+msgstr "Mode operasi utama:"
 
 #: src/tar.c:374
-msgid "extract files from an archive"
-msgstr ""
+msgid "list the contents of an archive"
+msgstr "daftar isi dari sebuah archive"
 
-#: src/tar.c:377
-#, fuzzy
-msgid "create a new archive"
-msgstr "Unexpected EOF dalam archive"
+#: src/tar.c:376
+msgid "extract files from an archive"
+msgstr "ekstrak berkas dari sebuah archive"
 
 #: src/tar.c:379
-msgid "find differences between archive and file system"
-msgstr ""
+msgid "create a new archive"
+msgstr "buat sebuah archive baru"
 
-#: src/tar.c:382
-msgid "append files to the end of an archive"
-msgstr ""
+#: src/tar.c:381
+msgid "find differences between archive and file system"
+msgstr "cari perbedaan diantara archive dan sistem berkas"
 
 #: src/tar.c:384
-msgid "only append files newer than copy in archive"
-msgstr ""
+msgid "append files to the end of an archive"
+msgstr "tambahkan berkas ke akhir dari sebuah archive"
 
 #: src/tar.c:386
-msgid "append tar files to an archive"
-msgstr ""
+msgid "only append files newer than copy in archive"
+msgstr "hanya tambahkan berkas yang lebih bari dari salinan dalam archive"
 
-#: src/tar.c:389
-msgid "delete from the archive (not on mag tapes!)"
-msgstr ""
+#: src/tar.c:388
+msgid "append tar files to an archive"
+msgstr "tambahkan berkas tar ke sebuah archive"
 
 #: src/tar.c:391
+msgid "delete from the archive (not on mag tapes!)"
+msgstr "hapus dari archive (bukan dalam pita mag!)"
+
+#: src/tar.c:393
 msgid "test the archive volume label and exit"
-msgstr ""
+msgstr "test label volume archive dan keluar"
 
-#: src/tar.c:396
+#: src/tar.c:398
 msgid "Operation modifiers:"
-msgstr ""
-
-#: src/tar.c:399
-msgid "handle sparse files efficiently"
-msgstr ""
-
-#: src/tar.c:400
-msgid "MAJOR[.MINOR]"
-msgstr ""
+msgstr "Pemodifikasi operasi:"
 
 #: src/tar.c:401
-msgid "set version of the sparse format to use (implies --sparse)"
-msgstr ""
+msgid "handle sparse files efficiently"
+msgstr "tangani berkas sparse secara efisien"
+
+#: src/tar.c:402
+msgid "MAJOR[.MINOR]"
+msgstr "MAJOR[.MINOR]"
 
 #: src/tar.c:403
-msgid "handle old GNU-format incremental backup"
+msgid "set version of the sparse format to use (implies --sparse)"
 msgstr ""
-
-#: src/tar.c:404 src/tar.c:541 src/tar.c:614 src/tar.c:618 src/tar.c:628
-#: src/tar.c:638 src/tar.c:641 src/tar.c:643 src/tar.c:725 tests/genfile.c:131
-#: tests/genfile.c:179 tests/genfile.c:183 tests/genfile.c:186
-msgid "FILE"
-msgstr ""
+"set versi dari format sparse untuk digunakan (mengimplikasikan --sparse)"
 
 #: src/tar.c:405
-msgid "handle new GNU-format incremental backup"
-msgstr ""
+msgid "handle old GNU-format incremental backup"
+msgstr "tangani format GNU lama incremental backup"
+
+#: src/tar.c:406 src/tar.c:543 src/tar.c:621 src/tar.c:625 src/tar.c:637
+#: src/tar.c:647 src/tar.c:650 src/tar.c:652 src/tar.c:735 tests/genfile.c:131
+#: tests/genfile.c:179 tests/genfile.c:183 tests/genfile.c:186
+msgid "FILE"
+msgstr "BERKAS"
 
 #: src/tar.c:407
-msgid "do not exit with nonzero on unreadable files"
-msgstr ""
-
-#: src/tar.c:408 src/tar.c:536 src/tar.c:551 src/tar.c:675 src/tar.c:710
-#: tests/genfile.c:165
-msgid "NUMBER"
-msgstr ""
+msgid "handle new GNU-format incremental backup"
+msgstr "tangani format GNU barus incremental backup"
 
 #: src/tar.c:409
+msgid "do not exit with nonzero on unreadable files"
+msgstr "jangan keluar dengan bukan nol dalam berkas tidak dapat dibaca"
+
+#: src/tar.c:410 src/tar.c:538 src/tar.c:553 src/tar.c:684 src/tar.c:720
+#: tests/genfile.c:165
+msgid "NUMBER"
+msgstr "NOMOR"
+
+#: src/tar.c:411
 msgid ""
 "process only the NUMBERth occurrence of each file in the archive; this "
 "option is valid only in conjunction with one of the subcommands --delete, --"
 "diff, --extract or --list and when a list of files is given either on the "
 "command line or via the -T option; NUMBER defaults to 1"
 msgstr ""
-
-#: src/tar.c:415
-msgid "archive is seekable"
-msgstr ""
+"proses hanya JUMLAH pertemuan dari setiap berkas dalam archive; opsi ini "
+"hanya berlaku dalam konjungsi dengan satu dari sub perintah --delete, --"
+"diff, --extract atau --list dan ketika sebuah daftar dari berkas diberikan "
+"baik dalam baris perintah atau melalui opsi -T; JUMLAH baku ke 1"
 
 #: src/tar.c:417
+msgid "archive is seekable"
+msgstr "pencarian tidak dapat dilakukan dalam archive"
+
+#: src/tar.c:419
 msgid "do not check device numbers when creating incremental archives"
 msgstr ""
+"tidak dapat memeriksa nomor perangkat ketika membuat archive incremental"
 
-#: src/tar.c:420
+#: src/tar.c:422
 msgid "check device numbers when creating incremental archives (default)"
-msgstr ""
+msgstr "periksa nomor perangkat ketika membuat incremental archive (baku)"
 
-#: src/tar.c:426
+#: src/tar.c:428
 msgid "Overwrite control:"
-msgstr ""
-
-#: src/tar.c:429
-msgid "attempt to verify the archive after writing it"
-msgstr ""
+msgstr "Overwrite kontrol:"
 
 #: src/tar.c:431
-msgid "remove files after adding them to the archive"
-msgstr ""
+msgid "attempt to verify the archive after writing it"
+msgstr "mencoba untuk memverifikasi archive setelah menulisnya"
 
 #: src/tar.c:433
-msgid "don't replace existing files when extracting"
-msgstr ""
+msgid "remove files after adding them to the archive"
+msgstr "hapus berkas setelah menambahkannya ke archive"
 
 #: src/tar.c:435
-msgid "don't replace existing files that are newer than their archive copies"
-msgstr ""
+msgid "don't replace existing files when extracting"
+msgstr "jangan timpa berkas yang sudah ada ketika mengekstrak"
 
 #: src/tar.c:437
-msgid "overwrite existing files when extracting"
+msgid "don't replace existing files that are newer than their archive copies"
 msgstr ""
+"jangan timpa berkas yang sudah ada yang lebih baru dari salinan archivenya"
 
 #: src/tar.c:439
-msgid "remove each file prior to extracting over it"
-msgstr ""
+msgid "overwrite existing files when extracting"
+msgstr "overwrite berkas yang sudah ada ketika mengekstrak"
 
 #: src/tar.c:441
-msgid "empty hierarchies prior to extracting directory"
-msgstr ""
+msgid "remove each file prior to extracting over it"
+msgstr "hapus setiap berkas sebelum mengekstrak diatasnya"
 
 #: src/tar.c:443
-msgid "preserve metadata of existing directories"
-msgstr ""
+msgid "empty hierarchies prior to extracting directory"
+msgstr "kosongkan susunan sebelum mengekstrak ke direktori"
 
 #: src/tar.c:445
+msgid "preserve metadata of existing directories"
+msgstr "jaga metadata dari direktori yang sudah ada"
+
+#: src/tar.c:447
 msgid "overwrite metadata of existing directories when extracting (default)"
 msgstr ""
+"overwrite metadata dari direktori yang sudah ada ketika mengekstrak (baku)"
 
-#: src/tar.c:451
+#: src/tar.c:453
 msgid "Select output stream:"
-msgstr ""
-
-#: src/tar.c:454
-#, fuzzy
-msgid "extract files to standard output"
-msgstr "Kesalahan dalam menulis ke output standar"
-
-#: src/tar.c:455 src/tar.c:514 src/tar.c:516 tests/genfile.c:162
-#: tests/genfile.c:189
-msgid "COMMAND"
-msgstr ""
+msgstr "Pilih stream keluaran:"
 
 #: src/tar.c:456
-msgid "pipe extracted files to another program"
-msgstr ""
+msgid "extract files to standard output"
+msgstr "ekstrak berkas ke standar keluaran"
+
+#: src/tar.c:457 src/tar.c:516 src/tar.c:518 tests/genfile.c:162
+#: tests/genfile.c:189
+msgid "COMMAND"
+msgstr "PERINTAH"
 
 #: src/tar.c:458
-msgid "ignore exit codes of children"
-msgstr ""
+msgid "pipe extracted files to another program"
+msgstr "pipe berkas terekstrak ke aplikasi lain"
 
 #: src/tar.c:460
+msgid "ignore exit codes of children"
+msgstr "abaikan kode keluaran dari anak"
+
+#: src/tar.c:462
 msgid "treat non-zero exit codes of children as error"
-msgstr ""
+msgstr "perlakukan kode keluaran bukan nol dari anak sebagai error"
 
-#: src/tar.c:465
+#: src/tar.c:467
 msgid "Handling of file attributes:"
-msgstr ""
-
-#: src/tar.c:468
-msgid "force NAME as owner for added files"
-msgstr ""
+msgstr "Penanganan dari atribut berkas:"
 
 #: src/tar.c:470
-msgid "force NAME as group for added files"
-msgstr ""
-
-#: src/tar.c:471 src/tar.c:661
-msgid "DATE-OR-FILE"
-msgstr ""
+msgid "force NAME as owner for added files"
+msgstr "paksa NAMA sebagai pemilik untuk berkas yang ditambahkan"
 
 #: src/tar.c:472
-msgid "set mtime for added files from DATE-OR-FILE"
-msgstr ""
+msgid "force NAME as group for added files"
+msgstr "paksa NAMA sebagai grup untuk berkas yang ditambahkan"
 
-#: src/tar.c:473
-msgid "CHANGES"
-msgstr ""
+#: src/tar.c:473 src/tar.c:670
+msgid "DATE-OR-FILE"
+msgstr "DATE-ATAU-BERKAS"
 
 #: src/tar.c:474
-msgid "force (symbolic) mode CHANGES for added files"
-msgstr ""
+msgid "set mtime for added files from DATE-OR-FILE"
+msgstr "set mtime untuk berkas yang ditambahkan dari DATE-OR-FILE"
+
+#: src/tar.c:475
+msgid "CHANGES"
+msgstr "PERUBAHAN"
 
 #: src/tar.c:476
-msgid "METHOD"
-msgstr ""
+msgid "force (symbolic) mode CHANGES for added files"
+msgstr "paksa PERUBAHAN (simbolik) mode untuk berkas yang ditambahkan"
 
-#: src/tar.c:477
+#: src/tar.c:478
+msgid "METHOD"
+msgstr "METODE"
+
+#: src/tar.c:479
 msgid ""
 "preserve access times on dumped files, either by restoring the times after "
 "reading (METHOD='replace'; default) or by not setting the times in the first "
 "place (METHOD='system')"
 msgstr ""
-
-#: src/tar.c:481
-msgid "don't extract file modified time"
-msgstr ""
+"jaga waktu akses di berkas yang didump, baik dengan mengembalikan waktu "
+"setelah membaca (METODE='replace'; baku) atau dengan tidak menset waktu di "
+"tempat pertama (METODE='system')"
 
 #: src/tar.c:483
-msgid "try extracting files with the same ownership"
-msgstr ""
+msgid "don't extract file modified time"
+msgstr "jangan ekstrak waktu modifikasi berkas"
 
 #: src/tar.c:485
-msgid "extract files as yourself"
-msgstr ""
+msgid "try extracting files with the same ownership"
+msgstr "mencoba mengekstrak berkas dengan kepemilikan yang sama"
 
 #: src/tar.c:487
-msgid "always use numbers for user/group names"
-msgstr ""
+msgid "extract files as yourself"
+msgstr "ekstrak berkas seperti dirimu"
 
 #: src/tar.c:489
-msgid "extract information about file permissions (default for superuser)"
-msgstr ""
+msgid "always use numbers for user/group names"
+msgstr "selalu gunakan nomor untuk nama pengguna/grup"
 
-#: src/tar.c:493
+#: src/tar.c:491
+msgid "extract information about file permissions (default for superuser)"
+msgstr "ekstrak informasi mengenai ijin berkas (baku untuk superuser)"
+
+#: src/tar.c:495
 msgid ""
 "apply the user's umask when extracting permissions from the archive (default "
 "for ordinary users)"
 msgstr ""
+"aplikasikan umask pengguna ketika mengekstrak ijin dari archive (baku untuk "
+"pengguna biasa)"
 
-#: src/tar.c:495
+#: src/tar.c:497
 msgid "sort names to extract to match archive"
-msgstr ""
-
-#: src/tar.c:498
-msgid "same as both -p and -s"
-msgstr ""
+msgstr "urutkan nama untuk mengekstrak supaya cocok dengan archive"
 
 #: src/tar.c:500
+msgid "same as both -p and -s"
+msgstr "sama seperti baik -p dan -s"
+
+#: src/tar.c:502
 msgid ""
 "delay setting modification times and permissions of extracted directories "
 "until the end of extraction"
 msgstr ""
+"tunda konfigurasi waktu modifikasi dan ijin untuk direktori terekstrak "
+"sampai akhir dari ekstrasi"
 
-#: src/tar.c:503
+#: src/tar.c:505
 msgid "cancel the effect of --delay-directory-restore option"
-msgstr ""
-
-#: src/tar.c:508
-msgid "Device selection and switching:"
-msgstr ""
+msgstr "batalkan efek dari opsi --delay-directory-restore"
 
 #: src/tar.c:510
-msgid "ARCHIVE"
-msgstr ""
+msgid "Device selection and switching:"
+msgstr "Pemilihan dan pengubahan perangkat:"
 
-#: src/tar.c:511
-msgid "use archive file or device ARCHIVE"
-msgstr ""
+#: src/tar.c:512
+msgid "ARCHIVE"
+msgstr "ARCHIVE"
 
 #: src/tar.c:513
-msgid "archive file is local even if it has a colon"
-msgstr ""
+msgid "use archive file or device ARCHIVE"
+msgstr "gunakan berkas archive atau perangkat ARCHIVE"
 
 #: src/tar.c:515
-msgid "use given rmt COMMAND instead of rmt"
-msgstr ""
+msgid "archive file is local even if it has a colon"
+msgstr "berkas archive adalah lokal walaupun ini memiliki sebuah kolon"
 
 #: src/tar.c:517
+msgid "use given rmt COMMAND instead of rmt"
+msgstr "gunakan PERINTAH rmt yang diberikan daripad rmt"
+
+#: src/tar.c:519
 msgid "use remote COMMAND instead of rsh"
-msgstr ""
+msgstr "gunakan PERINTAH remote daripada rsh"
 
-#: src/tar.c:521
+#: src/tar.c:523
 msgid "specify drive and density"
-msgstr ""
-
-#: src/tar.c:535
-#, fuzzy
-msgid "create/list/extract multi-volume archive"
-msgstr "Tidak dapat verifikasi multi-volume archives"
+msgstr "spesifikasikan drive dan kepadatan"
 
 #: src/tar.c:537
-msgid "change tape after writing NUMBER x 1024 bytes"
-msgstr ""
+msgid "create/list/extract multi-volume archive"
+msgstr "buat/daftar/ekstrak multi-volume archive"
 
 #: src/tar.c:539
+msgid "change tape after writing NUMBER x 1024 bytes"
+msgstr "ubah pita setelah menulis ANGKA x 1024 bytes"
+
+#: src/tar.c:541
 msgid "run script at end of each tape (implies -M)"
-msgstr ""
+msgstr "jalankan script di akhir dari setiap pite (mengimplikasikan -M)"
 
-#: src/tar.c:542
+#: src/tar.c:544
 msgid "use/update the volume number in FILE"
-msgstr ""
-
-#: src/tar.c:547
-msgid "Device blocking:"
-msgstr ""
+msgstr "gunakan/update jumlah volume dalam BERKAS"
 
 #: src/tar.c:549
-msgid "BLOCKS"
-msgstr ""
+msgid "Device blocking:"
+msgstr "Bloking perangkat:"
 
-#: src/tar.c:550
-msgid "BLOCKS x 512 bytes per record"
-msgstr ""
+#: src/tar.c:551
+msgid "BLOCKS"
+msgstr "BLOK"
 
 #: src/tar.c:552
-msgid "NUMBER of bytes per record, multiple of 512"
-msgstr ""
+msgid "BLOCKS x 512 bytes per record"
+msgstr "BLOK x 512 byte per detik"
 
 #: src/tar.c:554
-msgid "ignore zeroed blocks in archive (means EOF)"
-msgstr ""
+msgid "NUMBER of bytes per record, multiple of 512"
+msgstr "JUMLAH dari byte per rekaman, kelipatan dari 512"
 
 #: src/tar.c:556
+msgid "ignore zeroed blocks in archive (means EOF)"
+msgstr "abaikan blok yang dinolkan dalam archive (berarti EOF)"
+
+#: src/tar.c:558
 msgid "reblock as we read (for 4.2BSD pipes)"
-msgstr ""
+msgstr "reblok saat kita baca (untuk 4.2BSD pipes)"
 
-#: src/tar.c:561
-#, fuzzy
+#: src/tar.c:563
 msgid "Archive format selection:"
-msgstr "Opsi format archive konflik"
+msgstr "Pemilihan format archive:"
 
-#: src/tar.c:563 tests/genfile.c:152
+#: src/tar.c:565 tests/genfile.c:152
 msgid "FORMAT"
-msgstr ""
-
-#: src/tar.c:564
-msgid "create archive of the given format"
-msgstr ""
+msgstr "FORMAT"
 
 #: src/tar.c:566
+msgid "create archive of the given format"
+msgstr "buat archive dari format yang diberikan"
+
+#: src/tar.c:568
 msgid "FORMAT is one of the following:"
-msgstr ""
+msgstr "FORMAT adalah satu dari berikut:"
 
-#: src/tar.c:567
+#: src/tar.c:569
 msgid "old V7 tar format"
-msgstr ""
-
-#: src/tar.c:570
-msgid "GNU format as per tar <= 1.12"
-msgstr ""
+msgstr "format tar lama V7"
 
 #: src/tar.c:572
-msgid "GNU tar 1.13.x format"
-msgstr ""
+msgid "GNU format as per tar <= 1.12"
+msgstr "format gnu tar <= 1.12"
 
 #: src/tar.c:574
-msgid "POSIX 1003.1-1988 (ustar) format"
-msgstr ""
+msgid "GNU tar 1.13.x format"
+msgstr "format GNU tar 1.13.x"
 
 #: src/tar.c:576
+msgid "POSIX 1003.1-1988 (ustar) format"
+msgstr "format POSIX 1003.1-1988 (ustar)"
+
+#: src/tar.c:578
 msgid "POSIX 1003.1-2001 (pax) format"
-msgstr ""
+msgstr "format POSIX 1003.1-2001 (pax)"
 
-#: src/tar.c:577
+#: src/tar.c:579
 msgid "same as pax"
-msgstr ""
+msgstr "sama seperti pax"
 
-#: src/tar.c:580
+#: src/tar.c:582
 msgid "same as --format=v7"
-msgstr ""
-
-#: src/tar.c:583
-msgid "same as --format=posix"
-msgstr ""
-
-#: src/tar.c:584
-msgid "keyword[[:]=value][,keyword[[:]=value]]..."
-msgstr ""
+msgstr "sama seperti --format=v7"
 
 #: src/tar.c:585
-msgid "control pax keywords"
-msgstr ""
+msgid "same as --format=posix"
+msgstr "sama seperti --format=posix"
 
 #: src/tar.c:586
-msgid "TEXT"
-msgstr ""
+msgid "keyword[[:]=value][,keyword[[:]=value]]..."
+msgstr "kata kunci[[:]=nilai][,kata kunci[[:]=nilai]]..."
 
 #: src/tar.c:587
+msgid "control pax keywords"
+msgstr "kontrol kata kunci pax"
+
+#: src/tar.c:588
+msgid "TEXT"
+msgstr "TEKS"
+
+#: src/tar.c:589
 msgid ""
 "create archive with volume name TEXT; at list/extract time, use TEXT as a "
 "globbing pattern for volume name"
 msgstr ""
-
-#: src/tar.c:592
-#, fuzzy
-msgid "Compression options:"
-msgstr "Opsi kompresi konflik"
+"buat archive dengan nama volume TEKS; di waktu daftar/ekstrak, gunakan TEKS "
+"sebagai sebuah pola globbing untuk nama volume"
 
 #: src/tar.c:594
-msgid "use archive suffix to determine the compression program"
-msgstr ""
+msgid "Compression options:"
+msgstr "Opsi kompresi:"
 
 #: src/tar.c:596
-msgid "filter the archive through bzip2"
-msgstr ""
+msgid "use archive suffix to determine the compression program"
+msgstr "gunaka nama akhiran archive untuk menentukan aplikasi kompresi"
 
 #: src/tar.c:598
 #, fuzzy
+msgid "do not use use archive suffix to determine the compression program"
+msgstr "gunaka nama akhiran archive untuk menentukan aplikasi kompresi"
+
+#: src/tar.c:601
+msgid "filter the archive through bzip2"
+msgstr "saring archive melalui bzip2"
+
+#: src/tar.c:603
 msgid "filter the archive through gzip"
-msgstr "%s: file adalah archive; tidak di-dump"
-
-#: src/tar.c:602
-#, fuzzy
-msgid "filter the archive through compress"
-msgstr "%s: file adalah archive; tidak di-dump"
-
-#: src/tar.c:605
-#, fuzzy
-msgid "filter the archive through lzma"
-msgstr "%s: file adalah archive; tidak di-dump"
-
-#: src/tar.c:606
-msgid "PROG"
-msgstr ""
+msgstr "saring archive melalui gzip"
 
 #: src/tar.c:607
-msgid "filter through PROG (must accept -d)"
-msgstr ""
+msgid "filter the archive through compress"
+msgstr "saring archive melalui compress"
+
+#: src/tar.c:610
+msgid "filter the archive through lzma"
+msgstr "saring archive melalui lzma"
 
 #: src/tar.c:612
-msgid "Local file selection:"
-msgstr ""
-
-#: src/tar.c:615
-msgid "add given FILE to the archive (useful if its name starts with a dash)"
-msgstr ""
-
-#: src/tar.c:616
-msgid "DIR"
-msgstr ""
-
-#: src/tar.c:617
 #, fuzzy
-msgid "change to directory DIR"
-msgstr "Tidak bisa pindah direktori kerja"
+msgid "filter the archive through lzop"
+msgstr "saring archive melalui gzip"
+
+#: src/tar.c:613
+msgid "PROG"
+msgstr "PROG"
+
+#: src/tar.c:614
+msgid "filter through PROG (must accept -d)"
+msgstr "saring melalui PROG (harus menerima -d)"
 
 #: src/tar.c:619
-msgid "get names to extract or create from FILE"
-msgstr ""
+msgid "Local file selection:"
+msgstr "Pemilihan berkas lokal:"
 
-#: src/tar.c:621
-msgid "-T reads null-terminated names, disable -C"
+#: src/tar.c:622
+msgid "add given FILE to the archive (useful if its name starts with a dash)"
 msgstr ""
+"tambahkan berkas yang diberikan ke archive (berguna jika namanya berawal "
+"dengan sebuah dash)"
 
 #: src/tar.c:623
+msgid "DIR"
+msgstr "DIR"
+
+#: src/tar.c:624
+msgid "change to directory DIR"
+msgstr "pindah ke direktori DIR"
+
+#: src/tar.c:626
+msgid "get names to extract or create from FILE"
+msgstr "dapatkan nama untuk ekstrak atau buat dari BERKAS"
+
+#: src/tar.c:628
+msgid "-T reads null-terminated names, disable -C"
+msgstr "-T baca nama berakhiran kosong, non-aktifkan -C"
+
+#: src/tar.c:630
+msgid "disable the effect of the previous --null option"
+msgstr ""
+
+#: src/tar.c:632
 msgid "unquote filenames read with -T (default)"
-msgstr ""
+msgstr "unquote nama berkas baca dengan -T (baku)"
 
-#: src/tar.c:625
+#: src/tar.c:634
 msgid "do not unquote filenames read with -T"
-msgstr ""
+msgstr "jangan unquote nama berkas baca dengan -T"
 
-#: src/tar.c:626 tests/genfile.c:135
+#: src/tar.c:635 tests/genfile.c:135
 msgid "PATTERN"
-msgstr ""
+msgstr "POLA"
 
-#: src/tar.c:627
+#: src/tar.c:636
 msgid "exclude files, given as a PATTERN"
-msgstr ""
+msgstr "jangan masukan berkas, berikan sebagai sebuah POLA"
 
-#: src/tar.c:629
+#: src/tar.c:638
 msgid "exclude patterns listed in FILE"
-msgstr ""
+msgstr "jangan masukan pola yang terdaftar dalam BERKAS"
 
-#: src/tar.c:631
+#: src/tar.c:640
 msgid ""
 "exclude contents of directories containing CACHEDIR.TAG, except for the tag "
 "file itself"
 msgstr ""
+"jangan masukan isi dari direktori berisi CACHEDIR.TAG, kecuali untuk berkas "
+"tag itu sendiri"
 
-#: src/tar.c:634
+#: src/tar.c:643
 msgid "exclude everything under directories containing CACHEDIR.TAG"
-msgstr ""
-
-#: src/tar.c:637
-msgid "exclude directories containing CACHEDIR.TAG"
-msgstr ""
-
-#: src/tar.c:639
-msgid "exclude contents of directories containing FILE, except for FILE itself"
-msgstr ""
-
-#: src/tar.c:642
-msgid "exclude everything under directories containing FILE"
-msgstr ""
-
-#: src/tar.c:644
-msgid "exclude directories containing FILE"
-msgstr ""
+msgstr "jangan masukan apapun dibawah direktori berisi CACHEDIR.TAG"
 
 #: src/tar.c:646
-msgid "exclude version control system directories"
-msgstr ""
+msgid "exclude directories containing CACHEDIR.TAG"
+msgstr "jangan masukan direktori berisi CACHEDIR.TAG"
 
 #: src/tar.c:648
+msgid "exclude contents of directories containing FILE, except for FILE itself"
+msgstr ""
+"jangan masukan isi dari direktori berisi BERKAS, kecuali untuk BERKAS itu "
+"sendiri"
+
+#: src/tar.c:651
+msgid "exclude everything under directories containing FILE"
+msgstr "jangan masukan apapun dibawah direktori berisi BERKAS"
+
+#: src/tar.c:653
+msgid "exclude directories containing FILE"
+msgstr "jangan masukan direktori berisi BERKAS"
+
+#: src/tar.c:655
+msgid "exclude version control system directories"
+msgstr "jangan masukan direktori sistem pengontrol direktori"
+
+#: src/tar.c:657
 msgid "avoid descending automatically in directories"
-msgstr ""
-
-#: src/tar.c:650
-msgid "stay in local file system when creating archive"
-msgstr ""
-
-#: src/tar.c:652
-msgid "recurse into directories (default)"
-msgstr ""
-
-#: src/tar.c:654
-#, fuzzy
-msgid "don't strip leading `/'s from file names"
-msgstr "Menghilangkan awalan `%.*s' dari nama anggota"
-
-#: src/tar.c:656
-msgid "follow symlinks; archive and dump the files they point to"
-msgstr ""
-
-#: src/tar.c:658
-msgid "follow hard links; archive and dump the files they refer to"
-msgstr ""
+msgstr "hindari penurunan secara otomatis dalam direktori"
 
 #: src/tar.c:659
-msgid "MEMBER-NAME"
-msgstr ""
+msgid "stay in local file system when creating archive"
+msgstr "tetap dalam sistem berkas lokal ketika membuat archive"
 
-#: src/tar.c:660
-msgid "begin at member MEMBER-NAME in the archive"
-msgstr ""
+#: src/tar.c:661
+msgid "recurse into directories (default)"
+msgstr "rekursif kedalam direktori (baku)"
 
-#: src/tar.c:662
-msgid "only store files newer than DATE-OR-FILE"
-msgstr ""
-
-#: src/tar.c:664
-msgid "DATE"
-msgstr ""
+#: src/tar.c:663
+msgid "don't strip leading `/'s from file names"
+msgstr "jangan hilangkan awalan `/' dari nama berkas"
 
 #: src/tar.c:665
-msgid "compare date and time when data changed only"
-msgstr ""
-
-#: src/tar.c:666
-msgid "CONTROL"
-msgstr ""
+msgid "follow symlinks; archive and dump the files they point to"
+msgstr "ikuti symlinks; berkas archive dan dump yang mereka tunjuk ke"
 
 #: src/tar.c:667
-msgid "backup before removal, choose version CONTROL"
-msgstr ""
+msgid "follow hard links; archive and dump the files they refer to"
+msgstr "ikuti hard links; berkas archive dan dump yang mereka refer ke"
 
-#: src/tar.c:668 src/tar.c:742 src/tar.c:744 tests/genfile.c:168
-msgid "STRING"
-msgstr ""
+#: src/tar.c:668
+msgid "MEMBER-NAME"
+msgstr "NAMA-ANGGOTA"
 
 #: src/tar.c:669
+msgid "begin at member MEMBER-NAME in the archive"
+msgstr "berawal di anggota NAMA-ANGGOTA dalam archive"
+
+#: src/tar.c:671
+msgid "only store files newer than DATE-OR-FILE"
+msgstr "hanya simpan berkas lebih baru dari DATE-OR-FILE"
+
+#: src/tar.c:673
+msgid "DATE"
+msgstr "TANGGAL"
+
+#: src/tar.c:674
+msgid "compare date and time when data changed only"
+msgstr "bandingkan tanggal dan waktu hanya ketika data berubah"
+
+#: src/tar.c:675
+msgid "CONTROL"
+msgstr "KONTROL"
+
+#: src/tar.c:676
+msgid "backup before removal, choose version CONTROL"
+msgstr "backup sebelum penghapusan, pilih PENGONTROL versi"
+
+#: src/tar.c:677 src/tar.c:752 src/tar.c:754 tests/genfile.c:168
+msgid "STRING"
+msgstr "STRING"
+
+#: src/tar.c:678
 msgid ""
 "backup before removal, override usual suffix ('~' unless overridden by "
 "environment variable SIMPLE_BACKUP_SUFFIX)"
 msgstr ""
+"backup sebelum penghapusan, override akhiran biasa ('~' kecuali di override "
+"oleh variabel lingkungan SIMPLE_BACKUP_SUFFIX)"
 
-#: src/tar.c:674
+#: src/tar.c:683
 msgid "File name transformations:"
-msgstr ""
+msgstr "Transformasi nama berkas:"
 
-#: src/tar.c:676
+#: src/tar.c:685
 msgid "strip NUMBER leading components from file names on extraction"
 msgstr ""
-
-#: src/tar.c:678
-msgid "EXPRESSION"
-msgstr ""
-
-#: src/tar.c:679
-msgid "use sed replace EXPRESSION to transform file names"
-msgstr ""
-
-#: src/tar.c:684
-msgid "File name matching options (affect both exclude and include patterns):"
-msgstr ""
+"hilangkan NOMOR yang mengawali komponen dari nama berkas di waktu ekstraksi"
 
 #: src/tar.c:687
-msgid "ignore case"
-msgstr ""
+msgid "EXPRESSION"
+msgstr "EKSPRESI"
 
-#: src/tar.c:689
-msgid "patterns match file name start"
-msgstr ""
+#: src/tar.c:688
+msgid "use sed replace EXPRESSION to transform file names"
+msgstr "gunakan sed EKSPRESI replace untuk mengubah nama berkas"
 
-#: src/tar.c:691
-msgid "patterns match after any `/' (default for exclusion)"
-msgstr ""
-
-#: src/tar.c:693
-msgid "case sensitive matching (default)"
-msgstr ""
-
-#: src/tar.c:695
-msgid "use wildcards (default for exclusion)"
-msgstr ""
+#: src/tar.c:694
+msgid "File name matching options (affect both exclude and include patterns):"
+msgstr "Opsi nama berkas cocok (mempengaruhi baik pola exclude dan include):"
 
 #: src/tar.c:697
-msgid "verbatim string matching"
-msgstr ""
+msgid "ignore case"
+msgstr "abaikan perbedaan huruf besar dan huruf kecil"
 
 #: src/tar.c:699
-#, fuzzy
-msgid "wildcards do not match `/'"
-msgstr "Volume %s tidak sesuai dengan %s"
+msgid "patterns match file name start"
+msgstr "pencocokan pola nama berkas mulai"
 
 #: src/tar.c:701
-msgid "wildcards match `/' (default for exclusion)"
-msgstr ""
+msgid "patterns match after any `/' (default for exclusion)"
+msgstr "pencocokan polah setelah `/' apapun (baku untuk exclusion)"
 
-#: src/tar.c:706
-msgid "Informative output:"
-msgstr ""
+#: src/tar.c:703
+msgid "case sensitive matching (default)"
+msgstr "pencocokan dengan memperhatikan huruf besar dan huruf kecil (baku)"
+
+#: src/tar.c:705
+msgid "use wildcards (default for exclusion)"
+msgstr "gunakan wildcards (baku untuk exclusion)"
+
+#: src/tar.c:707
+msgid "verbatim string matching"
+msgstr "pencocok verbatim string"
 
 #: src/tar.c:709
-msgid "verbosely list files processed"
-msgstr ""
+msgid "wildcards do not match `/'"
+msgstr "wildcards tidak cocok `/'"
 
 #: src/tar.c:711
-msgid "display progress messages every NUMBERth record (default 10)"
-msgstr ""
+msgid "wildcards match `/' (default for exclusion)"
+msgstr "wildcards cocok `/' (baku untuk exclusion)"
 
-#: src/tar.c:713
-msgid "ACTION"
-msgstr ""
-
-#: src/tar.c:714
-msgid "execute ACTION on each checkpoint"
-msgstr ""
-
-#: src/tar.c:717
-msgid "print a message if not all links are dumped"
-msgstr ""
-
-#: src/tar.c:718
-msgid "SIGNAL"
-msgstr ""
+#: src/tar.c:716
+msgid "Informative output:"
+msgstr "Keluaran informative:"
 
 #: src/tar.c:719
+msgid "verbosely list files processed"
+msgstr "proses daftar berkas secara verbose"
+
+#: src/tar.c:721
+msgid "display progress messages every NUMBERth record (default 10)"
+msgstr "tampilkan pesan perkembangan setiap rekaman ke ANGKA (baku 10)"
+
+#: src/tar.c:723
+msgid "ACTION"
+msgstr "AKSI"
+
+#: src/tar.c:724
+msgid "execute ACTION on each checkpoint"
+msgstr "jalankan AKSI disetiap titik pemeriksaan"
+
+#: src/tar.c:727
+msgid "print a message if not all links are dumped"
+msgstr "tampilkan sebuah pesan jika tidak seluruh link didump"
+
+#: src/tar.c:728
+msgid "SIGNAL"
+msgstr "SINYAL"
+
+#: src/tar.c:729
 msgid ""
 "print total bytes after processing the archive; with an argument - print "
 "total bytes when this SIGNAL is delivered; Allowed signals are: SIGHUP, "
 "SIGQUIT, SIGINT, SIGUSR1 and SIGUSR2; the names without SIG prefix are also "
 "accepted"
 msgstr ""
+"tampilkan total bytes setelah memproses archive; dengan sebuah archive - "
+"tampilkan total bytes ketika SINYAL ini dikirimkan; Sinyal yang diijinkan "
+"adalah: SIGHUP, SIGQUIT, SIGINT, SIGUSR1 dan SIGUSR2; nama tanpa awalah SIG "
+"juga diterima"
 
-#: src/tar.c:724
+#: src/tar.c:734
 msgid "print file modification dates in UTC"
-msgstr ""
+msgstr "tampilkan waktu modifikasi berkas dalam UTC"
 
-#: src/tar.c:726
+#: src/tar.c:736
 msgid "send verbose output to FILE"
-msgstr ""
+msgstr "kirim keluaran verbose ke BERKAS"
 
-#: src/tar.c:728
+#: src/tar.c:738
 msgid "show block number within archive with each message"
-msgstr ""
+msgstr "tampilkan jumlah blok didalam archive dengan setiap pesan"
 
-#: src/tar.c:730
+#: src/tar.c:740
 msgid "ask for confirmation for every action"
-msgstr ""
+msgstr "minta konfirmasi untuk setiap aksi"
 
-#: src/tar.c:733
+#: src/tar.c:743
 msgid "show tar defaults"
-msgstr ""
+msgstr "tampilkan tar baku"
 
-#: src/tar.c:735
+#: src/tar.c:745
 msgid ""
 "when listing or extracting, list each directory that does not match search "
 "criteria"
 msgstr ""
+"ketika mendaftar atau mengekstrak, daftar setiap direktori yang tidak cocok "
+"dengan kriteria pencarian"
 
-#: src/tar.c:737
+#: src/tar.c:747
 msgid "show file or archive names after transformation"
-msgstr ""
-
-#: src/tar.c:740
-msgid "STYLE"
-msgstr ""
-
-#: src/tar.c:741
-msgid "set name quoting style; see below for valid STYLE values"
-msgstr ""
-
-#: src/tar.c:743
-msgid "additionally quote characters from STRING"
-msgstr ""
-
-#: src/tar.c:745
-msgid "disable quoting for characters from STRING"
-msgstr ""
+msgstr "tampilkan berkas atau nama berkas setelah transformasi"
 
 #: src/tar.c:750
-msgid "Compatibility options:"
-msgstr ""
+msgid "STYLE"
+msgstr "GAYA"
+
+#: src/tar.c:751
+msgid "set name quoting style; see below for valid STYLE values"
+msgstr "set nama quoting gaya; lihat dibawah untuk nilai GAYA yang valid"
 
 #: src/tar.c:753
+msgid "additionally quote characters from STRING"
+msgstr "sebagai tambahan karakter quote dari STRING"
+
+#: src/tar.c:755
+msgid "disable quoting for characters from STRING"
+msgstr "non-aktifkan quoting untuk karakter dari STRING"
+
+#: src/tar.c:760
+msgid "Compatibility options:"
+msgstr "Opsi yang kompatibel:"
+
+#: src/tar.c:763
 msgid ""
 "when creating, same as --old-archive; when extracting, same as --no-same-"
 "owner"
 msgstr ""
+"ketika membuat, sama seperti --old-archive; ketika mengekstrak, sama seperti "
+"--no-same-owner"
 
-#: src/tar.c:758
+#: src/tar.c:768
 msgid "Other options:"
-msgstr ""
+msgstr "Opsi lain:"
 
-#: src/tar.c:761
+#: src/tar.c:771
 msgid "disable use of some potentially harmful options"
-msgstr ""
+msgstr "non-aktifkan penggunaan dari opsi berbahaya yang berpotensial"
 
-#: src/tar.c:899
+#: src/tar.c:919
 msgid "You may not specify more than one `-Acdtrux' option"
 msgstr "Anda tidak bisa menjalankan lebih dari satu opsi `-Acdtrux'"
 
-#: src/tar.c:909
+#: src/tar.c:929
 msgid "Conflicting compression options"
 msgstr "Opsi kompresi konflik"
 
-#: src/tar.c:965
-#, fuzzy, c-format
+#: src/tar.c:985
+#, c-format
 msgid "Unknown signal name: %s"
-msgstr " tipe file tidak dikenal %s\n"
+msgstr "Nama sinyal: %s tidak dikenal"
 
-#: src/tar.c:989
-#, fuzzy
+#: src/tar.c:1009
 msgid "Date sample file not found"
-msgstr "Tanggal file tidak ditemukan"
+msgstr "Tanggal contoh berkas tidak ditemukan"
 
-#: src/tar.c:997
+#: src/tar.c:1017
 #, c-format
 msgid "Substituting %s for unknown date format %s"
 msgstr "Menggantikan %s untuk format tanggal tidak dikenal %s"
 
-#: src/tar.c:1022
+#: src/tar.c:1042
 #, c-format
 msgid "Option %s: Treating date `%s' as %s"
-msgstr ""
+msgstr "Opsi %s: memperlakukan tanggal `%s' sebagai %s"
 
-#: src/tar.c:1096
-#, fuzzy, c-format
+#: src/tar.c:1119
+#, c-format
 msgid "%s: file list already read"
-msgstr "%s: file adalah archive; tidak di-dump"
+msgstr "%s: daftar berkas telah dibaca"
 
-#: src/tar.c:1159
+#: src/tar.c:1184
 #, c-format
 msgid "%s: file name read contains nul character"
-msgstr ""
+msgstr "%s: nama berkas yang dibaca berisi karakter nul"
 
-#: src/tar.c:1224
+#: src/tar.c:1249
 msgid "Valid arguments for --quoting-style options are:"
-msgstr ""
+msgstr "Argumen yang valid untuk opsi --quoting-style adalah:"
 
-#: src/tar.c:1227
+#: src/tar.c:1252
 msgid ""
 "\n"
 "*This* tar defaults to:\n"
 msgstr ""
+"\n"
+"*Ini* tar baku ke:\n"
 
-#: src/tar.c:1264
+#: src/tar.c:1293
 msgid "Invalid blocking factor"
 msgstr "Faktor bloking tidak valid"
 
-#: src/tar.c:1340
+#: src/tar.c:1369
 msgid "Warning: the -I option is not supported; perhaps you meant -j or -T?"
 msgstr "Peringatan: option -l tidak didukung; mungkin maksud anda -j atau -T?"
 
-#: src/tar.c:1373
+#: src/tar.c:1406
 msgid "Invalid tape length"
 msgstr "Panjang tape tidak valid"
 
-#: src/tar.c:1409
+#: src/tar.c:1442
 msgid "More than one threshold date"
 msgstr "Lebih dari satu treshold date"
 
-#: src/tar.c:1464 src/tar.c:1467
+#: src/tar.c:1497 src/tar.c:1500
 msgid "Invalid sparse version value"
-msgstr ""
+msgstr "Nilai versi sparse tidak valid"
 
-#: src/tar.c:1552
+#: src/tar.c:1585
 msgid "--atime-preserve='system' is not supported on this platform"
-msgstr ""
+msgstr "opsi --atime-preserve='system' tidak didukung di platform ini"
 
-#: src/tar.c:1577
+#: src/tar.c:1610
 msgid "--checkpoint value is not an integer"
-msgstr ""
+msgstr "nilai --checkpoint bukan sebuah integer"
 
-#: src/tar.c:1678
+#: src/tar.c:1711
 #, c-format
 msgid "%s: Invalid group"
 msgstr "%s: grup tidak valid"
 
-#: src/tar.c:1685
+#: src/tar.c:1718
 msgid "Invalid mode given on option"
 msgstr "Mode tidak tepat diberikan pada opsi"
 
-#: src/tar.c:1738
-#, fuzzy
+#: src/tar.c:1775
 msgid "Invalid number"
-msgstr "Nomor inode tidak valid"
+msgstr "Nomor tidak valid"
 
-#: src/tar.c:1760
+#: src/tar.c:1797
 msgid "Invalid owner"
 msgstr "Pemilik tidak valid"
 
-#: src/tar.c:1794
+#: src/tar.c:1823
+msgid ""
+"The --preserve option is deprecated, use --preserve-permissions --preserve-"
+"order instead"
+msgstr ""
+
+#: src/tar.c:1833
 msgid "Invalid record size"
 msgstr "Ukuran record tidak valid"
 
-#: src/tar.c:1797
+#: src/tar.c:1836
 #, c-format
 msgid "Record size must be a multiple of %d."
 msgstr "Jumlah record harus kelipatan dari %d."
 
-#: src/tar.c:1834
-#, fuzzy
+#: src/tar.c:1873
 msgid "Invalid number of elements"
-msgstr "Panjang tape tidak valid"
+msgstr "Jumlah dari elemen tidak valid"
 
-#: src/tar.c:1854
+#: src/tar.c:1893
 msgid "Only one --to-command option allowed"
-msgstr ""
+msgstr "Hanya satu opsi --to-command yang diijinkan"
 
-#: src/tar.c:1930
+#: src/tar.c:1969
 #, c-format
 msgid "Malformed density argument: %s"
-msgstr ""
+msgstr "Salah bentuk kepadatan argumen: %s"
 
-#: src/tar.c:1956
+#: src/tar.c:1995
 #, c-format
 msgid "Unknown density: `%c'"
-msgstr ""
+msgstr "Kepadatan tidak diketahui: `%c'"
 
-#: src/tar.c:1973
+#: src/tar.c:2012
 #, c-format
 msgid "Options `-[0-7][lmh]' not supported by *this* tar"
 msgstr "Opsi `-[0-7][lmh]' tidak didukung oleh tar *ini*"
 
-#: src/tar.c:2008
+#: src/tar.c:2047
 msgid "[FILE]..."
-msgstr ""
+msgstr "[BERKAS]..."
 
-#: src/tar.c:2114
+#: src/tar.c:2153
 #, c-format
 msgid "Old option `%c' requires an argument."
 msgstr "Opsi 'lama' `%c' membutuhkan argument."
 
-#: src/tar.c:2196
+#: src/tar.c:2235
 msgid "--occurrence is meaningless without a file list"
-msgstr ""
+msgstr "--occurrence tidak berarti tanpa sebuah daftar berkas"
 
-#: src/tar.c:2202
+#: src/tar.c:2241
 msgid "--occurrence cannot be used in the requested operation mode"
-msgstr ""
+msgstr "--occurrence tidak dapat digunakan dalam mode operasi yang diminta"
 
-#: src/tar.c:2232
-#, fuzzy
+#: src/tar.c:2271
 msgid "Multiple archive files require `-M' option"
-msgstr "File multiple archive membutuhkan opsi '-M'"
+msgstr "Berkas multiple archive membutuhkan opsi '-M'"
 
-#: src/tar.c:2237
+#: src/tar.c:2276
 msgid "Cannot combine --listed-incremental with --newer"
 msgstr "Tidak dapat menggabungkan --listed-incremental dengan --newer"
 
-#: src/tar.c:2254
-#, fuzzy, c-format
+#: src/tar.c:2293
+#, c-format
 msgid "%s: Volume label is too long (limit is %lu byte)"
 msgid_plural "%s: Volume label is too long (limit is %lu bytes)"
 msgstr[0] "%s: Label volume terlalu panjang (batasnya adalah %lu byte)"
 msgstr[1] "%s: Label volume terlalu panjang (batasnya adalah %lu byte)"
 
-#: src/tar.c:2267
+#: src/tar.c:2306
 msgid "Cannot verify multi-volume archives"
 msgstr "Tidak dapat verifikasi multi-volume archives"
 
-#: src/tar.c:2269
+#: src/tar.c:2308
 msgid "Cannot verify compressed archives"
 msgstr "Tidak dapat verify compressed archives"
 
-#: src/tar.c:2275
+#: src/tar.c:2314
 msgid "Cannot use multi-volume compressed archives"
 msgstr "Tidak dapat menggunakan multi-volume compressed archives"
 
-#: src/tar.c:2281
-#, fuzzy
+#: src/tar.c:2320
 msgid "Cannot concatenate compressed archives"
 msgstr "Tidak dapat update compressed archives"
 
-#: src/tar.c:2293
+#: src/tar.c:2332
 msgid "--pax-option can be used only on POSIX archives"
+msgstr "--pax-option hanya dapat digunakan dalam archive POSIX"
+
+#: src/tar.c:2350
+msgid "Volume length cannot be less than record size"
 msgstr ""
 
-#: src/tar.c:2318
-msgid "Cowardly refusing to create an empty archive"
-msgstr "Tidak bisa membuat archive yang kosong"
+#: src/tar.c:2353
+msgid "--preserve-order is not compatible with --listed-incremental"
+msgstr ""
 
-#: src/tar.c:2343
+#: src/tar.c:2364
+msgid "Cowardly refusing to create an empty archive"
+msgstr "Secara takut menolak untuk membuat sebuah archive kosong"
+
+#: src/tar.c:2389
 msgid "Options `-Aru' are incompatible with `-f -'"
 msgstr "Opsi '-Aru' tidak kompatibel dengan `-f -'"
 
-#: src/tar.c:2432
+#: src/tar.c:2478
 msgid "You must specify one of the `-Acdtrux' options"
 msgstr "Anda harus menggunakan salah satu dari opsi `-Acdtrux'"
 
-#: src/tar.c:2483
+#: src/tar.c:2529
 #, c-format
-msgid "Error exit delayed from previous errors"
-msgstr "Kesalahan exit ditunda dari error sebelumnya"
+msgid "Exiting with failure status due to previous errors"
+msgstr ""
 
 #: src/update.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "%s: File shrank by %s byte"
 msgid_plural "%s: File shrank by %s bytes"
 msgstr[0] "%s: file mengecil sebanyak %s byte"
 msgstr[1] "%s: file mengecil sebanyak %s byte"
 
-#: src/xheader.c:158
+#: src/xheader.c:156
 #, c-format
 msgid "Keyword %s is unknown or not yet implemented"
-msgstr ""
+msgstr "Kata kunci %s tidak diketahui atau belum diimplementasikan"
 
-#: src/xheader.c:184
+#: src/xheader.c:182
 #, c-format
 msgid "Pattern %s cannot be used"
-msgstr ""
+msgstr "Pola %s tidak dapat digunakan"
 
-#: src/xheader.c:194
+#: src/xheader.c:192
 #, c-format
 msgid "Keyword %s cannot be overridden"
-msgstr ""
+msgstr "Kata kunci %s tidak dapat dioverride"
 
-#: src/xheader.c:498
+#: src/xheader.c:496
 msgid "Malformed extended header: missing length"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: hilang panjang"
 
-#: src/xheader.c:506
+#: src/xheader.c:504
 msgid "Extended header length is out of allowed range"
-msgstr ""
+msgstr "Ekstensi panjang header diluar dari jangkauan yang diijinkan"
 
-#: src/xheader.c:513
-#, fuzzy, c-format
+#: src/xheader.c:511
+#, c-format
 msgid "Extended header length %*s is out of range"
-msgstr "Arsip yang ditandatangahi dengan string base-64 %s di luar batasan %s"
+msgstr "Ekstensi panjang header %*s diluar dari jangkauan"
 
-#: src/xheader.c:525
+#: src/xheader.c:523
 msgid "Malformed extended header: missing blank after length"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: hilang blank setelah panjang"
 
-#: src/xheader.c:533
+#: src/xheader.c:531
 msgid "Malformed extended header: missing equal sign"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: hilang tanda sama dengan"
 
-#: src/xheader.c:539
+#: src/xheader.c:537
 msgid "Malformed extended header: missing newline"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: hilang baris baru"
 
-#: src/xheader.c:576
+#: src/xheader.c:574
 #, c-format
 msgid "Ignoring unknown extended header keyword `%s'"
-msgstr ""
+msgstr "Mengabaikan kata kunci ekstensi `%s' yang tidak diketahui"
 
-#: src/xheader.c:780
+#: src/xheader.c:778
 #, c-format
 msgid "Generated keyword/value pair is too long (keyword=%s, length=%s)"
 msgstr ""
+"Pasangan kata kunci/nilai yang dihasilkan terlalu panjang (kata kunci=%s, "
+"panjang=%s)"
 
 #. TRANSLATORS: The first %s is the pax extended header keyword
 #. (atime, gid, etc.).
-#: src/xheader.c:812
-#, fuzzy, c-format
+#: src/xheader.c:810
+#, c-format
 msgid "Extended header %s=%s is out of range %s..%s"
-msgstr "Nilai arsip %s dari %s di luar batasan %s..%s"
+msgstr "Ekstensi header %s=%s diluar dari jangkauan %s..%s"
 
-#: src/xheader.c:943 src/xheader.c:973 src/xheader.c:1287
+#: src/xheader.c:941 src/xheader.c:971 src/xheader.c:1285
 #, c-format
 msgid "Malformed extended header: invalid %s=%s"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: tidak valid %s=%s"
 
-#: src/xheader.c:1240 src/xheader.c:1265 src/xheader.c:1315
+#: src/xheader.c:1238 src/xheader.c:1263 src/xheader.c:1313
 #, c-format
 msgid "Malformed extended header: excess %s=%s"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: kelebihan %s=%s"
 
-#: src/xheader.c:1328
+#: src/xheader.c:1326
 #, c-format
 msgid "Malformed extended header: invalid %s: unexpected delimiter %c"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: tidak valid %s: tidak diduga pembatas %c"
 
-#: src/xheader.c:1338
+#: src/xheader.c:1336
 #, c-format
 msgid "Malformed extended header: invalid %s: odd number of values"
-msgstr ""
+msgstr "Salah bentuk ekstensi header: tidak valid %s: jumlah dari nilai ganjil"
 
 #: src/checkpoint.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "%s: not a valid timeout"
-msgstr "%s: grup tidak valid"
+msgstr "%s: bukan sebuah kehabisan waktu yang valid"
 
 #: src/checkpoint.c:112
 #, c-format
 msgid "%s: unknown checkpoint action"
-msgstr ""
+msgstr "%s: aksi titik pemeriksaan tidak diketahui"
 
 #: src/checkpoint.c:132
 msgid "write"
-msgstr ""
+msgstr "tulis"
 
 #: src/checkpoint.c:132
 msgid "read"
-msgstr ""
+msgstr "baca"
 
 #. TRANSLATORS: This is a ``checkpoint of write operation'',
 #. *not* ``Writing a checkpoint''.
 #. E.g. in Spanish ``Punto de comprobaci@'on de escritura'',
 #. *not* ``Escribiendo un punto de comprobaci@'on''
 #: src/checkpoint.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Write checkpoint %u"
-msgstr "Menulis checkpoint %d"
+msgstr "Menulis titik pemeriksaan %u"
 
 #. TRANSLATORS: This is a ``checkpoint of read operation'',
 #. *not* ``Reading a checkpoint''.
 #. E.g. in Spanish ``Punto de comprobaci@'on de lectura'',
 #. *not* ``Leyendo un punto de comprobaci@'on''
 #: src/checkpoint.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "Read checkpoint %u"
-msgstr "Membaca checkpoint %d"
+msgstr "Membaca titik pemeriksaan %u"
 
 #: tests/genfile.c:111
-#, fuzzy
 msgid ""
 "genfile manipulates data files for GNU paxutils test suite.\n"
 "OPTIONS are:\n"
-msgstr "Hasilkan file data untuk GNU test suite.\n"
+msgstr ""
+"genfile memanipulasi berkas data untuk suite pemeriksaan GNU paxutils.\n"
+"OPSI adalah:\n"
 
 #: tests/genfile.c:126
-#, fuzzy
 msgid "File creation options:"
-msgstr "Opsi kompresi konflik"
+msgstr "Opsi pembuatan berkas:"
 
 #: tests/genfile.c:127 tests/genfile.c:138
 msgid "SIZE"
-msgstr ""
+msgstr "UKURAN"
 
 #: tests/genfile.c:128
 msgid "Create file of the given SIZE"
-msgstr ""
+msgstr "Buat berkas dari UKURAN yang diberikan"
 
 #: tests/genfile.c:130
-#, fuzzy
 msgid "Write to file NAME, instead of standard output"
-msgstr "Kesalahan dalam menulis ke output standar"
+msgstr "Tulis ke berkas NAMA, daripada ke standar keluaran"
 
 #: tests/genfile.c:132
 msgid "Read file names from FILE"
-msgstr ""
+msgstr "Baca nama berkas dari BERKAS"
 
 #: tests/genfile.c:134
 msgid "-T reads null-terminated names"
-msgstr ""
+msgstr "-T baca nama berakhiran null"
 
 #: tests/genfile.c:136
 msgid "Fill the file with the given PATTERN. PATTERN is 'default' or 'zeros'"
-msgstr ""
+msgstr "Isi berkas dengan POLA yang diberikan. POLA adalah 'baku' atau 'nol'"
 
 #: tests/genfile.c:139
 msgid "Size of a block for sparse file"
-msgstr ""
+msgstr "Ukuran dari sebuah blok untuk berkas sparse"
 
 #: tests/genfile.c:141
 msgid "Generate sparse file. Rest of the command line gives the file map."
-msgstr ""
+msgstr "Buat berkas sparse. Sisa dari baris perintah memberikan peta berkas."
 
 #: tests/genfile.c:143
 msgid "OFFSET"
-msgstr ""
+msgstr "OFSET"
 
 #: tests/genfile.c:144
 msgid "Seek to the given offset before writing data"
-msgstr ""
+msgstr "Cari ke ofset yang diberikan sebelum menulis data"
 
 #: tests/genfile.c:150
 msgid "File statistics options:"
-msgstr ""
+msgstr "Opsi statistik berkas:"
 
 #: tests/genfile.c:153
 msgid "Print contents of struct stat for each given file. Default FORMAT is: "
 msgstr ""
+"Tampilkan isi dari statistik struk untuk setiap berkas yang diberikan. "
+"FORMAT baku adalah: "
 
 #: tests/genfile.c:160
 msgid "Synchronous execution options:"
-msgstr ""
+msgstr "opsi eksekusi synchronous:"
 
 #: tests/genfile.c:163
 msgid ""
 "Execute given COMMAND. Useful with --checkpoint and one of --cut, --append, "
 "--touch"
 msgstr ""
+"Jalankan PERINTAH yang diberikan. Berguna dengan --checkpoint dan satu dari "
+"--cut, --append, --touch"
 
 #: tests/genfile.c:166
 msgid "Perform given action (see below) upon reaching checkpoint NUMBER"
 msgstr ""
+"Lakukan aksi yang diberikan (lihat dibawah) ketika mencapai titik "
+"pemeriksaan NOMOR"
 
 #: tests/genfile.c:169
 msgid "Set date for next --touch option"
-msgstr ""
+msgstr "Set tanggal untuk opsi --touch selanjutnya"
 
 #: tests/genfile.c:172
 msgid "Display executed checkpoints and exit status of COMMAND"
 msgstr ""
+"Tampilkan titik pemeriksaan yang dijalankan dan status keluar dari PERINTAH"
 
 #: tests/genfile.c:177
 msgid ""
 "Synchronous execution actions. These are executed when checkpoint number "
 "given by --checkpoint option is reached."
 msgstr ""
+"Aksi eksekusi synchronous. Ini dijalankan ketika titik pemeriksaan nomor "
+"yang diberikan oleh opsi --checkpoint dicapai."
 
 #: tests/genfile.c:180
 msgid ""
 "Truncate FILE to the size specified by previous --length option (or 0, if it "
 "is not given)"
 msgstr ""
+"Potong BERKAS ke ukuran yang dispesifikasikan oleh opsi --length sebelumnya "
+"(atau 0, jika ini tidak diberikan)"
 
 #: tests/genfile.c:184
 msgid "Append SIZE bytes to FILE. SIZE is given by previous --length option."
 msgstr ""
+"Tambahkan UKURAN bytes ke BERKAS. UKURAN yang diberikan oleh opsi --length "
+"sebelumnya."
 
 #: tests/genfile.c:187
 msgid "Update the access and modification times of FILE"
-msgstr ""
+msgstr "Update waktu akses dan modifikasi dari BERKAS"
 
 #: tests/genfile.c:190
 msgid "Execute COMMAND"
-msgstr ""
+msgstr "Jalankan PERINTAH"
 
 #: tests/genfile.c:240
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid size: %s"
-msgstr "Time stamp tidak valid"
+msgstr "Ukuran: %s tidak valid"
 
 #: tests/genfile.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of allowed range: %s"
-msgstr "Nomor inode di luar batasan"
+msgstr "Jumlah diluar dari jangkauan yang diijinkan: %s"
 
 #: tests/genfile.c:248
 #, c-format
 msgid "Negative size: %s"
-msgstr ""
+msgstr "Ukuran negatif: %s"
 
-#: tests/genfile.c:261 tests/genfile.c:560
+#: tests/genfile.c:261 tests/genfile.c:558
 #, c-format
 msgid "stat(%s) failed"
+msgstr "stat(%s) gagal"
+
+#: tests/genfile.c:264
+#, c-format
+msgid "requested file length %lu, actual %lu"
 msgstr ""
 
-#: tests/genfile.c:355
+#: tests/genfile.c:268
+#, c-format
+msgid "created file is not sparse"
+msgstr ""
+
+#: tests/genfile.c:353
 #, c-format
 msgid "Error parsing number near `%s'"
-msgstr ""
+msgstr "Error parsing nomor didekat `%s'"
 
-#: tests/genfile.c:361
-#, fuzzy, c-format
+#: tests/genfile.c:359
+#, c-format
 msgid "Unknown date format"
-msgstr "Kesalahan sistem tidak dikenal"
+msgstr "Format tanggal tidak diketahui"
 
-#: tests/genfile.c:384
+#: tests/genfile.c:382
 msgid "[ARGS...]"
-msgstr ""
+msgstr "[ARG...]"
 
-#: tests/genfile.c:421 tests/genfile.c:461 tests/genfile.c:514
-#: tests/genfile.c:664 tests/genfile.c:678
+#: tests/genfile.c:419 tests/genfile.c:459 tests/genfile.c:512
+#: tests/genfile.c:662 tests/genfile.c:676
 #, c-format
 msgid "cannot open `%s'"
-msgstr ""
+msgstr "tidak dapat membuka `%s'"
 
-#: tests/genfile.c:427
-#, fuzzy
+#: tests/genfile.c:425
 msgid "cannot seek"
-msgstr "Tidak dapat menutup"
+msgstr "Tidak dapat mencari"
 
-#: tests/genfile.c:444
+#: tests/genfile.c:442
 #, c-format
 msgid "file name contains null character"
-msgstr ""
+msgstr "nama berkas berisi karakter null"
 
-#: tests/genfile.c:509
+#: tests/genfile.c:507
 #, c-format
 msgid "cannot generate sparse files on standard output, use --file option"
 msgstr ""
+"tidak dapat menghasilkan berkas sparse di standar keluaran, gunakan opsi --"
+"file"
 
-#: tests/genfile.c:587
+#: tests/genfile.c:585
 #, c-format
 msgid "incorrect mask (near `%s')"
-msgstr ""
+msgstr "mask tidak benar (didekat `%s')"
 
-#: tests/genfile.c:593 tests/genfile.c:626
-#, fuzzy, c-format
+#: tests/genfile.c:591 tests/genfile.c:624
+#, c-format
 msgid "Unknown field `%s'"
-msgstr " tipe file tidak dikenal %s\n"
+msgstr "Field `%s' tidak diketahui"
 
-#: tests/genfile.c:653
-#, fuzzy, c-format
+#: tests/genfile.c:651
+#, c-format
 msgid "cannot set time on `%s'"
-msgstr "%s: Tidak dapat mencari ke %s"
+msgstr "tidak dapat menset waktu di `%s'"
+
+#: tests/genfile.c:805
+#, c-format
+msgid "Command exited successfully\n"
+msgstr "Perintah keluar secara sukses\n"
 
 #: tests/genfile.c:807
 #, c-format
-msgid "Command exited successfully\n"
-msgstr ""
-
-#: tests/genfile.c:809
-#, fuzzy, c-format
 msgid "Command failed with status %d\n"
-msgstr "Child berhenti dengan signal %d"
+msgstr "Perintah gagal dengan status %d\n"
+
+#: tests/genfile.c:811
+#, c-format
+msgid "Command terminated on signal %d\n"
+msgstr "Perintah berakhir di sinyal %d\n"
 
 #: tests/genfile.c:813
 #, c-format
-msgid "Command terminated on signal %d\n"
-msgstr ""
-
-#: tests/genfile.c:815
-#, c-format
 msgid "Command stopped on signal %d\n"
-msgstr ""
+msgstr "Perintah berhenti di sinyal %d\n"
 
-#: tests/genfile.c:818
+#: tests/genfile.c:816
 #, c-format
 msgid "Command dumped core\n"
-msgstr ""
+msgstr "Perintah memberika core dump\n"
 
-#: tests/genfile.c:821
+#: tests/genfile.c:819
 #, c-format
 msgid "Command terminated\n"
-msgstr ""
+msgstr "Perintah berakhir\n"
 
-#: tests/genfile.c:853
-#, fuzzy, c-format
+#: tests/genfile.c:851
+#, c-format
 msgid "--stat requires file names"
-msgstr "--Mangled file names--\n"
+msgstr "--stat membutuhkan nama berkas"
 
-#: tests/genfile.c:866
+#: tests/genfile.c:864
 #, c-format
 msgid "too many arguments"
-msgstr ""
+msgstr "terlalu banyak argumen"
+
+#~ msgid "Error exit delayed from previous errors"
+#~ msgstr "Kesalahan exit ditunda dari error sebelumnya"
 
 #~ msgid "block size"
 #~ msgstr "ukuran blok"
