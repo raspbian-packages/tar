@@ -39,12 +39,12 @@ ls -l structure/file >/dev/null
 # command, behaviour of tar becomes variable, depending whether the system
 # clock ticked over to the next second between creating the file and
 # backing it up.
-sleep 1
+sleep 2
 
 tar cf archive --listed=list structure
 tar cfv archive --listed=list structure
 echo separator
-sleep 1
+sleep 2
 echo y >structure/file
 tar cfv archive --listed=list structure
 ],
