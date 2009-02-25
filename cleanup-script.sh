@@ -4,6 +4,7 @@
 #	Copyright 2009 by Bdale Garbee.  GPL v2 or any later version.
 #
 
+git rm -rf doc
 rm -rf doc
 
 # This is a shell archive (produced by GNU sharutils 4.6.3).
@@ -217,4 +218,7 @@ then ${echo} 'x - removed lock directory `'${lock_dir}\''.'
 else ${echo} 'x - failed to remove lock directory `'${lock_dir}\''.'
   exit 1
 fi
+
+git add doc/Makefile doc/Makefile.in doc/README
+
 exit 0

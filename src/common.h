@@ -93,9 +93,6 @@ GLOBAL enum subcommand subcommand_option;
 /* Selected format for output archive.  */
 GLOBAL enum archive_format archive_format;
 
-/* Either NL or NUL, as decided by the --null option.  */
-GLOBAL char filename_terminator;
-
 /* Size of each record, once in blocks, once in bytes.  Those two variables
    are always related, the second being BLOCKSIZE times the first.  They do
    not have _option in their name, even if their values is derived from
@@ -702,8 +699,7 @@ char *xheader_format_name (struct tar_stat_info *st, const char *fmt,
 
 void sys_detect_dev_null_output (void);
 void sys_save_archive_dev_ino (void);
-void sys_drain_input_pipe (void);
-void sys_wait_for_child (pid_t);
+void sys_wait_for_child (pid_t, bool);
 void sys_spawn_shell (void);
 bool sys_compare_uid (struct stat *a, struct stat *b);
 bool sys_compare_gid (struct stat *a, struct stat *b);
@@ -738,17 +734,16 @@ bool string_ascii_p (const char *str);
 bool utf8_convert (bool to_utf, char const *input, char **output);
 
 /* Module transform.c */
-typedef enum
-  {
-    xform_regfile,
-    xform_link,
-    xform_symlink
-  } xform_type;
+#define XFORM_REGFILE  0x01
+#define XFORM_LINK     0x02
+#define XFORM_SYMLINK  0x04
+#define XFORM_ALL      (XFORM_REGFILE|XFORM_LINK|XFORM_SYMLINK)
 
 void set_transform_expr (const char *expr);
-bool transform_name (char **pinput);
-bool transform_member_name (char **pinput, xform_type type);
-bool transform_name_fp (char **pinput, char *(*fun)(char *, void *), void *);
+bool transform_name (char **pinput, int type);
+bool transform_member_name (char **pinput, int type);
+bool transform_name_fp (char **pinput, int type,
+			char *(*fun)(char *, void *), void *);
 
 /* Module suffix.c */
 void set_comression_program_by_suffix (const char *name, const char *defprog);

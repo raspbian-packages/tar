@@ -271,15 +271,17 @@ enum
   IGNORE_FAILED_READ_OPTION,
   INDEX_FILE_OPTION,
   KEEP_NEWER_FILES_OPTION,
-  LZMA_OPTION,
+  LZOP_OPTION,
   MODE_OPTION,
   MTIME_OPTION,
   NEWER_MTIME_OPTION,
   NO_ANCHORED_OPTION,
+  NO_AUTO_COMPRESS_OPTION,
   NO_CHECK_DEVICE_OPTION,
   NO_DELAY_DIRECTORY_RESTORE_OPTION,
   NO_IGNORE_CASE_OPTION,
   NO_IGNORE_COMMAND_ERROR_OPTION,
+  NO_NULL_OPTION,
   NO_OVERWRITE_DIR_OPTION,
   NO_QUOTE_CHARS_OPTION,
   NO_RECURSION_OPTION,
@@ -350,7 +352,7 @@ The version control may be set with --backup or VERSION_CONTROL, values are:\n\n
 
 /* NOTE:
 
-   Available option letters are DEIJQY and eqy. Consider the following
+   Available option letters are DEIQY and eqy. Consider the following
    assignments:
 
    [For Solaris tar compatibility =/= Is it important at all?]
@@ -592,6 +594,9 @@ static struct argp_option options[] = {
    N_("Compression options:"), GRID },
   {"auto-compress", 'a', 0, 0,
    N_("use archive suffix to determine the compression program"), GRID+1 },
+  {"no-auto-compress", NO_AUTO_COMPRESS_OPTION, 0, 0,
+   N_("do not use use archive suffix to determine the compression program"),
+   GRID+1 },
   {"bzip2", 'j', 0, 0,
    N_("filter the archive through bzip2"), GRID+1 },
   {"gzip", 'z', 0, 0,
@@ -601,8 +606,10 @@ static struct argp_option options[] = {
   {"compress", 'Z', 0, 0,
    N_("filter the archive through compress"), GRID+1 },
   {"uncompress", 0, 0, OPTION_ALIAS, NULL, GRID+1 },
-  {"lzma", LZMA_OPTION, 0, 0,
+  {"lzma", 'J', 0, 0,
    N_("filter the archive through lzma"), GRID+1 },
+  {"lzop", LZOP_OPTION, 0, 0,
+   N_("filter the archive through lzop"), GRID+8 },
   {"use-compress-program", USE_COMPRESS_PROGRAM_OPTION, N_("PROG"), 0,
    N_("filter through PROG (must accept -d)"), GRID+1 },
 #undef GRID
@@ -619,6 +626,8 @@ static struct argp_option options[] = {
    N_("get names to extract or create from FILE"), GRID+1 },
   {"null", NULL_OPTION, 0, 0,
    N_("-T reads null-terminated names, disable -C"), GRID+1 },
+  {"no-null", NO_NULL_OPTION, 0, 0,
+   N_("disable the effect of the previous --null option"), GRID+1 },
   {"unquote", UNQUOTE_OPTION, 0, 0,
    N_("unquote filenames read with -T (default)"), GRID+1 },
   {"no-unquote", NO_UNQUOTE_OPTION, 0, 0,
@@ -677,6 +686,7 @@ static struct argp_option options[] = {
    GRID+1 },
   {"transform", TRANSFORM_OPTION, N_("EXPRESSION"), 0,
    N_("use sed replace EXPRESSION to transform file names"), GRID+1 },
+  {"xform", 0, 0, OPTION_ALIAS, NULL, GRID+1 },
 #undef GRID
 
 #define GRID 120
@@ -849,6 +859,16 @@ exclude_vcs_files ()
     "=RELEASE-ID",
     "=meta-update",
     "=update",
+    /* Bazaar */
+    ".bzr",
+    ".bzrignore",
+    ".bzrtags",
+    /* Mercurial */
+    ".hg",
+    ".hgignore",
+    ".hgtags",
+    /* darcs */
+    "_darcs",
     NULL
   };
 
@@ -1029,6 +1049,9 @@ report_textual_dates (struct tar_args *args)
 
 static volatile int _argp_hang;
 
+/* Either NL or NUL, as decided by the --null option.  */
+static char filename_terminator;
+
 enum read_file_list_state  /* Result of reading file name from the list file */
   {
     file_list_success,     /* OK, name read successfully */
@@ -1037,16 +1060,16 @@ enum read_file_list_state  /* Result of reading file name from the list file */
     file_list_skip         /* Empty (zero-length) entry encountered, skip it */
   };
 
-/* Read from FP a sequence of characters up to FILENAME_TERMINATOR and put them
+/* Read from FP a sequence of characters up to TERM and put them
    into STK.
  */
 static enum read_file_list_state
-read_name_from_file (FILE *fp, struct obstack *stk)
+read_name_from_file (FILE *fp, struct obstack *stk, int term)
 {
   int c;
   size_t counter = 0;
 
-  for (c = getc (fp); c != EOF && c != filename_terminator; c = getc (fp))
+  for (c = getc (fp); c != EOF && c != term; c = getc (fp))
     {
       if (c == 0)
 	{
@@ -1127,7 +1150,8 @@ update_argv (const char *filename, struct argp_state *state)
   size_t new_argc;
   bool is_stdin = false;
   enum read_file_list_state read_state;
-
+  int term = filename_terminator;
+  
   if (!strcmp (filename, "-"))
     {
       is_stdin = true;
@@ -1141,7 +1165,8 @@ update_argv (const char *filename, struct argp_state *state)
 	open_fatal (filename);
     }
 
-  while ((read_state = read_name_from_file (fp, &argv_stk)) != file_list_end)
+  while ((read_state = read_name_from_file (fp, &argv_stk, term))
+	 != file_list_end)
     {
       switch (read_state)
 	{
@@ -1170,7 +1195,7 @@ update_argv (const char *filename, struct argp_state *state)
 	    obstack_1grow (&argv_stk, 0);
 	    count = 1;
 	    /* Read rest of files using new filename terminator */
-	    filename_terminator = 0;
+	    term = 0;
 	    break;
 	  }
 
@@ -1187,7 +1212,7 @@ update_argv (const char *filename, struct argp_state *state)
 
   start = obstack_finish (&argv_stk);
 
-  if (filename_terminator == 0)
+  if (term == 0)
     for (p = start; *p; p += strlen (p) + 1)
       if (p[0] == '-')
 	count++;
@@ -1203,7 +1228,7 @@ update_argv (const char *filename, struct argp_state *state)
 
   for (i = state->next, p = start; *p; p += strlen (p) + 1, i++)
     {
-      if (filename_terminator == 0 && p[0] == '-')
+      if (term == 0 && p[0] == '-')
 	state->argv[i++] = "--add-file";
       state->argv[i] = p;
     }
@@ -1251,6 +1276,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
 
     case 'a':
       args->compress_autodetect = true;
+      break;
+
+    case NO_AUTO_COMPRESS_OPTION:
+      args->compress_autodetect = false;
       break;
       
     case 'b':
@@ -1345,6 +1374,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
       set_use_compress_program_option ("bzip2");
       break;
 
+    case 'J':
+      set_use_compress_program_option ("lzma");
+      break;
+      
     case 'k':
       /* Don't replace existing files.  */
       old_files_option = KEEP_OLD_FILES;
@@ -1376,8 +1409,8 @@ parse_opt (int key, char *arg, struct argp_state *state)
       }
       break;
 
-    case LZMA_OPTION:
-      set_use_compress_program_option ("lzma");
+    case LZOP_OPTION:
+      set_use_compress_program_option ("lzop");
       break;
       
     case 'm':
@@ -1721,6 +1754,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
       filename_terminator = '\0';
       break;
 
+    case NO_NULL_OPTION:
+      filename_terminator = '\n';
+      break;
+
     case NUMERIC_OWNER_OPTION:
       numeric_owner_option = true;
       break;
@@ -1783,6 +1820,8 @@ parse_opt (int key, char *arg, struct argp_state *state)
       /* FIXME: What it is good for? */
       same_permissions_option = true;
       same_order_option = true;
+      WARN ((0, 0, _("The --preserve option is deprecated, "
+		     "use --preserve-permissions --preserve-order instead")));
       break;
 
     case RECORD_SIZE_OPTION:
@@ -2307,6 +2346,13 @@ decode_options (int argc, char **argv)
   else if (utc_option)
     verbose_option = 2;
 
+  if (tape_length_option && tape_length_option < record_size)
+    USAGE_ERROR ((0, 0, _("Volume length cannot be less than record size")));
+
+  if (same_order_option && listed_incremental_option)
+    USAGE_ERROR ((0, 0, _("--preserve-order is not compatible with "
+			  "--listed-incremental")));
+  
   /* Forbid using -c with no input files whatsoever.  Check that `-f -',
      explicit or implied, is used correctly.  */
 
@@ -2480,7 +2526,7 @@ main (int argc, char **argv)
   name_term ();
 
   if (exit_status == TAREXIT_FAILURE)
-    error (0, 0, _("Error exit delayed from previous errors"));
+    error (0, 0, _("Exiting with failure status due to previous errors"));
 
   if (stdlis == stdout)
     close_stdout ();

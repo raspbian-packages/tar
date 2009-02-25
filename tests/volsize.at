@@ -1,7 +1,7 @@
 # Process this file with autom4te to create testsuite. -*- Autotest -*-
 
 # Test suite for GNU tar.
-# Copyright (C) 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2007, 2008 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ AT_TARBALL_PREREQ([abc.tar],[540f196ceddcad9e7bd2f2d7533d0474])
 echo Short Listing
 tar tf $TEST_DATA_DIR/abc.tar
 echo Verbose Listing
-tar tfv $TEST_DATA_DIR/abc.tar
+tar --utc -tvf $TEST_DATA_DIR/abc.tar
 echo Extracted directory
 tar xf $TEST_DATA_DIR/abc.tar
 find abc|sort
@@ -46,11 +46,14 @@ find abc|sort
 abc/not-a-file.gif
 abc/CCC
 Verbose Listing
-V--------- 0/0            1536 2006-05-09 01:07 abc/not-a-file.gif--Volume Header--
--rw-r--r-- tom/users         0 2006-04-22 22:52 abc/CCC
+V--------- 0/0            1536 2006-05-08 22:07 abc/not-a-file.gif--Volume Header--
+-rw-r--r-- tom/users         0 2006-04-22 19:52 abc/CCC
 Extracted directory
 abc
 abc/CCC
+],
+[tar: Record size = 5 blocks
+tar: Record size = 5 blocks
 ])
 
 AT_CLEANUP

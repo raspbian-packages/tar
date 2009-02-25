@@ -89,6 +89,7 @@ TESTSUITE_AT = \
  multiv03.at\
  multiv04.at\
  multiv05.at\
+ multiv06.at\
  old.at\
  options.at\
  options02.at\
@@ -97,6 +98,8 @@ TESTSUITE_AT = \
  rename01.at\
  rename02.at\
  rename03.at\
+ rename04.at\
+ rename05.at\
  same-order01.at\
  same-order02.at\
  shortfile.at\

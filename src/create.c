@@ -1041,7 +1041,7 @@ dump_regular_file (int fd, struct tar_stat_info *st)
   while (size_left > 0)
     {
       size_t bufsize, count;
-
+      
       mv_size_left (size_left);
 
       blk = find_next_block ();
@@ -1495,7 +1495,7 @@ dump_file0 (struct tar_stat_info *st, const char *p,
   assign_string (&st->file_name,
                  safer_name_suffix (p, false, absolute_names_option));
 
-  transform_name (&st->file_name);
+  transform_name (&st->file_name, XFORM_REGFILE);
 
   if (deref_stat (dereference_option, p, &st->stat) != 0)
     {
@@ -1705,7 +1705,7 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 	}
       buffer[size] = '\0';
       assign_string (&st->link_name, buffer);
-      transform_name (&st->link_name);
+      transform_name (&st->link_name, XFORM_SYMLINK);
       if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT) < size)
 	write_long_link (st);
 
