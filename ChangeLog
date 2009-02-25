@@ -1,5 +1,195 @@
+2008-11-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/xheader.c: Remove duplicate inclusion of fnmatch.h. Reported
+	by Jim Meyering.
+
+2008-11-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Do not try to drain the input pipe before closing the
+	archive. 
+	
+	* src/buffer.c (close_archive): Remove call to
+	sys_drain_input_pipe. Pass hit_eof as the second
+	argument to sys_wait_for_child.
+	* src/common.h (sys_drain_input_pipe): Remove
+	(sys_wait_for_child): Declare second argument.
+	* src/system.c (sys_drain_input_pipe): Remove.
+	(sys_wait_for_child): Take two arguments. The second one helps to
+	decide whether to tolerate child termination on SIGPIPE.
+
+2008-11-03  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/buffer.c (_write_volume_label): Fix typo, which prevented
+	`-V label -M' from working.
+
+2008-10-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* NEWS, configure.ac: Version 1.20.91
+	* doc/tar.texi: Document transformation scope flags.
+	* src/common.h (transform_symlinks_option): Remove in favor of
+	transformation scope flags.
+	(XFORM_REGFILE, XFORM_LINK, XFORM_SYMLINK, XFORM_ALL): New macros.
+	(transform_name, transform_member_name, transform_name_fp): Take
+	an additional argument, specifying scope flags.
+	* src/create.c: Reflect changes to transform_name.
+	* src/extract.c (extract_link, extract_symlink): Remove calls to
+	transform_member_name. It is done in read_header.
+	* src/list.c (decode_xform): Reflect change in data type of 2nd
+	argument. 
+	(transform_member_name): 2nd arg is int.
+	(decode_header): Transform file name and link target names.
+	* src/tar.c: Remove --transform-symlinks.
+	* src/transform.c (struct transform): New member `flags'.
+	(transform_flags): New variable.
+	(parse_transform_expr): Parse transformation scope flags. Allow to
+	set global flags using `flags=' syntax.
+	(_transform_name_to_obstack, transform_name_fp)
+	(transform_name): Take an additional argument, specifying scope
+	flags. 
+
+2008-10-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* THANKS: Add Ed Leaver.
+	* src/buffer.c (short_read): Remove !read_full_records condition,
+	which was always false on a first record and thus disabled record
+	size autodetection.  Thanks Ed Leaver for the patch.
+	(_gnu_flush_read): Handle blocking_factor == 1.
+	* tests/sparsemv.at: Reflect changes to buffer.c.
+	* tests/sparsemvp.at: Likewise.
+	* tests/volsize.at: Likewise.
+	* NEWS: Update.
+	
+2008-10-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/common.h (transform_symlinks_option): New global.
+	* src/create.c (dump_file0): Transform symlink targets only if
+	explicitly required.  Thanks Cyril Strejc for reporting the
+	problem.
+	* src/tar.c (parse_opt): New options --transform-symlinks and
+	--no-transform-symlinks. New alias --xform to the --transform
+	option.
+	* doc/tar.texi: Document --transform-symlinks
+	* NEWS: Update.
+	* THANKS: Update.
+	
+	* src/names.c (name_gather): Use xzalloc.
+	* src/buffer.c (short_read): Move record size detection before
+	the loop.
+	
+2008-10-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/tar.c (options): Add --lzop option.
+
+2008-10-05  Xavier Hienne <xavier.hienne@free.fr> (tiny change)
+
+	* src/checkpoint.c (checkpoint_compile_action): Add missing
+	`else'. 
+
+2008-09-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* NEWS: Update.
+	* doc/tar.texi: Update.
+	* src/tar.c: New option --no-null.
+
+2008-09-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/common.h (filename_terminator): Remove global.
+	* src/tar.c (filename_terminator): New static.
+	* src/names.c (name_next_elt): Do not depend on
+	filename_terminator, this was a leftover from 1.13.
+
+2008-09-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* doc/tar.texi: Remove incorrect example.
+
+2008-09-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/incremen.c (dumpdir_create0): Eliminate gcc warning.
+	(attach_directory): Bugfix - add missing return statement.
+	* THANKS: Add Enric Hernandez
+
+2008-07-31  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/incremen.c (struct directory): New member `next'.  Change
+	type of `name'.
+	(dirhead, dirtail): New statics.
+	(make_directory): Reflect changes to struct directory.
+	(free_directory, attach_directory): New functions.
+	(dirlist_replace_prefix): New function.
+	(note_directory): Use attach_directory, instead of make_directory,
+	(find_directory, find_directory_meta): Use free_directory.
+	(procdir): Replace directory prefixes in directory list to avoid
+	marking subdirectories as renamed after renaming their parent
+	directory.
+	(append_incremental_renames): Iterate over directory list, not
+	hash table, to preserve logical ordering of renames.
+	* tests/rename04.at, tests/rename05.at: New test cases.
+	* tests/Makefile.am, tests/testsuite.at: Add rename04.at and
+	rename05.at.
+	* tests/atlocal.in (decho): New function.
+	* tests/multiv06.at: Use decho instead of echo2.
+	* tests/incremental.at: Raise wait interval to 2 seconds.
+	
+2008-07-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/tar.c (decode_options): Do not allow volume length less
+	than record size.
+	* src/buffer.c (_gnu_flush_write): Compensate for the effect
+	of eventual flush_archive occurring in the middle of buffer
+	move.
+	Increment records_written only if _flush_write was able to write
+	something.
+	* tests/multiv06.at: New testcase.
+	* tests/Makefile.am, test/testsuite.at: Add tests/multiv06.at
+
+2008-06-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* configure.ac, NEWS: Version 1.20.90
+	* doc/tar.texi: Document -J, --no-auto-compress, etc.
+	* src/buffer.c (ct_tar): New constant.
+	(magic): Add lzop support.  Proposed by Kevin Day
+	<thekevinday@gmail.com>.
+	(check_compressed_archive): Do not use autodetect if the
+	compression program was specified explicitly.
+	Fall back to analyzing archive name, if the autodetection fails.
+	* src/suffix.c: Add .lzo
+	* src/tar.c: New options --lzop and --no-auto-compress.
+	New short option -J (alias for --lzma).
+
+	* src/buffer.c (try_new_volume): Print more information with error
+	diagnostics.
+	(_gnu_flush_write): Improve error checking.  Adjust
+	real_s_sizeleft before calling new_volume to avoid creating
+	malformed multivolume headers.
+	* tests/delete05.at, tests/gzip.at, tests/ignfail.at,
+	tests/longv7.at, tests/lustar01.at, tests/lustar02.at,
+	tests/shortfile.at: Update to match new diagnostic wording
+	(see 2008-05-06).
+	
+	* NEWS: Update.
+
+2008-06-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* doc/tar.texi (exclude): Document support for new VCS.
+	* THANKS: Update.
+	* NEWS: Update.	
+	* tests/multiv05.at: Fix typos.
+	* tests/volsize.at: Remove a TZ dependency.
+	
+2008-06-14  Dan Drake <dan@dandrake.org> (tiny change)
+
+	* src/tar.c (exclude_vcs_files): Support for Bazaar, Mercurial and
+	Darcs. 
+
+2008-05-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* src/tar.c (main): Reword the "delayed error" message. New
+	wording proposed by Karl Berry.
+
 2008-02-20  Sergey Poznyakoff  <gray@gnu.org.ua>
 
+	* configure.ac: Raise version number to 1.20
+	* src/compare.c (diff_dumpdir): const.
 	* src/common.h (dumpdir_t,dumpdir_iter_t): New data types.
 	(dumpdir_create0,dumpdir_create,dumpdir_free,dumpdir_locate)
 	(dumpdir_first,dumpdir_next): New functions.
@@ -9,9 +199,11 @@
 	(struct directory): Change members char *contents, *icontents to
 	struct dumpdir *dump, *idump. All references updated.
 	(note_directory): Last arg is const.
+	* src/names.c (add_hierarchy_to_namelist): buffer is const.
+	* tests/incr03.at, tests/incr04.at, tests/rename02.at,
+	tests/rename03.at: Insert calls to sleep between creation of files
+	and adding them to the archive.
 	
-	* src/system.c: Remove setenv.h
-
 2008-03-31  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* src/create.c (dump_file0): Count links only for actually dumped

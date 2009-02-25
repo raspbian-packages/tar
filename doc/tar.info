@@ -1,6 +1,6 @@
-This is tar.info, produced by makeinfo version 4.8.90 from tar.texi.
+This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-   This manual is for GNU `tar' (version 1.20, 14 April 2008), which
+This manual is for GNU `tar' (version 1.21, 30 October 2008), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -30,373 +30,376 @@ END-INFO-DIR-ENTRY
 
 
 Indirect:
-tar.info-1: 1246
-tar.info-2: 303205
+tar.info-1: 1243
+tar.info-2: 300672
 
 Tag Table:
 (Indirect)
-Node: Top1246
-Node: Introduction10511
-Node: Book Contents11298
-Node: Definitions13470
-Node: What tar Does15273
-Node: Naming tar Archives18039
-Node: Authors18759
-Node: Reports20572
-Node: Tutorial20932
-Node: assumptions21745
-Node: stylistic conventions24220
-Node: basic tar options24663
-Node: frequent operations28301
-Node: Two Frequent Options28953
-Node: file tutorial29584
-Node: verbose tutorial30945
-Ref: verbose member listing33159
-Node: help tutorial35912
-Node: create36266
-Node: prepare for examples37767
-Node: Creating the archive39535
-Node: create verbose42367
-Node: short create43188
-Node: create dir45941
-Node: list48648
-Ref: listing member and file names49922
-Node: list dir52203
-Node: extract53192
-Node: extracting archives54369
-Node: extracting files54859
-Ref: extracting files-Footnote-157506
-Node: extract dir57886
-Node: extracting untrusted archives60269
-Node: failing commands61148
-Node: going further62248
-Node: tar invocation62461
-Node: Synopsis63973
-Node: using tar options68942
-Ref: TAR_OPTIONS70527
-Node: Styles71544
-Node: Long Options73256
-Node: Short Options75428
-Ref: Short Options-Footnote-177236
-Node: Old Options77453
-Ref: Old Options-Footnote-180403
-Node: Mixing80573
-Ref: Mixing-Footnote-182939
-Node: All Options83059
-Node: Operation Summary83664
-Ref: --append83784
-Ref: --catenate83864
-Ref: --compare83935
-Ref: --concatenate84138
-Ref: --create84248
-Ref: --delete84316
-Ref: --diff84429
-Ref: --extract84485
-Ref: --get84587
-Ref: --list84645
-Ref: --update84713
-Node: Option Summary84923
-Ref: --absolute-names85078
-Ref: --after-date85256
-Ref: --anchored85308
-Ref: --atime-preserve85441
-Ref: --auto-compress87956
-Ref: --backup88112
-Ref: --block-number88303
-Ref: --blocking-factor88477
-Ref: --bzip288629
-Ref: --check-device88736
-Ref: --checkpoint88931
-Ref: --checkpoint-action89372
-Ref: --check-links90523
-Ref: --compress90800
-Ref: --uncompress90800
-Ref: --confirmation91004
-Ref: --delay-directory-restore91072
-Ref: --dereference91273
-Ref: --directory91458
-Ref: --exclude91711
-Ref: --exclude-from91830
-Ref: --exclude-caches91976
-Ref: --exclude-caches-under92170
-Ref: --exclude-caches-all92348
-Ref: --exclude-tag92477
-Ref: --exclude-tag-under92632
-Ref: --exclude-tag-all92800
-Ref: --exclude-vcs92914
-Ref: --file93069
-Ref: --files-from93269
-Ref: --force-local93472
-Ref: --format93663
-Ref: --group94333
-Ref: --gzip94681
-Ref: --gunzip94681
-Ref: --ungzip94681
-Ref: --hard-dereference94904
-Ref: --help95091
-Ref: --ignore-case95225
-Ref: --ignore-command-error95352
-Ref: --ignore-failed-read95463
-Ref: --ignore-zeros95593
-Ref: --incremental95738
-Ref: --index-file96003
-Ref: --info-script96088
-Ref: --new-volume-script96088
-Ref: --interactive96409
-Ref: --keep-newer-files96621
-Ref: --keep-old-files96763
-Ref: --label96894
-Ref: --listed-incremental97182
-Ref: --lzma97546
-Ref: --mode97646
-Ref: --mtime97937
-Ref: --multi-volume98378
-Ref: --newer98579
-Ref: --newer-mtime98857
-Ref: --no-anchored99081
-Ref: --no-check-device99218
-Ref: --no-delay-directory-restore99401
-Ref: --no-ignore-case99654
-Ref: --no-ignore-command-error99747
-Ref: --no-overwrite-dir99902
-Ref: --no-quote-chars100045
-Ref: --no-recursion100226
-Ref: --no-same-owner100331
-Ref: --no-same-permissions100514
-Ref: --no-unquote100716
-Ref: --no-wildcards100854
-Ref: --no-wildcards-match-slash100938
-Ref: --null101040
-Ref: --numeric-owner101268
-Ref: --occurrence101919
-Ref: --old-archive102486
-Ref: --one-file-system102535
-Ref: --overwrite102713
-Ref: --overwrite-dir102855
-Ref: --owner103000
-Ref: --pax-option103379
-Ref: --portability103678
-Ref: --posix103743
-Ref: --preserve103785
-Ref: --preserve-order103923
-Ref: --preserve-permissions103987
-Ref: --same-permissions103987
-Ref: --quote-chars104401
-Ref: --quoting-style104554
-Ref: --read-full-records104875
-Ref: --record-size105040
-Ref: --recursion105171
-Ref: --recursive-unlink105274
-Ref: --remove-files105441
-Ref: --restrict105587
-Ref: --rmt-command105775
-Ref: --rsh-command105916
-Ref: --same-order106038
-Ref: --same-owner106330
-Ref: --seek106707
-Ref: --show-defaults106964
-Ref: --show-omitted-dirs107332
-Ref: --show-transformed-names107486
-Ref: --show-stored-names107486
-Ref: --sparse107875
-Ref: --sparse-version108014
-Ref: --starting-file108238
-Ref: --strip-components108427
-Ref: --suffix108739
-Ref: --tape-length108874
-Ref: --test-label109029
-Ref: --to-command109181
-Ref: --to-stdout109340
-Ref: --totals109493
-Ref: --touch109724
-Ref: --transform109926
-Ref: --unlink-first110518
-Ref: --unquote110686
-Ref: --use-compress-program110793
-Ref: --utc110961
-Ref: --verbose111054
-Ref: --verify111306
-Ref: --version111424
-Ref: --volno-file111596
-Ref: --wildcards111783
-Ref: --wildcards-match-slash111903
-Ref: Option Summary-Footnote-1112031
-Node: Short Option Summary112249
-Node: help114420
-Ref: help-Footnote-1118250
-Node: defaults118460
-Node: verbose119477
-Ref: totals121778
-Ref: Progress information123368
-Ref: show-omitted-dirs124347
-Ref: block-number124766
-Ref: verbose-Footnote-1125793
-Node: checkpoints125900
-Node: interactive131291
-Node: operations133374
-Node: Basic tar133633
-Ref: Basic tar-Footnote-1136737
-Node: Advanced tar136881
-Node: Operations137726
-Node: append139696
-Ref: append-Footnote-1142861
-Node: appending files143027
-Node: multiple144808
-Node: update147498
-Node: how to update148537
-Node: concatenate150320
-Ref: concatenate-Footnote-1153569
-Node: delete153707
-Node: compare155550
-Node: create options157040
-Node: override157498
-Node: Ignore Failed Read160936
-Node: extract options161156
-Node: Reading162052
-Node: read full records163615
-Node: Ignore Zeros163951
-Node: Writing164942
-Node: Dealing with Old Files165499
-Node: Overwrite Old Files167926
-Node: Keep Old Files169383
-Node: Keep Newer Files169893
-Node: Unlink First170183
-Node: Recursive Unlink170587
-Node: Data Modification Times171140
-Node: Setting Access Permissions171950
-Node: Directory Modification Times and Permissions172582
-Node: Writing to Standard Output176188
-Node: Writing to an External Program177723
-Node: remove files180460
-Node: Scarce180653
-Node: Starting File180901
-Node: Same Order181721
-Node: backup182557
-Node: Applications185781
-Node: looking ahead187294
-Node: Backups188120
-Node: Full Dumps189952
-Node: Incremental Dumps191758
-Ref: device numbers194894
-Ref: incremental-op198876
-Ref: Incremental Dumps-Footnote-1199250
-Ref: Incremental Dumps-Footnote-2199400
-Node: Backup Levels199887
-Node: Backup Parameters202274
-Node: General-Purpose Variables203455
-Ref: RSH206612
-Node: Magnetic Tape Control208491
-Node: User Hooks209828
-Node: backup-specs example211156
-Node: Scripted Backups212299
-Ref: Scripted Backups-Footnote-1215161
-Node: Scripted Restoration215545
-Node: Choosing218153
-Node: file219338
-Ref: remote-dev222037
-Ref: local and remote archives222429
-Node: Selecting Archive Members223459
-Ref: input name quoting224140
-Node: files226126
-Ref: files-Footnote-1229400
-Node: nul229558
-Node: exclude230855
-Node: problems with exclude235619
-Node: wildcards237664
-Node: controlling pattern-matching240248
-Ref: controlling pattern-matching-Footnote-1244238
-Node: quoting styles244454
-Ref: escape sequences244800
-Node: transform250936
-Ref: show-transformed-names252926
-Node: after256915
-Node: recurse260580
-Node: one263349
-Node: directory264845
-Node: absolute267918
-Ref: absolute-Footnote-1271108
-Node: Date input formats271459
-Node: General date syntax273775
-Node: Calendar date items276726
-Node: Time of day items278723
-Node: Time zone items280839
-Node: Day of week items282073
-Node: Relative items in date strings283062
-Node: Pure numbers in date strings285864
-Node: Seconds since the Epoch286845
-Node: Specifying time zone rules288466
-Node: Authors of get_date290830
-Node: Formats291582
-Node: Compression296270
-Node: gzip296562
-Ref: auto-compress299320
-Ref: gzip-Footnote-1303156
-Node: sparse303205
-Node: Attributes306259
-Node: Portability312230
-Node: Portable Names313716
-Node: dereference314421
-Node: hard links315822
-Ref: hard links-Footnote-1318780
-Node: old318836
-Node: ustar320020
-Node: gnu320611
-Node: posix321488
-Node: PAX keywords321969
-Node: Checksumming326297
-Node: Large or Negative Values328221
-Node: Other Tars329821
-Node: Split Recovery330957
-Node: Sparse Recovery334689
-Ref: extracting sparse v.0.x338322
-Ref: Sparse Recovery-Footnote-1341611
-Ref: Sparse Recovery-Footnote-2341634
-Node: cpio341755
-Node: Media346511
-Node: Device348441
-Node: Remote Tape Server353509
-Node: Common Problems and Solutions357239
-Node: Blocking357631
-Node: Format Variations364138
-Node: Blocking Factor365050
-Node: Many376704
-Node: Tape Positioning380498
-Node: mt382371
-Node: Using Multiple Tapes383926
-Node: Multi-Volume Archives385992
-Ref: tape-length387477
-Ref: change volume prompt387781
-Ref: volno-file388651
-Ref: info-script389203
-Ref: Multi-Volume Archives-Footnote-1394387
-Ref: Multi-Volume Archives-Footnote-2394497
-Node: Tape Files394564
-Node: Tarcat396048
-Node: label397093
-Ref: --test-label option398722
-Ref: label-Footnote-1401767
-Node: verify402002
-Node: Write Protection405302
-Node: Changes406132
-Node: Configuring Help Summary409717
-Node: Fixing Snapshot Files416220
-Node: Tar Internals418405
-Node: Standard418737
-Node: Extensions440938
-Node: Sparse Formats443498
-Node: Old GNU Format444788
-Node: PAX 0447199
-Node: PAX 1450326
-Node: Snapshot Files452060
-Node: Dumpdir456513
-Node: Genfile459759
-Node: Generate Mode460852
-Node: Status Mode465149
-Node: Exec Mode466948
-Node: Free Software Needs Free Documentation469184
-Node: Copying This Manual474155
-Node: GNU Free Documentation License474437
-Node: Index of Command Line Options496844
-Node: Index520649
+Node: Top1243
+Node: Introduction10510
+Node: Book Contents11297
+Node: Definitions13469
+Node: What tar Does15272
+Node: Naming tar Archives18038
+Node: Authors18758
+Node: Reports20571
+Node: Tutorial20931
+Node: assumptions21744
+Node: stylistic conventions24219
+Node: basic tar options24662
+Node: frequent operations28300
+Node: Two Frequent Options28952
+Node: file tutorial29583
+Node: verbose tutorial30944
+Ref: verbose member listing33158
+Node: help tutorial35911
+Node: create36265
+Node: prepare for examples37766
+Node: Creating the archive39534
+Node: create verbose42366
+Node: short create43187
+Node: create dir45940
+Node: list48647
+Ref: listing member and file names49921
+Node: list dir52202
+Node: extract53191
+Node: extracting archives54368
+Node: extracting files54858
+Ref: extracting files-Footnote-157505
+Node: extract dir57885
+Node: extracting untrusted archives60268
+Node: failing commands61147
+Node: going further62247
+Node: tar invocation62460
+Node: Synopsis63972
+Node: using tar options68941
+Ref: TAR_OPTIONS70526
+Node: Styles71543
+Node: Long Options73255
+Node: Short Options75427
+Ref: Short Options-Footnote-177235
+Node: Old Options77452
+Ref: Old Options-Footnote-180402
+Node: Mixing80572
+Ref: Mixing-Footnote-182938
+Node: All Options83058
+Node: Operation Summary83663
+Ref: --append83783
+Ref: --catenate83863
+Ref: --compare83934
+Ref: --concatenate84137
+Ref: --create84247
+Ref: --delete84315
+Ref: --diff84428
+Ref: --extract84484
+Ref: --get84586
+Ref: --list84644
+Ref: --update84712
+Node: Option Summary84922
+Ref: --absolute-names85077
+Ref: --after-date85255
+Ref: --anchored85307
+Ref: --atime-preserve85440
+Ref: --auto-compress87955
+Ref: --backup88182
+Ref: --block-number88373
+Ref: --blocking-factor88547
+Ref: --bzip288699
+Ref: --check-device88806
+Ref: --checkpoint89001
+Ref: --checkpoint-action89442
+Ref: --check-links90593
+Ref: --compress90870
+Ref: --uncompress90870
+Ref: --confirmation91074
+Ref: --delay-directory-restore91142
+Ref: --dereference91343
+Ref: --directory91528
+Ref: --exclude91781
+Ref: --exclude-from91900
+Ref: --exclude-caches92046
+Ref: --exclude-caches-under92240
+Ref: --exclude-caches-all92418
+Ref: --exclude-tag92547
+Ref: --exclude-tag-under92702
+Ref: --exclude-tag-all92870
+Ref: --exclude-vcs92984
+Ref: --file93139
+Ref: --files-from93339
+Ref: --force-local93542
+Ref: --format93733
+Ref: --group94403
+Ref: --gzip94751
+Ref: --gunzip94751
+Ref: --ungzip94751
+Ref: --hard-dereference94974
+Ref: --help95161
+Ref: --ignore-case95295
+Ref: --ignore-command-error95422
+Ref: --ignore-failed-read95533
+Ref: --ignore-zeros95663
+Ref: --incremental95808
+Ref: --index-file96073
+Ref: --info-script96158
+Ref: --new-volume-script96158
+Ref: --interactive96479
+Ref: --keep-newer-files96691
+Ref: --keep-old-files96833
+Ref: --label96964
+Ref: --listed-incremental97252
+Ref: --lzma97616
+Ref: --mode97821
+Ref: --mtime98112
+Ref: --multi-volume98553
+Ref: --newer98754
+Ref: --newer-mtime99032
+Ref: --no-anchored99256
+Ref: --no-auto-compress99393
+Ref: --no-check-device99544
+Ref: --no-delay-directory-restore99727
+Ref: --no-ignore-case99980
+Ref: --no-ignore-command-error100073
+Ref: --no-null100228
+Ref: --no-overwrite-dir100433
+Ref: --no-quote-chars100576
+Ref: --no-recursion100757
+Ref: --no-same-owner100862
+Ref: --no-same-permissions101045
+Ref: --no-unquote101247
+Ref: --no-wildcards101385
+Ref: --no-wildcards-match-slash101469
+Ref: --null101571
+Ref: --numeric-owner101799
+Ref: --occurrence102450
+Ref: --old-archive103017
+Ref: --one-file-system103066
+Ref: --overwrite103244
+Ref: --overwrite-dir103386
+Ref: --owner103531
+Ref: --pax-option103910
+Ref: --portability104209
+Ref: --posix104274
+Ref: --preserve104316
+Ref: --preserve-order104454
+Ref: --preserve-permissions104518
+Ref: --same-permissions104518
+Ref: --quote-chars104932
+Ref: --quoting-style105085
+Ref: --read-full-records105406
+Ref: --record-size105571
+Ref: --recursion105702
+Ref: --recursive-unlink105805
+Ref: --remove-files105972
+Ref: --restrict106118
+Ref: --rmt-command106306
+Ref: --rsh-command106447
+Ref: --same-order106569
+Ref: --same-owner106861
+Ref: --seek107238
+Ref: --show-defaults107495
+Ref: --show-omitted-dirs107863
+Ref: --show-transformed-names108017
+Ref: --show-stored-names108017
+Ref: --sparse108406
+Ref: --sparse-version108545
+Ref: --starting-file108769
+Ref: --strip-components108958
+Ref: --suffix109270
+Ref: --tape-length109405
+Ref: --test-label109560
+Ref: --to-command109712
+Ref: --to-stdout109871
+Ref: --totals110024
+Ref: --touch110255
+Ref: --transform110457
+Ref: --xform110457
+Ref: --unlink-first111068
+Ref: --unquote111236
+Ref: --use-compress-program111343
+Ref: --utc111511
+Ref: --verbose111604
+Ref: --verify111856
+Ref: --version111974
+Ref: --volno-file112146
+Ref: --wildcards112333
+Ref: --wildcards-match-slash112453
+Ref: Option Summary-Footnote-1112581
+Node: Short Option Summary112799
+Node: help115002
+Ref: help-Footnote-1118832
+Node: defaults119042
+Node: verbose120059
+Ref: totals122360
+Ref: Progress information123950
+Ref: show-omitted-dirs124929
+Ref: block-number125348
+Ref: verbose-Footnote-1126375
+Node: checkpoints126482
+Node: interactive131879
+Node: operations133962
+Node: Basic tar134221
+Ref: Basic tar-Footnote-1137325
+Node: Advanced tar137469
+Node: Operations138314
+Node: append140284
+Ref: append-Footnote-1143449
+Node: appending files143615
+Node: multiple145396
+Node: update148086
+Node: how to update149125
+Node: concatenate150908
+Ref: concatenate-Footnote-1154157
+Node: delete154295
+Node: compare156138
+Node: create options157628
+Node: override158086
+Node: Ignore Failed Read161524
+Node: extract options161744
+Node: Reading162640
+Node: read full records164203
+Node: Ignore Zeros164539
+Node: Writing165530
+Node: Dealing with Old Files166087
+Node: Overwrite Old Files168514
+Node: Keep Old Files169971
+Node: Keep Newer Files170481
+Node: Unlink First170771
+Node: Recursive Unlink171175
+Node: Data Modification Times171728
+Node: Setting Access Permissions172538
+Node: Directory Modification Times and Permissions173170
+Node: Writing to Standard Output176776
+Node: Writing to an External Program178311
+Node: remove files181048
+Node: Scarce181241
+Node: Starting File181489
+Node: Same Order182309
+Node: backup183145
+Node: Applications186369
+Node: looking ahead187882
+Node: Backups188708
+Node: Full Dumps190540
+Node: Incremental Dumps192346
+Ref: device numbers195482
+Ref: incremental-op199464
+Ref: Incremental Dumps-Footnote-1199838
+Ref: Incremental Dumps-Footnote-2199988
+Node: Backup Levels200475
+Node: Backup Parameters202862
+Node: General-Purpose Variables204043
+Ref: RSH207200
+Node: Magnetic Tape Control209079
+Node: User Hooks210416
+Node: backup-specs example211744
+Node: Scripted Backups212887
+Ref: Scripted Backups-Footnote-1215749
+Node: Scripted Restoration216133
+Node: Choosing218741
+Node: file219926
+Ref: remote-dev222625
+Ref: local and remote archives223017
+Node: Selecting Archive Members224047
+Ref: input name quoting224728
+Node: files226714
+Ref: files-Footnote-1229988
+Node: nul230146
+Node: exclude232545
+Node: problems with exclude237507
+Node: wildcards239552
+Node: controlling pattern-matching242136
+Ref: controlling pattern-matching-Footnote-1246126
+Node: quoting styles246342
+Ref: escape sequences246688
+Node: transform252823
+Ref: show-transformed-names254812
+Node: after261001
+Node: recurse264666
+Node: one267435
+Node: directory268931
+Node: absolute272004
+Ref: absolute-Footnote-1275138
+Node: Date input formats275489
+Node: General date syntax277805
+Node: Calendar date items280756
+Node: Time of day items282753
+Node: Time zone items284949
+Node: Day of week items286183
+Node: Relative items in date strings287172
+Node: Pure numbers in date strings289974
+Node: Seconds since the Epoch290955
+Node: Specifying time zone rules292576
+Node: Authors of get_date294940
+Node: Formats295692
+Node: Compression300380
+Node: gzip300672
+Ref: auto-compress303802
+Ref: gzip-Footnote-1307753
+Node: sparse307802
+Node: Attributes310856
+Node: Portability316827
+Node: Portable Names318313
+Node: dereference319018
+Node: hard links320419
+Ref: hard links-Footnote-1323377
+Node: old323433
+Node: ustar324617
+Node: gnu325208
+Node: posix326085
+Node: PAX keywords326566
+Node: Checksumming330894
+Node: Large or Negative Values332818
+Node: Other Tars334418
+Node: Split Recovery335554
+Node: Sparse Recovery339286
+Ref: extracting sparse v.0.x342919
+Ref: Sparse Recovery-Footnote-1346208
+Ref: Sparse Recovery-Footnote-2346231
+Node: cpio346352
+Node: Media351108
+Node: Device353038
+Node: Remote Tape Server358106
+Node: Common Problems and Solutions361836
+Node: Blocking362228
+Node: Format Variations368735
+Node: Blocking Factor369647
+Node: Many381301
+Node: Tape Positioning385095
+Node: mt386968
+Node: Using Multiple Tapes388523
+Node: Multi-Volume Archives390589
+Ref: tape-length392074
+Ref: change volume prompt392378
+Ref: volno-file393248
+Ref: info-script393800
+Ref: Multi-Volume Archives-Footnote-1398984
+Ref: Multi-Volume Archives-Footnote-2399094
+Node: Tape Files399161
+Node: Tarcat400644
+Node: label401689
+Ref: --test-label option403318
+Ref: label-Footnote-1406363
+Node: verify406598
+Node: Write Protection409898
+Node: Changes410728
+Node: Configuring Help Summary414313
+Node: Fixing Snapshot Files420814
+Node: Tar Internals422999
+Node: Standard423331
+Node: Extensions445532
+Node: Sparse Formats448092
+Node: Old GNU Format449382
+Node: PAX 0451793
+Node: PAX 1454920
+Node: Snapshot Files456654
+Node: Dumpdir461107
+Node: Genfile464353
+Node: Generate Mode465446
+Node: Status Mode469743
+Node: Exec Mode471542
+Node: Free Software Needs Free Documentation473778
+Node: Copying This Manual478749
+Node: GNU Free Documentation License479031
+Node: Index of Command Line Options501438
+Node: Index525681
 
 End Tag Table

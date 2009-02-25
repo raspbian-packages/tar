@@ -2407,7 +2407,8 @@ superuser privileges and can be a pain to manage.
 @itemx -a
 
 During a @option{--create} operation, enables automatic compressed
-format recognition based on the archive suffix. @xref{gzip}.
+format recognition based on the archive suffix.  The effect of this
+option is cancelled by @option{--no-auto-compress}.  @xref{gzip}.
 
 @opsummary{backup}
 @item --backup=@var{backup-type}
@@ -2785,9 +2786,15 @@ incremental format.  @xref{Incremental Dumps}.
 
 @opsummary{lzma}
 @item --lzma
+@itemx -J
 
 This option tells @command{tar} to read or write archives through
 @command{lzma}.  @xref{gzip}.
+
+@item --lzop
+
+This option tells @command{tar} to read or write archives through
+@command{lzop}.  @xref{gzip}.
 
 @opsummary{mode}
 @item --mode=@var{permissions}
@@ -2843,6 +2850,12 @@ changed).  @xref{after}.
 An exclude pattern can match any subsequence of the name's components.
 @xref{controlling pattern-matching}.
 
+@opsummary{no-auto-compress}
+@item --no-auto-compress
+
+Disables automatic compressed format recognition based on the archive
+suffix.  @xref{--auto-compress}.  @xref{gzip}.
+
 @opsummary{no-check-device}
 @item --no-check-device
 Do not check device numbers when creating a list of modified files
@@ -2866,6 +2879,13 @@ Use case-sensitive matching.
 @item --no-ignore-command-error
 Print warnings about subprocesses that terminated with a nonzero exit
 code. @xref{Writing to an External Program}.
+
+@opsummary{no-null}
+@item --no-null
+
+If the @option{--null} option was given previously, this option
+cancels its effect, so that any following @option{--files-from}
+options will expect their file lists to be newline-terminated.
 
 @opsummary{no-overwrite-dir}
 @item --no-overwrite-dir
@@ -3246,8 +3266,9 @@ rather than the data modification time stored in the archive.
 @xref{Data Modification Times}.
 
 @opsummary{transform}
+@opsummary{xform}
 @item --transform=@var{sed-expr}
-
+@itemx --xform=@var{sed-expr}
 Transform file or member names using @command{sed} replacement expression
 @var{sed-expr}.  For example,
 
@@ -3358,6 +3379,8 @@ them with the equivalent long option.
 
 @item -G @tab @ref{--incremental}.
 
+@item -J @tab @ref{--lzma}.
+
 @item -K @tab @ref{--starting-file}.
 
 @item -L @tab @ref{--tape-length}.
@@ -3411,7 +3434,7 @@ them with the equivalent long option.
 @item -o @tab When creating, @ref{--no-same-owner}, when extracting ---
 @ref{--portability}.
 
-The later usage is deprecated.  It is retained for compatibility with
+The latter usage is deprecated.  It is retained for compatibility with
 the earlier versions of @GNUTAR{}.  In future releases
 @option{-o} will be equivalent to @option{--no-same-owner} only.
 
@@ -3886,15 +3909,15 @@ The name of the archive @command{tar} is processing.
 
 @vrindex TAR_BLOCKING_FACTOR, checkpoint script environment
 @item TAR_BLOCKING_FACTOR
-Current blocking factor (@pxref{Blocking}.
+Current blocking factor (@pxref{Blocking}).
 
 @vrindex TAR_CHECKPOINT, checkpoint script environment
 @item TAR_CHECKPOINT
-The checkpoint number.
+Number of the checkpoint.
 
 @vrindex TAR_SUBCOMMAND, checkpoint script environment
 @item TAR_SUBCOMMAND
-A short option describing the operation @command{tar} is executing
+A short option describing the operation @command{tar} is executing.
 @xref{Operations}, for a complete list of subcommand options.
 
 @vrindex TAR_FORMAT, checkpoint script environment
@@ -6732,10 +6755,14 @@ files whose names contain newlines can be archived using
 @option{--files-from}.
 
 @table @option
-@opindex null
+@xopindex{null, described}
 @item --null
 Only consider @code{NUL} terminated file names, instead of files that
 terminate in a newline.
+
+@xopindex{no-null, described}
+@item --no-null
+Undo the effect of any previous @option{--null} option.
 @end table
 
 The @option{--null} option is just like the one in @acronym{GNU}
@@ -6759,7 +6786,37 @@ $ @kbd{find .  -size +800 -print0 > long-files}
 $ @kbd{tar -c -v --null --files-from=long-files --file=big.tar}
 @end smallexample
 
-@FIXME{say anything else here to conclude the section?}
+The @option{--no-null} option can be used if you need to read both
+zero-terminated and newline-terminated files on the same command line.
+For example, if @file{flist} is a newline-terminated file, then the
+following command can be used to combine it with the above command:
+
+@smallexample
+@group
+$ @kbd{find .  -size +800 -print0 |
+  tar -c -f big.tar --null -T - --no-null -T flist}
+@end group
+@end smallexample
+
+This example uses short options for typographic reasons, to avoid
+very long lines.
+
+@GNUTAR is able to automatically detect null-terminated file lists, so
+it is safe to use them even without the @option{--null} option.  In
+this case @command{tar} will print a warning and continue reading such
+a file as if @option{--null} were actually given:
+
+@smallexample
+@group
+$ @kbd{find .  -size +800 -print0 | tar -c -f big.tar -T -}
+tar: -: file name read contains nul character
+@end group
+@end smallexample
+
+The null terminator, however, remains in effect only for this
+particular file, any following @option{-T} options will assume
+newline termination.  Of course, the null autodetection applies
+to these eventual surplus @option{-T} options as well.
 
 @node exclude
 @section Excluding Some Files
@@ -6816,10 +6873,16 @@ However, empty lines are OK.
 @cindex CVS, excluding files
 @cindex SVN, excluding files
 @cindex git, excluding files
+@cindex Bazaar, excluding files
+@cindex Arch, excluding files
+@cindex Mercurial, excluding files
+@cindex Darcs, excluding files
 @table @option
 @opindex exclude-vcs
 @item --exclude-vcs
-Exclude files and directories used by some version control systems.
+Exclude files and directories used by following version control
+systems: @samp{CVS}, @samp{RCS}, @samp{SCCS}, @samp{SVN}, @samp{Arch},
+@samp{Bazaar}, @samp{Mercurial}, and @samp{Darcs}.
 @end table
 
 As of version @value{VERSION}, the following files are excluded:
@@ -6837,6 +6900,13 @@ As of version @value{VERSION}, the following files are excluded:
 @item @file{=RELEASE-ID}
 @item @file{=meta-update}
 @item @file{=update}
+@item @file{.bzr}
+@item @file{.bzrignore}
+@item @file{.bzrtags}
+@item @file{.hg}
+@item @file{.hgignore}
+@item @file{.hgrags}
+@item @file{_darcs}
 @end itemize
 
 @findex exclude-caches
@@ -7484,7 +7554,7 @@ characters that are quoted by default in the selected quoting style.
 
 @command{Tar} archives contain detailed information about files stored
 in them and full file names are part of that information.  When
-storing file to an archive, its file name is recorded in the archive
+storing file to an archive, its file name is recorded in it,
 along with the actual file contents.  When restoring from an archive,
 a file is created on disk with exactly the same name as that stored
 in the archive.  In the majority of cases this is the desired behavior
@@ -7501,7 +7571,7 @@ directory components, or with otherwise modified names.  In other
 cases it is desirable to store files under differing names in the
 archive.
 
-@GNUTAR{} provides two options for these needs.
+@GNUTAR{} provides several options for these needs.
 
 @table @option
 @opindex strip-components
@@ -7523,8 +7593,8 @@ The option @option{--strip=2} instructs @command{tar} to strip the
 two leading components (@file{usr/} and @file{include/}) off the file
 name.
 
-If you add to the above invocation @option{--verbose} (@option{-v})
-option, you will note that the verbose listing still contains the
+If you add the @option{--verbose} (@option{-v}) option to the invocation
+above, you will note that the verbose listing still contains the
 full file name, with the two removed components still in place.  This
 can be inconvenient, so @command{tar} provides a special option for
 altering this behavior:
@@ -7549,7 +7619,7 @@ stdlib.h
 @end group
 @end smallexample
 
-Notice that in both cases the file is @file{stdlib.h} extracted to the
+Notice that in both cases the file @file{stdlib.h} is extracted to the
 current working directory, @option{--show-transformed-names} affects
 only the way its name is displayed.
 
@@ -7575,7 +7645,9 @@ In case you need to apply more complex modifications to the file name,
 
 @table @option
 @opindex transform
+@opindex xform
 @item --transform=@var{expression}
+@itemx --xform=@var{expression}
 Modify file names using supplied @var{expression}.
 @end table
 
@@ -7592,6 +7664,21 @@ where @var{regexp} is a @dfn{regular expression}, @var{replace} is a
 replacement for each file name part that matches @var{regexp}.  Both
 @var{regexp} and @var{replace} are described in detail in
 @ref{The "s" Command, The "s" Command, The `s' Command, sed, GNU sed}.
+
+Any delimiter can be used in lieue of @samp{/}, the only requirement being
+that it be used consistently throughout the expression. For example,
+the following two expressions are equivalent:
+
+@smallexample
+@group
+s/one/two/
+s,one,two,
+@end group
+@end smallexample
+
+Changing delimiters is often useful when the @var{regex} contains
+slashes.  For example, it is more convenient to write @code{s,/,-,} than
+@code{s/\//-/}.
 
 As in @command{sed}, you can give several replace expressions,
 separated by a semicolon.
@@ -7614,7 +7701,7 @@ sed, GNU sed}).
 @item @var{number}
 Only replace the @var{number}th match of the @var{regexp}.
 
-Note: the @var{posix} standard does not specify what should happen
+Note: the @acronym{POSIX} standard does not specify what should happen
 when you mix the @samp{g} and @var{number} modifiers.  @GNUTAR{}
 follows the GNU @command{sed} implementation in this regard, so
 the interaction is defined to be: ignore matches before the
@@ -7623,20 +7710,40 @@ the interaction is defined to be: ignore matches before the
 
 @end table
 
-Any delimiter can be used in lieue of @samp{/}, the only requirement being
-that it be used consistently throughout the expression. For example,
-the following two expressions are equivalent:
+In addition, several @dfn{transformation scope} flags are supported,
+that control to what files transformations apply.  These are:
+
+@table @samp
+@item r
+Apply transformation to regular archive members.
+
+@item R
+Do not apply transformation to regular archive members.
+
+@item s
+Apply transformation to symbolic link targets.
+
+@item S
+Do not apply transformation to symbolic link targets.
+
+@item h
+Apply transformation to hard link targets.
+
+@item H
+Do not apply transformation to hard link targets.
+@end table
+
+Default is @samp{rsh}, which means to apply tranformations to both archive
+members and targets of symbolic and hard links.
+
+Default scope flags can also be changed using @samp{flags=} statement
+in the transform expression.  The flags set this way remain in force
+until next @samp{flags=} statement or end of expression, whichever
+occurs first.  For example:
 
 @smallexample
-@group
-s/one/two/
-s,one,two,
-@end group
+  --transform 'flags=S;s|^|/usr/local/|'
 @end smallexample
-
-Changing delimiters is often useful when the @var{regex} contains
-slashes.  For example, it is more convenient to write @code{s,/,-,} than
-@code{s/\//-/}.
 
 Here are several examples of @option{--transform} usage:
 
@@ -7654,19 +7761,58 @@ $ @kbd{tar --transform='s,usr/,usr/local/,' -x -f arch.tar}
 $ @kbd{tar --transform='s,/*[^/]*/[^/]*/,,' -x -f arch.tar}
 @end smallexample
 
-@item Prepend @file{/prefix/}  to each file name:
-
-@smallexample
-$ @kbd{tar --transform 's,^,/prefix/,' -x -f arch.tar}
-@end smallexample
-
 @item Convert each file name to lower case:
 
 @smallexample
 $ @kbd{tar --transform 's/.*/\L&/' -x -f arch.tar}
 @end smallexample
 
+@item Prepend @file{/prefix/}  to each file name:
+
+@smallexample
+$ @kbd{tar --transform 's,^,/prefix/,' -x -f arch.tar}
+@end smallexample
+
+@item Archive the @file{/lib} directory, prepending @samp{/usr/local}
+to each archive member:
+
+@smallexample
+$ @kbd{tar --transform 's,^,/usr/local/,S' -c -f arch.tar /lib}
+@end smallexample
 @end enumerate
+
+Notice the use of flags in the last example.  The @file{/lib}
+directory often contains many symbolic links to files within it.
+It may look, for example, like this:
+
+@smallexample
+$ @kbd{ls -l}
+drwxr-xr-x root/root       0 2008-07-08 16:20 /lib/
+-rwxr-xr-x root/root 1250840 2008-05-25 07:44 /lib/libc-2.3.2.so
+lrwxrwxrwx root/root       0 2008-06-24 17:12 /lib/libc.so.6 -> libc-2.3.2.so
+...
+@end smallexample
+
+Using the expression @samp{s,^,/usr/local/,} would mean adding
+@samp{/usr/local} to both regular archive members and to link
+targets. In this case, @file{/lib/libc.so.6} would become:
+
+@smallexample
+  /usr/local/lib/libc.so.6 -> /usr/local/libc-2.3.2.so
+@end smallexample
+
+This is definitely not desired.  To avoid this, the @samp{S} flag
+are used, which excludes symbolic link targets from filename
+transformations.  The result is:
+
+@smallexample
+$ @kbd{tar --transform 's,^,/usr/local/,S', -c -v -f arch.tar \
+       --show-transformed /lib}
+drwxr-xr-x root/root       0 2008-07-08 16:20 /usr/local/lib/
+-rwxr-xr-x root/root 1250840 2008-05-25 07:44 /usr/local/lib/libc-2.3.2.so
+lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 ->
+libc-2.3.2.so
+@end smallexample
 
 Unlike @option{--strip-components}, @option{--transform} can be used
 in any @GNUTAR{} operation mode.  For example, the following command
@@ -8112,9 +8258,7 @@ the @file{/} directory first, and then avoid absolute notation.
 For example:
 
 @smallexample
-$ @kbd{(cd / && tar -c -f archive.tar home)}
-# @i{or}:
-$ @kbd{tar -c -f archive.tar -C  / home}
+$ @kbd{tar -c -f archive.tar -C / home}
 @end smallexample
 
 @include getdate.texi
@@ -8244,8 +8388,13 @@ switch to @samp{posix}.
 @cindex Compressed archives
 @cindex Storing archives in compressed format
 
+@cindex gzip
+@cindex bzip2
+@cindex lzma
+@cindex lzop
+@cindex compress
 @GNUTAR{} is able to create and read compressed archives.  It supports
-@command{gzip}, @command{bzip2} and @command{lzma} compression
+@command{gzip}, @command{bzip2}, @command{lzma} and @command{lzop} compression
 programs.  For backward compatibility, it also supports
 @command{compress} command, although we strongly recommend against
 using it, because it is by far less effective than other compression
@@ -8256,7 +8405,8 @@ Creating a compressed archive is simple: you just specify a
 commands.  The compression option is @option{-z} (@option{--gzip}) to
 create a @command{gzip} compressed archive, @option{-j}
 (@option{--bzip2}) to create a @command{bzip2} compressed archive,
-@option{--lzma} to create an @asis{LZMA} compressed archive and
+@option{-J} (@option{--lzma}) to create an @asis{LZMA} compressed
+archive, @option{--lzop} to create an @asis{LSOP} archive, and
 @option{-Z} (@option{--compress}) to use @command{compress} program.
 For example:
 
@@ -8296,6 +8446,12 @@ $ @kbd{tar tf archive.tar.gz}
 $ @kbd{tar xf archive.tar.gz}
 @end smallexample
 
+The format recognition algorithm is based on @dfn{signatures}, a
+special byte sequences in the beginning of file, that are specific for
+certain compression formats.  If this approach fails, @command{tar}
+falls back to using archive name suffix to determine its format
+(@xref{auto-compress}, for a list of recognized suffixes).
+
 The only case when you have to specify a decompression option while
 reading the archive is when reading from a pipe or from a tape drive
 that does not support random access.  However, in this case @GNUTAR{}
@@ -8331,7 +8487,7 @@ The following table summarizes compression options used by @GNUTAR{}.
 @item --auto-compress
 @itemx -a
 Select a compression program to use by the archive file name
-suffix. The following suffixes are recognized:
+suffix.  The following suffixes are recognized:
 
 @multitable @columnfractions 0.3 0.6
 @headitem Suffix @tab Compression program
@@ -8346,6 +8502,7 @@ suffix. The following suffixes are recognized:
 @item @samp{.tbz} @tab @command{bzip2}
 @item @samp{.lzma} @tab @command{lzma}
 @item @samp{.tlz} @tab @command{lzma}
+@item @samp{.lzo} @tab @command{lzop}
 @end multitable
 
 @opindex gzip
@@ -8396,7 +8553,13 @@ Filter the archive through @code{bzip2}.  Otherwise like @option{--gzip}.
 
 @opindex lzma
 @item --lzma
+@itemx -J
 Filter the archive through @command{lzma}.  Otherwise like @option{--gzip}.
+
+@opindex lzop
+@item --lzop
+Filter the archive through @command{lzop}.  Otherwise like
+@option{--gzip}.
 
 @opindex compress
 @opindex uncompress

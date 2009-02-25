@@ -1,6 +1,6 @@
-This is tar.info, produced by makeinfo version 4.8.90 from tar.texi.
+This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-   This manual is for GNU `tar' (version 1.20, 14 April 2008), which
+This manual is for GNU `tar' (version 1.21, 30 October 2008), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -34,7 +34,7 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.20, 14 April 2008), which
+This manual is for GNU `tar' (version 1.21, 30 October 2008), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -561,7 +561,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.20
+to create version 1.12.  The book for versions from 1.14 up to 1.21
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2203,7 +2203,8 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 `--auto-compress'
 `-a'
      During a `--create' operation, enables automatic compressed format
-     recognition based on the archive suffix. *Note gzip::.
+     recognition based on the archive suffix.  The effect of this
+     option is cancelled by `--no-auto-compress'.  *Note gzip::.
 
 `--backup=BACKUP-TYPE'
      Rather than deleting files from the file system, `tar' will back
@@ -2494,7 +2495,12 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      format.  *Note Incremental Dumps::.
 
 `--lzma'
+`-J'
      This option tells `tar' to read or write archives through `lzma'.
+     *Note gzip::.
+
+`--lzop'
+     This option tells `tar' to read or write archives through `lzop'.
      *Note gzip::.
 
 `--mode=PERMISSIONS'
@@ -2537,6 +2543,10 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      An exclude pattern can match any subsequence of the name's
      components.  *Note controlling pattern-matching::.
 
+`--no-auto-compress'
+     Disables automatic compressed format recognition based on the
+     archive suffix.  *Note --auto-compress::.  *Note gzip::.
+
 `--no-check-device'
      Do not check device numbers when creating a list of modified files
      for incremental archiving.  *Note device numbers::, for a detailed
@@ -2554,6 +2564,11 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 `--no-ignore-command-error'
      Print warnings about subprocesses that terminated with a nonzero
      exit code. *Note Writing to an External Program::.
+
+`--no-null'
+     If the `--null' option was given previously, this option cancels
+     its effect, so that any following `--files-from' options will
+     expect their file lists to be newline-terminated.
 
 `--no-overwrite-dir'
      Preserve metadata of existing directories when extracting files
@@ -2833,6 +2848,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      the archive.  *Note Data Modification Times::.
 
 `--transform=SED-EXPR'
+`--xform=SED-EXPR'
      Transform file or member names using `sed' replacement expression
      SED-EXPR.  For example,
 
@@ -2921,6 +2937,7 @@ Short Option   Reference
 -C             *note --directory::.
 -F             *note --info-script::.
 -G             *note --incremental::.
+-J             *note --lzma::.
 -K             *note --starting-file::.
 -L             *note --tape-length::.
 -M             *note --multi-volume::.
@@ -2949,7 +2966,7 @@ Short Option   Reference
 -o             When creating, *note --no-same-owner::, when extracting --
                *note --portability::.
                
-                  The later usage is deprecated.  It is retained for
+                  The latter usage is deprecated.  It is retained for
                compatibility with the earlier versions of GNU `tar'.  In
                future releases `-o' will be equivalent to
                `--no-same-owner' only.
@@ -2975,7 +2992,7 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.20
+     tar (GNU tar) 1.21
      Copyright (C) 2008 Free Software Foundation, Inc.
      This is free software.  You may redistribute copies of it under the terms
      of the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
@@ -3322,13 +3339,13 @@ environment plus the following variables:
      The name of the archive `tar' is processing.
 
 `TAR_BLOCKING_FACTOR'
-     Current blocking factor (*note Blocking::.
+     Current blocking factor (*note Blocking::).
 
 `TAR_CHECKPOINT'
-     The checkpoint number.
+     Number of the checkpoint.
 
 `TAR_SUBCOMMAND'
-     A short option describing the operation `tar' is executing *Note
+     A short option describing the operation `tar' is executing.  *Note
      Operations::, for a complete list of subcommand options.
 
 `TAR_FORMAT'
@@ -3422,8 +3439,8 @@ complementary notes for these operations.
      can initialize an empty archive and later use `--append' (`-r')
      for adding all members.  Some applications would not welcome
      making an exception in the way of adding the first archive member.
-     On the other hand, many people reported that it is dangerously
-     too easy for `tar' to destroy a magnetic tape with an empty
+     On the other hand, many people reported that it is dangerously too
+     easy for `tar' to destroy a magnetic tape with an empty
      archive(1).  The two most common errors are:
 
        1. Mistakingly using `create' instead of `extract', when the
@@ -4660,9 +4677,9 @@ character device, or when it refers to a remote file.
 
    For the sake of simplicity and efficiency, backups are made by
 renaming old files prior to creation or extraction, and not by copying.
-The original name is restored if the file creation fails.  If a
-failure occurs after a partial extraction of a file, both the backup
-and the partially extracted file are kept.
+The original name is restored if the file creation fails.  If a failure
+occurs after a partial extraction of a file, both the backup and the
+partially extracted file are kept.
 
 `--backup[=METHOD]'
      Back up files that are about to be overwritten or removed.
@@ -5535,10 +5552,10 @@ File: tar.info,  Node: Choosing,  Next: Date input formats,  Prev: Backups,  Up:
      _(This message will disappear, once this node revised.)_
 
 Certain options to `tar' enable you to specify a name for your archive.
-Other options let you decide which files to include or exclude from
-the archive, based on when or whether files were modified, whether the
-file names do or don't match specified patterns, or whether files are
-in specified directories.
+Other options let you decide which files to include or exclude from the
+archive, based on when or whether files were modified, whether the file
+names do or don't match specified patterns, or whether files are in
+specified directories.
 
    This chapter discusses these options in detail.
 
@@ -5830,6 +5847,9 @@ newline, so files whose names contain newlines can be archived using
      Only consider `NUL' terminated file names, instead of files that
      terminate in a newline.
 
+`--no-null'
+     Undo the effect of any previous `--null' option.
+
    The `--null' option is just like the one in GNU `xargs' and `cpio',
 and is useful with the `-print0' predicate of GNU `find'.  In `tar',
 `--null' also disables special handling for file names that begin with
@@ -5846,6 +5866,30 @@ create the archive `big.tgz'.  The `--null' option to `tar' will cause
 
      $ find .  -size +800 -print0 > long-files
      $ tar -c -v --null --files-from=long-files --file=big.tar
+
+   The `--no-null' option can be used if you need to read both
+zero-terminated and newline-terminated files on the same command line.
+For example, if `flist' is a newline-terminated file, then the
+following command can be used to combine it with the above command:
+
+     $ find .  -size +800 -print0 |
+       tar -c -f big.tar --null -T - --no-null -T flist
+
+   This example uses short options for typographic reasons, to avoid
+very long lines.
+
+   GNU `tar' is able to automatically detect null-terminated file
+lists, so it is safe to use them even without the `--null' option.  In
+this case `tar' will print a warning and continue reading such a file
+as if `--null' were actually given:
+
+     $ find .  -size +800 -print0 | tar -c -f big.tar -T -
+     tar: -: file name read contains nul character
+
+   The null terminator, however, remains in effect only for this
+particular file, any following `-T' options will assume newline
+termination.  Of course, the null autodetection applies to these
+eventual surplus `-T' options as well.
 
 
 File: tar.info,  Node: exclude,  Next: wildcards,  Prev: files,  Up: Choosing
@@ -5887,9 +5931,11 @@ difficult to catch using text editors.
    However, empty lines are OK.
 
 `--exclude-vcs'
-     Exclude files and directories used by some version control systems.
+     Exclude files and directories used by following version control
+     systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
+     `Mercurial', and `Darcs'.
 
-   As of version 1.20, the following files are excluded:
+   As of version 1.21, the following files are excluded:
 
    * `CVS/', and everything under it
 
@@ -5914,6 +5960,20 @@ difficult to catch using text editors.
    * `=meta-update'
 
    * `=update'
+
+   * `.bzr'
+
+   * `.bzrignore'
+
+   * `.bzrtags'
+
+   * `.hg'
+
+   * `.hgignore'
+
+   * `.hgrags'
+
+   * `_darcs'
 
    When creating an archive, the `--exclude-caches' option family
 causes `tar' to exclude all directories that contain a "cache directory
@@ -6242,7 +6302,6 @@ caused by certain characters.  This is called "name quoting".  The
 characters in question are:
 
    * Non-printable control characters:
-
      Character     ASCII   Character name
      --------------------------------------------------------------- 
      \a            7       Audible bell
@@ -6452,11 +6511,11 @@ File: tar.info,  Node: transform,  Next: after,  Prev: quoting styles,  Up: Choo
 
 `Tar' archives contain detailed information about files stored in them
 and full file names are part of that information.  When storing file to
-an archive, its file name is recorded in the archive along with the
-actual file contents.  When restoring from an archive, a file is
-created on disk with exactly the same name as that stored in the
-archive.  In the majority of cases this is the desired behavior of a
-file archiver.  However, there are some cases when it is not.
+an archive, its file name is recorded in it, along with the actual file
+contents.  When restoring from an archive, a file is created on disk
+with exactly the same name as that stored in the archive.  In the
+majority of cases this is the desired behavior of a file archiver.
+However, there are some cases when it is not.
 
    First of all, it is often unsafe to extract archive members with
 absolute file names or those that begin with a `../'.  GNU `tar' takes
@@ -6467,7 +6526,7 @@ option for handling them, which is described in *note absolute::.
 directory components, or with otherwise modified names.  In other cases
 it is desirable to store files under differing names in the archive.
 
-   GNU `tar' provides two options for these needs.
+   GNU `tar' provides several options for these needs.
 
 `--strip-components=NUMBER'
      Strip given NUMBER of leading components from file names before
@@ -6483,9 +6542,9 @@ working directory.  To do so, you type:
    The option `--strip=2' instructs `tar' to strip the two leading
 components (`usr/' and `include/') off the file name.
 
-   If you add to the above invocation `--verbose' (`-v') option, you
-will note that the verbose listing still contains the full file name,
-with the two removed components still in place.  This can be
+   If you add the `--verbose' (`-v') option to the invocation above,
+you will note that the verbose listing still contains the full file
+name, with the two removed components still in place.  This can be
 inconvenient, so `tar' provides a special option for altering this
 behavior:
 
@@ -6500,7 +6559,7 @@ For example:
      $ tar -xf usr.tar -v --strip=2 --show-transformed usr/include/stdlib.h
      stdlib.h
 
-   Notice that in both cases the file is `stdlib.h' extracted to the
+   Notice that in both cases the file `stdlib.h' is extracted to the
 current working directory, `--show-transformed-names' affects only the
 way its name is displayed.
 
@@ -6519,6 +6578,7 @@ to make sure the command will produce the intended results.
 name, GNU `tar' provides a general-purpose transformation option:
 
 `--transform=EXPRESSION'
+`--xform=EXPRESSION'
      Modify file names using supplied EXPRESSION.
 
 The EXPRESSION is a `sed'-like replace expression of the form:
@@ -6528,6 +6588,16 @@ The EXPRESSION is a `sed'-like replace expression of the form:
 where REGEXP is a "regular expression", REPLACE is a replacement for
 each file name part that matches REGEXP.  Both REGEXP and REPLACE are
 described in detail in *note The "s" Command: (sed)The "s" Command.
+
+   Any delimiter can be used in lieue of `/', the only requirement being
+that it be used consistently throughout the expression. For example,
+the following two expressions are equivalent:
+
+     s/one/two/
+     s,one,two,
+
+   Changing delimiters is often useful when the REGEX contains slashes.
+For example, it is more convenient to write `s,/,-,' than `s/\//-/'.
 
    As in `sed', you can give several replace expressions, separated by
 a semicolon.
@@ -6555,15 +6625,36 @@ a semicolon.
      replace all matches from the NUMBERth on.
 
 
-   Any delimiter can be used in lieue of `/', the only requirement being
-that it be used consistently throughout the expression. For example,
-the following two expressions are equivalent:
+   In addition, several "transformation scope" flags are supported,
+that control to what files transformations apply.  These are:
 
-     s/one/two/
-     s,one,two,
+`r'
+     Apply transformation to regular archive members.
 
-   Changing delimiters is often useful when the REGEX contains slashes.
-For example, it is more convenient to write `s,/,-,' than `s/\//-/'.
+`R'
+     Do not apply transformation to regular archive members.
+
+`s'
+     Apply transformation to symbolic link targets.
+
+`S'
+     Do not apply transformation to symbolic link targets.
+
+`h'
+     Apply transformation to hard link targets.
+
+`H'
+     Do not apply transformation to hard link targets.
+
+   Default is `rsh', which means to apply tranformations to both archive
+members and targets of symbolic and hard links.
+
+   Default scope flags can also be changed using `flags=' statement in
+the transform expression.  The flags set this way remain in force until
+next `flags=' statement or end of expression, whichever occurs first.
+For example:
+
+       --transform 'flags=S;s|^|/usr/local/|'
 
    Here are several examples of `--transform' usage:
 
@@ -6576,14 +6667,45 @@ For example, it is more convenient to write `s,/,-,' than `s/\//-/'.
 
           $ tar --transform='s,/*[^/]*/[^/]*/,,' -x -f arch.tar
 
-  3. Prepend `/prefix/'  to each file name:
-
-          $ tar --transform 's,^,/prefix/,' -x -f arch.tar
-
-  4. Convert each file name to lower case:
+  3. Convert each file name to lower case:
 
           $ tar --transform 's/.*/\L&/' -x -f arch.tar
 
+  4. Prepend `/prefix/'  to each file name:
+
+          $ tar --transform 's,^,/prefix/,' -x -f arch.tar
+
+  5. Archive the `/lib' directory, prepending `/usr/local' to each
+     archive member:
+
+          $ tar --transform 's,^,/usr/local/,S' -c -f arch.tar /lib
+
+   Notice the use of flags in the last example.  The `/lib' directory
+often contains many symbolic links to files within it.  It may look,
+for example, like this:
+
+     $ ls -l
+     drwxr-xr-x root/root       0 2008-07-08 16:20 /lib/
+     -rwxr-xr-x root/root 1250840 2008-05-25 07:44 /lib/libc-2.3.2.so
+     lrwxrwxrwx root/root       0 2008-06-24 17:12 /lib/libc.so.6 -> libc-2.3.2.so
+     ...
+
+   Using the expression `s,^,/usr/local/,' would mean adding
+`/usr/local' to both regular archive members and to link targets. In
+this case, `/lib/libc.so.6' would become:
+
+       /usr/local/lib/libc.so.6 -> /usr/local/libc-2.3.2.so
+
+   This is definitely not desired.  To avoid this, the `S' flag are
+used, which excludes symbolic link targets from filename
+transformations.  The result is:
+
+     $ tar --transform 's,^,/usr/local/,S', -c -v -f arch.tar \
+            --show-transformed /lib
+     drwxr-xr-x root/root       0 2008-07-08 16:20 /usr/local/lib/
+     -rwxr-xr-x root/root 1250840 2008-05-25 07:44 /usr/local/lib/libc-2.3.2.so
+     lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 ->
+     libc-2.3.2.so
 
    Unlike `--strip-components', `--transform' can be used in any GNU
 `tar' operation mode.  For example, the following command adds files to
@@ -6948,9 +7070,7 @@ error to the sink.  For example, under `sh':
 Another solution, both nicer and simpler, would be to change to the `/'
 directory first, and then avoid absolute notation.  For example:
 
-     $ (cd / && tar -c -f archive.tar home)
-     # or:
-     $ tar -c -f archive.tar -C  / home
+     $ tar -c -f archive.tar -C / home
 
    ---------- Footnotes ----------
 
@@ -7173,15 +7293,16 @@ derived from Latin which uses `12m' for noon and `12pm' for midnight.)
 
    The time may alternatively be followed by a time zone correction,
 expressed as `SHHMM', where S is `+' or `-', HH is a number of zone
-hours and MM is a number of zone minutes.  You can also separate HH
-from MM with a colon.  When a time zone correction is given this way, it
-forces interpretation of the time relative to Coordinated Universal
-Time (UTC), overriding any previous specification for the time zone or
-the local time zone.  For example, `+0530' and `+05:30' both stand for
-the time zone 5.5 hours ahead of UTC (e.g., India).  The MINUTE part of
-the time of day may not be elided when a time zone correction is used.
-This is the best way to specify a time zone correction by fractional
-parts of an hour.
+hours and MM is a number of zone minutes.  The zone minutes term, MM,
+may be omitted, in which case the one- or two-digit correction is
+interpreted as a number of hours.  You can also separate HH from MM
+with a colon.  When a time zone correction is given this way, it forces
+interpretation of the time relative to Coordinated Universal Time
+(UTC), overriding any previous specification for the time zone or the
+local time zone.  For example, `+0530' and `+05:30' both stand for the
+time zone 5.5 hours ahead of UTC (e.g., India).  This is the best way to
+specify a time zone correction by fractional parts of an hour.  The
+maximum zone correction is 24 hours.
 
    Either `am'/`pm' or a time zone correction may be specified, but not
 both.
@@ -7469,7 +7590,7 @@ v7
      Makefiles.  This practice will change in the future, in the
      meantime, however this means that projects containing file names
      more than 99 characters long will not be able to use GNU `tar'
-     1.20 and Automake prior to 1.9.
+     1.21 and Automake prior to 1.9.
 
 ustar
      Archive format defined by POSIX.1-1988 specification.  It stores
@@ -7547,177 +7668,4 @@ File: tar.info,  Node: Compression,  Next: Attributes,  Up: Formats
 
 * gzip::                        Creating and Reading Compressed Archives
 * sparse::                      Archiving Sparse Files
-
-
-File: tar.info,  Node: gzip,  Next: sparse,  Up: Compression
-
-8.1.1 Creating and Reading Compressed Archives
-----------------------------------------------
-
-GNU `tar' is able to create and read compressed archives.  It supports
-`gzip', `bzip2' and `lzma' compression programs.  For backward
-compatibility, it also supports `compress' command, although we
-strongly recommend against using it, because it is by far less
-effective than other compression programs(1).
-
-   Creating a compressed archive is simple: you just specify a
-"compression option" along with the usual archive creation commands.
-The compression option is `-z' (`--gzip') to create a `gzip' compressed
-archive, `-j' (`--bzip2') to create a `bzip2' compressed archive,
-`--lzma' to create an LZMA compressed archive and `-Z' (`--compress')
-to use `compress' program.  For example:
-
-     $ tar cfz archive.tar.gz .
-
-   You can also let GNU `tar' select the compression program basing on
-the suffix of the archive file name. This is done using
-`--auto-compress' (`-a') command line option. For example, the
-following invocation will use `bzip2' for compression:
-
-     $ tar cfa archive.tar.bz2 .
-
-whereas the following one will use `lzma':
-
-     $ tar cfa archive.tar.lzma .
-
-   For a complete list of file name suffixes recognized by GNU `tar',
-*note auto-compress::.
-
-   Reading compressed archive is even simpler: you don't need to specify
-any additional options as GNU `tar' recognizes its format
-automatically.  Thus, the following commands will list and extract the
-archive created in previous example:
-
-     # List the compressed archive
-     $ tar tf archive.tar.gz
-     # Extract the compressed archive
-     $ tar xf archive.tar.gz
-
-   The only case when you have to specify a decompression option while
-reading the archive is when reading from a pipe or from a tape drive
-that does not support random access.  However, in this case GNU `tar'
-will indicate which option you should use.  For example:
-
-     $ cat archive.tar.gz | tar tf -
-     tar: Archive is compressed.  Use -z option
-     tar: Error is not recoverable: exiting now
-
-   If you see such diagnostics, just add the suggested option to the
-invocation of GNU `tar':
-
-     $ cat archive.tar.gz | tar tfz -
-
-   Notice also, that there are several restrictions on operations on
-compressed archives.  First of all, compressed archives cannot be
-modified, i.e., you cannot update (`--update' (`-u')) them or delete
-(`--delete') members from them or add (`--append' (`-r')) members to
-them.  Likewise, you cannot append another `tar' archive to a
-compressed archive using `--concatenate' (`-A')).  Secondly,
-multi-volume archives cannot be compressed.
-
-   The following table summarizes compression options used by GNU `tar'.
-
-`--auto-compress'
-`-a'
-     Select a compression program to use by the archive file name
-     suffix. The following suffixes are recognized:
-
-     Suffix               Compression program
-     -------------------------------------------------------------- 
-     `.gz'                `gzip'
-     `.tgz'               `gzip'
-     `.taz'               `gzip'
-     `.Z'                 `compress'
-     `.taZ'               `compress'
-     `.bz2'               `bzip2'
-     `.tz2'               `bzip2'
-     `.tbz2'              `bzip2'
-     `.tbz'               `bzip2'
-     `.lzma'              `lzma'
-     `.tlz'               `lzma'
-
-`-z'
-`--gzip'
-`--ungzip'
-     Filter the archive through `gzip'.
-
-     You can use `--gzip' and `--gunzip' on physical devices (tape
-     drives, etc.) and remote files as well as on normal files; data to
-     or from such devices or remote files is reblocked by another copy
-     of the `tar' program to enforce the specified (or default) record
-     size.  The default compression parameters are used; if you need to
-     override them, set `GZIP' environment variable, e.g.:
-
-          $ GZIP=--best tar cfz archive.tar.gz subdir
-
-     Another way would be to avoid the `--gzip' (`--gunzip',
-     `--ungzip', `-z') option and run `gzip' explicitly:
-
-          $ tar cf - subdir | gzip --best -c - > archive.tar.gz
-
-     About corrupted compressed archives: `gzip''ed files have no
-     redundancy, for maximum compression.  The adaptive nature of the
-     compression scheme means that the compression tables are implicitly
-     spread all over the archive.  If you lose a few blocks, the dynamic
-     construction of the compression tables becomes unsynchronized, and
-     there is little chance that you could recover later in the archive.
-
-     There are pending suggestions for having a per-volume or per-file
-     compression in GNU `tar'.  This would allow for viewing the
-     contents without decompression, and for resynchronizing
-     decompression at every volume or file, in case of corrupted
-     archives.  Doing so, we might lose some compressibility.  But this
-     would have make recovering easier.  So, there are pros and cons.
-     We'll see!
-
-`-j'
-`--bzip2'
-     Filter the archive through `bzip2'.  Otherwise like `--gzip'.
-
-`--lzma'
-     Filter the archive through `lzma'.  Otherwise like `--gzip'.
-
-`-Z'
-`--compress'
-`--uncompress'
-     Filter the archive through `compress'.  Otherwise like `--gzip'.
-
-`--use-compress-program=PROG'
-     Use external compression program PROG.  Use this option if you
-     have a compression program that GNU `tar' does not support.  There
-     are two requirements to which PROG should comply:
-
-     First, when called without options, it should read data from
-     standard input, compress it and output it on standard output.
-
-     Secondly, if called with `-d' argument, it should do exactly the
-     opposite, i.e., read the compressed data from the standard input
-     and produce uncompressed data on the standard output.
-
-   The `--use-compress-program' option, in particular, lets you
-implement your own filters, not necessarily dealing with
-compression/decompression.  For example, suppose you wish to implement
-PGP encryption on top of compression, using `gpg' (*note gpg:
-(gpg)Top.).  The following script does that:
-
-     #! /bin/sh
-     case $1 in
-     -d) gpg --decrypt - | gzip -d -c;;
-     '') gzip -c | gpg -s ;;
-     *)  echo "Unknown option $1">&2; exit 1;;
-     esac
-
-   Suppose you name it `gpgz' and save it somewhere in your `PATH'.
-Then the following command will create a compressed archive signed with
-your private key:
-
-     $ tar -cf foo.tar.gpgz --use-compress=gpgz .
-
-Likewise, the following command will list its contents:
-
-     $ tar -tf foo.tar.gpgz --use-compress=gpgz .
-
-   ---------- Footnotes ----------
-
-   (1) It also had patent problems in the past.
 

@@ -49,8 +49,10 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([AC_LIBOBJ], m4_defn([gl_LIBOBJ]))
   m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gl_REPLACE_FUNCS]))
   m4_pushdef([AC_LIBSOURCES], m4_defn([gl_LIBSOURCES]))
+  m4_pushdef([gl_LIBSOURCES_LIST], [])
+  m4_pushdef([gl_LIBSOURCES_DIR], [])
+  gl_COMMON
   gl_source_base='.#bootmp/lib'
-  gl_EOVERFLOW
   gl_FUNC_ALLOCA
   gl_ARGMATCH
   gl_ARGP
@@ -59,21 +61,27 @@ AC_DEFUN([gl_INIT],
      AM_XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
   gl_BACKUPFILE
   gl_CANONICALIZE_LGPL
+  gl_MODULE_INDICATOR([canonicalize-lgpl])
   gl_FUNC_CHDIR_LONG
   gl_FUNC_CHOWN
   gl_UNISTD_MODULE_INDICATOR([chown])
   gl_CLOCK_TIME
+  gl_FUNC_CLOSE
+  gl_UNISTD_MODULE_INDICATOR([close])
   gl_CLOSE_STREAM
   gl_MODULE_INDICATOR([close-stream])
   gl_CLOSEOUT
   gl_CHECK_TYPE_STRUCT_DIRENT_D_INO
+  gl_DIRENT_H
   gl_FUNC_DIRFD
+  gl_DIRENT_MODULE_INDICATOR([dirfd])
   gl_DIRNAME
   gl_DOUBLE_SLASH_ROOT
   gl_FUNC_DUP2
   gl_UNISTD_MODULE_INDICATOR([dup2])
   gl_ENVIRON
   gl_UNISTD_MODULE_INDICATOR([environ])
+  gl_HEADER_ERRNO_H
   gl_ERROR
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_XGETTEXT_OPTION([--flag=error:3:c-format])
@@ -82,6 +90,8 @@ AC_DEFUN([gl_INIT],
   gl_EXITFAIL
   gl_FUNC_FCHDIR
   gl_UNISTD_MODULE_INDICATOR([fchdir])
+  gl_FUNC_FCLOSE
+  gl_STDIO_MODULE_INDICATOR([fclose])
   gl_FCNTL_H
   gl_FCNTL_SAFER
   gl_MODULE_INDICATOR([fcntl-safer])
@@ -123,6 +133,7 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_LSEEK
   gl_UNISTD_MODULE_INDICATOR([lseek])
   gl_FUNC_LSTAT
+  gl_SYS_STAT_MODULE_INDICATOR([lstat])
   AC_FUNC_MALLOC
   AC_DEFINE([GNULIB_MALLOC_GNU], 1, [Define to indicate the 'malloc' module.])
   gl_FUNC_MALLOC_POSIX
@@ -144,10 +155,15 @@ AC_DEFUN([gl_INIT],
   gl_MODECHANGE
   AC_FUNC_OBSTACK
   dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
+  gl_FUNC_OPEN
+  gl_MODULE_INDICATOR([open])
+  gl_FCNTL_MODULE_INDICATOR([open])
   gl_FUNC_OPENAT
   gl_PATHMAX
   gl_QUOTE
   gl_QUOTEARG
+  gl_FUNC_RAWMEMCHR
+  gl_STRING_MODULE_INDICATOR([rawmemchr])
   gl_FUNC_READLINK
   gl_UNISTD_MODULE_INDICATOR([readlink])
   gl_FUNC_REALLOC_POSIX
@@ -155,6 +171,7 @@ AC_DEFUN([gl_INIT],
   gl_REGEX
   gl_FUNC_RMDIR
   gl_FUNC_RPMATCH
+  gl_STDLIB_MODULE_INDICATOR([rpmatch])
   gl_SAFE_READ
   gl_SAFE_WRITE
   gl_SAVE_CWD
@@ -192,8 +209,10 @@ AC_DEFUN([gl_INIT],
   gl_INTTYPES_MODULE_INDICATOR([strtoimax])
   gl_FUNC_STRTOL
   gl_FUNC_STRTOLL
+  gl_STDLIB_MODULE_INDICATOR([strtoll])
   gl_FUNC_STRTOUL
   gl_FUNC_STRTOULL
+  gl_STDLIB_MODULE_INDICATOR([strtoull])
   gl_FUNC_STRTOUMAX
   gl_INTTYPES_MODULE_INDICATOR([strtoumax])
   gl_HEADER_SYS_STAT_H
@@ -220,11 +239,26 @@ AC_DEFUN([gl_INIT],
   gl_WCTYPE_H
   gl_FUNC_WCWIDTH
   gl_WCHAR_MODULE_INDICATOR([wcwidth])
+  gl_FUNC_WRITE
+  gl_UNISTD_MODULE_INDICATOR([write])
   gl_XALLOC
   gl_XGETCWD
   gl_XSIZE
   gl_XSTRNDUP
   gl_XSTRTOL
+  m4_ifval(gl_LIBSOURCES_LIST, [
+    m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
+      for gl_file in ]gl_LIBSOURCES_LIST[ ; do
+        if test ! -r ]m4_defn([gl_LIBSOURCES_DIR])[/$gl_file ; then
+          echo "missing file ]m4_defn([gl_LIBSOURCES_DIR])[/$gl_file" >&2
+          exit 1
+        fi
+      done])dnl
+      m4_if(m4_sysval, [0], [],
+        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])
+  ])
+  m4_popdef([gl_LIBSOURCES_DIR])
+  m4_popdef([gl_LIBSOURCES_LIST])
   m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
@@ -247,7 +281,23 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([AC_LIBOBJ], m4_defn([gltests_LIBOBJ]))
   m4_pushdef([AC_REPLACE_FUNCS], m4_defn([gltests_REPLACE_FUNCS]))
   m4_pushdef([AC_LIBSOURCES], m4_defn([gltests_LIBSOURCES]))
+  m4_pushdef([gltests_LIBSOURCES_LIST], [])
+  m4_pushdef([gltests_LIBSOURCES_DIR], [])
+  gl_COMMON
   gl_source_base='.#bootmp/tests'
+  m4_ifval(gltests_LIBSOURCES_LIST, [
+    m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
+      for gl_file in ]gltests_LIBSOURCES_LIST[ ; do
+        if test ! -r ]m4_defn([gltests_LIBSOURCES_DIR])[/$gl_file ; then
+          echo "missing file ]m4_defn([gltests_LIBSOURCES_DIR])[/$gl_file" >&2
+          exit 1
+        fi
+      done])dnl
+      m4_if(m4_sysval, [0], [],
+        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])
+  ])
+  m4_popdef([gltests_LIBSOURCES_DIR])
+  m4_popdef([gltests_LIBSOURCES_LIST])
   m4_popdef([AC_LIBSOURCES])
   m4_popdef([AC_REPLACE_FUNCS])
   m4_popdef([AC_LIBOBJ])
@@ -278,13 +328,6 @@ AC_DEFUN([gl_LIBOBJ], [
   gl_LIBOBJS="$gl_LIBOBJS $1.$ac_objext"
 ])
 
-# m4_foreach_w is provided by autoconf-2.59c and later.
-# This definition is to accommodate developers using versions
-# of autoconf older than that.
-m4_ifndef([m4_foreach_w],
-  [m4_define([m4_foreach_w],
-    [m4_foreach([$1], m4_split(m4_normalize([$2]), [ ]), [$3])])])
-
 # Like AC_REPLACE_FUNCS, except that the module name goes
 # into gl_LIBOBJS instead of into LIBOBJS.
 AC_DEFUN([gl_REPLACE_FUNCS], [
@@ -293,15 +336,14 @@ AC_DEFUN([gl_REPLACE_FUNCS], [
 ])
 
 # Like AC_LIBSOURCES, except the directory where the source file is
-# expected is derived from the gnulib-tool parametrization,
+# expected is derived from the gnulib-tool parameterization,
 # and alloca is special cased (for the alloca-opt module).
 # We could also entirely rely on EXTRA_lib..._SOURCES.
 AC_DEFUN([gl_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_syscmd([test -r .#bootmp/lib/]_gl_NAME[ || test ! -d .#bootmp/lib])dnl
-      m4_if(m4_sysval, [0], [],
-        [AC_FATAL([missing .#bootmp/lib/]_gl_NAME)])
+      m4_define([gl_LIBSOURCES_DIR], [.#bootmp/lib])
+      m4_append([gl_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
 ])
@@ -313,13 +355,6 @@ AC_DEFUN([gltests_LIBOBJ], [
   gltests_LIBOBJS="$gltests_LIBOBJS $1.$ac_objext"
 ])
 
-# m4_foreach_w is provided by autoconf-2.59c and later.
-# This definition is to accommodate developers using versions
-# of autoconf older than that.
-m4_ifndef([m4_foreach_w],
-  [m4_define([m4_foreach_w],
-    [m4_foreach([$1], m4_split(m4_normalize([$2]), [ ]), [$3])])])
-
 # Like AC_REPLACE_FUNCS, except that the module name goes
 # into gltests_LIBOBJS instead of into LIBOBJS.
 AC_DEFUN([gltests_REPLACE_FUNCS], [
@@ -328,15 +363,14 @@ AC_DEFUN([gltests_REPLACE_FUNCS], [
 ])
 
 # Like AC_LIBSOURCES, except the directory where the source file is
-# expected is derived from the gnulib-tool parametrization,
+# expected is derived from the gnulib-tool parameterization,
 # and alloca is special cased (for the alloca-opt module).
 # We could also entirely rely on EXTRA_lib..._SOURCES.
 AC_DEFUN([gltests_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_syscmd([test -r .#bootmp/tests/]_gl_NAME[ || test ! -d .#bootmp/tests])dnl
-      m4_if(m4_sysval, [0], [],
-        [AC_FATAL([missing .#bootmp/tests/]_gl_NAME)])
+      m4_define([gltests_LIBSOURCES_DIR], [.#bootmp/tests])
+      m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
 ])
@@ -369,6 +403,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/backupfile.c
   lib/backupfile.h
   lib/basename.c
+  lib/c-ctype.c
+  lib/c-ctype.h
   lib/canonicalize-lgpl.c
   lib/canonicalize.h
   lib/chdir-long.c
@@ -376,17 +412,18 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/chown.c
   lib/close-stream.c
   lib/close-stream.h
+  lib/close.c
   lib/closeout.c
   lib/closeout.h
   lib/config.charset
   lib/creat-safer.c
   lib/dirent.in.h
   lib/dirfd.c
-  lib/dirfd.h
   lib/dirname.c
   lib/dirname.h
   lib/dup-safer.c
   lib/dup2.c
+  lib/errno.in.h
   lib/error.c
   lib/error.h
   lib/exclude.c
@@ -397,6 +434,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fchmodat.c
   lib/fchown-stub.c
   lib/fchownat.c
+  lib/fclose.c
   lib/fcntl--.h
   lib/fcntl-safer.h
   lib/fcntl.in.h
@@ -441,7 +479,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/localcharset.h
   lib/lseek.c
   lib/lstat.c
-  lib/lstat.h
   lib/malloc.c
   lib/malloca.c
   lib/malloca.h
@@ -463,6 +500,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/obstack.h
   lib/offtostr.c
   lib/open-safer.c
+  lib/open.c
   lib/openat-die.c
   lib/openat-priv.h
   lib/openat-proc.c
@@ -478,6 +516,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/quote.h
   lib/quotearg.c
   lib/quotearg.h
+  lib/rawmemchr.c
+  lib/rawmemchr.valgrind
   lib/readlink.c
   lib/realloc.c
   lib/ref-add.sin
@@ -507,11 +547,14 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdarg.in.h
   lib/stdbool.in.h
   lib/stdint.in.h
+  lib/stdio-impl.h
+  lib/stdio-write.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/stpcpy.c
   lib/strcasecmp.c
   lib/strchrnul.c
+  lib/strchrnul.valgrind
   lib/strdup.c
   lib/streq.h
   lib/strerror.c
@@ -563,6 +606,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/wchar.in.h
   lib/wctype.in.h
   lib/wcwidth.c
+  lib/write.c
   lib/xalloc-die.c
   lib/xalloc.h
   lib/xgetcwd.c
@@ -586,9 +630,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/chown.m4
   m4/clock_time.m4
   m4/close-stream.m4
+  m4/close.m4
   m4/closeout.m4
   m4/codeset.m4
   m4/d-ino.m4
+  m4/dirent_h.m4
   m4/dirfd.m4
   m4/dirname.m4
   m4/dos.m4
@@ -596,12 +642,13 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/dup2.m4
   m4/eealloc.m4
   m4/environ.m4
-  m4/eoverflow.m4
+  m4/errno_h.m4
   m4/error.m4
   m4/exclude.m4
   m4/exitfail.m4
   m4/extensions.m4
   m4/fchdir.m4
+  m4/fclose.m4
   m4/fcntl-safer.m4
   m4/fcntl_h.m4
   m4/fileblocks.m4
@@ -664,13 +711,16 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/mktime.m4
   m4/modechange.m4
   m4/nls.m4
+  m4/open.m4
   m4/openat.m4
   m4/pathmax.m4
   m4/po.m4
   m4/printf-posix.m4
+  m4/printf.m4
   m4/progtest.m4
   m4/quote.m4
   m4/quotearg.m4
+  m4/rawmemchr.m4
   m4/readlink.m4
   m4/realloc.m4
   m4/regex.m4
@@ -711,6 +761,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sys_time_h.m4
   m4/sysexits.m4
   m4/tempname.m4
+  m4/threadlib.m4
   m4/time_h.m4
   m4/time_r.m4
   m4/timespec.m4
@@ -733,6 +784,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/wctype.m4
   m4/wcwidth.m4
   m4/wint_t.m4
+  m4/write.m4
   m4/xalloc.m4
   m4/xgetcwd.m4
   m4/xsize.m4

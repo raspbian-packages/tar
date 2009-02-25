@@ -1,6 +1,6 @@
-This is tar.info, produced by makeinfo version 4.8.90 from tar.texi.
+This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-   This manual is for GNU `tar' (version 1.20, 14 April 2008), which
+This manual is for GNU `tar' (version 1.21, 30 October 2008), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -27,6 +27,191 @@ INFO-DIR-SECTION Individual utilities
 START-INFO-DIR-ENTRY
 * tar: (tar)tar invocation.                     Invoking GNU `tar'.
 END-INFO-DIR-ENTRY
+
+
+File: tar.info,  Node: gzip,  Next: sparse,  Up: Compression
+
+8.1.1 Creating and Reading Compressed Archives
+----------------------------------------------
+
+GNU `tar' is able to create and read compressed archives.  It supports
+`gzip', `bzip2', `lzma' and `lzop' compression programs.  For backward
+compatibility, it also supports `compress' command, although we
+strongly recommend against using it, because it is by far less
+effective than other compression programs(1).
+
+   Creating a compressed archive is simple: you just specify a
+"compression option" along with the usual archive creation commands.
+The compression option is `-z' (`--gzip') to create a `gzip' compressed
+archive, `-j' (`--bzip2') to create a `bzip2' compressed archive, `-J'
+(`--lzma') to create an LZMA compressed archive, `--lzop' to create an
+LSOP archive, and `-Z' (`--compress') to use `compress' program.  For
+example:
+
+     $ tar cfz archive.tar.gz .
+
+   You can also let GNU `tar' select the compression program basing on
+the suffix of the archive file name. This is done using
+`--auto-compress' (`-a') command line option. For example, the
+following invocation will use `bzip2' for compression:
+
+     $ tar cfa archive.tar.bz2 .
+
+whereas the following one will use `lzma':
+
+     $ tar cfa archive.tar.lzma .
+
+   For a complete list of file name suffixes recognized by GNU `tar',
+*note auto-compress::.
+
+   Reading compressed archive is even simpler: you don't need to specify
+any additional options as GNU `tar' recognizes its format
+automatically.  Thus, the following commands will list and extract the
+archive created in previous example:
+
+     # List the compressed archive
+     $ tar tf archive.tar.gz
+     # Extract the compressed archive
+     $ tar xf archive.tar.gz
+
+   The format recognition algorithm is based on "signatures", a special
+byte sequences in the beginning of file, that are specific for certain
+compression formats.  If this approach fails, `tar' falls back to using
+archive name suffix to determine its format (*Note auto-compress::, for
+a list of recognized suffixes).
+
+   The only case when you have to specify a decompression option while
+reading the archive is when reading from a pipe or from a tape drive
+that does not support random access.  However, in this case GNU `tar'
+will indicate which option you should use.  For example:
+
+     $ cat archive.tar.gz | tar tf -
+     tar: Archive is compressed.  Use -z option
+     tar: Error is not recoverable: exiting now
+
+   If you see such diagnostics, just add the suggested option to the
+invocation of GNU `tar':
+
+     $ cat archive.tar.gz | tar tfz -
+
+   Notice also, that there are several restrictions on operations on
+compressed archives.  First of all, compressed archives cannot be
+modified, i.e., you cannot update (`--update' (`-u')) them or delete
+(`--delete') members from them or add (`--append' (`-r')) members to
+them.  Likewise, you cannot append another `tar' archive to a
+compressed archive using `--concatenate' (`-A')).  Secondly,
+multi-volume archives cannot be compressed.
+
+   The following table summarizes compression options used by GNU `tar'.
+
+`--auto-compress'
+`-a'
+     Select a compression program to use by the archive file name
+     suffix.  The following suffixes are recognized:
+
+     Suffix               Compression program
+     -------------------------------------------------------------- 
+     `.gz'                `gzip'
+     `.tgz'               `gzip'
+     `.taz'               `gzip'
+     `.Z'                 `compress'
+     `.taZ'               `compress'
+     `.bz2'               `bzip2'
+     `.tz2'               `bzip2'
+     `.tbz2'              `bzip2'
+     `.tbz'               `bzip2'
+     `.lzma'              `lzma'
+     `.tlz'               `lzma'
+     `.lzo'               `lzop'
+
+`-z'
+`--gzip'
+`--ungzip'
+     Filter the archive through `gzip'.
+
+     You can use `--gzip' and `--gunzip' on physical devices (tape
+     drives, etc.) and remote files as well as on normal files; data to
+     or from such devices or remote files is reblocked by another copy
+     of the `tar' program to enforce the specified (or default) record
+     size.  The default compression parameters are used; if you need to
+     override them, set `GZIP' environment variable, e.g.:
+
+          $ GZIP=--best tar cfz archive.tar.gz subdir
+
+     Another way would be to avoid the `--gzip' (`--gunzip',
+     `--ungzip', `-z') option and run `gzip' explicitly:
+
+          $ tar cf - subdir | gzip --best -c - > archive.tar.gz
+
+     About corrupted compressed archives: `gzip''ed files have no
+     redundancy, for maximum compression.  The adaptive nature of the
+     compression scheme means that the compression tables are implicitly
+     spread all over the archive.  If you lose a few blocks, the dynamic
+     construction of the compression tables becomes unsynchronized, and
+     there is little chance that you could recover later in the archive.
+
+     There are pending suggestions for having a per-volume or per-file
+     compression in GNU `tar'.  This would allow for viewing the
+     contents without decompression, and for resynchronizing
+     decompression at every volume or file, in case of corrupted
+     archives.  Doing so, we might lose some compressibility.  But this
+     would have make recovering easier.  So, there are pros and cons.
+     We'll see!
+
+`-j'
+`--bzip2'
+     Filter the archive through `bzip2'.  Otherwise like `--gzip'.
+
+`--lzma'
+`-J'
+     Filter the archive through `lzma'.  Otherwise like `--gzip'.
+
+`--lzop'
+     Filter the archive through `lzop'.  Otherwise like `--gzip'.
+
+`-Z'
+`--compress'
+`--uncompress'
+     Filter the archive through `compress'.  Otherwise like `--gzip'.
+
+`--use-compress-program=PROG'
+     Use external compression program PROG.  Use this option if you
+     have a compression program that GNU `tar' does not support.  There
+     are two requirements to which PROG should comply:
+
+     First, when called without options, it should read data from
+     standard input, compress it and output it on standard output.
+
+     Secondly, if called with `-d' argument, it should do exactly the
+     opposite, i.e., read the compressed data from the standard input
+     and produce uncompressed data on the standard output.
+
+   The `--use-compress-program' option, in particular, lets you
+implement your own filters, not necessarily dealing with
+compression/decompression.  For example, suppose you wish to implement
+PGP encryption on top of compression, using `gpg' (*note gpg:
+(gpg)Top.).  The following script does that:
+
+     #! /bin/sh
+     case $1 in
+     -d) gpg --decrypt - | gzip -d -c;;
+     '') gzip -c | gpg -s ;;
+     *)  echo "Unknown option $1">&2; exit 1;;
+     esac
+
+   Suppose you name it `gpgz' and save it somewhere in your `PATH'.
+Then the following command will create a compressed archive signed with
+your private key:
+
+     $ tar -cf foo.tar.gpgz --use-compress=gpgz .
+
+Likewise, the following command will list its contents:
+
+     $ tar -tf foo.tar.gpgz --use-compress=gpgz .
+
+   ---------- Footnotes ----------
+
+   (1) It also had patent problems in the past.
 
 
 File: tar.info,  Node: sparse,  Prev: gzip,  Up: Compression
@@ -1191,10 +1376,10 @@ File: tar.info,  Node: Remote Tape Server,  Next: Common Problems and Solutions,
 
 In order to access the tape drive on a remote machine, `tar' uses the
 remote tape server written at the University of California at Berkeley.
-The remote tape server must be installed as `PREFIX/libexec/rmt' on
-any machine whose tape drive you want to use.  `tar' calls `rmt' by
-running an `rsh' or `remsh' to the remote machine, optionally using a
-different login name if one is supplied.
+The remote tape server must be installed as `PREFIX/libexec/rmt' on any
+machine whose tape drive you want to use.  `tar' calls `rmt' by running
+an `rsh' or `remsh' to the remote machine, optionally using a different
+login name if one is supplied.
 
    A copy of the source for the remote tape server is provided.  It is
 Copyright (C) 1983 by the Regents of the University of California, but
@@ -1429,8 +1614,8 @@ of 512 bytes) is called the "blocking factor".  The
 `--blocking-factor=512-SIZE' (`-b 512-SIZE') option specifies the
 blocking factor of an archive.  The default blocking factor is
 typically 20 (i.e., 10240 bytes), but can be specified at installation.
-To find out the blocking factor of an existing archive, use `tar
---list --file=ARCHIVE-NAME'.  This may not work on some devices.
+To find out the blocking factor of an existing archive, use `tar --list
+--file=ARCHIVE-NAME'.  This may not work on some devices.
 
    Records are separated by gaps, which waste space on the archive
 media.  If you are archiving on magnetic tape, using a larger blocking
@@ -2104,12 +2289,12 @@ number of the volume of the archive.  (If you use the
 make sure the label on the tape matches the one you give. *Note label::.
 
    When `tar' writes an archive to tape, it creates a single tape file.
-If multiple archives are written to the same tape, one after the
-other, they each get written as separate tape files.  When extracting,
-it is necessary to position the tape at the right place before running
-`tar'.  To do this, use the `mt' command.  For more information on the
-`mt' command and on the organization of tapes into a sequence of tape
-files, see *note mt::.
+If multiple archives are written to the same tape, one after the other,
+they each get written as separate tape files.  When extracting, it is
+necessary to position the tape at the right place before running `tar'.
+To do this, use the `mt' command.  For more information on the `mt'
+command and on the organization of tapes into a sequence of tape files,
+see *note mt::.
 
    People seem to often do:
 
@@ -2344,7 +2529,7 @@ Appendix A Changes
 ******************
 
 This appendix lists some important user-visible changes between version
-GNU `tar' 1.20 and previous versions. An up-to-date version of this
+GNU `tar' 1.21 and previous versions. An up-to-date version of this
 document is available at the GNU `tar' documentation page
 (http://www.gnu.org/software/tar/manual/changes.html).
 
@@ -2430,7 +2615,6 @@ options. The options within each group are printed in the following
 order: a short option, eventually followed by a list of corresponding
 long option names, followed by a short description of the option. For
 example, here is an excerpt from the actual `tar --help' output:
-
 
  Main operation mode:
 
@@ -2562,7 +2746,6 @@ Boolean assignment
      Column in which "group headers" are printed.  A group header is a
      descriptive text preceding an option group.  For example, in the
      following text:
-
 
       Main operation mode:
 
@@ -3134,9 +3317,9 @@ files in an archive.  These are listed below.
      option.  The original type of the file is not given here.  The
      `size' field gives the maximum size of this piece of the file
      (assuming the volume does not end before the file is written out).
-     The `offset' field gives the offset from the beginning of the
-     file where this part of the file begins.  Thus `size' plus
-     `offset' should equal the original size of the file.
+     The `offset' field gives the offset from the beginning of the file
+     where this part of the file begins.  Thus `size' plus `offset'
+     should equal the original size of the file.
 
 `GNUTYPE_SPARSE'
 `'S''
@@ -3382,12 +3565,12 @@ backups (*note Incremental Dumps::).  It contains the status of the
 file system at the time of the dump and is used to determine which
 files were modified since the last backup.
 
-   GNU `tar' version 1.20 supports three snapshot file formats.  The
+   GNU `tar' version 1.21 supports three snapshot file formats.  The
 first format, called "format 0", is the one used by GNU `tar' versions
 up to 1.15.1. The second format, called "format 1" is an extended
 version of this format, that contains more metadata and allows for
 further extensions. It was used by version 1.15.1. Starting from
-version 1.16 and up to 1.20, the "format 2" is used.
+version 1.16 and up to 1.21, the "format 2" is used.
 
    GNU `tar' is able to read all three formats, but will create
 snapshots only in format 2.
@@ -3443,7 +3626,7 @@ snapshots only in format 2.
   2.    A snapshot file begins with a format identifier, as described
      for version 1, e.g.:
 
-          GNU tar-1.20-2
+          GNU tar-1.21-2
 
      This line is followed by newline. Rest of file consists of
      records, separated by null (ASCII 0) characters. Thus, in contrast
@@ -4436,35 +4619,35 @@ Summary::.
 * append, summary:                       Operation Summary.   (line   6)
 * atime-preserve:                        Attributes.          (line  14)
 * atime-preserve, summary:               Option Summary.      (line  19)
-* auto-compress:                         gzip.                (line  69)
+* auto-compress:                         gzip.                (line  76)
 * auto-compress, summary:                Option Summary.      (line  65)
 * backup:                                backup.              (line  41)
-* backup, summary:                       Option Summary.      (line  70)
+* backup, summary:                       Option Summary.      (line  71)
 * block-number:                          verbose.             (line 115)
-* block-number, summary:                 Option Summary.      (line  75)
+* block-number, summary:                 Option Summary.      (line  76)
 * blocking-factor:                       Blocking Factor.     (line   8)
-* blocking-factor, summary:              Option Summary.      (line  81)
-* bzip2:                                 gzip.                (line 122)
-* bzip2, summary:                        Option Summary.      (line  86)
+* blocking-factor, summary:              Option Summary.      (line  82)
+* bzip2:                                 gzip.                (line 130)
+* bzip2, summary:                        Option Summary.      (line  87)
 * catenate:                              concatenate.         (line   6)
 * catenate, summary:                     Operation Summary.   (line  10)
 * check-device, described:               Incremental Dumps.   (line  99)
-* check-device, summary:                 Option Summary.      (line  91)
+* check-device, summary:                 Option Summary.      (line  92)
 * check-links, described:                hard links.          (line  33)
-* check-links, summary:                  Option Summary.      (line 142)
+* check-links, summary:                  Option Summary.      (line 143)
 * checkpoint:                            checkpoints.         (line   6)
 * checkpoint, defined:                   checkpoints.         (line  13)
-* checkpoint, summary:                   Option Summary.      (line  96)
+* checkpoint, summary:                   Option Summary.      (line  97)
 * checkpoint-action:                     checkpoints.         (line   6)
 * checkpoint-action, defined:            checkpoints.         (line  22)
-* checkpoint-action, summary:            Option Summary.      (line 104)
+* checkpoint-action, summary:            Option Summary.      (line 105)
 * compare:                               compare.             (line   8)
 * compare, summary:                      Operation Summary.   (line  14)
-* compress:                              gzip.                (line 129)
-* compress, summary:                     Option Summary.      (line 151)
+* compress:                              gzip.                (line 141)
+* compress, summary:                     Option Summary.      (line 152)
 * concatenate:                           concatenate.         (line   6)
 * concatenate, summary:                  Operation Summary.   (line  20)
-* confirmation, summary:                 Option Summary.      (line 158)
+* confirmation, summary:                 Option Summary.      (line 159)
 * create, additional options:            create options.      (line   6)
 * create, complementary notes:           Basic tar.           (line  11)
 * create, introduced:                    Creating the archive.
@@ -4474,35 +4657,35 @@ Summary::.
 * create, using with --verify:           verify.              (line  24)
 * delay-directory-restore:               Directory Modification Times and Permissions.
                                                               (line  62)
-* delay-directory-restore, summary:      Option Summary.      (line 161)
+* delay-directory-restore, summary:      Option Summary.      (line 162)
 * delete:                                delete.              (line   8)
 * delete, summary:                       Operation Summary.   (line  29)
 * dereference:                           dereference.         (line   6)
-* dereference, summary:                  Option Summary.      (line 166)
+* dereference, summary:                  Option Summary.      (line 167)
 * diff, summary:                         Operation Summary.   (line  33)
 * directory:                             directory.           (line  11)
-* directory, summary:                    Option Summary.      (line 172)
+* directory, summary:                    Option Summary.      (line 173)
 * directory, using in --files-from argument: files.           (line  60)
 * exclude:                               exclude.             (line  11)
 * exclude, potential problems with:      problems with exclude.
                                                               (line   6)
-* exclude, summary:                      Option Summary.      (line 179)
-* exclude-caches:                        exclude.             (line  80)
-* exclude-caches, summary:               Option Summary.      (line 188)
-* exclude-caches-all:                    exclude.             (line  88)
-* exclude-caches-all, summary:           Option Summary.      (line 201)
-* exclude-caches-under:                  exclude.             (line  84)
-* exclude-caches-under, summary:         Option Summary.      (line 195)
+* exclude, summary:                      Option Summary.      (line 180)
+* exclude-caches:                        exclude.             (line  96)
+* exclude-caches, summary:               Option Summary.      (line 189)
+* exclude-caches-all:                    exclude.             (line 104)
+* exclude-caches-all, summary:           Option Summary.      (line 202)
+* exclude-caches-under:                  exclude.             (line 100)
+* exclude-caches-under, summary:         Option Summary.      (line 196)
 * exclude-from:                          exclude.             (line  22)
-* exclude-from, summary:                 Option Summary.      (line 183)
-* exclude-tag:                           exclude.             (line  97)
-* exclude-tag, summary:                  Option Summary.      (line 205)
-* exclude-tag-all:                       exclude.             (line 105)
-* exclude-tag-all, summary:              Option Summary.      (line 213)
-* exclude-tag-under:                     exclude.             (line 101)
-* exclude-tag-under, summary:            Option Summary.      (line 209)
+* exclude-from, summary:                 Option Summary.      (line 184)
+* exclude-tag:                           exclude.             (line 113)
+* exclude-tag, summary:                  Option Summary.      (line 206)
+* exclude-tag-all:                       exclude.             (line 121)
+* exclude-tag-all, summary:              Option Summary.      (line 214)
+* exclude-tag-under:                     exclude.             (line 117)
+* exclude-tag-under, summary:            Option Summary.      (line 210)
 * exclude-vcs:                           exclude.             (line  39)
-* exclude-vcs, summary:                  Option Summary.      (line 217)
+* exclude-vcs, summary:                  Option Summary.      (line 218)
 * extract:                               extract.             (line   8)
 * extract, additional options:           extract options.     (line   8)
 * extract, complementary notes:          Basic tar.           (line  48)
@@ -4510,52 +4693,52 @@ Summary::.
 * extract, using with --listed-incremental: Incremental Dumps.
                                                               (line 112)
 * file, short description:               file.                (line  17)
-* file, summary:                         Option Summary.      (line 223)
+* file, summary:                         Option Summary.      (line 224)
 * file, tutorial:                        file tutorial.       (line   6)
 * files-from:                            files.               (line  14)
-* files-from, summary:                   Option Summary.      (line 229)
+* files-from, summary:                   Option Summary.      (line 230)
 * force-local, short description:        Device.              (line  70)
-* force-local, summary:                  Option Summary.      (line 235)
-* format, summary:                       Option Summary.      (line 240)
+* force-local, summary:                  Option Summary.      (line 236)
+* format, summary:                       Option Summary.      (line 241)
 * get, summary:                          Operation Summary.   (line  42)
 * group:                                 override.            (line  73)
-* group, summary:                        Option Summary.      (line 265)
-* gunzip, summary:                       Option Summary.      (line 273)
-* gzip:                                  gzip.                (line  88)
-* gzip, summary:                         Option Summary.      (line 273)
+* group, summary:                        Option Summary.      (line 266)
+* gunzip, summary:                       Option Summary.      (line 274)
+* gzip:                                  gzip.                (line  96)
+* gzip, summary:                         Option Summary.      (line 274)
 * hard-dereference, described:           hard links.          (line  61)
-* hard-dereference, summary:             Option Summary.      (line 281)
+* hard-dereference, summary:             Option Summary.      (line 282)
 * help:                                  help tutorial.       (line   6)
 * help, introduction:                    help.                (line  26)
-* help, summary:                         Option Summary.      (line 287)
+* help, summary:                         Option Summary.      (line 288)
 * ignore-case:                           controlling pattern-matching.
                                                               (line  86)
-* ignore-case, summary:                  Option Summary.      (line 292)
+* ignore-case, summary:                  Option Summary.      (line 293)
 * ignore-command-error:                  Writing to an External Program.
                                                               (line  82)
-* ignore-command-error, summary:         Option Summary.      (line 296)
+* ignore-command-error, summary:         Option Summary.      (line 297)
 * ignore-failed-read:                    Ignore Failed Read.  (line   7)
-* ignore-failed-read, summary:           Option Summary.      (line 300)
+* ignore-failed-read, summary:           Option Summary.      (line 301)
 * ignore-zeros:                          Ignore Zeros.        (line   6)
 * ignore-zeros, short description:       Blocking Factor.     (line 156)
-* ignore-zeros, summary:                 Option Summary.      (line 304)
-* incremental, summary:                  Option Summary.      (line 309)
+* ignore-zeros, summary:                 Option Summary.      (line 305)
+* incremental, summary:                  Option Summary.      (line 310)
 * incremental, using with --list:        Incremental Dumps.   (line 177)
-* index-file, summary:                   Option Summary.      (line 316)
+* index-file, summary:                   Option Summary.      (line 317)
 * info-script:                           Multi-Volume Archives.
                                                               (line  80)
 * info-script, short description:        Device.              (line 104)
-* info-script, summary:                  Option Summary.      (line 319)
+* info-script, summary:                  Option Summary.      (line 320)
 * interactive:                           interactive.         (line  14)
-* interactive, summary:                  Option Summary.      (line 327)
+* interactive, summary:                  Option Summary.      (line 328)
 * keep-newer-files:                      Keep Newer Files.    (line   6)
-* keep-newer-files, summary:             Option Summary.      (line 334)
+* keep-newer-files, summary:             Option Summary.      (line 335)
 * keep-old-files:                        Keep Old Files.      (line   6)
 * keep-old-files, introduced:            Dealing with Old Files.
                                                               (line  16)
-* keep-old-files, summary:               Option Summary.      (line 338)
+* keep-old-files, summary:               Option Summary.      (line 339)
 * label:                                 label.               (line   8)
-* label, summary:                        Option Summary.      (line 343)
+* label, summary:                        Option Summary.      (line 344)
 * list:                                  list.                (line   6)
 * list, summary:                         Operation Summary.   (line  46)
 * list, using with --incremental:        Incremental Dumps.   (line 177)
@@ -4563,189 +4746,195 @@ Summary::.
 * list, using with --verbose:            list.                (line  30)
 * list, using with file name arguments:  list.                (line  68)
 * listed-incremental:                    Incremental Dumps.   (line  14)
-* listed-incremental, summary:           Option Summary.      (line 350)
+* listed-incremental, summary:           Option Summary.      (line 351)
 * listed-incremental, using with --extract: Incremental Dumps.
                                                               (line 112)
 * listed-incremental, using with --list: Incremental Dumps.   (line 177)
-* lzma:                                  gzip.                (line 126)
-* lzma, summary:                         Option Summary.      (line 358)
+* lzma:                                  gzip.                (line 134)
+* lzma, summary:                         Option Summary.      (line 359)
+* lzop:                                  gzip.                (line 138)
 * mode:                                  override.            (line  14)
-* mode, summary:                         Option Summary.      (line 362)
+* mode, summary:                         Option Summary.      (line 368)
 * mtime:                                 override.            (line  29)
-* mtime, summary:                        Option Summary.      (line 368)
+* mtime, summary:                        Option Summary.      (line 374)
 * multi-volume:                          Multi-Volume Archives.
                                                               (line   6)
 * multi-volume, short description:       Device.              (line  88)
-* multi-volume, summary:                 Option Summary.      (line 377)
+* multi-volume, summary:                 Option Summary.      (line 383)
 * new-volume-script:                     Multi-Volume Archives.
                                                               (line  80)
 * new-volume-script, short description:  Device.              (line 104)
-* new-volume-script, summary:            Option Summary.      (line 319)
+* new-volume-script, summary:            Option Summary.      (line 320)
 * newer:                                 after.               (line  26)
-* newer, summary:                        Option Summary.      (line 385)
+* newer, summary:                        Option Summary.      (line 391)
 * newer-mtime:                           after.               (line  37)
-* newer-mtime, summary:                  Option Summary.      (line 393)
+* newer-mtime, summary:                  Option Summary.      (line 399)
 * no-anchored:                           controlling pattern-matching.
                                                               (line  79)
-* no-anchored, summary:                  Option Summary.      (line 398)
+* no-anchored, summary:                  Option Summary.      (line 404)
+* no-auto-compress, summary:             Option Summary.      (line 408)
 * no-check-device, described:            Incremental Dumps.   (line  95)
-* no-check-device, summary:              Option Summary.      (line 402)
+* no-check-device, summary:              Option Summary.      (line 412)
 * no-delay-directory-restore:            Directory Modification Times and Permissions.
                                                               (line  68)
-* no-delay-directory-restore, summary:   Option Summary.      (line 407)
+* no-delay-directory-restore, summary:   Option Summary.      (line 417)
 * no-ignore-case:                        controlling pattern-matching.
                                                               (line  86)
-* no-ignore-case, summary:               Option Summary.      (line 413)
+* no-ignore-case, summary:               Option Summary.      (line 423)
 * no-ignore-command-error:               Writing to an External Program.
                                                               (line  87)
-* no-ignore-command-error, summary:      Option Summary.      (line 416)
-* no-overwrite-dir, summary:             Option Summary.      (line 420)
-* no-quote-chars, summary:               Option Summary.      (line 424)
+* no-ignore-command-error, summary:      Option Summary.      (line 426)
+* no-null, described:                    nul.                 (line  15)
+* no-null, summary:                      Option Summary.      (line 430)
+* no-overwrite-dir, summary:             Option Summary.      (line 435)
+* no-quote-chars, summary:               Option Summary.      (line 439)
 * no-recursion:                          recurse.             (line  13)
-* no-recursion, summary:                 Option Summary.      (line 429)
+* no-recursion, summary:                 Option Summary.      (line 444)
 * no-same-owner:                         Attributes.          (line  67)
-* no-same-owner, summary:                Option Summary.      (line 433)
-* no-same-permissions, summary:          Option Summary.      (line 439)
+* no-same-owner, summary:                Option Summary.      (line 448)
+* no-same-permissions, summary:          Option Summary.      (line 454)
 * no-unquote:                            Selecting Archive Members.
                                                               (line  42)
-* no-unquote, summary:                   Option Summary.      (line 444)
+* no-unquote, summary:                   Option Summary.      (line 459)
 * no-wildcards:                          controlling pattern-matching.
                                                               (line  41)
-* no-wildcards, summary:                 Option Summary.      (line 448)
+* no-wildcards, summary:                 Option Summary.      (line 463)
 * no-wildcards-match-slash:              controlling pattern-matching.
                                                               (line  92)
-* no-wildcards-match-slash, summary:     Option Summary.      (line 451)
-* null:                                  nul.                 (line  11)
-* null, summary:                         Option Summary.      (line 454)
+* no-wildcards-match-slash, summary:     Option Summary.      (line 466)
+* null, described:                       nul.                 (line  11)
+* null, summary:                         Option Summary.      (line 469)
 * numeric-owner:                         Attributes.          (line  73)
-* numeric-owner, summary:                Option Summary.      (line 460)
-* occurrence, summary:                   Option Summary.      (line 477)
-* old-archive, summary:                  Option Summary.      (line 491)
+* numeric-owner, summary:                Option Summary.      (line 475)
+* occurrence, summary:                   Option Summary.      (line 492)
+* old-archive, summary:                  Option Summary.      (line 506)
 * one-file-system:                       one.                 (line  16)
-* one-file-system, summary:              Option Summary.      (line 494)
+* one-file-system, summary:              Option Summary.      (line 509)
 * overwrite:                             Overwrite Old Files. (line   6)
 * overwrite, introduced:                 Dealing with Old Files.
                                                               (line  22)
-* overwrite, summary:                    Option Summary.      (line 499)
+* overwrite, summary:                    Option Summary.      (line 514)
 * overwrite-dir:                         Overwrite Old Files. (line  28)
 * overwrite-dir, introduced:             Dealing with Old Files.
                                                               (line   6)
-* overwrite-dir, summary:                Option Summary.      (line 503)
+* overwrite-dir, summary:                Option Summary.      (line 518)
 * owner:                                 override.            (line  57)
-* owner, summary:                        Option Summary.      (line 507)
+* owner, summary:                        Option Summary.      (line 522)
 * pax-option:                            PAX keywords.        (line   6)
-* pax-option, summary:                   Option Summary.      (line 516)
-* portability, summary:                  Option Summary.      (line 522)
-* posix, summary:                        Option Summary.      (line 526)
+* pax-option, summary:                   Option Summary.      (line 531)
+* portability, summary:                  Option Summary.      (line 537)
+* posix, summary:                        Option Summary.      (line 541)
 * preserve:                              Attributes.          (line 126)
-* preserve, summary:                     Option Summary.      (line 529)
+* preserve, summary:                     Option Summary.      (line 544)
 * preserve-order:                        Same Order.          (line   6)
-* preserve-order, summary:               Option Summary.      (line 533)
+* preserve-order, summary:               Option Summary.      (line 548)
 * preserve-permissions:                  Setting Access Permissions.
                                                               (line  10)
 * preserve-permissions, short description: Attributes.        (line 113)
-* preserve-permissions, summary:         Option Summary.      (line 536)
-* quote-chars, summary:                  Option Summary.      (line 546)
-* quoting-style:                         quoting styles.      (line  39)
-* quoting-style, summary:                Option Summary.      (line 550)
+* preserve-permissions, summary:         Option Summary.      (line 551)
+* quote-chars, summary:                  Option Summary.      (line 561)
+* quoting-style:                         quoting styles.      (line  38)
+* quoting-style, summary:                Option Summary.      (line 565)
 * read-full-records <1>:                 read full records.   (line   6)
 * read-full-records:                     Reading.             (line   8)
 * read-full-records, short description:  Blocking Factor.     (line 172)
-* read-full-records, summary:            Option Summary.      (line 557)
-* record-size, summary:                  Option Summary.      (line 562)
+* read-full-records, summary:            Option Summary.      (line 572)
+* record-size, summary:                  Option Summary.      (line 577)
 * recursion:                             recurse.             (line  24)
-* recursion, summary:                    Option Summary.      (line 566)
+* recursion, summary:                    Option Summary.      (line 581)
 * recursive-unlink:                      Recursive Unlink.    (line   6)
-* recursive-unlink, summary:             Option Summary.      (line 570)
+* recursive-unlink, summary:             Option Summary.      (line 585)
 * remove-files:                          remove files.        (line   6)
-* remove-files, summary:                 Option Summary.      (line 575)
-* restrict, summary:                     Option Summary.      (line 579)
-* rmt-command, summary:                  Option Summary.      (line 584)
+* remove-files, summary:                 Option Summary.      (line 590)
+* restrict, summary:                     Option Summary.      (line 594)
+* rmt-command, summary:                  Option Summary.      (line 599)
 * rsh-command:                           Device.              (line  73)
-* rsh-command, summary:                  Option Summary.      (line 588)
+* rsh-command, summary:                  Option Summary.      (line 603)
 * same-order:                            Same Order.          (line   6)
-* same-order, summary:                   Option Summary.      (line 592)
+* same-order, summary:                   Option Summary.      (line 607)
 * same-owner:                            Attributes.          (line  48)
-* same-owner, summary:                   Option Summary.      (line 600)
+* same-owner, summary:                   Option Summary.      (line 615)
 * same-permissions:                      Setting Access Permissions.
                                                               (line  10)
 * same-permissions, short description:   Attributes.          (line 113)
-* same-permissions, summary:             Option Summary.      (line 536)
-* seek, summary:                         Option Summary.      (line 609)
+* same-permissions, summary:             Option Summary.      (line 551)
+* seek, summary:                         Option Summary.      (line 624)
 * show-defaults:                         defaults.            (line   6)
-* show-defaults, summary:                Option Summary.      (line 616)
+* show-defaults, summary:                Option Summary.      (line 631)
 * show-omitted-dirs:                     verbose.             (line 107)
-* show-omitted-dirs, summary:            Option Summary.      (line 625)
+* show-omitted-dirs, summary:            Option Summary.      (line 640)
 * show-stored-names:                     list.                (line  60)
-* show-stored-names, summary:            Option Summary.      (line 629)
+* show-stored-names, summary:            Option Summary.      (line 644)
 * show-transformed-names:                transform.           (line  45)
-* show-transformed-names, summary:       Option Summary.      (line 629)
+* show-transformed-names, summary:       Option Summary.      (line 644)
 * sparse:                                sparse.              (line  22)
-* sparse, summary:                       Option Summary.      (line 637)
+* sparse, summary:                       Option Summary.      (line 652)
 * sparse-version:                        sparse.              (line  57)
-* sparse-version, summary:               Option Summary.      (line 642)
+* sparse-version, summary:               Option Summary.      (line 657)
 * starting-file:                         Starting File.       (line   6)
-* starting-file, summary:                Option Summary.      (line 647)
+* starting-file, summary:                Option Summary.      (line 662)
 * strip-components:                      transform.           (line  25)
-* strip-components, summary:             Option Summary.      (line 653)
+* strip-components, summary:             Option Summary.      (line 668)
 * suffix:                                backup.              (line  68)
-* suffix, summary:                       Option Summary.      (line 662)
+* suffix, summary:                       Option Summary.      (line 677)
 * tape-length:                           Multi-Volume Archives.
                                                               (line  33)
 * tape-length, short description:        Device.              (line  96)
-* tape-length, summary:                  Option Summary.      (line 668)
+* tape-length, summary:                  Option Summary.      (line 683)
 * test-label:                            label.               (line  37)
-* test-label, summary:                   Option Summary.      (line 673)
+* test-label, summary:                   Option Summary.      (line 688)
 * to-command:                            Writing to an External Program.
                                                               (line   9)
-* to-command, summary:                   Option Summary.      (line 677)
+* to-command, summary:                   Option Summary.      (line 692)
 * to-stdout:                             Writing to Standard Output.
                                                               (line  14)
-* to-stdout, summary:                    Option Summary.      (line 681)
+* to-stdout, summary:                    Option Summary.      (line 696)
 * totals:                                verbose.             (line  46)
-* totals, summary:                       Option Summary.      (line 686)
+* totals, summary:                       Option Summary.      (line 701)
 * touch <1>:                             Attributes.          (line  37)
 * touch:                                 Data Modification Times.
                                                               (line  15)
-* touch, summary:                        Option Summary.      (line 691)
+* touch, summary:                        Option Summary.      (line 706)
 * transform:                             transform.           (line  74)
-* transform, summary:                    Option Summary.      (line 697)
-* uncompress:                            gzip.                (line 129)
-* uncompress, summary:                   Option Summary.      (line 151)
-* ungzip:                                gzip.                (line  88)
-* ungzip, summary:                       Option Summary.      (line 273)
+* transform, summary:                    Option Summary.      (line 712)
+* uncompress:                            gzip.                (line 141)
+* uncompress, summary:                   Option Summary.      (line 152)
+* ungzip:                                gzip.                (line  96)
+* ungzip, summary:                       Option Summary.      (line 274)
 * unlink-first:                          Unlink First.        (line   6)
 * unlink-first, introduced:              Dealing with Old Files.
                                                               (line  42)
-* unlink-first, summary:                 Option Summary.      (line 716)
+* unlink-first, summary:                 Option Summary.      (line 732)
 * unquote:                               Selecting Archive Members.
                                                               (line  39)
-* unquote, summary:                      Option Summary.      (line 722)
+* unquote, summary:                      Option Summary.      (line 738)
 * update:                                update.              (line   8)
 * update, summary:                       Operation Summary.   (line  50)
 * usage:                                 help.                (line  53)
-* use-compress-program:                  gzip.                (line 134)
-* use-compress-program, summary:         Option Summary.      (line 726)
-* utc, summary:                          Option Summary.      (line 730)
+* use-compress-program:                  gzip.                (line 146)
+* use-compress-program, summary:         Option Summary.      (line 742)
+* utc, summary:                          Option Summary.      (line 746)
 * verbose:                               verbose.             (line  18)
 * verbose, introduced:                   verbose tutorial.    (line   6)
-* verbose, summary:                      Option Summary.      (line 734)
+* verbose, summary:                      Option Summary.      (line 750)
 * verbose, using with --create:          create verbose.      (line   6)
 * verbose, using with --list:            list.                (line  30)
 * verify, short description:             verify.              (line   8)
-* verify, summary:                       Option Summary.      (line 741)
+* verify, summary:                       Option Summary.      (line 757)
 * verify, using with --create:           verify.              (line  24)
 * version:                               help.                (line   6)
-* version, summary:                      Option Summary.      (line 746)
+* version, summary:                      Option Summary.      (line 762)
 * volno-file:                            Multi-Volume Archives.
                                                               (line  71)
-* volno-file, summary:                   Option Summary.      (line 751)
+* volno-file, summary:                   Option Summary.      (line 767)
 * wildcards:                             controlling pattern-matching.
                                                               (line  38)
-* wildcards, summary:                    Option Summary.      (line 756)
+* wildcards, summary:                    Option Summary.      (line 772)
 * wildcards-match-slash:                 controlling pattern-matching.
                                                               (line  92)
-* wildcards-match-slash, summary:        Option Summary.      (line 760)
+* wildcards-match-slash, summary:        Option Summary.      (line 776)
+* xform:                                 transform.           (line  74)
+* xform, summary:                        Option Summary.      (line 712)
 
 
 File: tar.info,  Node: Index,  Prev: Index of Command Line Options,  Up: Top
@@ -4767,6 +4956,7 @@ Appendix I Index
                                                               (line  23)
 * am in date strings:                    Time of day items.   (line  22)
 * Appending files to an Archive:         appending files.     (line   8)
+* Arch, excluding files:                 exclude.             (line  39)
 * archive:                               Definitions.         (line   6)
 * Archive creation:                      file.                (line  36)
 * archive member:                        Definitions.         (line  15)
@@ -4776,7 +4966,7 @@ Appendix I Index
 * Archiving Directories:                 create dir.          (line   6)
 * archiving files:                       Top.                 (line  24)
 * ARGP_HELP_FMT, environment variable:   Configuring Help Summary.
-                                                              (line  22)
+                                                              (line  21)
 * authors of get_date:                   Authors of get_date. (line   6)
 * Avoiding recursion in directories:     recurse.             (line   8)
 * backup options:                        backup.              (line   6)
@@ -4788,6 +4978,7 @@ Appendix I Index
 * BACKUP_HOUR:                           General-Purpose Variables.
                                                               (line  11)
 * backups:                               backup.              (line  41)
+* Bazaar, excluding files:               exclude.             (line  39)
 * beginning of time, for POSIX:          Seconds since the Epoch.
                                                               (line  13)
 * bell, checkpoint action:               checkpoints.         (line  65)
@@ -4802,6 +4993,7 @@ Appendix I Index
 * Blocks per record:                     Blocking Factor.     (line   6)
 * bug reports:                           Reports.             (line   6)
 * Bytes per record:                      Blocking Factor.     (line   6)
+* bzip2:                                 gzip.                (line   6)
 * calendar date item:                    Calendar date items. (line   6)
 * case, ignored in dates:                General date syntax. (line  64)
 * cat vs concatenate:                    concatenate.         (line  63)
@@ -4810,13 +5002,15 @@ Appendix I Index
 * checkpoints, defined:                  checkpoints.         (line   6)
 * Choosing an archive file:              file.                (line   8)
 * comments, in dates:                    General date syntax. (line  64)
+* compress:                              gzip.                (line   6)
 * Compressed archives:                   gzip.                (line   6)
 * concatenate vs cat:                    concatenate.         (line  63)
 * Concatenating Archives:                concatenate.         (line   6)
-* corrupted archives <1>:                gzip.                (line 107)
+* corrupted archives <1>:                gzip.                (line 115)
 * corrupted archives:                    Full Dumps.          (line   8)
 * Creation of the archive:               create.              (line   8)
 * CVS, excluding files:                  exclude.             (line  39)
+* Darcs, excluding files:                exclude.             (line  39)
 * DAT blocking:                          Blocking Factor.     (line 204)
 * Data Modification time, excluding files by: after.          (line   8)
 * Data modification times of extracted files: Data Modification Times.
@@ -4842,7 +5036,7 @@ Appendix I Index
 * displacement of dates:                 Relative items in date strings.
                                                               (line   6)
 * doc-opt-col:                           Configuring Help Summary.
-                                                              (line  95)
+                                                              (line  94)
 * dot, checkpoint action:                checkpoints.         (line  80)
 * Double-checking a write operation:     verify.              (line   6)
 * DUMP_BEGIN:                            User Hooks.          (line  32)
@@ -4851,9 +5045,9 @@ Appendix I Index
                                                               (line 102)
 * dumps, full:                           Full Dumps.          (line   8)
 * dup-args:                              Configuring Help Summary.
-                                                              (line  52)
+                                                              (line  51)
 * dup-args-note:                         Configuring Help Summary.
-                                                              (line  69)
+                                                              (line  68)
 * echo, checkpoint action:               checkpoints.         (line  25)
 * Eggert, Paul:                          Authors of get_date. (line   6)
 * End-of-archive blocks, ignoring:       Ignore Zeros.        (line   6)
@@ -4865,9 +5059,9 @@ Appendix I Index
 * Error message, block number of:        verbose.             (line 125)
 * Exabyte blocking:                      Blocking Factor.     (line 204)
 * exclude:                               exclude.             (line  14)
-* exclude-caches:                        exclude.             (line  68)
+* exclude-caches:                        exclude.             (line  84)
 * exclude-from:                          exclude.             (line  27)
-* exclude-tag:                           exclude.             (line  91)
+* exclude-tag:                           exclude.             (line 107)
 * Excluding characters from a character class: wildcards.     (line  34)
 * Excluding file by age:                 after.               (line   8)
 * Excluding files by file system:        exclude.             (line   8)
@@ -4928,11 +5122,12 @@ Appendix I Index
 * GNU.sparse.offset, extended header variable: PAX 0.         (line  18)
 * GNU.sparse.realsize, extended header variable: PAX 1.       (line  24)
 * GNU.sparse.size, extended header variable: PAX 0.           (line  11)
-* gnupg, using with tar:                 gzip.                (line 146)
-* gpg, using with tar:                   gzip.                (line 146)
+* gnupg, using with tar:                 gzip.                (line 158)
+* gpg, using with tar:                   gzip.                (line 158)
+* gzip:                                  gzip.                (line   6)
 * hard links, dereferencing:             hard links.          (line   8)
 * header-col:                            Configuring Help Summary.
-                                                              (line 141)
+                                                              (line 140)
 * hook:                                  User Hooks.          (line  13)
 * hour in date strings:                  Relative items in date strings.
                                                               (line  15)
@@ -4957,11 +5152,14 @@ Appendix I Index
 * Lists of file names:                   files.               (line   6)
 * Local and remote archives:             file.                (line  73)
 * long-opt-col:                          Configuring Help Summary.
-                                                              (line  87)
+                                                              (line  86)
+* lzma:                                  gzip.                (line   6)
+* lzop:                                  gzip.                (line   6)
 * MacKenzie, David:                      Authors of get_date. (line   6)
 * member:                                Definitions.         (line  15)
 * member name:                           Definitions.         (line  15)
 * Members, replacing with other members: append.              (line  49)
+* Mercurial, excluding files:            exclude.             (line  39)
 * Meyering, Jim:                         Authors of get_date. (line   6)
 * Middle of the archive, starting in the: Starting File.      (line  11)
 * midnight in date strings:              Time of day items.   (line  22)
@@ -5014,7 +5212,7 @@ Appendix I Index
 * Old style archives:                    old.                 (line   6)
 * Old style format:                      old.                 (line   6)
 * opt-doc-col:                           Configuring Help Summary.
-                                                              (line 127)
+                                                              (line 126)
 * option syntax, traditional:            Old Options.         (line  60)
 * Options when reading archives:         Reading.             (line   6)
 * Options, archive format specifying:    Format Variations.   (line   6)
@@ -5053,7 +5251,7 @@ Appendix I Index
 * Retrieving files from an archive:      extract.             (line   8)
 * return status:                         Synopsis.            (line  67)
 * rmargin:                               Configuring Help Summary.
-                                                              (line 160)
+                                                              (line 158)
 * rmt:                                   Remote Tape Server.  (line   6)
 * RSH:                                   General-Purpose Variables.
                                                               (line  72)
@@ -5063,7 +5261,7 @@ Appendix I Index
 * Salz, Rich:                            Authors of get_date. (line   6)
 * SCCS, excluding files:                 exclude.             (line  39)
 * short-opt-col:                         Configuring Help Summary.
-                                                              (line  79)
+                                                              (line  78)
 * simple backup method:                  backup.              (line  64)
 * SIMPLE_BACKUP_SUFFIX:                  backup.              (line  68)
 * sleep, checkpoint action:              checkpoints.         (line  90)
@@ -5188,8 +5386,8 @@ Appendix I Index
 * unpacking:                             Definitions.         (line  22)
 * Updating an archive:                   update.              (line   8)
 * usage-indent:                          Configuring Help Summary.
-                                                              (line 156)
-* Using encrypted archives:              gzip.                (line 146)
+                                                              (line 154)
+* Using encrypted archives:              gzip.                (line 158)
 * ustar archive format:                  ustar.               (line   6)
 * uuencode:                              Applications.        (line   8)
 * v7 archive format:                     old.                 (line   6)

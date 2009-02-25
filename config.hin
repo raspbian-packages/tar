@@ -71,9 +71,6 @@
    language is requested. */
 #undef ENABLE_NLS
 
-/* Define as good substitute value for EOVERFLOW. */
-#undef EOVERFLOW
-
 /* Define if gnulib's fchdir() replacement is used. */
 #undef FCHDIR_REPLACEMENT
 
@@ -96,6 +93,9 @@
 /* Define to make the limit macros in <stdint.h> visible. */
 #undef GL_TRIGGER_STDC_LIMIT_MACROS
 
+/* Define to 1 when using the gnulib module canonicalize-lgpl. */
+#undef GNULIB_CANONICALIZE_LGPL
+
 /* Define to 1 when using the gnulib module close-stream. */
 #undef GNULIB_CLOSE_STREAM
 
@@ -104,6 +104,9 @@
 
 /* Define to indicate the 'malloc' module. */
 #undef GNULIB_MALLOC_GNU
+
+/* Define to 1 when using the gnulib module open. */
+#undef GNULIB_OPEN
 
 /* Define to 1 to add extern declaration of program_invocation_name to argp.h
    */
@@ -252,10 +255,6 @@
    don't. */
 #undef HAVE_DECL_MEMRCHR
 
-/* Define to 1 if you have the declaration of `mkdir', and to 0 if you don't.
-   */
-#undef HAVE_DECL_MKDIR
-
 /* Define if program_invocation_name is declared */
 #undef HAVE_DECL_PROGRAM_INVOCATION_NAME
 
@@ -269,6 +268,10 @@
 /* Define to 1 if you have the declaration of `putc_unlocked', and to 0 if you
    don't. */
 #undef HAVE_DECL_PUTC_UNLOCKED
+
+/* Define to 1 if you have the declaration of `sleep', and to 0 if you don't.
+   */
+#undef HAVE_DECL_SLEEP
 
 /* Define to 1 if you have the declaration of `snprintf', and to 0 if you
    don't. */
@@ -350,6 +353,9 @@
 /* Define if you have the declaration of environ. */
 #undef HAVE_ENVIRON_DECL
 
+/* Define to 1 if you have the <errno.h> header file. */
+#undef HAVE_ERRNO_H
+
 /* Define to 1 if you have the `fchdir' function. */
 #undef HAVE_FCHDIR
 
@@ -382,6 +388,9 @@
 
 /* Define to 1 if you have the `funlockfile' function. */
 #undef HAVE_FUNLOCKFILE
+
+/* Define to 1 if you have the `futimens' function. */
+#undef HAVE_FUTIMENS
 
 /* Define to 1 if you have the `futimes' function. */
 #undef HAVE_FUTIMES
@@ -422,9 +431,6 @@
 /* Define to 1 if you have the <iconv.h> header file. */
 #undef HAVE_ICONV_H
 
-/* Define if your compiler supports the #include_next directive. */
-#undef HAVE_INCLUDE_NEXT
-
 /* Define to 1 if the compiler supports one of the keywords 'inline',
    '__inline__', '__inline' and effectively inlines functions marked as such.
    */
@@ -440,9 +446,6 @@
    declares uintmax_t. */
 #undef HAVE_INTTYPES_H_WITH_UINTMAX
 
-/* Define to 1 if you have the <io.h> header file. */
-#undef HAVE_IO_H
-
 /* Define to 1 if you have the `isblank' function. */
 #undef HAVE_ISBLANK
 
@@ -455,11 +458,17 @@
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
 #undef HAVE_LANGINFO_CODESET
 
+/* Define if you have <langinfo.h> and nl_langinfo(YESEXPR). */
+#undef HAVE_LANGINFO_YESEXPR
+
 /* Define to 1 if you have the `lchmod' function. */
 #undef HAVE_LCHMOD
 
 /* Define to 1 if you have the `lchown' function. */
 #undef HAVE_LCHOWN
+
+/* Define to 1 if you have the <libintl.h> header file. */
+#undef HAVE_LIBINTL_H
 
 /* Define to 1 if you have the <linewrap.h> header file. */
 #undef HAVE_LINEWRAP_H
@@ -567,6 +576,9 @@
 /* Define to 1 if you have the <pwd.h> header file. */
 #undef HAVE_PWD_H
 
+/* Define to 1 if you have the `rawmemchr' function. */
+#undef HAVE_RAWMEMCHR
+
 /* Define to 1 if you have the `readlink' function. */
 #undef HAVE_READLINK
 
@@ -599,9 +611,6 @@
 
 /* Define to 1 if 'wint_t' is a signed integer type. */
 #undef HAVE_SIGNED_WINT_T
-
-/* Define to 1 if you have the `sleep' function. */
-#undef HAVE_SLEEP
 
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF
@@ -675,6 +684,9 @@
 
 /* Define to 1 if you have the `strtoumax' function. */
 #undef HAVE_STRTOUMAX
+
+/* Define to 1 if the system has the type `struct random_data'. */
+#undef HAVE_STRUCT_RANDOM_DATA
 
 /* Define to 1 if `st_atimensec' is member of `struct stat'. */
 #undef HAVE_STRUCT_STAT_ST_ATIMENSEC
@@ -765,6 +777,9 @@
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
 
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
@@ -812,6 +827,9 @@
 /* Define to 1 if the system has the type `unsigned long long int'. */
 #undef HAVE_UNSIGNED_LONG_LONG_INT
 
+/* Define to 1 if you have the `utimensat' function. */
+#undef HAVE_UTIMENSAT
+
 /* Define to 1 if you have the `utimes' function. */
 #undef HAVE_UTIMES
 
@@ -853,6 +871,9 @@
 
 /* Define to 1 if you have the `wcwidth' function. */
 #undef HAVE_WCWIDTH
+
+/* Define to 1 if you have the <winsock2.h> header file. */
+#undef HAVE_WINSOCK2_H
 
 /* Define if you have the 'wint_t' type. */
 #undef HAVE_WINT_T
@@ -916,6 +937,9 @@
 
 /* Define to 1 if your C compiler doesn't accept -c and -o together. */
 #undef NO_MINUS_C_MINUS_O
+
+/* Define to 1 if open() fails to recognize a trailing slash. */
+#undef OPEN_TRAILING_SLASH_BUG
 
 /* Name of package */
 #undef PACKAGE
@@ -1111,6 +1135,16 @@
 /* Define to long or long long if <stdint.h> and <inttypes.h> don't define. */
 #undef intmax_t
 
+/* Work around a bug in Apple GCC 4.0.1 build 5465: In C99 mode, it supports
+   the ISO C 99 semantics of 'extern inline' (unlike the GNU C semantics of
+   earlier versions), but does not display it by setting __GNUC_STDC_INLINE__.
+   __APPLE__ && __MACH__ test for MacOS X.
+   __APPLE_CC__ tests for the Apple compiler and its version.
+   __STDC_VERSION__ tests for the C99 mode.  */
+#if defined __APPLE__ && defined __MACH__ && __APPLE_CC__ >= 5465 && !defined __cplusplus && __STDC_VERSION__ >= 199901L && !defined __GNUC_STDC_INLINE__
+# define __GNUC_STDC_INLINE__ 1
+#endif
+
 /* Define to rpl_localtime if the replacement function should be used. */
 #undef localtime
 
@@ -1131,6 +1165,9 @@
 
 /* Define to `int' if <sys/types.h> does not define. */
 #undef mode_t
+
+/* Define to the type of st_nlink in struct stat, or a supertype. */
+#undef nlink_t
 
 /* Define to `long int' if <sys/types.h> does not define. */
 #undef off_t
@@ -1214,6 +1251,16 @@
 
 /* Define to `int' if <sys/types.h> doesn't define. */
 #undef uid_t
+
+/* Define as a marker that can be attached to function parameter declarations
+   for parameters that are not used.  This helps to reduce warnings, such as
+   from GCC -Wunused-parameter.  */
+#if __GNUC__ >= 3 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
+# define _UNUSED_PARAMETER_ __attribute__ ((__unused__))
+#else
+# define _UNUSED_PARAMETER_
+#endif
+
 
 /* Define to rpl_utime if the replacement function should be used. */
 #undef utime

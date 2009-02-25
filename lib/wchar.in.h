@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* A substitute for ISO C99 <wchar.h>, for platforms that have issues.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,8 +28,12 @@
  * the declaration of wcwidth().
  */
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
 #ifdef __need_mbstate_t
-/* Special invocation convention inside glibc header files.  */
+/* Special invocation convention inside uClibc header files.  */
 
 #@INCLUDE_NEXT@ @NEXT_WCHAR_H@
 
@@ -60,6 +64,12 @@
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+
+/* Define wint_t.  (Also done in wctype.in.h.)  */
+#if !@HAVE_WINT_T@ && !defined wint_t
+# define wint_t int
 #endif
 
 
