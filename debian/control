@@ -3,7 +3,7 @@ Section: utils
 Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Build-Depends: debhelper (>> 5), gettext, autoconf, autotools-dev
-Standards-Version: 3.7.3
+Standards-Version: 3.8.0
 
 Package: tar
 Architecture: any
