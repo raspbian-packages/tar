@@ -9,10 +9,10 @@ endif
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-
+	cp -f /usr/share/misc/config.sub build-aux/config.sub
+	cp -f /usr/share/misc/config.guess build-aux/config.guess
 	RSH="/usr/bin/rsh" CFLAGS="-O2 -g -Wall" \
 		./configure --prefix=/usr --libexecdir=/usr/sbin $(CONFARGS)
-
 	touch configure-stamp
 
 build: configure-stamp build-stamp
@@ -33,11 +33,6 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	[ ! -f Makefile ] || $(MAKE) distclean
-
-	-test -r /usr/share/misc/config.sub && \
-		cp -f /usr/share/misc/config.sub build-aux/config.sub
-	-test -r /usr/share/misc/config.guess && \
-		cp -f /usr/share/misc/config.guess build-aux/config.guess
 
 	dh_clean
 
