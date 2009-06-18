@@ -35,7 +35,7 @@ This manual is for @acronym{GNU} @command{tar} (version
 from archives.
 
 Copyright @copyright{} 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001,
-2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -2786,7 +2786,6 @@ incremental format.  @xref{Incremental Dumps}.
 
 @opsummary{lzma}
 @item --lzma
-@itemx -J
 
 This option tells @command{tar} to read or write archives through
 @command{lzma}.  @xref{gzip}.
@@ -3309,6 +3308,7 @@ name quoting}.
 
 @opsummary{use-compress-program}
 @item --use-compress-program=@var{prog}
+@itemx -I=@var{prog}
 
 Instructs @command{tar} to access the archive through @var{prog}, which is
 presumed to be a compression program of some sort.  @xref{gzip}.
@@ -3358,6 +3358,12 @@ Use wildcards when matching member names with patterns.
 @item --wildcards-match-slash
 Wildcards match @samp{/}.
 @xref{controlling pattern-matching}.
+
+@opsummary{xz}
+@item --xz
+@itemx -J
+Use @command{xz} for compressing or decompressing the archives.  @xref{gzip}.
+
 @end table
 
 @node Short Option Summary
@@ -3379,7 +3385,7 @@ them with the equivalent long option.
 
 @item -G @tab @ref{--incremental}.
 
-@item -J @tab @ref{--lzma}.
+@item -J @tab @ref{--xz}.
 
 @item -K @tab @ref{--starting-file}.
 
@@ -4138,7 +4144,7 @@ The five operations that we will cover in this chapter are:
 @itemx -r
 Add new entries to an archive that already exists.
 @item --update
-@itemx -r
+@itemx -u
 Add more recent copies of archive members to the end of an archive, if
 they exist.
 @item --concatenate
@@ -8405,7 +8411,8 @@ Creating a compressed archive is simple: you just specify a
 commands.  The compression option is @option{-z} (@option{--gzip}) to
 create a @command{gzip} compressed archive, @option{-j}
 (@option{--bzip2}) to create a @command{bzip2} compressed archive,
-@option{-J} (@option{--lzma}) to create an @asis{LZMA} compressed
+@option{-J} (@option{--xz}) to create an @asis{XZ} archive, 
+@option{--lzma} to create an @asis{LZMA} compressed
 archive, @option{--lzop} to create an @asis{LSOP} archive, and
 @option{-Z} (@option{--compress}) to use @command{compress} program.
 For example:
@@ -8503,6 +8510,7 @@ suffix.  The following suffixes are recognized:
 @item @samp{.lzma} @tab @command{lzma}
 @item @samp{.tlz} @tab @command{lzma}
 @item @samp{.lzo} @tab @command{lzop}
+@item @samp{.xz} @tab @command{xz}
 @end multitable
 
 @opindex gzip
@@ -8547,13 +8555,17 @@ lose some compressibility.  But this would have make recovering easier.
 So, there are pros and cons.  We'll see!
 
 @opindex bzip2
+@item -J
+@itemx --xz
+Filter the archive through @code{xz}.  Otherwise like
+@option{--gzip}.
+
 @item -j
 @itemx --bzip2
 Filter the archive through @code{bzip2}.  Otherwise like @option{--gzip}.
 
 @opindex lzma
 @item --lzma
-@itemx -J
 Filter the archive through @command{lzma}.  Otherwise like @option{--gzip}.
 
 @opindex lzop
@@ -8570,6 +8582,7 @@ Filter the archive through @command{compress}.  Otherwise like @option{--gzip}.
 
 @opindex use-compress-program
 @item --use-compress-program=@var{prog}
+@itemx -I=@var{prog}
 Use external compression program @var{prog}.  Use this option if you
 have a compression program that @GNUTAR{} does not support.  There
 are two requirements to which @var{prog} should comply:
@@ -8608,14 +8621,14 @@ Suppose you name it @file{gpgz} and save it somewhere in your
 archive signed with your private key:
 
 @smallexample
-$ @kbd{tar -cf foo.tar.gpgz --use-compress=gpgz .}
+$ @kbd{tar -cf foo.tar.gpgz -Igpgz .}
 @end smallexample
 
 @noindent
-Likewise, the following command will list its contents:
+Likewise, the command below will list its contents:
 
 @smallexample
-$ @kbd{tar -tf foo.tar.gpgz --use-compress=gpgz .}
+$ @kbd{tar -tf foo.tar.gpgz -Igpgz .}
 @end smallexample
 
 @ignore
@@ -8887,11 +8900,7 @@ This option is meaningless with @option{--list} (@option{-t}).
 @item --preserve
 Same as both @option{--same-permissions} and @option{--same-order}.
 
-The @option{--preserve} option has no equivalent short option name.
-It is equivalent to @option{--same-permissions} plus @option{--same-order}.
-
-@FIXME{I do not see the purpose of such an option.  (Neither I.  FP.)
-Neither do I. --Sergey}
+This option is deprecated, and will be removed in @GNUTAR{} version 1.23.
 
 @end table
 

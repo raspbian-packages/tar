@@ -1,10 +1,10 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.21, 30 October 2008), which
+This manual is for GNU `tar' (version 1.22, 5 March 2009), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
-2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -34,11 +34,11 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.21, 30 October 2008), which
+This manual is for GNU `tar' (version 1.22, 5 March 2009), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
-2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -561,7 +561,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.21
+to create version 1.12.  The book for versions from 1.14 up to 1.22
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2495,7 +2495,6 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      format.  *Note Incremental Dumps::.
 
 `--lzma'
-`-J'
      This option tells `tar' to read or write archives through `lzma'.
      *Note gzip::.
 
@@ -2878,6 +2877,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      input name quoting::.
 
 `--use-compress-program=PROG'
+`-I=PROG'
      Instructs `tar' to access the archive through PROG, which is
      presumed to be a compression program of some sort.  *Note gzip::.
 
@@ -2914,6 +2914,12 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 `--wildcards-match-slash'
      Wildcards match `/'.  *Note controlling pattern-matching::.
 
+`--xz'
+`-J'
+     Use `xz' for compressing or decompressing the archives.  *Note
+     gzip::.
+
+
    ---------- Footnotes ----------
 
    (1) Earlier versions of GNU `tar' understood `-l' as a synonym for
@@ -2937,7 +2943,7 @@ Short Option   Reference
 -C             *note --directory::.
 -F             *note --info-script::.
 -G             *note --incremental::.
--J             *note --lzma::.
+-J             *note --xz::.
 -K             *note --starting-file::.
 -L             *note --tape-length::.
 -M             *note --multi-volume::.
@@ -2992,7 +2998,7 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.21
+     tar (GNU tar) 1.22
      Copyright (C) 2008 Free Software Foundation, Inc.
      This is free software.  You may redistribute copies of it under the terms
      of the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
@@ -3558,7 +3564,7 @@ where the last chapter left them.)
      Add new entries to an archive that already exists.
 
 `--update'
-`-r'
+`-u'
      Add more recent copies of archive members to the end of an
      archive, if they exist.
 
@@ -5935,7 +5941,7 @@ difficult to catch using text editors.
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-   As of version 1.21, the following files are excluded:
+   As of version 1.22, the following files are excluded:
 
    * `CVS/', and everything under it
 
@@ -7590,7 +7596,7 @@ v7
      Makefiles.  This practice will change in the future, in the
      meantime, however this means that projects containing file names
      more than 99 characters long will not be able to use GNU `tar'
-     1.21 and Automake prior to 1.9.
+     1.22 and Automake prior to 1.9.
 
 ustar
      Archive format defined by POSIX.1-1988 specification.  It stores

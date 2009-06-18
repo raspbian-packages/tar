@@ -1,8 +1,8 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation,
-   Inc.
+   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+   Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -1047,6 +1047,11 @@ prune_impossible_nodes (re_match_context_t *mctx)
       re_node_set_free (&sctx.limits);
       if (BE (ret != REG_NOERROR, 0))
 	goto free_return;
+      if (sifted_states[0] == NULL)
+	{
+	  ret = REG_NOMATCH;
+	  goto free_return;
+	}
     }
   re_free (mctx->state_log);
   mctx->state_log = sifted_states;
@@ -3081,7 +3086,9 @@ check_arrival_add_next_nodes (re_match_context_t *mctx, Idx str_idx,
   const re_dfa_t *const dfa = mctx->dfa;
   bool ok;
   Idx cur_idx;
+#ifdef RE_ENABLE_I18N
   reg_errcode_t err = REG_NOERROR;
+#endif
   re_node_set union_set;
   re_node_set_init_empty (&union_set);
   for (cur_idx = 0; cur_idx < cur_nodes->nelem; ++cur_idx)
