@@ -1,12 +1,14 @@
-tar (1.21-1) UNRELEASED; urgency=low
+tar (1.22-1) unstable; urgency=low
 
   * new upstream version
-  * update man page to include new and changed commands in 1.21
   * version the Replaces entry for cpio, closes: #483355
   * move config.* update to configure target, yields a smaller diff that 
     doesn't clash with git-buildpackage... already had autotools-dev build dep!
+  * script debian/tarman contributed by Marcus Watts now used to create tar.1
+    by processing usage text in source code!  Partial fix for #473328.
+    closes: #515578, #429776, #411707, 
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 24 Feb 2009 23:16:14 -0700
+ -- Bdale Garbee <bdale@gag.com>  Fri, 03 Apr 2009 01:33:52 -0600
 
 tar (1.20-1) unstable; urgency=low
 
