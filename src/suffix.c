@@ -1,5 +1,5 @@
 /* This file is part of GNU tar.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 
    Written by Sergey Poznyakoff.
 
@@ -40,6 +40,7 @@ struct compression_suffix compression_suffixes[] = {
   { S(lzma, lzma) },
   { S(tlz, lzma) },
   { S(lzo, lzop) },
+  { S(xz, xz) },
 #undef S
 };
 

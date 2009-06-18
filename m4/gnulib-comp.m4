@@ -1,7 +1,7 @@
 # -*- buffer-read-only: t -*- vi: set ro:
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -28,7 +28,6 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
   AC_REQUIRE([AC_PROG_RANLIB])
   AC_REQUIRE([AM_PROG_CC_C_O])
-  AC_REQUIRE([AC_GNU_SOURCE])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([AC_FUNC_FSEEKO])
   dnl Some compilers (e.g., AIX 5.3 cc) need to be in c99 mode
@@ -60,6 +59,8 @@ AC_DEFUN([gl_INIT],
     [AM_XGETTEXT_OPTION([--flag=argp_error:2:c-format])
      AM_XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
   gl_BACKUPFILE
+  gl_FUNC_BTOWC
+  gl_WCHAR_MODULE_INDICATOR([btowc])
   gl_CANONICALIZE_LGPL
   gl_MODULE_INDICATOR([canonicalize-lgpl])
   gl_FUNC_CHDIR_LONG
@@ -81,7 +82,7 @@ AC_DEFUN([gl_INIT],
   gl_UNISTD_MODULE_INDICATOR([dup2])
   gl_ENVIRON
   gl_UNISTD_MODULE_INDICATOR([environ])
-  gl_HEADER_ERRNO_H
+  AC_REQUIRE([gl_HEADER_ERRNO_H])
   gl_ERROR
   m4_ifdef([AM_XGETTEXT_OPTION],
     [AM_XGETTEXT_OPTION([--flag=error:3:c-format])
@@ -140,19 +141,22 @@ AC_DEFUN([gl_INIT],
   gl_STDLIB_MODULE_INDICATOR([malloc-posix])
   gl_MALLOCA
   gl_MBCHAR
+  gl_FUNC_MBRTOWC
+  gl_WCHAR_MODULE_INDICATOR([mbrtowc])
   gl_FUNC_MBSCASECMP
   gl_STRING_MODULE_INDICATOR([mbscasecmp])
+  gl_FUNC_MBSINIT
+  gl_WCHAR_MODULE_INDICATOR([mbsinit])
   gl_MBITER
-  gl_FUNC_MEMCHR
   gl_FUNC_MEMPCPY
   gl_STRING_MODULE_INDICATOR([mempcpy])
   gl_FUNC_MEMRCHR
   gl_STRING_MODULE_INDICATOR([memrchr])
-  gl_FUNC_MEMSET
   gt_FUNC_MKDTEMP
   gl_STDLIB_MODULE_INDICATOR([mkdtemp])
   gl_FUNC_MKTIME
   gl_MODECHANGE
+  AC_REQUIRE([gl_MULTIARCH])
   AC_FUNC_OBSTACK
   dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
   gl_FUNC_OPEN
@@ -169,7 +173,6 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_REALLOC_POSIX
   gl_STDLIB_MODULE_INDICATOR([realloc-posix])
   gl_REGEX
-  gl_FUNC_RMDIR
   gl_FUNC_RPMATCH
   gl_STDLIB_MODULE_INDICATOR([rpmatch])
   gl_SAFE_READ
@@ -178,6 +181,7 @@ AC_DEFUN([gl_INIT],
   gl_SAVEDIR
   gl_FUNC_SETENV
   gl_STDLIB_MODULE_INDICATOR([setenv])
+  gl_SIZE_MAX
   gl_FUNC_SLEEP
   gl_UNISTD_MODULE_INDICATOR([sleep])
   gl_FUNC_SNPRINTF
@@ -195,7 +199,7 @@ AC_DEFUN([gl_INIT],
   gl_STRCASE
   gl_FUNC_STRCHRNUL
   gl_STRING_MODULE_INDICATOR([strchrnul])
-  gl_FUNC_STRDUP
+  gl_FUNC_STRDUP_POSIX
   gl_STRING_MODULE_INDICATOR([strdup])
   gl_FUNC_STRERROR
   gl_STRING_MODULE_INDICATOR([strerror])
@@ -236,6 +240,8 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_VSNPRINTF
   gl_STDIO_MODULE_INDICATOR([vsnprintf])
   gl_WCHAR_H
+  gl_FUNC_WCRTOMB
+  gl_WCHAR_MODULE_INDICATOR([wcrtomb])
   gl_WCTYPE_H
   gl_FUNC_WCWIDTH
   gl_WCHAR_MODULE_INDICATOR([wcwidth])
@@ -403,6 +409,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/backupfile.c
   lib/backupfile.h
   lib/basename.c
+  lib/btowc.c
   lib/c-ctype.c
   lib/c-ctype.h
   lib/canonicalize-lgpl.c
@@ -485,12 +492,12 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/malloca.valgrind
   lib/mbchar.c
   lib/mbchar.h
+  lib/mbrtowc.c
   lib/mbscasecmp.c
+  lib/mbsinit.c
   lib/mbuiter.h
-  lib/memchr.c
   lib/mempcpy.c
   lib/memrchr.c
-  lib/memset.c
   lib/mkdirat.c
   lib/mkdtemp.c
   lib/mktime.c
@@ -528,7 +535,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/regex_internal.c
   lib/regex_internal.h
   lib/regexec.c
-  lib/rmdir.c
   lib/rpmatch.c
   lib/safe-read.c
   lib/safe-read.h
@@ -540,6 +546,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/savedir.c
   lib/savedir.h
   lib/setenv.c
+  lib/size_max.h
   lib/sleep.c
   lib/snprintf.c
   lib/stat-macros.h
@@ -603,7 +610,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/version-etc.c
   lib/version-etc.h
   lib/vsnprintf.c
+  lib/w32sock.h
   lib/wchar.in.h
+  lib/wcrtomb.c
   lib/wctype.in.h
   lib/wcwidth.c
   lib/write.c
@@ -620,11 +629,13 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xstrtol.h
   lib/xstrtoul.c
   lib/xstrtoumax.c
+  m4/00gnulib.m4
   m4/alloca.m4
   m4/argmatch.m4
   m4/argp.m4
   m4/backupfile.m4
   m4/bison.m4
+  m4/btowc.m4
   m4/canonicalize-lgpl.m4
   m4/chdir-long.m4
   m4/chown.m4
@@ -692,6 +703,9 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/lib-link.m4
   m4/lib-prefix.m4
   m4/localcharset.m4
+  m4/locale-fr.m4
+  m4/locale-ja.m4
+  m4/locale-zh.m4
   m4/lock.m4
   m4/longlong.m4
   m4/lseek.m4
@@ -702,14 +716,14 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/mbiter.m4
   m4/mbrtowc.m4
   m4/mbscasecmp.m4
+  m4/mbsinit.m4
   m4/mbstate_t.m4
-  m4/memchr.m4
   m4/mempcpy.m4
   m4/memrchr.m4
-  m4/memset.m4
   m4/mkdtemp.m4
   m4/mktime.m4
   m4/modechange.m4
+  m4/multiarch.m4
   m4/nls.m4
   m4/open.m4
   m4/openat.m4
@@ -724,7 +738,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/readlink.m4
   m4/realloc.m4
   m4/regex.m4
-  m4/rmdir.m4
   m4/rpmatch.m4
   m4/safe-read.m4
   m4/safe-write.m4
@@ -781,6 +794,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/vsnprintf.m4
   m4/wchar.m4
   m4/wchar_t.m4
+  m4/wcrtomb.m4
   m4/wctype.m4
   m4/wcwidth.m4
   m4/wint_t.m4

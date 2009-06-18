@@ -1,7 +1,8 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
-/* memset.c -- set an area of memory to a given value
-   Copyright (C) 1991, 2003 Free Software Foundation, Inc.
+/* size_max.h -- declare SIZE_MAX through system headers
+   Copyright (C) 2005-2006 Free Software Foundation, Inc.
+   Written by Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,14 +18,16 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#include <stddef.h>
+#ifndef GNULIB_SIZE_MAX_H
+#define GNULIB_SIZE_MAX_H
 
-void *
-memset (void *str, int c, size_t len)
-{
-  register char *st = str;
+/* Get SIZE_MAX declaration on systems like Solaris 7/8/9.  */
+# include <limits.h>
+/* Get SIZE_MAX declaration on systems like glibc 2.  */
+# if HAVE_STDINT_H
+#  include <stdint.h>
+# endif
+/* On systems where these include files don't define it, SIZE_MAX is defined
+   in config.h.  */
 
-  while (len-- > 0)
-    *st++ = c;
-  return str;
-}
+#endif /* GNULIB_SIZE_MAX_H */
