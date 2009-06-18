@@ -681,7 +681,7 @@ at_help_all="1;version.at:19;tar version;;
 53;recurse.at:21;recurse;recurse;
 54;same-order01.at:26;working -C with --same-order;same-order same-order01;
 55;same-order02.at:25;multiple -C options;same-order same-order02;
-56;shortrec.at:25;short records;shortrec.at;
+56;shortrec.at:25;short records;shortrec;
 57;sparse01.at:21;sparse files;sparse sparse01;
 58;sparse02.at:21;extracting sparse file over a pipe;sparse sparse02;
 59;sparse03.at:21;storing sparse files > 8G;sparse sparse03;
@@ -926,7 +926,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF
-GNU tar 1.21 test suite test groups:
+GNU tar 1.22 test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -950,7 +950,7 @@ _ATEOF
   exit 0
 fi
 if $at_version_p; then
-  echo "$as_me (GNU tar 1.21)"
+  echo "$as_me (GNU tar 1.22)"
   cat <<\_ACEOF
 
 Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
@@ -1034,13 +1034,13 @@ exec 5>>"$at_suite_log"
 # Banners and logs.
 cat <<\_ASBOX
 ## ------------------------ ##
-## GNU tar 1.21 test suite. ##
+## GNU tar 1.22 test suite. ##
 ## ------------------------ ##
 _ASBOX
 {
   cat <<\_ASBOX
 ## ------------------------ ##
-## GNU tar 1.21 test suite. ##
+## GNU tar 1.22 test suite. ##
 ## ------------------------ ##
 _ASBOX
   echo
@@ -1137,7 +1137,7 @@ IFS=$as_save_IFS
 
   if test -f "$as_dir/$at_program"; then
     {
-      echo "$at_srcdir/testsuite.at:92: $as_dir/$at_program --version"
+      echo "$at_srcdir/testsuite.at:104: $as_dir/$at_program --version"
       "$as_dir/$at_program" --version
       echo
     } >&5 2>&1
@@ -1310,7 +1310,7 @@ fi
 
 at_failed=false
 $at_diff "$at_devnull" "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; echo "tar (GNU tar) 1.21
+echo >>"$at_stdout"; echo "tar (GNU tar) 1.22
 " | $at_diff - "$at_stdout" || at_failed=:
 case $at_status in
    77) echo 77 > "$at_status_file"; exit 77;;
@@ -1352,6 +1352,8 @@ $at_traceon
     (
       echo "2. pipe.at:29: testing ..."
       $at_traceon
+
+
 
 
 
@@ -1444,7 +1446,7 @@ cmp orig/file2 directory/file2) ) >"$at_stdout" 2>"$at_stderr"
 fi
 
 at_failed=false
-$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+echo stderr:; tee stderr <"$at_stderr"
 echo >>"$at_stdout"; echo "directory/
 directory/file1
 directory/file2
@@ -1465,6 +1467,45 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/pipe.at:33: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo pipe.at:33 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+$at_diff "$at_devnull" "$at_stdout" || at_failed=:
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/pipe.at:33: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
 $at_traceoff
 echo "$at_srcdir/pipe.at:33:
 mkdir oldgnu
@@ -1551,7 +1592,7 @@ cmp orig/file2 directory/file2) ) >"$at_stdout" 2>"$at_stderr"
 fi
 
 at_failed=false
-$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+echo stderr:; tee stderr <"$at_stderr"
 echo >>"$at_stdout"; echo "directory/
 directory/file1
 directory/file2
@@ -1572,6 +1613,45 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/pipe.at:33: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo pipe.at:33 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+$at_diff "$at_devnull" "$at_stdout" || at_failed=:
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/pipe.at:33: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
 $at_traceoff
 echo "$at_srcdir/pipe.at:33:
 mkdir ustar
@@ -1658,7 +1738,7 @@ cmp orig/file2 directory/file2) ) >"$at_stdout" 2>"$at_stderr"
 fi
 
 at_failed=false
-$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+echo stderr:; tee stderr <"$at_stderr"
 echo >>"$at_stdout"; echo "directory/
 directory/file1
 directory/file2
@@ -1679,6 +1759,45 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/pipe.at:33: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo pipe.at:33 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+$at_diff "$at_devnull" "$at_stdout" || at_failed=:
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/pipe.at:33: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
 $at_traceoff
 echo "$at_srcdir/pipe.at:33:
 mkdir posix
@@ -1765,7 +1884,7 @@ cmp orig/file2 directory/file2) ) >"$at_stdout" 2>"$at_stderr"
 fi
 
 at_failed=false
-$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+echo stderr:; tee stderr <"$at_stderr"
 echo >>"$at_stdout"; echo "directory/
 directory/file1
 directory/file2
@@ -1786,6 +1905,45 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/pipe.at:33: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo pipe.at:33 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+$at_diff "$at_devnull" "$at_stdout" || at_failed=:
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/pipe.at:33: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
 $at_traceoff
 echo "$at_srcdir/pipe.at:33:
 mkdir gnu
@@ -1872,7 +2030,7 @@ cmp orig/file2 directory/file2) ) >"$at_stdout" 2>"$at_stderr"
 fi
 
 at_failed=false
-$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+echo stderr:; tee stderr <"$at_stderr"
 echo >>"$at_stdout"; echo "directory/
 directory/file1
 directory/file2
@@ -1893,6 +2051,47 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/pipe.at:33: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo pipe.at:33 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+$at_diff "$at_devnull" "$at_stderr" || at_failed=:
+$at_diff "$at_devnull" "$at_stdout" || at_failed=:
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/pipe.at:33: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+
 
 
 
@@ -2157,6 +2356,7 @@ fi
 
 $at_traceon
 
+
  # Testing one format is enough
 
       $at_traceoff
@@ -2296,6 +2496,7 @@ fi
 
 $at_traceon
 
+
  # Testing one format is enough
 
       $at_traceoff
@@ -2413,7 +2614,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/indexfile.at:29:
 mkdir oldgnu
 (cd oldgnu
@@ -2507,7 +2709,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/indexfile.at:29:
 mkdir ustar
 (cd ustar
@@ -2601,7 +2804,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/indexfile.at:29:
 mkdir posix
 (cd posix
@@ -2695,7 +2899,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/indexfile.at:29:
 mkdir gnu
 (cd gnu
@@ -2789,6 +2994,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -2895,7 +3101,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/verbose.at:29:
 mkdir oldgnu
 (cd oldgnu
@@ -2977,7 +3184,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/verbose.at:29:
 mkdir ustar
 (cd ustar
@@ -3059,7 +3267,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/verbose.at:29:
 mkdir posix
 (cd posix
@@ -3141,7 +3350,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/verbose.at:29:
 mkdir gnu
 (cd gnu
@@ -3223,6 +3433,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -3321,7 +3532,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append.at:24:
 mkdir oldgnu
 (cd oldgnu
@@ -3395,7 +3607,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append.at:24:
 mkdir ustar
 (cd ustar
@@ -3469,7 +3682,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append.at:24:
 mkdir posix
 (cd posix
@@ -3543,7 +3757,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append.at:24:
 mkdir gnu
 (cd gnu
@@ -3617,6 +3832,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -3723,7 +3939,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append01.at:34:
 mkdir ustar
 (cd ustar
@@ -3803,7 +4020,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append01.at:34:
 mkdir posix
 (cd posix
@@ -3883,7 +4101,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append01.at:34:
 mkdir gnu
 (cd gnu
@@ -3963,6 +4182,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -4119,7 +4339,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append02.at:43:
 mkdir oldgnu
 (cd oldgnu
@@ -4251,7 +4472,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append02.at:43:
 mkdir ustar
 (cd ustar
@@ -4383,7 +4605,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append02.at:43:
 mkdir posix
 (cd posix
@@ -4515,7 +4738,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/append02.at:43:
 mkdir gnu
 (cd gnu
@@ -4647,6 +4871,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -4932,6 +5157,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -5029,7 +5255,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete01.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -5105,7 +5332,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete01.at:26:
 mkdir ustar
 (cd ustar
@@ -5181,7 +5409,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete01.at:26:
 mkdir posix
 (cd posix
@@ -5257,7 +5486,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete01.at:26:
 mkdir gnu
 (cd gnu
@@ -5333,6 +5563,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -5447,7 +5678,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete02.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -5537,7 +5769,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete02.at:26:
 mkdir ustar
 (cd ustar
@@ -5627,7 +5860,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete02.at:26:
 mkdir posix
 (cd posix
@@ -5717,7 +5951,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete02.at:26:
 mkdir gnu
 (cd gnu
@@ -5807,6 +6042,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -5931,7 +6167,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete03.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -6029,7 +6266,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete03.at:26:
 mkdir posix
 (cd posix
@@ -6127,6 +6365,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -6262,7 +6501,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete04.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -6373,7 +6613,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete04.at:26:
 mkdir ustar
 (cd ustar
@@ -6484,7 +6725,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete04.at:26:
 mkdir posix
 (cd posix
@@ -6595,7 +6837,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete04.at:26:
 mkdir gnu
 (cd gnu
@@ -6706,6 +6949,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -6821,7 +7065,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete05.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -6912,7 +7157,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete05.at:30:
 mkdir ustar
 (cd ustar
@@ -7003,7 +7249,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete05.at:30:
 mkdir posix
 (cd posix
@@ -7094,7 +7341,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/delete05.at:30:
 mkdir gnu
 (cd gnu
@@ -7185,6 +7433,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -7284,7 +7533,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac01.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -7359,7 +7609,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac01.at:26:
 mkdir ustar
 (cd ustar
@@ -7434,7 +7685,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac01.at:26:
 mkdir posix
 (cd posix
@@ -7509,7 +7761,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac01.at:26:
 mkdir gnu
 (cd gnu
@@ -7584,6 +7837,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -7691,7 +7945,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac02.at:28:
 mkdir oldgnu
 (cd oldgnu
@@ -7772,7 +8027,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac02.at:28:
 mkdir ustar
 (cd ustar
@@ -7853,7 +8109,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac02.at:28:
 mkdir posix
 (cd posix
@@ -7934,7 +8191,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac02.at:28:
 mkdir gnu
 (cd gnu
@@ -8015,6 +8273,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -8114,7 +8373,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac03.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -8189,7 +8449,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac03.at:26:
 mkdir ustar
 (cd ustar
@@ -8264,7 +8525,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac03.at:26:
 mkdir posix
 (cd posix
@@ -8339,7 +8601,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac03.at:26:
 mkdir gnu
 (cd gnu
@@ -8414,6 +8677,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -8549,7 +8813,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac04.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -8660,7 +8925,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac04.at:26:
 mkdir ustar
 (cd ustar
@@ -8771,7 +9037,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac04.at:26:
 mkdir posix
 (cd posix
@@ -8882,7 +9149,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac04.at:26:
 mkdir gnu
 (cd gnu
@@ -8993,6 +9261,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -9130,6 +9399,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -9302,7 +9572,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac06.at:36:
 mkdir oldgnu
 (cd oldgnu
@@ -9450,7 +9721,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac06.at:36:
 mkdir ustar
 (cd ustar
@@ -9598,7 +9870,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac06.at:36:
 mkdir posix
 (cd posix
@@ -9746,7 +10019,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac06.at:36:
 mkdir gnu
 (cd gnu
@@ -9894,6 +10168,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -10036,7 +10311,8 @@ else
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac07.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -10154,7 +10430,8 @@ else
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac07.at:30:
 mkdir ustar
 (cd ustar
@@ -10272,7 +10549,8 @@ else
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac07.at:30:
 mkdir posix
 (cd posix
@@ -10390,7 +10668,8 @@ else
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/extrac07.at:30:
 mkdir gnu
 (cd gnu
@@ -10508,6 +10787,7 @@ else
 fi
 
 $at_traceon
+
 
  # Testing one format is enough
 
@@ -10757,7 +11037,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incremental.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -10902,7 +11183,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incremental.at:26:
 mkdir posix
 (cd posix
@@ -11047,6 +11329,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -11175,7 +11458,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr01.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -11279,7 +11563,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr01.at:30:
 mkdir posix
 (cd posix
@@ -11383,6 +11668,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -11575,7 +11861,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr02.at:35:
 mkdir oldgnu
 (cd oldgnu
@@ -11743,7 +12030,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr02.at:35:
 mkdir posix
 (cd posix
@@ -11914,6 +12202,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -12073,7 +12362,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/listed01.at:29:
 mkdir oldgnu
 (cd oldgnu
@@ -12211,6 +12501,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -12522,7 +12813,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/listed02.at:31:
 mkdir oldgnu
 (cd oldgnu
@@ -12812,6 +13104,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -12995,7 +13288,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr03.at:31:
 mkdir oldgnu
 (cd oldgnu
@@ -13157,7 +13451,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr03.at:31:
 mkdir posix
 (cd posix
@@ -13319,6 +13614,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -13600,7 +13896,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr04.at:34:
 mkdir oldgnu
 (cd oldgnu
@@ -13855,7 +14152,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/incr04.at:34:
 mkdir posix
 (cd posix
@@ -14110,6 +14408,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -14312,7 +14611,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename01.at:27:
 mkdir oldgnu
 (cd oldgnu
@@ -14490,7 +14790,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename01.at:27:
 mkdir posix
 (cd posix
@@ -14668,6 +14969,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -14893,7 +15195,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename02.at:27:
 mkdir oldgnu
 (cd oldgnu
@@ -15094,7 +15397,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename02.at:27:
 mkdir posix
 (cd posix
@@ -15295,6 +15599,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -15569,7 +15874,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename03.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -15819,7 +16125,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename03.at:26:
 mkdir posix
 (cd posix
@@ -16069,6 +16376,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -16257,7 +16565,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename04.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -16421,7 +16730,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename04.at:30:
 mkdir posix
 (cd posix
@@ -16585,6 +16895,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -16776,7 +17087,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename05.at:27:
 mkdir oldgnu
 (cd oldgnu
@@ -16943,7 +17255,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/rename05.at:27:
 mkdir posix
 (cd posix
@@ -17110,6 +17423,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -17296,7 +17610,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/chtype.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -17458,7 +17773,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/chtype.at:30:
 mkdir posix
 (cd posix
@@ -17620,6 +17936,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -17840,7 +18157,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/ignfail.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -18036,7 +18354,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/ignfail.at:26:
 mkdir ustar
 (cd ustar
@@ -18232,7 +18551,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/ignfail.at:26:
 mkdir posix
 (cd posix
@@ -18428,7 +18748,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/ignfail.at:26:
 mkdir gnu
 (cd gnu
@@ -18624,6 +18945,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -18751,7 +19073,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/link01.at:36:
 mkdir oldgnu
 (cd oldgnu
@@ -18854,7 +19177,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/link01.at:36:
 mkdir ustar
 (cd ustar
@@ -18957,7 +19281,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/link01.at:36:
 mkdir posix
 (cd posix
@@ -19060,7 +19385,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/link01.at:36:
 mkdir gnu
 (cd gnu
@@ -19163,6 +19489,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -19278,6 +19605,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -19383,7 +19711,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/long01.at:36:
 mkdir oldgnu
 (cd oldgnu
@@ -19463,6 +19792,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -19560,6 +19890,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -19664,6 +19995,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -19774,6 +20106,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -19952,7 +20285,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv01.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -20102,7 +20436,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv01.at:30:
 mkdir pax
 (cd pax
@@ -20252,6 +20587,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -20371,7 +20707,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv02.at:31:
 mkdir oldgnu
 (cd oldgnu
@@ -20466,7 +20803,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv02.at:31:
 mkdir pax
 (cd pax
@@ -20561,6 +20899,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -20738,7 +21077,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv03.at:33:
 mkdir oldgnu
 (cd oldgnu
@@ -20894,6 +21234,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -21030,7 +21371,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv04.at:39:
 mkdir oldgnu
 (cd oldgnu
@@ -21145,6 +21487,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -21335,6 +21678,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -21444,7 +21788,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/multiv06.at:30:
 mkdir pax
 (cd pax
@@ -21532,6 +21877,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -21703,7 +22049,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/recurse.at:24:
 mkdir oldgnu
 (cd oldgnu
@@ -21779,7 +22126,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/recurse.at:24:
 mkdir ustar
 (cd ustar
@@ -21855,7 +22203,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/recurse.at:24:
 mkdir posix
 (cd posix
@@ -21931,7 +22280,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/recurse.at:24:
 mkdir gnu
 (cd gnu
@@ -22007,6 +22357,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -22132,7 +22483,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order01.at:29:
 mkdir oldgnu
 (cd oldgnu
@@ -22233,7 +22585,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order01.at:29:
 mkdir ustar
 (cd ustar
@@ -22334,7 +22687,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order01.at:29:
 mkdir posix
 (cd posix
@@ -22435,7 +22789,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order01.at:29:
 mkdir gnu
 (cd gnu
@@ -22536,6 +22891,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -22665,7 +23021,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order02.at:28:
 mkdir oldgnu
 (cd oldgnu
@@ -22770,7 +23127,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order02.at:28:
 mkdir ustar
 (cd ustar
@@ -22875,7 +23233,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order02.at:28:
 mkdir posix
 (cd posix
@@ -22980,7 +23339,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/same-order02.at:28:
 mkdir gnu
 (cd gnu
@@ -23085,6 +23445,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -23109,6 +23470,8 @@ $at_traceon
 
 
 
+
+
   $at_traceoff
 echo "$at_srcdir/shortrec.at:28:
 mkdir v7
@@ -23121,10 +23484,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 )"
@@ -23147,10 +23510,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stder1"
@@ -23169,13 +23532,51 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+echo stderr:; tee stderr <"$at_stderr"
+echo stdout:; cat "$at_stdout"
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/shortrec.at:28: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/shortrec.at:28: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo shortrec.at:28 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
     at_status=$?
 fi
 
@@ -23196,6 +23597,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 $at_traceoff
 echo "$at_srcdir/shortrec.at:28:
 mkdir oldgnu
@@ -23208,10 +23610,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 )"
@@ -23234,10 +23636,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stder1"
@@ -23256,13 +23658,51 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+echo stderr:; tee stderr <"$at_stderr"
+echo stdout:; cat "$at_stdout"
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/shortrec.at:28: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/shortrec.at:28: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo shortrec.at:28 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
     at_status=$?
 fi
 
@@ -23283,6 +23723,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 $at_traceoff
 echo "$at_srcdir/shortrec.at:28:
 mkdir ustar
@@ -23295,10 +23736,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 )"
@@ -23321,10 +23762,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stder1"
@@ -23343,13 +23784,51 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+echo stderr:; tee stderr <"$at_stderr"
+echo stdout:; cat "$at_stdout"
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/shortrec.at:28: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/shortrec.at:28: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo shortrec.at:28 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
     at_status=$?
 fi
 
@@ -23370,6 +23849,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 $at_traceoff
 echo "$at_srcdir/shortrec.at:28:
 mkdir posix
@@ -23382,10 +23862,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 )"
@@ -23408,10 +23888,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stder1"
@@ -23430,13 +23910,51 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+echo stderr:; tee stderr <"$at_stderr"
+echo stdout:; cat "$at_stdout"
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/shortrec.at:28: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/shortrec.at:28: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo shortrec.at:28 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
     at_status=$?
 fi
 
@@ -23457,6 +23975,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 $at_traceoff
 echo "$at_srcdir/shortrec.at:28:
 mkdir gnu
@@ -23469,10 +23988,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 )"
@@ -23495,10 +24014,10 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stder1"
@@ -23517,13 +24036,51 @@ rm -rf *
 
 mkdir directory
 (cd directory && touch a b c d e f g h i j k l m n o p q r)
-tar -c -b 1 -f - directory | tar -t -f - >/dev/null
+tar -c -b 1 -f - directory | tar -t -f -
 tar -c -b 1 -f archive directory
-tar -t -f archive >/dev/null
-tar -t -f - < archive >/dev/null
+tar -t -f archive
+tar -t -f - < archive
 
 rm -r directory
 ) ) >"$at_stdout" 2>"$at_stderr"
+    at_status=$?
+fi
+
+at_failed=false
+echo stderr:; tee stderr <"$at_stderr"
+echo stdout:; cat "$at_stdout"
+case $at_status in
+   77) echo 77 > "$at_status_file"; exit 77;;
+   0) ;;
+   *) echo "$at_srcdir/shortrec.at:28: exit code was $at_status, expected 0"
+      at_failed=:;;
+esac
+if $at_failed; then
+
+
+  echo 1 > "$at_status_file"
+  exit 1
+fi
+
+$at_traceon
+
+
+  $at_traceoff
+echo "$at_srcdir/shortrec.at:28: grep -v '^.*tar: Record size = ' stderr; exit 0"
+echo shortrec.at:28 >"$at_check_line_file"
+
+at_trace_this=
+if test -n "$at_traceon"; then
+    at_trace_this=yes
+fi
+
+if test -n "$at_trace_this"; then
+    ( $at_traceon; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stder1"
+    at_status=$?
+    grep '^ *+' "$at_stder1" >&2
+    grep -v '^ *+' "$at_stder1" >"$at_stderr"
+else
+    ( :; grep -v '^.*tar: Record size = ' stderr; exit 0 ) >"$at_stdout" 2>"$at_stderr"
     at_status=$?
 fi
 
@@ -23544,6 +24101,10 @@ if $at_failed; then
 fi
 
 $at_traceon
+
+
+
+
 
 
 
@@ -23667,7 +24228,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/sparse01.at:24:
 mkdir gnu
 (cd gnu
@@ -23766,7 +24328,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/sparse01.at:24:
 mkdir oldgnu
 (cd oldgnu
@@ -23865,6 +24428,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -23993,7 +24557,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/sparse02.at:28:
 mkdir gnu
 (cd gnu
@@ -24075,7 +24640,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/sparse02.at:28:
 mkdir oldgnu
 (cd oldgnu
@@ -24157,6 +24723,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -24285,6 +24852,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -24461,7 +25029,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/sparsemv.at:31:
 mkdir oldgnu
 (cd oldgnu
@@ -24588,6 +25157,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -24745,6 +25315,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -24896,6 +25467,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -25053,6 +25625,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -25178,7 +25751,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/update.at:30:
 mkdir oldgnu
 (cd oldgnu
@@ -25282,7 +25856,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/update.at:30:
 mkdir ustar
 (cd ustar
@@ -25386,7 +25961,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/update.at:30:
 mkdir posix
 (cd posix
@@ -25490,7 +26066,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/update.at:30:
 mkdir gnu
 (cd gnu
@@ -25594,6 +26171,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -25735,7 +26313,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/volume.at:26:
 mkdir oldgnu
 (cd oldgnu
@@ -25852,6 +26431,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -25992,7 +26572,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/volsize.at:32:
 mkdir oldgnu
 (cd oldgnu
@@ -26108,7 +26689,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/volsize.at:32:
 mkdir ustar
 (cd ustar
@@ -26224,7 +26806,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/volsize.at:32:
 mkdir posix
 (cd posix
@@ -26340,7 +26923,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/volsize.at:32:
 mkdir gnu
 (cd gnu
@@ -26456,6 +27040,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -26577,7 +27162,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/comprec.at:25:
 mkdir oldgnu
 (cd oldgnu
@@ -26673,7 +27259,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/comprec.at:25:
 mkdir ustar
 (cd ustar
@@ -26769,7 +27356,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/comprec.at:25:
 mkdir posix
 (cd posix
@@ -26865,7 +27453,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/comprec.at:25:
 mkdir gnu
 (cd gnu
@@ -26961,6 +27550,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -27059,6 +27649,7 @@ $at_traceon
 
 
 
+
       $at_traceoff
       $at_times_p && times >"$at_times_file"
     ) 5>&1 2>&1 | eval $at_tee_pipe
@@ -27149,7 +27740,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/shortupd.at:32:
 mkdir oldgnu
 (cd oldgnu
@@ -27218,7 +27810,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/shortupd.at:32:
 mkdir ustar
 (cd ustar
@@ -27287,7 +27880,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/shortupd.at:32:
 mkdir posix
 (cd posix
@@ -27356,7 +27950,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/shortupd.at:32:
 mkdir gnu
 (cd gnu
@@ -27425,6 +28020,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -27541,7 +28137,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/truncate.at:32:
 mkdir oldgnu
 (cd oldgnu
@@ -27633,7 +28230,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/truncate.at:32:
 mkdir ustar
 (cd ustar
@@ -27725,7 +28323,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/truncate.at:32:
 mkdir posix
 (cd posix
@@ -27817,7 +28416,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/truncate.at:32:
 mkdir gnu
 (cd gnu
@@ -27909,6 +28509,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -28011,7 +28612,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/grow.at:27:
 mkdir oldgnu
 (cd oldgnu
@@ -28089,7 +28691,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/grow.at:27:
 mkdir ustar
 (cd ustar
@@ -28167,7 +28770,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/grow.at:27:
 mkdir posix
 (cd posix
@@ -28245,7 +28849,8 @@ if $at_failed; then
 fi
 
 $at_traceon
-$at_traceoff
+
+              $at_traceoff
 echo "$at_srcdir/grow.at:27:
 mkdir gnu
 (cd gnu
@@ -28323,6 +28928,7 @@ if $at_failed; then
 fi
 
 $at_traceon
+
 
 
 
@@ -29248,7 +29854,7 @@ _ASBOX
   echo "Please send \`${at_testdir+${at_testdir}/}$as_me.log' and all information you think might help:"
   echo
   echo "   To: <bug-tar@gnu.org>"
-  echo "   Subject: [GNU tar 1.21] $as_me:$at_fail_list${at_fail_list:+ failed${at_xpass_list:+,}}$at_xpass_list${at_xpass_list:+ passed unexpectedly}"
+  echo "   Subject: [GNU tar 1.22] $as_me:$at_fail_list${at_fail_list:+ failed${at_xpass_list:+,}}$at_xpass_list${at_xpass_list:+ passed unexpectedly}"
   echo
   if test $at_debug_p = false; then
     echo

@@ -1,5 +1,32 @@
-GNU tar NEWS - User visible changes. 2008-12-27
+GNU tar NEWS - User visible changes. 2009-03-05
 Please send GNU tar bug reports to <bug-tar@gnu.org>
+
+
+version 1.22 - Sergey Poznyakoff, 2009-03-05
+
+* Support for xz compression
+
+Tar uses xz for compression if one of the following conditions is met: 
+
+ 1. The option --xz or -J (see below) is used.
+ 2. The xz binary is set as compressor using --use-compress-program option.
+ 3. The file name of the archive being created ends in `.xz' and
+ auto-compress option (-a) is used.
+
+Xz is used for decompression if one of the following conditions is met: 
+
+ 1. The option --xz or -J is used.
+ 2. The xz binary is set as compressor using --use-compress-program option.
+ 3. The file is recognized as xz compressed stream data.
+
+* Short option -J reassigned as a short equivalent of --xz
+
+* New option -I
+
+The -I option is assigned as a short equivalent for
+--use-compress-program.
+
+* The --no-recursive option works in incremental mode.
 
 
 version 1.21 - Sergey Poznyakoff, 2008-12-27

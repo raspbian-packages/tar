@@ -1,7 +1,7 @@
 /* A tar (tape archiver) program.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1995, 1996, 1997, 1999, 2000,
-   2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2001, 2003, 2004, 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
 
    Written by John Gilmore, starting 1985-08-25.
 
@@ -271,6 +271,7 @@ enum
   IGNORE_FAILED_READ_OPTION,
   INDEX_FILE_OPTION,
   KEEP_NEWER_FILES_OPTION,
+  LZMA_OPTION,
   LZOP_OPTION,
   MODE_OPTION,
   MTIME_OPTION,
@@ -323,7 +324,6 @@ enum
   TRANSFORM_OPTION,
   UNQUOTE_OPTION,
   USAGE_OPTION,
-  USE_COMPRESS_PROGRAM_OPTION,
   UTC_OPTION,
   VERSION_OPTION,
   VOLNO_FILE_OPTION,
@@ -352,7 +352,7 @@ The version control may be set with --backup or VERSION_CONTROL, values are:\n\n
 
 /* NOTE:
 
-   Available option letters are DEIQY and eqy. Consider the following
+   Available option letters are DEQY and eqy. Consider the following
    assignments:
 
    [For Solaris tar compatibility =/= Is it important at all?]
@@ -360,7 +360,6 @@ The version control may be set with --backup or VERSION_CONTROL, values are:\n\n
    E  use extended headers (--format=posix)
 
    [q  alias for --occurrence=1 =/= this would better be used for quiet?]
-   [I  same as T =/= will harm star compatibility]
 
    y  per-file gzip compression
    Y  per-block gzip compression */
@@ -595,7 +594,7 @@ static struct argp_option options[] = {
   {"auto-compress", 'a', 0, 0,
    N_("use archive suffix to determine the compression program"), GRID+1 },
   {"no-auto-compress", NO_AUTO_COMPRESS_OPTION, 0, 0,
-   N_("do not use use archive suffix to determine the compression program"),
+   N_("do not use archive suffix to determine the compression program"),
    GRID+1 },
   {"bzip2", 'j', 0, 0,
    N_("filter the archive through bzip2"), GRID+1 },
@@ -606,11 +605,13 @@ static struct argp_option options[] = {
   {"compress", 'Z', 0, 0,
    N_("filter the archive through compress"), GRID+1 },
   {"uncompress", 0, 0, OPTION_ALIAS, NULL, GRID+1 },
-  {"lzma", 'J', 0, 0,
+  {"lzma", LZMA_OPTION, 0, 0,
    N_("filter the archive through lzma"), GRID+1 },
   {"lzop", LZOP_OPTION, 0, 0,
    N_("filter the archive through lzop"), GRID+8 },
-  {"use-compress-program", USE_COMPRESS_PROGRAM_OPTION, N_("PROG"), 0,
+  {"xz", 'J', 0, 0,
+   N_("filter the archive through xz"), GRID+8 },
+  {"use-compress-program", 'I', N_("PROG"), 0,
    N_("filter through PROG (must accept -d)"), GRID+1 },
 #undef GRID
   
@@ -1364,18 +1365,12 @@ parse_opt (int key, char *arg, struct argp_state *state)
       ignore_zeros_option = true;
       break;
 
-    case 'I':
-      USAGE_ERROR ((0, 0,
-		    _("Warning: the -I option is not supported;"
-		      " perhaps you meant -j or -T?")));
-      break;
-
     case 'j':
       set_use_compress_program_option ("bzip2");
       break;
 
     case 'J':
-      set_use_compress_program_option ("lzma");
+      set_use_compress_program_option ("xz");
       break;
       
     case 'k':
@@ -1409,6 +1404,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
       }
       break;
 
+    case LZMA_OPTION:
+      set_use_compress_program_option ("lzma");
+      break;
+      
     case LZOP_OPTION:
       set_use_compress_program_option ("lzop");
       break;
@@ -1905,7 +1904,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
       set_transform_expr (arg);
       break;
 
-    case USE_COMPRESS_PROGRAM_OPTION:
+    case 'I':
       set_use_compress_program_option (arg);
       break;
 
