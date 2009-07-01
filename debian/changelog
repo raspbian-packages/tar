@@ -1,3 +1,10 @@
+tar (1.22-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Set SIGPIPE to default action, patch from upstream. (closes: #532570)
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 30 Jun 2009 22:23:48 +0200
+
 tar (1.22-1) unstable; urgency=low
 
   * new upstream version
