@@ -15,8 +15,8 @@ configure-stamp:
 		./configure --prefix=/usr --libexecdir=/usr/sbin $(CONFARGS)
 	touch configure-stamp
 
-build: configure-stamp build-stamp
-build-stamp:
+build: build-stamp
+build-stamp: configure-stamp
 	dh_testdir
 	RSH="/usr/bin/rsh" CFLAGS="-O2 -g -Wall -fno-gnu89-inline" $(MAKE)
 
