@@ -140,6 +140,8 @@ m4_include([extrac07.at])
 
 m4_include([gzip.at])
 
+m4_include([hardlinks.at])
+
 m4_include([incremental.at])
 m4_include([incr01.at])
 m4_include([incr02.at])
