@@ -1377,7 +1377,7 @@ static Hash_table *link_table;
 static bool
 dump_hard_link (struct tar_stat_info *st)
 {
-  if (link_table && st->stat.st_nlink > 1)
+  if (link_table && (st->stat.st_nlink > 1 || remove_files_option))
     {
       struct link lp;
       struct link *duplicate;
@@ -1424,7 +1424,7 @@ file_count_links (struct tar_stat_info *st)
 {
   if (hard_dereference_option)
     return;
-  if (st->stat.st_nlink > 1)
+  if (st->stat.st_nlink > 1 || remove_files_option)
     {
       struct link *duplicate;
       struct link *lp = xmalloc (offsetof (struct link, name)
