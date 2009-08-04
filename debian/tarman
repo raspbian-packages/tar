@@ -275,7 +275,7 @@ $command_string
 stores and extracts files from a tape or disk archive.
 .Pp
 The first argument to
-.B tar
+tar
 should be a function; either one of the letters
 .Cm $short_letters ,
 or one of the long function names.
