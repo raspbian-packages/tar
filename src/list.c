@@ -136,7 +136,11 @@ read_and (void (*do_something) (void))
 
 	  if (!ignore_zeros_option)
 	    {
+	      char buf[UINTMAX_STRSIZE_BOUND];
 
+	      status = read_header (false);
+	      if (status == HEADER_ZERO_BLOCK)
+		break;
 	      /* 
 	       * According to POSIX tar specs, this is wrong, but on the web
 	       * there are some tar specs that can trigger this, and some tar
@@ -144,11 +148,6 @@ read_and (void (*do_something) (void))
 	       * let's not be pedantic about issuing the warning.
 	       */
 #if 0	       
-	      char buf[UINTMAX_STRSIZE_BOUND];
-
-	      status = read_header (false);
-	      if (status == HEADER_ZERO_BLOCK)
-		break;
 	      WARN ((0, 0, _("A lone zero block at %s"),
 		     STRINGIFY_BIGINT (current_block_ordinal (), buf)));
 #endif
