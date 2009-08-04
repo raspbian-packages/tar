@@ -6,8 +6,9 @@ tar (1.22-1.2) UNRELEASED; urgency=low
   * Preserve hard links with --remove-files, closes #188663
     Thanks to Ted T'so for the idea and Sergey Poznyakoff for
     cleaning up my original implementation.
+  * Respect DEB_BUILD_OPTIONS=nocheck to conform with Policy 3.8.2
 
- -- Carl Worth <cworth@cworth.org>  Wed, 29 Jul 2009 16:18:18 -0700
+ -- Carl Worth <cworth@cworth.org>  Tue, 04 Aug 2009 12:07:06 -0700
 
 tar (1.22-1.1) unstable; urgency=low
 
