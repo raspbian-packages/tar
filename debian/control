@@ -2,6 +2,7 @@ Source: tar
 Section: utils
 Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
+Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 5), gettext, autoconf, autotools-dev
 Standards-Version: 3.8.0
 
