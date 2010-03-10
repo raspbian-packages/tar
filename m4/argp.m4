@@ -1,5 +1,5 @@
-# argp.m4 serial 9
-dnl Copyright (C) 2003-2007, 2009 Free Software Foundation, Inc.
+# argp.m4 serial 10
+dnl Copyright (C) 2003-2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,19 +11,19 @@ AC_DEFUN([gl_ARGP],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl argp-parse.c depends on GNU getopt internals, therefore use GNU getopt
   dnl always.
-  gl_GETOPT_SUBSTITUTE
-  dnl Note: gl_GETOPT_SUBSTITUTE does AC_LIBOBJ([getopt]), AC_LIBOBJ([getopt1]).
+  gl_REPLACE_GETOPT
+  dnl Note: gl_REPLACE_GETOPT does AC_LIBOBJ([getopt]), AC_LIBOBJ([getopt1]).
 
   AC_CHECK_DECL([program_invocation_name],
                 [AC_DEFINE([HAVE_DECL_PROGRAM_INVOCATION_NAME], [1],
                            [Define if program_invocation_name is declared])],
-	        [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
+                [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
                            [Define to 1 to add extern declaration of program_invocation_name to argp.h])],
                 [#include <errno.h>])
   AC_CHECK_DECL([program_invocation_short_name],
                 [AC_DEFINE([HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME], [1],
                            [Define if program_invocation_short_name is declared])],
-	        [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
+                [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
                            [Define to 1 to add extern declaration of program_invocation_short_name to argp.h])],
                 [#include <errno.h>])
 

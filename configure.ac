@@ -1,7 +1,8 @@
 # Configure template for GNU tar.  -*- autoconf -*-
 
 # Copyright (C) 1991, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
-# 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+# 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free
+# Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,12 +19,15 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
-AC_INIT([GNU tar], [1.22], [bug-tar@gnu.org])
+AC_INIT([GNU tar], [1.23], [bug-tar@gnu.org])
 AC_CONFIG_SRCDIR([src/tar.c])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_HEADERS([config.h:config.hin])
-AC_PREREQ([2.60])
-AM_INIT_AUTOMAKE([1.9 gnits tar-ustar dist-bzip2 dist-shar std-options])
+AC_CONFIG_HEADERS([config.h])
+AC_PREREQ([2.63])
+AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-shar std-options silent-rules])
+
+# Enable silent rules by default:
+AM_SILENT_RULES([yes])
 
 AC_PROG_CC
 AC_EXEEXT
@@ -48,7 +52,6 @@ AC_CHECK_HEADERS([sys/buf.h], [], [],
 #endif])
 
 AC_HEADER_SYS_WAIT
-AM_STDBOOL_H
 
 AC_HEADER_DIRENT
 AC_HEADER_MAJOR
@@ -121,6 +124,14 @@ else
   AC_DEFINE_UNQUOTED(REMOTE_SHELL, "$tar_cv_path_RSH",
     [Define to the full path of your rsh, if any.])
 fi
+
+TAR_COMPR_PROGRAM(compress)
+TAR_COMPR_PROGRAM(gzip)
+TAR_COMPR_PROGRAM(bzip2)
+TAR_COMPR_PROGRAM(lzip)
+TAR_COMPR_PROGRAM(lzma)
+TAR_COMPR_PROGRAM(lzop)
+TAR_COMPR_PROGRAM(xz)
 
 AC_MSG_CHECKING(for default archive format)
 
@@ -241,6 +252,7 @@ fi
 
 AC_OUTPUT([Makefile\
            doc/Makefile\
+	   gnu/Makefile\
            lib/Makefile\
            po/Makefile.in\
            scripts/Makefile\

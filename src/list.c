@@ -1,7 +1,7 @@
 /* List a tar archive, with support routines for reading a tar archive.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1998, 1999, 2000,
-   2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2001, 2003, 2004, 2005, 2006, 2007, 2010 Free Software Foundation, Inc.
 
    Written by John Gilmore, on 1985-08-26.
 
@@ -33,6 +33,7 @@ union block *recent_long_name;	/* recent long name header and contents */
 union block *recent_long_link;	/* likewise, for long link */
 size_t recent_long_name_blocks;	/* number of blocks in recent_long_name */
 size_t recent_long_link_blocks;	/* likewise, for long link */
+union block *recent_global_header; /* Recent global header block */
 
 static uintmax_t from_header (const char *, size_t, const char *,
 			      uintmax_t, uintmax_t, bool, bool);
@@ -77,7 +78,8 @@ read_and (void (*do_something) (void))
       prev_status = status;
       tar_stat_destroy (&current_stat_info);
 
-      status = read_header (false);
+      status = read_header (&current_header, &current_stat_info, 
+                            read_header_auto);
       switch (status)
 	{
 	case HEADER_STILL_UNREAD:
@@ -138,7 +140,8 @@ read_and (void (*do_something) (void))
 	    {
 	      char buf[UINTMAX_STRSIZE_BOUND];
 
-	      status = read_header (false);
+	      status = read_header (&current_header, &current_stat_info, 
+	                            read_header_auto);
 	      if (status == HEADER_ZERO_BLOCK)
 		break;
 	      /* 
@@ -148,8 +151,9 @@ read_and (void (*do_something) (void))
 	       * let's not be pedantic about issuing the warning.
 	       */
 #if 0	       
-	      WARN ((0, 0, _("A lone zero block at %s"),
-		     STRINGIFY_BIGINT (current_block_ordinal (), buf)));
+	      WARNOPT (WARN_ALONE_ZERO_BLOCK,
+		       (0, 0, _("A lone zero block at %s"),
+			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
 #endif
 	      break;
 	    }
@@ -212,11 +216,12 @@ void
 list_archive (void)
 {
   off_t block_ordinal = current_block_ordinal ();
-  /* Print the header block.  */
 
+  /* Print the header block.  */
+  
   decode_header (current_header, &current_stat_info, &current_format, 0);
   if (verbose_option)
-    print_header (&current_stat_info, block_ordinal);
+    print_header (&current_stat_info, current_header, block_ordinal);
 
   if (incremental_option)
     {
@@ -287,20 +292,29 @@ tar_checksum (union block *header, bool silent)
 }
 
 /* Read a block that's supposed to be a header block.  Return its
-   address in "current_header", and if it is good, the file's size
-   and names (file name, link name) in *info.
+   address in *RETURN_BLOCK, and if it is good, the file's size
+   and names (file name, link name) in *INFO.
 
-   Return 1 for success, 0 if the checksum is bad, EOF on eof, 2 for a
-   block full of zeros (EOF marker).
+   Return one of enum read_header describing the status of the
+   operation.
 
-   If RAW_EXTENDED_HEADERS is nonzero, do not automagically fold the
-   GNU long name and link headers into later headers.
+   The MODE parameter instructs read_header what to do with special
+   header blocks, i.e.: extended POSIX, GNU long name or long link,
+   etc.:
 
-   You must always set_next_block_after(current_header) to skip past
+     read_header_auto        process them automatically,
+     read_header_x_raw       when a special header is read, return
+                             HEADER_SUCCESS_EXTENDED without actually
+			     processing the header,
+     read_header_x_global    when a POSIX global header is read,
+                             decode it and return HEADER_SUCCESS_EXTENDED.
+
+   You must always set_next_block_after(*return_block) to skip past
    the header which this routine reads.  */
 
 enum read_header
-read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
+read_header (union block **return_block, struct tar_stat_info *info,
+	     enum read_header_mode mode)
 {
   union block *header;
   union block *header_copy;
@@ -317,7 +331,7 @@ read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
       enum read_header status;
 
       header = find_next_block ();
-      current_header = header;
+      *return_block = header;
       if (!header)
 	return HEADER_END_OF_FILE;
 
@@ -337,7 +351,7 @@ read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
 	  || header->header.typeflag == XGLTYPE
 	  || header->header.typeflag == SOLARIS_XHDTYPE)
 	{
-	  if (raw_extended_headers)
+	  if (mode == read_header_x_raw)
 	    return HEADER_SUCCESS_EXTENDED;
 	  else if (header->header.typeflag == GNUTYPE_LONGNAME
 		   || header->header.typeflag == GNUTYPE_LONGLINK)
@@ -399,11 +413,18 @@ read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
 	  else if (header->header.typeflag == XGLTYPE)
 	    {
 	      struct xheader xhdr;
+
+	      if (!recent_global_header)
+		recent_global_header = xmalloc (sizeof *recent_global_header);
+	      memcpy (recent_global_header, header,
+		      sizeof *recent_global_header);
 	      memset (&xhdr, 0, sizeof xhdr);
 	      xheader_read (&xhdr, header,
 			    OFF_FROM_HEADER (header->header.size));
 	      xheader_decode_global (&xhdr);
 	      xheader_destroy (&xhdr);
+	      if (mode == read_header_x_global)
+		return HEADER_SUCCESS_EXTENDED;
 	    }
 
 	  /* Loop!  */
@@ -412,7 +433,7 @@ read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
       else
 	{
 	  char const *name;
-	  struct posix_header const *h = &current_header->header;
+	  struct posix_header const *h = &header->header;
 	  char namebuf[sizeof h->prefix + 1 + NAME_FIELD_SIZE + 1];
 
 	  if (recent_long_name)
@@ -469,12 +490,6 @@ read_header_primitive (bool raw_extended_headers, struct tar_stat_info *info)
 	  return HEADER_SUCCESS;
 	}
     }
-}
-
-enum read_header
-read_header (bool raw_extended_headers)
-{
-  return read_header_primitive (raw_extended_headers, &current_stat_info);
 }
 
 static char *
@@ -538,7 +553,9 @@ decode_header (union block *header, struct tar_stat_info *stat_info,
 	       enum archive_format *format_pointer, int do_user_group)
 {
   enum archive_format format;
-
+  unsigned hbits; /* high bits of the file mode. */
+  mode_t mode = MODE_FROM_HEADER (header->header.mode, &hbits);
+  
   if (strcmp (header->header.magic, TMAGIC) == 0)
     {
       if (header->star_header.prefix[130] == 0
@@ -553,12 +570,12 @@ decode_header (union block *header, struct tar_stat_info *stat_info,
 	format = USTAR_FORMAT;
     }
   else if (strcmp (header->header.magic, OLDGNU_MAGIC) == 0)
-    format = OLDGNU_FORMAT;
+    format = hbits ? OLDGNU_FORMAT : GNU_FORMAT;
   else
     format = V7_FORMAT;
   *format_pointer = format;
 
-  stat_info->stat.st_mode = MODE_FROM_HEADER (header->header.mode);
+  stat_info->stat.st_mode = mode;
   stat_info->mtime.tv_sec = TIME_FROM_HEADER (header->header.mtime);
   stat_info->mtime.tv_nsec = 0;
   assign_string (&stat_info->uname,
@@ -675,7 +692,8 @@ from_header (char const *where0, size_t digs, char const *type,
 	{
 	  if (type && !silent)
 	    ERROR ((0, 0,
-		    /* TRANSLATORS: %s is type of the value (gid_t, uid_t, etc.) */
+		    /* TRANSLATORS: %s is type of the value (gid_t, uid_t,
+		       etc.) */
 		    _("Blanks in header where numeric %s value expected"),
 		    type));
 	  return -1;
@@ -892,25 +910,28 @@ minor_from_header (const char *p, size_t s)
 		      (uintmax_t) TYPE_MAXIMUM (minor_t), false, false);
 }
 
+/* Convert P to the file mode, as understood by tar.
+   Store unrecognized mode bits (from 10th up) in HBITS. */
 mode_t
-mode_from_header (const char *p, size_t s)
+mode_from_header (const char *p, size_t s, unsigned *hbits)
 {
-  /* Do not complain about unrecognized mode bits.  */
   unsigned u = from_header (p, s, "mode_t",
 			    - (uintmax_t) TYPE_MINIMUM (mode_t),
 			    TYPE_MAXIMUM (uintmax_t), false, false);
-  return ((u & TSUID ? S_ISUID : 0)
-	  | (u & TSGID ? S_ISGID : 0)
-	  | (u & TSVTX ? S_ISVTX : 0)
-	  | (u & TUREAD ? S_IRUSR : 0)
-	  | (u & TUWRITE ? S_IWUSR : 0)
-	  | (u & TUEXEC ? S_IXUSR : 0)
-	  | (u & TGREAD ? S_IRGRP : 0)
-	  | (u & TGWRITE ? S_IWGRP : 0)
-	  | (u & TGEXEC ? S_IXGRP : 0)
-	  | (u & TOREAD ? S_IROTH : 0)
-	  | (u & TOWRITE ? S_IWOTH : 0)
-	  | (u & TOEXEC ? S_IXOTH : 0));
+  mode_t mode = ((u & TSUID ? S_ISUID : 0)
+		 | (u & TSGID ? S_ISGID : 0)
+		 | (u & TSVTX ? S_ISVTX : 0)
+		 | (u & TUREAD ? S_IRUSR : 0)
+		 | (u & TUWRITE ? S_IWUSR : 0)
+		 | (u & TUEXEC ? S_IXUSR : 0)
+		 | (u & TGREAD ? S_IRGRP : 0)
+		 | (u & TGWRITE ? S_IWGRP : 0)
+		 | (u & TGEXEC ? S_IXGRP : 0)
+		 | (u & TOREAD ? S_IROTH : 0)
+		 | (u & TOWRITE ? S_IWOTH : 0)
+		 | (u & TOEXEC ? S_IXOTH : 0));
+  *hbits = mode ^ u;
+  return mode;
 }
 
 off_t
@@ -1021,9 +1042,6 @@ tartime (struct timespec t, bool full_time)
    they shouldn't.  Unix tar is pretty random here anyway.  */
 
 
-/* FIXME: Note that print_header uses the globals HEAD, HSTAT, and
-   HEAD_STANDARD, which must be set up in advance.  Not very clean..  */
-
 /* Width of "user/group size", with initial value chosen
    heuristically.  This grows as needed, though this may cause some
    stairstepping in the output.  Make it too small and the output will
@@ -1036,8 +1054,11 @@ static int ugswidth = 19;
    USGWIDTH, some stairstepping may occur.  */
 static int datewidth = sizeof "YYYY-MM-DD HH:MM" - 1;
 
-void
-print_header (struct tar_stat_info *st, off_t block_ordinal)
+static bool volume_label_printed = false;
+
+static void
+simple_print_header (struct tar_stat_info *st, union block *blk,
+		     off_t block_ordinal)
 {
   char modes[11];
   char const *time_stamp;
@@ -1052,9 +1073,6 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
   char uintbuf[UINTMAX_STRSIZE_BOUND];
   int pad;
   int sizelen;
-
-  if (test_label_option && current_header->header.typeflag != GNUTYPE_VOLHDR)
-    return;
 
   if (show_transformed_names_option)
     temp_name = st->file_name ? st->file_name : st->orig_file_name;
@@ -1082,9 +1100,10 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
       /* File type and modes.  */
 
       modes[0] = '?';
-      switch (current_header->header.typeflag)
+      switch (blk->header.typeflag)
 	{
 	case GNUTYPE_VOLHDR:
+	  volume_label_printed = true;
 	  modes[0] = 'V';
 	  break;
 
@@ -1152,8 +1171,8 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	  /* Try parsing it as an unsigned integer first, and as a
 	     uid_t if that fails.  This method can list positive user
 	     ids that are too large to fit in a uid_t.  */
-	  uintmax_t u = from_header (current_header->header.uid,
-				     sizeof current_header->header.uid, 0,
+	  uintmax_t u = from_header (blk->header.uid,
+				     sizeof blk->header.uid, 0,
 				     (uintmax_t) 0,
 				     (uintmax_t) TYPE_MAXIMUM (uintmax_t),
 				     false, false);
@@ -1162,7 +1181,7 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	  else
 	    {
 	      sprintf (uform, "%ld",
-		       (long) UID_FROM_HEADER (current_header->header.uid));
+		       (long) UID_FROM_HEADER (blk->header.uid));
 	      user = uform;
 	    }
 	}
@@ -1177,8 +1196,8 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	  /* Try parsing it as an unsigned integer first, and as a
 	     gid_t if that fails.  This method can list positive group
 	     ids that are too large to fit in a gid_t.  */
-	  uintmax_t g = from_header (current_header->header.gid,
-				     sizeof current_header->header.gid, 0,
+	  uintmax_t g = from_header (blk->header.gid,
+				     sizeof blk->header.gid, 0,
 				     (uintmax_t) 0,
 				     (uintmax_t) TYPE_MAXIMUM (uintmax_t),
 				     false, false);
@@ -1187,14 +1206,14 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	  else
 	    {
 	      sprintf (gform, "%ld",
-		       (long) GID_FROM_HEADER (current_header->header.gid));
+		       (long) GID_FROM_HEADER (blk->header.gid));
 	      group = gform;
 	    }
 	}
 
       /* Format the file size or major/minor device numbers.  */
 
-      switch (current_header->header.typeflag)
+      switch (blk->header.typeflag)
 	{
 	case CHRTYPE:
 	case BLKTYPE:
@@ -1224,7 +1243,7 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 
       fprintf (stdlis, " %s", quotearg (temp_name));
 
-      switch (current_header->header.typeflag)
+      switch (blk->header.typeflag)
 	{
 	case SYMTYPE:
 	  fprintf (stdlis, " -> %s\n", quotearg (st->link_name));
@@ -1237,7 +1256,7 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	default:
 	  {
 	    char type_string[2];
-	    type_string[0] = current_header->header.typeflag;
+	    type_string[0] = blk->header.typeflag;
 	    type_string[1] = '\0';
 	    fprintf (stdlis, _(" unknown file type %s\n"),
 		     quote (type_string));
@@ -1271,13 +1290,47 @@ print_header (struct tar_stat_info *st, off_t block_ordinal)
 	case GNUTYPE_MULTIVOL:
 	  strcpy (size,
 		  STRINGIFY_BIGINT
-		  (UINTMAX_FROM_HEADER (current_header->oldgnu_header.offset),
+		  (UINTMAX_FROM_HEADER (blk->oldgnu_header.offset),
 		   uintbuf));
 	  fprintf (stdlis, _("--Continued at byte %s--\n"), size);
 	  break;
 	}
     }
   fflush (stdlis);
+}
+
+
+void
+print_volume_label ()
+{
+  struct tar_stat_info vstat;
+  union block vblk;
+  enum archive_format dummy;
+
+  memset (&vblk, 0, sizeof (vblk));
+  vblk.header.typeflag = GNUTYPE_VOLHDR;
+  if (recent_global_header)
+    memcpy (vblk.header.mtime, recent_global_header->header.mtime,
+	    sizeof vblk.header.mtime);
+  tar_stat_init (&vstat);
+  assign_string (&vstat.file_name, ".");
+  decode_header (&vblk, &vstat, &dummy, 0);
+  assign_string (&vstat.file_name, volume_label);
+  simple_print_header (&vstat, &vblk, 0);
+  tar_stat_destroy (&vstat);
+}
+
+void
+print_header (struct tar_stat_info *st, union block *blk,
+	      off_t block_ordinal)
+{
+  if (current_format == POSIX_FORMAT && !volume_label_printed && volume_label)
+    {
+      print_volume_label ();
+      volume_label_printed = true;
+    }
+
+  simple_print_header (st, blk, block_ordinal);
 }
 
 /* Print a similar line when we make a directory automatically.  */
@@ -1355,4 +1408,34 @@ skip_member (void)
 
       mv_end ();
     }
+}
+
+void
+test_archive_label ()
+{
+  base64_init ();
+  name_gather ();
+
+  open_archive (ACCESS_READ);
+  if (read_header (&current_header, &current_stat_info, read_header_auto)
+      == HEADER_SUCCESS)
+    {
+      char *s = NULL;
+	
+      decode_header (current_header,
+		     &current_stat_info, &current_format, 0);
+      if (current_header->header.typeflag == GNUTYPE_VOLHDR)
+	assign_string (&volume_label, current_header->header.name);
+
+      if (volume_label
+	  && (name_match (volume_label)
+	      || (multi_volume_option
+		  && (s = drop_volume_label_suffix (volume_label))
+		  && name_match (s))))
+	if (verbose_option)
+	  print_volume_label ();
+      free (s);
+    }
+  close_archive ();
+  names_notfound ();
 }

@@ -23,9 +23,10 @@
 # References: <42AB0D28.6030706@mein-horde.de>
 #             by Martin Lohmeier <martin@mein-horde.de>
 #             on Sat, 11 Jun 2005 18:11:20 +0200
+#             http://lists.gnu.org/archive/html/bug-tar/2005-06/msg00024.html
 
 AT_SETUP([update unchanged directories])
-AT_KEYWORDS([update])
+AT_KEYWORDS([update update00])
 
 AT_TAR_CHECK([
 AT_SORT_PREREQ

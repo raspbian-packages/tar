@@ -1,5 +1,6 @@
 /* argcv.c - simple functions for parsing input based on whitespace
-   Copyright (C) 1999, 2000, 2001, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2000, 2001, 2007, 2009, 2010 Free Software
+   Foundation, Inc.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -15,6 +16,9 @@
    License along with this library; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 #include <ctype.h>
 
 #include <argcv.h>
@@ -153,7 +157,7 @@ escaped_length (const char *str, int *quote)
 	  len += 2;
 	  *quote = 1;
 	}
-      else if (isprint (*str))
+      else if (isprint ((unsigned char) *str))
 	len++;
       else if (argcv_escape_char (*str) != -1)
 	len += 2;
@@ -249,7 +253,7 @@ escape_copy (char *dst, const char *src)
 	  *dst++ = '\\';
 	  *dst++ = '"';
 	}
-      else if (*src != '\t' && isprint(*src))
+      else if (*src != '\t' && isprint ((unsigned char) *src))
 	*dst++ = *src;      
       else
 	{
@@ -368,7 +372,7 @@ argcv_string (int argc, char **argv, char **pstring)
 	buffer[j++] = '"';
     }
 
-  for (; j > 0 && isspace (buffer[j-1]); j--)
+  for (; j > 0 && isspace ((unsigned char) buffer[j - 1]); j--)
     ;
   buffer[j] = 0;
   if (pstring)

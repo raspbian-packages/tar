@@ -1,8 +1,9 @@
-tar (1.22-3) unstable; urgency=low
+tar (1.23-1) unstable; urgency=low
 
+  * new upstream version, fixes security issue in rmt (CVE-2010-0624)
   * add suggests for lzma and xz-utils, closes: #523499
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 26 Jan 2010 15:21:30 -0700
+ -- Bdale Garbee <bdale@gag.com>  Wed, 10 Mar 2010 09:51:37 -0700
 
 tar (1.22-2) unstable; urgency=low
 

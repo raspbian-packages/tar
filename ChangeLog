@@ -1,3 +1,773 @@
+2010-03-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.23
+	* configure.ac, NEWS: Update version number.
+
+	Doc changes.
+	* NEWS: Update.
+	* THANKS: Update.
+	* doc/snapshot.texi, doc/snapshot.texi,
+	doc/sparse.texi, doc/tar-snapshot-edit.texi,
+	doc/tar.texi: Spellchecked and proof-read. Thanks
+	to Denis Excoffier.
+	* gnulib.modules: Remove utime.
+
+2010-03-08  Kamil Dudka  <kdudka@redhat.com>
+
+	Fix possible overflow in code_timespec (tiny change)
+	* src/misc.c (code_timespec): ignore invalid values of ns
+
+2010-03-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix in the testsuite.
+	* tests/extrac05.at: Skip test if creating
+	sparse file fails.
+
+	Fix eventual memory override and fd exhaustion in create.c
+	Both bugs reported by Kamil Dudka.
+
+	* src/create.c (check_exclusion_tags): Do not keep
+	pointer to a location within tagname: it may change
+	after xrealloc. Use byte offset instead.
+	(dump_file0): Close fd before returning without
+	dumping the directory.
+
+2010-03-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+	* doc/tar.texi: Improve some wording.
+
+2010-03-02  Antonio Diaz Diaz  <ant_diaz@teleline.es>
+
+	Add Lzip support
+	* configure.ac: Add TAR_COMPR_PROGRAM(lzip)
+	* doc/tar.texi: Reflect lzip support.
+	* src/buffer.c (compress_type) <ct_lzip>: New constant.
+	(magic): Add magic for lzip.
+	* src/suffix.c (compression_suffixes): Add lz.
+	* src/tar.c: New option --lzip.
+
+2010-03-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+	* tests/exclude05.at: Rewrite awk invocation to avoid
+	overflowing awk's file table on Solaris.
+
+2010-03-02  Eric Blake	<ebb9@byu.net>
+
+	Fix large file support.
+	* scripts/xsparse.c (read_map): Use fseeko.
+	* src/incremen.c (write_directory_file): Likewise.
+
+2010-03-02  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfix
+	* src/buffer.c (seek_archive): Rewrite size computation
+	to prevent it from reaching negative values. Based on
+	report by Denis Excoffier <Denis.Excoffier@free.fr>.
+
+2010-02-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Supply more information to the --to-command script.
+	* src/system.c (stat_to_env): Pass information about the current
+	volume in variables TAR_ARCHIVE, TAR_VOLUME, TAR_BLOCKING_FACTOR,
+	TAR_FORMAT.
+	* doc/tar.texi: Document new environment variables.
+	* NEWS: Likewise.
+	* configure.ac: Version number 1.22.91.
+
+2010-02-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+	* src/names.c (regex_usage_warning): Fix warning message.
+
+2010-02-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update THANKS
+
+2010-02-05  Ondřej Vašík  <ovasik@redhat.com>
+
+	Bugfix (tiny change)
+	* src/xheader.c (xheader_read): Remove unnecessary call
+	to xheader_init.
+
+2010-01-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Enable silent build mode.
+	* configure.ac: Require automake 1.11, autoconf 2.63. Enable
+	silent rules.
+	* NEWS: Update.
+	* lib/Makefile.am (rmt-command.h): Silent the rule.
+
+2010-01-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Read POSIX multivolume archives split at the header boundary.
+	* src/common.h (read_header_mode): New enum.
+	(read_header): Change type of the 3rd argument.
+	* src/list.c (read_header): Change type of the 3rd argument.
+	All callers updated.
+	* src/buffer.c (try_new_volume): Allow for volumes split at the
+	extended/ustar header boundary. This is against POSIX specs, but
+	we must be able to read such archives anyway.
+
+	* tests/multiv07.at: New test case.
+	* tests/Makefile.am: Add multiv07.at
+	* tests/testsuite.at: Likewise.
+
+	* src/compare.c: Update calls to read_header.
+	* src/delete.c: Likewise.
+	* src/update.c: Likewise.
+
+2010-01-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change.
+	* NEWS: Update.
+	* doc/tar.texi: Update.
+	* src/create.c (finish_header): Minor change.
+
+2010-01-24  Rob Vermaas  <rob.vermaas@gmail.com>
+
+	Bugfix (tiny change).
+	* src/tar.c (format_default_settings)[REMOTE_SHELL]: Fix
+	misplaced comma.
+
+2010-01-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+	* src/incremen.c (read_incr_db_01)
+	(read_directory_file): Initialize bufsize to 0.
+	Suggested by noordsij@cs.helsinki.fi.
+
+	Improve handling of --test-label.
+	* src/list.c (print_volume_label): New function.
+	(print_header): Call print_volume_label.
+	(test_archive_label): New function.
+	* src/buffer.c (VOLUME_LABEL_APPEND): Remove.
+	(VOLUME_TEXT, VOLUME_TEXT_LEN): New macros
+	(drop_volume_label_suffix): New function.
+	(check_label_pattern): Use drop_volume_label_suffix.
+	* src/common.h (subcommand): New constant TEST_LABEL_SUBCOMMAND.
+	(test_label_option): Remove.
+	(drop_volume_label_suffix): New proto.
+	(test_archive_label): New proto.
+	* src/names.c (all_names_found): Remove test for
+	test_label_option.
+	* src/tar.c (subcommand_string): Handle TEST_LABEL_SUBCOMMAND.
+	(set_subcommand_option): Improve diagnostics.
+	(parse_opt): Set subcommand if --test-label is given.
+	(main): Handle TEST_LABEL_SUBCOMMAND.
+
+	Fix listing of volume labels (in particular in PAX archives).
+	* src/buffer.c (match_volume_label): Call set_volume_label.
+	(check_label_pattern): Get label string
+	as argument.
+	(match_volume_label): Handle volume labels stored in
+	global PAX headers.
+	* src/common.c (print_header,read_header): Change signature.
+	(read_header_primitive): Remove prototype.
+	* src/list.c (recent_global_header): New static.
+	(list_archive): Always print volume labels.
+	(read_header_primitive): Remove.
+	(read_header): Change the signature (all callers updated)
+	Save the recent global header.
+	(volume_label_printed): New static.
+	(simple_print_header): New function (ex-print_header).
+	(print_header): Change the signature (all callers updated).
+	For POSIX formats, print first volume header (if set).
+	* src/xheader.c (xheader_write_global): Write the data
+	accumulated in xhdr->stk even if keyword_global_override_list
+	is empty.
+	(xheader_read): On unexpected EOF, report error instead of
+	coredumping.
+	(XHDR_PROTECTED, XHDR_GLOBAL): New defines.
+	(struct xhdr_tab): Remove `protected' with `flags'. All uses
+	updated.
+	(decg): If XHDR_GLOBAL bit is set, call the keyword's decode
+	method instead of adding it to `kwl'.
+
+	* src/compare.c: Update calls to read_header.
+	* src/create.c: Likewise.
+	* src/delete.c: Likewise.
+	* src/update.c: Likewise.
+	* src/extract.c: Likewise.
+	(extract_volhdr): Do not print "Reading <label>" statement,
+	because
+	it is inconsistent: it is not printed if the volume begins with a
+	member continued from the previous volume.
+
+	* tests/label01.at: New testcase.
+	* tests/label02.at: New testcase.
+	* tests/Makefile.am, tests/testsuite.at: Add new testcases.
+
+2010-01-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix prefix length calculation in ustar mode.
+	* src/create.c (split_long_name): Fix prefix length
+	calculation.
+	(write_ustar_long_name): Improve ustar mode compatibility
+	with the Sun version.
+
+2009-10-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Rewrite update algorithm.
+	* src/common.h (namebuf_t): New typedef.
+	(namebuf_create, namebuf_free)
+	(namebuf_name): New prototypes.
+	(remname): New prototype.
+	* src/misc.c (struct namebuf): New structure.
+	(namebuf_create, namebuf_free)
+	(namebuf_name): New functions.
+	* src/create.c (dup_dir0): Remove is_avoided_name
+	checks. This is taken care of in update_archive.
+	* src/incremen.c (scan_directory): Use namebuf
+	to produce full file names.
+	* src/names.c (nametail): Remove extra level of
+	indirection. All uses updated.
+	(avoided_name_table, add_avoided_name)
+	(is_avoided_name): Remove.
+	* src/update.c (update_archive): Change algorithm.
+	Instead of adding unmodified files to the avoided_name
+	table, create namelist so that it contains only
+	modified files.
+
+	* tests/Makefile.am: Add update01.at, update02.at
+	* tests/testsuite.at: Likewise.
+	* tests/update.at (AT_KEYWORDS): Add update00.
+
+	Minor changes.
+	* src/tar.c (main): Ignore SIGPIPE.
+	* src/system.c (sys_child_open_for_compress)
+	(sys_child_open_for_uncompress): Reset SIGPIPE
+	in child to default.
+	* tests/remfiles01.at: Avoid race conditions.
+	* tests/remfiles02.at: Likewise.
+
+	Bugfix.
+	* src/buffer.c (_open_archive): Call guess_seekable_archive
+	only if the call to open_compressed_archive succeeded.
+
+2009-10-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve previous changes.
+	* acinclude.m4: Fix typos.
+	* gnulib.modules: Add xvasprintf.
+	* src/common.h: Include xvasprintf.h.
+	* src/tar.c (options): Remove docstrings for --gzip, --bzip2,
+	--compress, --lzop, --lzma and --xz.
+	(tar_help_filter): Generate these using actual values of
+	*_PROGRAM constants.
+	(format_default_settings): Use xasprintf.
+	(parse_opt): Use *_PROGRAM defines instead of hardcoded
+	program names.
+
+	Allow installers to specify alternative program names for
+	compression programs.
+	This adds --with-gzip, --with-bzip2 etc. switches to the
+	configure, so that
+	one can do, e.g. ./configure --with-bzip2=lbzip2 and have
+	lbzip2 executed
+	whenever user calls `tar --bzip2'.
+
+	* acinclude.m4: New file.
+	* configure.ac: Add TAR_COMPR_PROGRAM invocations for
+	the supported compressors.
+	* src/buffer.c (magic): Use *_COMPRESSOR defines instead
+	of hardcoded program names.
+	* src/suffix.c (compression_suffixes): Likewise.
+
+2009-10-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+	* src/buffer.c (magic): Fix `xz' entry: add the name of the
+	program.
+	* src/suffix.c (compression_suffixes, nsuffixes): Mark as static.
+
+2009-10-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide a way to explicitly set mtime for extended header
+	ustar blocks.
+	* src/tar.c (struct textual_date): ts is a copy of the structure,
+	not a pointer to it. Date is a copy as well, hence the `const' is
+	taken away.
+	(get_date_or_file): Return 0/1 depending on success/failure.
+	Copy timestamp to the `ts' member. Store a copy of the string
+	in `date'.
+	(report_textual_dates): Report only if verbose_option is set,
+	but always free the list.
+	(expand_pax_option): New function.
+	(parse_opt): Preprocess the argument to xheader_set_option with
+	expand_pax_option.
+	(decode_options): Call report_textual_dates unconditionally.
+	* src/xheader.c (exthdr_mtime_option, exthdr_mtime)
+	(globexthdr_mtime_option, globexthdr_mtime): New statics.
+	(xheader_set_keyword_equal): handle exthdr.mtime and
+	globexthdr.mtime.
+	(xheader_write): Override `t' argument if a corresponding
+	exthdr.mtime or globexthdr.mtime option is set.
+	* NEWS: Update
+	* doc/tar.texi: Document the changes.
+
+	Use file's mtime as mtime for its extended header.
+	This makes two pax archives binary equivalent if they
+	have the same contents and care is taken to make extended
+	headers otherwise reproducible, e.g. by using:
+
+	  --pax-option=exthdr.name=%d/PaxHeaders/%f,atime:=0
+
+	Proposed by Michael D. Adams <mdmkolbe@gmail.com>.
+
+	* src/common.h (start_private_header): Take time_t as 3rd param.
+	(xheader_write): Likewise.
+	* src/create.c (start_private_header): Take time_t as 3rd param.
+	All callers updated.
+	(write_extended): Use file's mtime as mtime for its extended
+	header,
+	Use current time stamp as mtime for global headers.
+	(xheader_write): Take time_t as 3rd param.
+
+	Fix bugs in handling the --remove-files option.
+	Make sure the files are deleted only if they were succesfully
+	stored
+	to the archive.
+
+	* src/exit.c: New file.
+	* src/unlink.c: New file.
+	* src/Makefile.am (tar_SOURCES): Add exit.c and unlink.c.
+	* src/common.h: Include progname.h
+	(program_name): Remove global.
+	(records_written): New extern.
+	(queue_deferred_unlink, finish_deferred_unlinks): New prototypes.
+	(fatal_exit_hook): New extern.
+	* src/create.c (create_archive): Call finish_deferred_unlinks.
+	(dump_hard_link, dump_file0): Don't actually unlink the file,
+	queue it to deferred_unlinks instead.
+	* src/delete.c (records_written): Remove extern: declared in
+	common.h.
+	* src/extract.c (extract_archive): Set fatal_exit_hook.
+	(fatal_exit, xalloc_die): Move to exit.c
+	* src/system.c (sys_wait_for_child): Exit immediately
+	if the child dies or exits with a non-zero status.
+	(sys_child_open_for_compress)
+	(sys_child_open_for_uncompress): Use set_program_name,
+	instead of setting program_name directly.
+	* src/tar.c (main): Use set_program_name,
+	instead of setting program_name directly.
+
+	* tests/Makefile.am (TESTSUITE_AT): Add remfiles01.at
+	and remfiles02.at.
+	* tests/testsuite.at: Likewise.
+	* tests/gzip.at: Reflect the above changes.
+
+2009-10-04  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix bug in OLDGNU format creation.
+	See tests/append02.at for a detailed description
+
+	* src/common.h (MODE_FROM_HEADER): Take additional argument.
+	(mode_from_header): Likewise.
+	* src/create.c (mode_to_chars): Store all mode bits if
+	using OLDGNU_FORMAT. This reverses f4e4adea80a.
+	* src/list.c (decode_header): Use header mode field
+	to discern between GNU and OLDGNU formats.
+	(mode_from_header): Store unrecognized mode bits (from 10th up)
+	in the location pointed to by the third parameter.
+	* tests/append02.at: Update documentation and references.
+
+2009-09-16  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Restore extra help output.
+	* src/tar.c (tar_list_quoting_styles): Change first argument to
+	struct obstack.
+	(format_default_settings): New function.
+	(show_default_settings)
+	(show_default_settings_fs): Removed.
+	(tar_help): Removed.
+	(tar_help_filter): New function.
+	(argp): Set help_filter.
+	(parse_opt): Fix error message.
+
+2009-09-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve command line option handling.
+	* gnulib.modules: Add argp-version-etc and progname,
+	use getopt-gnu instead of getopt.
+	* src/tar.c (HANG_OPTION, USAGE_OPTION)
+	(VERSION_OPTION): Remove.
+	(options): Remove corresponding options. Let argp
+	handle them.
+	(parse_opt): Likewise.
+	(_argp_hang): Removed.
+	(tar_authors): New variable.
+	(decode_options): Call argp_version_setup.
+	Do not use ARGP_NO_HELP flag in the call to argp_parse.
+
+	Avoid overwriting exit_status with a value indicating less
+	important condition.
+	* src/tar.c (set_exit_status): New function.
+	* src/common.h (set_exit_status): New prototype.
+	* src/compare.c: Use set_exit_status instead of
+	exit_status assignments.
+	* src/create.c: Likewise.
+	* src/misc.c: Likewise.
+
+	* src/system.c (wait_for_grandchild): Use auto variable
+	instead of the global exit_status.
+	* src/incremen.c (scan_directory): Use file_removed_diag
+	instead of stat_diag.
+
+	Automatic detection of seekable archives.
+	* src/buffer.c (guess_seekable_archive): New function.
+	(_open_archive): Call guess_seekable_archive for archives
+	open for reading.
+	(new_volume): Likewise.
+	* src/common.h (seek_option): New global.
+	* src/tar.c (options): New option --no-seek.
+	(parse_opt): --seek and --no-seek set seek_option,
+	not seekable_archive.
+	(decode_options): Initialize seek_option to -1.
+
+	* NEWS: Update.
+	* doc/tar.texi: Update.
+
+2009-08-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix testcases.
+	* tests/extrac08.at: Ensure a predictable umask value.
+	* tests/xform-h.at (xform): do not depend on file name
+	ordering.
+
+2009-08-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix interaction between --listed-incremental and -C
+	* src/incremen.c (read_directory_file): Execute eventual -C dir
+	after opening the snapshot file.
+	(collect_and_sort_names): Remove call to chdir_do
+	* tests/incr05.at, tests/incr06.at: Use relative file names for
+	snapshot files.
+
+2009-08-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update for new exclude module from gnulib. Add testcases by
+	Phil Proudman.
+	* src/names.c (is_pattern): Remove.
+	(regex_usage_warning): Use fnmatch_pattern_has_wildcards
+	instead of
+	is_pattern.
+	* src/tar.c: New option --exclude-backups.
+	(vcs_file_table, backup_file_table): New globals.
+	(add_exclude_array): New function.
+	* tests/exclude01.at, tests/exclude02.at,
+	tests/exclude03.at, tests/exclude04.at,
+	tests/exclude05.at: New testcases. Supplied by Phil Proudman.
+	* tests/Makefile.am (TESTSUITE_AT): Add new tests.
+	* tests/testsuite.at: Add new tests.
+	* THANKS: Update.
+
+2009-08-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove src/version.c (reappeared after migration to Git)
+
+2009-08-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+	* src/misc.c (file_removed_diag): Set exit code to
+	TAREXIT_DIFFERS.
+
+2009-08-08  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes
+
+	Fix handling of files removed during incremental dumps.
+	Changes to src/create.c and src/incremen.c are partially
+	based on patch from Alexander Peslyak <solar at openwall.com>.
+
+	The new testcases require paxutils commit f653a2b or later.
+
+	* src/common.h (struct name): New member `cmdline'.
+	(dump_file): Change type of the 2nd argument to bool.
+	(file_removed_diag, dir_removed_diag): New prototypes.
+	(addname): New argument `cmdline'.
+	(name_from_list): Change return value.
+	* src/create.c (dump_dir0, dump_dir): top_level is bool.
+	(create_archive): Update calls to name_from_list.
+	Take advantage of the name->cmdline to set top_level argument
+	during incremental backups.
+	(dump_file0): top_level is bool.
+	Do not bail out if a no-top-level file disappears during
+	incremental
+	backup, use file_removed_diag instead.
+	(dump_filed): top_level is bool.
+	* src/incremen.c (update_parent_directory): Silently ignore
+	ENOENT.  It should have already been reported elsewhere.
+	(scan_directory): Use dir_removed_diag to report missing
+	directories.
+	* src/misc.c (file_removed_diag, dir_removed_diag): New functions.
+	* src/names.c (name_gather): Set ->cmdname.
+	(addname): Likewise. All uses updated.
+	(name_from_list): Return struct name const *. All uses updated.
+
+	* tests/filerem01.at: New testcase.
+	* tests/filerem02.at: New testcase.
+	* tests/Makefile.am, tests/testsuite.at: Add filerem01.at,
+	filerem02.at
+	* tests/grow.at, test/truncate.at: Use new syntax for genfile
+	--run.
+
+	* NEWS: Update.
+	* doc/tar.texi: Minor fix.
+
+	Optimize searches for directory structures by keeping a pointer
+	to struct directory in struct name.
+	* src/common.h (struct name): New member `directory' replaces
+	dir_contents. Rearrange members.
+	(rebase_directory): Change signature.
+	(scan_directory): Change signature.
+	(name_fill_directory)
+	(directory_contents, safe_directory_contents): New prototypes.
+	(append_incremental_renames): Change signature.
+	(replace_prefix): New proto.
+	* src/compare.c (diff_dumpdir): Use directory_contents +
+	scan_directory.
+	* src/create.c
+	* src/incremen.c (replace_prefix): Move to misc.c
+	(rebase_directory): Rewrite.
+	(scan_directory): Return pointer to struct directory.
+	(directory_contents, safe_directory_contents): New functions.
+	(get_directory_contents): Remove.
+	(name_fill_directory): New function.
+	(append_incremental_renames): Rewrite. This also fixes a memory
+	leak.
+	* src/names.c (name_gather, addname): Reflect changes in struct
+	name.
+	(add_hierarchy_to_namelist): Rewrite using name_fill_directory and
+	directory_contents.
+	(rebase_child_list): Update call to rebase_directory.
+	(collect_and_sort_names): Optimize
+
+	* src/misc.c (replace_prefix): New function.
+	* src/names.c (add_hierarchy_to_namelist): Use new
+	get_directory_contents.
+
+	* tests/incr05.at: New test case.
+	* tests/incr06.at: New test case.
+	* tests/Makefile.am, test/testsuite.at: Add incr05.at and
+	incr06.at.
+
+	* doc/Makefile.am (check-options): Improve rule.
+	* doc/tar.texi, NEWS: Update.
+
+2009-08-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fixes.
+	* src/common.h (rebase_directory): New prototype.
+	* src/incremen.c (rebase_directory): Use replace_prefix.
+	* src/names.c (collect_and_sort_names): Abort if
+	hash_insert fails.
+
+	Improve listed incremental dumps.
+	The modified algorithm tries to avoid dumping the same
+	directory twice and ensures the order of the directories
+	in the resulting archive is the same, whatever their order
+	on the command line.  It also fixes the operation of
+	--listed-incremental -C.
+
+	* gnulib.modules: Add canonicalize
+	* src/common.h (incremental_level): New global.
+	(check_exclusion_tags): first argument is const.
+	(get_directory_contents): Add third argument.
+	(zap_slashes, normalize_filename): New prototypes.
+	(chdir_count): New prototype.
+	(WARN_VERBOSE_WARNINGS): New define.
+	(WARN_ALL): Exclude WARN_VERBOSE_WARNINGS.
+	* src/compare.c (diff_dumpdir): Update the call to
+	get_directory_contents.
+	* src/create.c (check_exclusion_tags): First argument is const.
+	Use ISSLASH and DIRECTORY_SEPARATOR instead of referring to '/'.
+
+	* src/incremen.c (struct directory): New member `caname'.
+	(hash_directory_name): Rename to
+	hash_directory_canonical_name. Operate
+	on the canonical name.
+	(compare_directory_names): Rename to
+	compare_directory_canonical_names.
+	Operate on the canonical name.
+	(make_directory): Take two arguments.
+	(free_directory): Free caname.
+	(attach_directory): Create caname.
+	(find_directory): Use caname for lookups.
+	(PD_VERBOSE): Remove.
+	(PD_FORCE_INIT): New define.
+	(procdir): First argument is const.
+	Reinitialize directory if PD_FORCE_INIT bit is set.
+	Do not use PD_VERBOSE or verbose_option for issuing warnings.
+	Rely on WARNOPT instead.
+	Always set *entry.
+	(scan_directory): Take three arguments. The third one is a boolean
+	which is true if the directory is explicitly mentioned on
+	the command
+	line.
+	(get_directory_contents): Remove.  Use scan_directory instead.
+	All callers updated.
+	(read_directory_file): Truncate the file if --level=0 is given.
+	* src/misc.c: Include canonicalize.h
+	(zap_slashes, normalize_filename): New functions.
+	(chdir_count): New function.
+	* src/names.c (add_hierarchy_to_namelist): Take three arguments,
+	as
+	get_directory_contents and scan_directory.
+	(collect_and_sort_names): Allow at most one -C, before file name
+	arguments.
+	Read directory file after eventual changing to another directory.
+	Avoid adding the same directory under different pathnames to
+	the list.
+	* src/tar.c: New option --level.
+
+	* tests/incr03.at, tests/incr04.at, tests/listed01.at,
+	tests/listed02.at, tests/rename01.at, tests/rename02.at,
+	tests/rename03.at: Update for new tar behavior.
+	* tests/multiv01.at: Do not use --listed-incremental.
+
+2009-08-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Forgotten to push src/warning.c
+
+	Implement the --warning option.
+	* src/warning.c: New file.
+	* src/Makefile.am: Add warning.c
+	* src/common.h: Provide definitions for warning classes.
+	(warning_option): New global.
+	(WARNOPT): New define.
+	(set_warning_option): New prototype.
+	* src/tar.c: New option `--warning'.
+	* src/compare.c: When applicable WARNOPT instead of WARN.
+	* src/create.c: Likewise.
+	* src/extract.c: Likewise.
+	* src/incremen.c: Likewise.
+	* src/list.c: Likewise.
+
+	* NEWS, doc/tar.texi: Update.
+
+2009-08-05  Carl Worth	<cworth@cworth.org>
+
+	Fix descriptions of some options (tiny change)
+
+2009-08-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix backup handling and restoring file modes of existing
+	directories
+	* NEWS, THANKS: Update
+	* src/extract.c (extract_dir): reset status to 0 if the
+	directory already exists.
+	* src/misc.c (maybe_backup_file): Assign before_backup_name
+	and clear after_backup_name before checking if we really need
+	to backup the file.
+	* tests/backup01.at: New testcase.
+	* tests/extrac08.at: New testcase.
+	* tests/Makefile.am, tests/testsuite.at: Add extrac08.at and
+	backup01.at
+
+2009-07-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix hard links recognition with -c --remove-files
+	* src/create.c (dump_hard_link): Always look up in the link table
+	if remove_files_option is set. Patch suggested by Theodore Ts'o
+	<tytso@mit.edu>.
+	(check_links): Remove extra newline from the warning message.
+	* tests/link02.at, tests/link03.at: New testcases.
+	* tests/Makefile.am (TESTSUITE_AT): Add link02.at and link03.at
+	* tests/testsuite.at: Include link02.at and link03.at
+
+	Fix handling of hard link targets by -c --transform
+	* src/create.c (file_count_links): Transform link target
+	before the look up.
+	* tests/xform-h.at: New test case.
+	* tests/Makefile.am (TESTSUITE_AT): Add xform-h.at.
+	* tests/testsuite.at: Add xform-h.at
+
+2009-06-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor fix.
+	* src/extract.c (file_newer_p): Do not report error on ENOENT
+
+2009-06-19  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove rebox.el (reappeared after migration to Git)
+
+2009-06-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove files that were removed in CVS, but reappeared after
+	migration to Git
+
+2009-06-18  David Bartley  <dtbartle@csclub.uwaterloo.ca>
+
+	Fix Solaris bug where chmod fails if we don't have
+	PRIV_SYS_LINKDIR
+	* gnulib.modules: Add priv-set.
+	* src/extract.c (set_mode, extract_archive): Restore
+	PRIV_SYS_LINKDIR on chmod failure.
+	* src/tar.c (main): Drop PRIV_SYS_LINKDIR on startup.
+
+2009-06-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Ensure default behavior for SIGPIPE
+	* src/tar.c (main): Install default handler for SIGPIPE.
+	Proposed by Bastian Blank.
+
+2009-06-18  Eric Blake	<ebb9@byu.net>
+
+	Follow autoconf recommendation for TESTSUITEFLAGS.
+	* tests/Makefile.am (check-local, installcheck-local): Honor
+	TESTSUITEFLAGS.
+
+2009-06-18  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix handling of sub-subprocess returns.
+	* src/system.c (wait_for_grandchild): New function.
+	(sys_child_open_for_compress)
+	(sys_child_open_for_uncompress): Use wait_for_grandchild
+	to manage grandchild return.
+
+2009-05-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Report record size only if the archive refers to a device.
+	* Makefile.am (INCLUDES): Add ../lib, for rmt-command.h
+	* src/buffer.c (short_read): Report the actual record size
+	only if the archive descriptor refers to a device.
+	* tests/pipe.at, tests/shortrec.at,
+	tests/sparsemvp.at: Reflect the above change.
+	* NEWS, configure.ac: Version 1.22.90
+
+2009-05-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Do not issue errors on existing files when given the -k option
+	* Makefile.am (dist-hook): Fix rule.
+	* src/extract.c (maybe_recoverable): Return three-state value.
+	(extract_dir): Skip extraction if maybe_recoverable indicates so.
+	(extract_file): Likewise.
+
+2009-05-12  Eric Blake	<ebb9@byu.net>
+
+	Avoid undefined behavior
+	* src/xheader.c (xheader_set_keyword_equal): Pass correct type to
+	ctype macros.
+	* src/transform.c (run_case_conv): Likewise.
+
+2009-05-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove src/Makefile.in
+
+2009-03-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Bugfixes.
+	* bootstrap (symlink_to_dir): Fix symlink calculation.
+	* doc/tar.texi: Minor fixes by Victor Villa and Stepan Kasal.
+
+2009-03-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove Makefile.in
+
+	Migrate to Git
+
 2009-03-05  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* src/incremen.c: --no-recursive works with --incremental.
@@ -8830,4 +9600,5 @@
 Local Variables:
 mode: change-log
 version-control: never
+buffer-read-only: t
 End:
