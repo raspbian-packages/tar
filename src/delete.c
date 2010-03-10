@@ -1,7 +1,7 @@
 /* Delete entries from a tar archive.
 
    Copyright (C) 1988, 1992, 1994, 1996, 1997, 2000, 2001, 2003, 2004,
-   2005, 2006 Free Software Foundation, Inc.
+   2005, 2006, 2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -35,7 +35,6 @@ extern union block *current_block;
 extern union block *recent_long_name;
 extern union block *recent_long_link;
 extern off_t records_read;
-extern off_t records_written;
 
 /* The number of records skipped at the start of the archive, when
    passing over members that are not deleted.  */
@@ -166,7 +165,9 @@ delete_archive_members (void)
 
   do
     {
-      enum read_header status = read_header (true);
+      enum read_header status = read_header (&current_header,
+                                             &current_stat_info,
+                                             read_header_x_raw);
 
       switch (status)
 	{
@@ -261,7 +262,8 @@ delete_archive_members (void)
 
 	  if (current_block == record_end)
 	    flush_archive ();
-	  status = read_header (false);
+	  status = read_header (&current_header, &current_stat_info, 
+	                        read_header_auto);
 
 	  xheader_decode (&current_stat_info);
 

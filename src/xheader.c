@@ -1,6 +1,7 @@
 /* POSIX extended headers for tar.
 
-   Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009, 2010 Free Software
+   Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -96,8 +97,14 @@ static struct keyword_list *global_header_override_list;
 /* Template for the name field of an 'x' type header */
 static char *exthdr_name;
 
+static char *exthdr_mtime_option;
+static time_t exthdr_mtime;
+
 /* Template for the name field of a 'g' type header */
 static char *globexthdr_name;
+
+static char *globexthdr_mtime_option;
+static time_t globexthdr_mtime;
 
 bool
 xheader_keyword_deleted_p (const char *kw)
@@ -157,6 +164,21 @@ xheader_set_single_keyword (char *kw)
 }
 
 static void
+assign_time_option (char **sval, time_t *tval, const char *input)
+{
+  uintmax_t u;
+  char *p;
+  time_t t = u = strtoumax (input, &p, 10);
+  if (t != u || *p || errno == ERANGE)
+    ERROR ((0, 0, _("Time stamp is out of allowed range")));
+  else
+    {
+      *tval = t;
+      assign_string (sval, input);
+    }
+}
+
+static void
 xheader_set_keyword_equal (char *kw, char *eq)
 {
   bool global = true;
@@ -168,12 +190,12 @@ xheader_set_keyword_equal (char *kw, char *eq)
       global = false;
     }
 
-  while (p > kw && isspace (*p))
+  while (p > kw && isspace ((unsigned char) *p))
     p--;
 
   *p = 0;
 
-  for (p = eq + 1; *p && isspace (*p); p++)
+  for (p = eq + 1; *p && isspace ((unsigned char) *p); p++)
     ;
 
   if (strcmp (kw, "delete") == 0)
@@ -186,6 +208,10 @@ xheader_set_keyword_equal (char *kw, char *eq)
     assign_string (&exthdr_name, p);
   else if (strcmp (kw, "globexthdr.name") == 0)
     assign_string (&globexthdr_name, p);
+  else if (strcmp (kw, "exthdr.mtime") == 0)
+    assign_time_option (&exthdr_mtime_option, &exthdr_mtime, p);
+  else if (strcmp (kw, "globexthdr.mtime") == 0)
+    assign_time_option (&globexthdr_mtime_option, &globexthdr_mtime, p);
   else
     {
       if (xheader_protected_keyword_p (kw))
@@ -364,14 +390,26 @@ xheader_ghdr_name (void)
 }
 
 void
-xheader_write (char type, char *name, struct xheader *xhdr)
+xheader_write (char type, char *name, time_t t, struct xheader *xhdr)
 {
   union block *header;
   size_t size;
   char *p;
 
   size = xhdr->size;
-  header = start_private_header (name, size);
+  switch (type)
+    {
+    case XGLTYPE:
+      if (globexthdr_mtime_option)
+	t = globexthdr_mtime;
+      break;
+
+    case XHDTYPE:
+      if (exthdr_mtime_option)
+	t = exthdr_mtime;
+      break;
+    }
+  header = start_private_header (name, size, t);
   header->header.typeflag = type;
 
   simple_finish_header (header);
@@ -403,22 +441,29 @@ xheader_write (char type, char *name, struct xheader *xhdr)
 void
 xheader_write_global (struct xheader *xhdr)
 {
-  char *name;
-  struct keyword_list *kp;
+  if (keyword_global_override_list)
+    {
+      struct keyword_list *kp;
 
-  if (!keyword_global_override_list)
-    return;
-
-  xheader_init (xhdr);
-  for (kp = keyword_global_override_list; kp; kp = kp->next)
-    code_string (kp->value, kp->pattern, xhdr);
-  xheader_finish (xhdr);
-  xheader_write (XGLTYPE, name = xheader_ghdr_name (), xhdr);
-  free (name);
+      xheader_init (xhdr);
+      for (kp = keyword_global_override_list; kp; kp = kp->next)
+	code_string (kp->value, kp->pattern, xhdr);
+    }
+  if (xhdr->stk)
+    {
+      char *name;
+      
+      xheader_finish (xhdr);
+      xheader_write (XGLTYPE, name = xheader_ghdr_name (), time (NULL), xhdr);
+      free (name);
+    }
 }
 
 
 /* General Interface */
+
+#define XHDR_PROTECTED 0x01
+#define XHDR_GLOBAL    0x02
 
 struct xhdr_tab
 {
@@ -426,7 +471,7 @@ struct xhdr_tab
   void (*coder) (struct tar_stat_info const *, char const *,
 		 struct xheader *, void const *data);
   void (*decoder) (struct tar_stat_info *, char const *, char const *, size_t);
-  bool protect;
+  int flags;
 };
 
 /* This declaration must be extern, because ISO C99 section 6.9.2
@@ -454,7 +499,7 @@ xheader_protected_pattern_p (const char *pattern)
   struct xhdr_tab const *p;
 
   for (p = xhdr_tab; p->keyword; p++)
-    if (p->protect && fnmatch (pattern, p->keyword, 0) == 0)
+    if ((p->flags & XHDR_PROTECTED) && fnmatch (pattern, p->keyword, 0) == 0)
       return true;
   return false;
 }
@@ -465,7 +510,7 @@ xheader_protected_keyword_p (const char *keyword)
   struct xhdr_tab const *p;
 
   for (p = xhdr_tab; p->keyword; p++)
-    if (p->protect && strcmp (p->keyword, keyword) == 0)
+    if ((p->flags & XHDR_PROTECTED) && strcmp (p->keyword, keyword) == 0)
       return true;
   return false;
 }
@@ -571,8 +616,9 @@ decx (void *data, char const *keyword, char const *value, size_t size)
   if (t)
     t->decoder (st, keyword, value, size);
   else
-    WARN((0, 0, _("Ignoring unknown extended header keyword `%s'"),
-	 keyword));
+    WARNOPT (WARN_UNKNOWN_KEYWORD,
+	     (0, 0, _("Ignoring unknown extended header keyword `%s'"),
+	      keyword));
 }
 
 void
@@ -595,7 +641,11 @@ decg (void *data, char const *keyword, char const *value,
       size_t size __attribute__((unused)))
 {
   struct keyword_list **kwl = data;
-  xheader_list_append (kwl, keyword, value);
+  struct xhdr_tab const *tab = locate_handler (keyword);
+  if (tab && (tab->flags & XHDR_GLOBAL))
+    tab->decoder (data, keyword, value, size);
+  else
+    xheader_list_append (kwl, keyword, value);
 }
 
 void
@@ -644,7 +694,6 @@ xheader_read (struct xheader *xhdr, union block *p, size_t size)
 {
   size_t j = 0;
 
-  xheader_init (xhdr);
   size += BLOCKSIZE;
   xhdr->size = size;
   xhdr->buffer = xmalloc (size + 1);
@@ -657,6 +706,9 @@ xheader_read (struct xheader *xhdr, union block *p, size_t size)
       if (len > BLOCKSIZE)
 	len = BLOCKSIZE;
 
+      if (!p)
+	FATAL_ERROR ((0, 0, _("Unexpected EOF in archive")));
+      
       memcpy (&xhdr->buffer[j], p->buffer, len);
       set_next_block_after (p);
 
@@ -1453,51 +1505,53 @@ sparse_minor_decoder (struct tar_stat_info *st,
 }
 
 struct xhdr_tab const xhdr_tab[] = {
-  { "atime",	atime_coder,	atime_decoder,	  false },
-  { "comment",	dummy_coder,	dummy_decoder,	  false },
-  { "charset",	dummy_coder,	dummy_decoder,	  false },
-  { "ctime",	ctime_coder,	ctime_decoder,	  false },
-  { "gid",	gid_coder,	gid_decoder,	  false },
-  { "gname",	gname_coder,	gname_decoder,	  false },
-  { "linkpath", linkpath_coder, linkpath_decoder, false },
-  { "mtime",	mtime_coder,	mtime_decoder,	  false },
-  { "path",	path_coder,	path_decoder,	  false },
-  { "size",	size_coder,	size_decoder,	  false },
-  { "uid",	uid_coder,	uid_decoder,	  false },
-  { "uname",	uname_coder,	uname_decoder,	  false },
+  { "atime",	atime_coder,	atime_decoder,	  0 },
+  { "comment",	dummy_coder,	dummy_decoder,	  0 },
+  { "charset",	dummy_coder,	dummy_decoder,	  0 },
+  { "ctime",	ctime_coder,	ctime_decoder,	  0 },
+  { "gid",	gid_coder,	gid_decoder,	  0 },
+  { "gname",	gname_coder,	gname_decoder,	  0 },
+  { "linkpath", linkpath_coder, linkpath_decoder, 0 },
+  { "mtime",	mtime_coder,	mtime_decoder,	  0 },
+  { "path",	path_coder,	path_decoder,	  0 },
+  { "size",	size_coder,	size_decoder,	  0 },
+  { "uid",	uid_coder,	uid_decoder,	  0 },
+  { "uname",	uname_coder,	uname_decoder,	  0 },
 
   /* Sparse file handling */
   { "GNU.sparse.name",       path_coder, path_decoder,
-    true },
+    XHDR_PROTECTED },
   { "GNU.sparse.major",      sparse_major_coder, sparse_major_decoder,
-    true },
+    XHDR_PROTECTED },
   { "GNU.sparse.minor",      sparse_minor_coder, sparse_minor_decoder,
-    true },
+    XHDR_PROTECTED },
   { "GNU.sparse.realsize",   sparse_size_coder, sparse_size_decoder,
-    true },
+    XHDR_PROTECTED },
   { "GNU.sparse.numblocks",  sparse_numblocks_coder, sparse_numblocks_decoder,
-    true },
+    XHDR_PROTECTED },
 
   /* tar 1.14 - 1.15.90 keywords. */
-  { "GNU.sparse.size",       sparse_size_coder, sparse_size_decoder, true },
+  { "GNU.sparse.size",       sparse_size_coder, sparse_size_decoder,
+    XHDR_PROTECTED },
   /* tar 1.14 - 1.15.1 keywords. Multiple instances of these appeared in 'x'
      headers, and each of them was meaningful. It confilcted with POSIX specs,
      which requires that "when extended header records conflict, the last one
      given in the header shall take precedence." */
   { "GNU.sparse.offset",     sparse_offset_coder, sparse_offset_decoder,
-    true },
+    XHDR_PROTECTED },
   { "GNU.sparse.numbytes",   sparse_numbytes_coder, sparse_numbytes_decoder,
-    true },
+    XHDR_PROTECTED },
   /* tar 1.15.90 keyword, introduced to remove the above-mentioned conflict. */
   { "GNU.sparse.map",        NULL /* Unused, see pax_dump_header() */,
-    sparse_map_decoder, false },
+    sparse_map_decoder, 0 },
 
   { "GNU.dumpdir",           dumpdir_coder, dumpdir_decoder,
-    true },
+    XHDR_PROTECTED },
 
   /* Keeps the tape/volume label. May be present only in the global headers.
      Equivalent to GNUTYPE_VOLHDR.  */
-  { "GNU.volume.label", volume_label_coder, volume_label_decoder, true },
+  { "GNU.volume.label", volume_label_coder, volume_label_decoder,
+    XHDR_PROTECTED | XHDR_GLOBAL },
 
   /* These may be present in a first global header of the archive.
      They provide the same functionality as GNUTYPE_MULTIVOL header.
@@ -1506,9 +1560,11 @@ struct xhdr_tab const xhdr_tab[] = {
      GNU.volume.offset keeps the offset of the start of this volume,
      otherwise kept in oldgnu_header.offset.  */
   { "GNU.volume.filename", volume_label_coder, volume_filename_decoder,
-    true },
-  { "GNU.volume.size", volume_size_coder, volume_size_decoder, true },
-  { "GNU.volume.offset", volume_offset_coder, volume_offset_decoder, true },
+    XHDR_PROTECTED | XHDR_GLOBAL },
+  { "GNU.volume.size", volume_size_coder, volume_size_decoder,
+    XHDR_PROTECTED | XHDR_GLOBAL },
+  { "GNU.volume.offset", volume_offset_coder, volume_offset_decoder,
+    XHDR_PROTECTED | XHDR_GLOBAL },
 
-  { NULL, NULL, NULL, false }
+  { NULL, NULL, NULL, 0 }
 };

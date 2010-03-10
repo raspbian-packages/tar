@@ -2,7 +2,7 @@
    Print statistics for existing files.
 
    Copyright (C) 1995, 1996, 1997, 2001, 2003, 2004, 2005, 2006, 2007,
-   2008 Free Software Foundation, Inc.
+   2008, 2009 Free Software Foundation, Inc.
 
    François Pinard <pinard@iro.umontreal.ca>, 1995.
    Sergey Poznyakoff <gray@mirddin.farlep.net>, 2004, 2005, 2006, 2007, 2008.
@@ -99,6 +99,7 @@ char *buffer;
 /* Number of arguments and argument vector for mode == mode_exec */
 int exec_argc;
 char **exec_argv;
+char *checkpoint_option;
 
 /* Time for --touch option */
 struct timespec touch_time;
@@ -119,6 +120,7 @@ static char doc[] = N_("genfile manipulates data files for GNU paxutils test sui
 #define OPT_DATE       261
 #define OPT_VERBOSE    262
 #define OPT_SEEK       263
+#define OPT_UNLINK     264
 
 static struct argp_option options[] = {
 #define GRP 0
@@ -159,8 +161,8 @@ static struct argp_option options[] = {
   {NULL, 0, NULL, 0,
    N_("Synchronous execution options:"), GRP},
 
-  {"run", 'r', N_("COMMAND"), 0,
-   N_("Execute given COMMAND. Useful with --checkpoint and one of --cut, --append, --touch"),
+  {"run", 'r', N_("OPTION"), OPTION_ARG_OPTIONAL,
+   N_("Execute ARGS. Useful with --checkpoint and one of --cut, --append, --touch, --unlink"),
    GRP+1 },
   {"checkpoint", OPT_CHECKPOINT, N_("NUMBER"), 0,
    N_("Perform given action (see below) upon reaching checkpoint NUMBER"),
@@ -188,6 +190,9 @@ static struct argp_option options[] = {
    GRP+1 },
   {"exec", OPT_EXEC, N_("COMMAND"), 0,
    N_("Execute COMMAND"),
+   GRP+1 },
+  {"unlink", OPT_UNLINK, N_("FILE"), 0,
+   N_("Unlink FILE"),
    GRP+1 },
 #undef GRP
   { NULL, }
@@ -333,7 +338,11 @@ parse_opt (int key, char *arg, struct argp_state *state)
 
     case 'r':
       mode = mode_exec;
-      argcv_get (arg, "", NULL, &exec_argc, &exec_argv);
+      if (arg)
+	{
+	  argcv_get (arg, "", NULL, &exec_argc, &exec_argv);
+	  checkpoint_option = "--checkpoint";
+	}
       break;
 
     case 'T':
@@ -363,6 +372,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case OPT_TRUNCATE:
     case OPT_TOUCH:
     case OPT_EXEC:
+    case OPT_UNLINK:
       reg_action (key, arg);
       break;
 
@@ -574,7 +584,7 @@ print_stat (const char *name)
 	{
 	  mode_t mask = ~0;
 
-	  if (ispunct (p[4]))
+	  if (ispunct ((unsigned char) p[4]))
 	    {
 	      char *q;
 
@@ -685,6 +695,11 @@ exec_checkpoint (struct action *p)
       system (p->name);
       break;
 
+    case OPT_UNLINK:
+      if (unlink (p->name))
+	error (0, errno, _("cannot unlink `%s'"), p->name);
+      break;
+      
     default:
       abort ();
     }
@@ -730,11 +745,17 @@ exec_command (void)
 
   /* Insert --checkpoint option.
      FIXME: This assumes that exec_argv does not use traditional tar options
-     (without dash) */
-  exec_argc++;
-  exec_argv = xrealloc (exec_argv, (exec_argc + 1) * sizeof (*exec_argv));
-  memmove (exec_argv+2, exec_argv+1, (exec_argc - 1) * sizeof (*exec_argv));
-  exec_argv[1] = "--checkpoint";
+     (without dash).
+     FIXME: There is no way to set checkpoint argument (granularity).
+  */
+  if (checkpoint_option)
+    {
+      exec_argc++;
+      exec_argv = xrealloc (exec_argv, (exec_argc + 1) * sizeof (*exec_argv));
+      memmove (exec_argv+2, exec_argv+1,
+	       (exec_argc - 1) * sizeof (*exec_argv));
+      exec_argv[1] = checkpoint_option;
+    }
 
 #ifdef SIGCHLD
   /* System V fork+wait does not work if SIGCHLD is ignored.  */
@@ -760,7 +781,7 @@ exec_command (void)
       setenv ("LC_ALL", "POSIX", 1);
 
       execvp (exec_argv[0], exec_argv);
-      error (EXIT_FAILURE, errno, "execvp");
+      error (EXIT_FAILURE, errno, "execvp %s", exec_argv[0]);
     }
 
   /* Master */
@@ -771,12 +792,12 @@ exec_command (void)
 
   while ((p = fgets (buf, sizeof buf, fp)))
     {
-      while (*p && !isspace (*p) && *p != ':')
+      while (*p && !isspace ((unsigned char) *p) && *p != ':')
 	p++;
 
       if (*p == ':')
 	{
-	  for (p++; *p && isspace (*p); p++)
+	  for (p++; *p && isspace ((unsigned char) *p); p++)
 	    ;
 
 	  if (*p
@@ -784,7 +805,7 @@ exec_command (void)
 	    {
 	      char *end;
 	      size_t n = strtoul (p + sizeof CHECKPOINT_TEXT - 1, &end, 10);
-	      if (!(*end && !isspace (*end)))
+	      if (!(*end && !isspace ((unsigned char) *end)))
 		{
 		  process_checkpoint (n);
 		  continue;
@@ -872,6 +893,13 @@ main (int argc, char **argv)
       break;
 
     case mode_exec:
+      if (!checkpoint_option)
+	{
+	  exec_argc = argc;
+	  exec_argv = argv;
+	}
+      else if (argc)
+	error (EXIT_FAILURE, 0, _("too many arguments"));
       exec_command ();
       break;
 

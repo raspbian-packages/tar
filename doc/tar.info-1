@@ -1,10 +1,10 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.22, 5 March 2009), which
+This manual is for GNU `tar' (version 1.23, 9 March 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
-2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -34,11 +34,11 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.22, 5 March 2009), which
+This manual is for GNU `tar' (version 1.23, 9 March 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
-2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
+2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -138,6 +138,7 @@ Invoking GNU `tar'
 * defaults::
 * verbose::
 * checkpoints::
+* warnings::
 * interactive::
 
 The Three Option Styles
@@ -398,7 +399,7 @@ comments.
 
    The second chapter is a tutorial (*note Tutorial::) which provides a
 gentle introduction for people who are new to using `tar'.  It is meant
-to be self contained, not requiring any reading from subsequent
+to be self-contained, not requiring any reading from subsequent
 chapters to make sense.  It moves from topic to topic in a logical,
 progressive order, building on information already explained.
 
@@ -561,7 +562,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.22
+to create version 1.12.  The book for versions from 1.14 up to 1.23
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -585,7 +586,7 @@ If you find problems or have suggestions about this program or manual,
 please report them to `bug-tar@gnu.org'.
 
    When reporting a bug, please be sure to include as much detail as
-possible, in order to reproduce it.  .
+possible, in order to reproduce it.
 
 
 File: tar.info,  Node: Tutorial,  Next: tar invocation,  Prev: Introduction,  Up: Top
@@ -699,7 +700,7 @@ three forms: long (mnemonic) form, short form, and old style.  Some of
 the operations and options have no short or "old" forms; however, the
 operations and options which we will cover in this tutorial have
 corresponding abbreviations.  We will indicate those abbreviations
-appropriately to get you used to seeing them.  (Note that the "old
+appropriately to get you used to seeing them.  Note, that the "old
 style" option forms exist in GNU `tar' for compatibility with Unix
 `tar'.  In this book we present a full discussion of this way of
 writing options and operations (*note Old Options::), and we discuss
@@ -800,7 +801,7 @@ the name of the archive file that `tar' will work on.
    If you don't specify this argument, then `tar' will examine the
 environment variable `TAPE'.  If it is set, its value will be used as
 the archive name.  Otherwise, `tar' will use the default archive,
-determined at the compile time. Usually it is standard output or some
+determined at compile time. Usually it is standard output or some
 physical tape drive attached to your machine (you can verify what the
 default is by running `tar --show-defaults', *note defaults::).  If
 there is no tape drive attached, or the default is not meaningful, then
@@ -1009,7 +1010,7 @@ home directory.
    Now `cd' to the directory named `practice'; `practice' is now your
 "working directory".  (_Please note_: Although the full file name of
 this directory is `/HOMEDIR/practice', in our examples we will refer to
-this directory as `practice'; the HOMEDIR is presumed.
+this directory as `practice'; the HOMEDIR is presumed.)
 
    In general, you should check that the files to be archived exist
 where you think they do (in the working directory) by running `ls'.
@@ -1107,7 +1108,7 @@ the `create' example above would appear as:
      jazz
 
    This example is just like the example we showed which did not use
-`--verbose', except that `tar' generated the remaining lines .
+`--verbose', except that `tar' generated the remaining lines.
 
    In the rest of the examples in this chapter, we will frequently use
 `verbose' mode so we can show actions or `tar' responses that you would
@@ -1238,7 +1239,7 @@ the exclusion of that one file.  (_Please note:_ Other implementations
 of `tar' may not be so clever; they will enter an infinite loop when
 this happens, so you should not depend on this behavior unless you are
 certain you are running GNU `tar'.  In general, it is wise to always
-place the archive outside of the directory being dumped.
+place the archive outside of the directory being dumped.)
 
 
 File: tar.info,  Node: list,  Next: extract,  Prev: create,  Up: Tutorial
@@ -1290,12 +1291,12 @@ information).  In other words, in verbose mode GNU `tar' shows "file
 names" when creating an archive and "member names" when listing it.
 Consider this example:
 
-     $ tar cfv archive /etc/mail
+     $ tar --create --verbose --file archive /etc/mail
      tar: Removing leading `/' from member names
      /etc/mail/
      /etc/mail/sendmail.cf
      /etc/mail/aliases
-     $ tar tf archive
+     $ tar --test --file archive
      etc/mail/
      etc/mail/sendmail.cf
      etc/mail/aliases
@@ -1370,8 +1371,6 @@ File: tar.info,  Node: extract,  Next: going further,  Prev: list,  Up: Tutorial
 
 2.8 How to Extract Members from an Archive
 ==========================================
-
-     _(This message will disappear, once this node revised.)_
 
 Creating an archive is only half the job--there is no point in storing
 files in an archive if you can't retrieve them.  The act of retrieving
@@ -1565,16 +1564,15 @@ you will get the following response:
 
      tar: folk: Not found in archive
      tar: jazz: Not found in archive
-     $
 
 This is because these files were not originally _in_ the parent
 directory `..', where the archive is located; they were in the
 `practice' directory, and their file names reflect this:
 
      $ tar -tvf music.tar
+     practice/blues
      practice/folk
      practice/jazz
-     practice/rock
 
 Likewise, if you try to use this command,
 
@@ -1600,8 +1598,6 @@ File: tar.info,  Node: tar invocation,  Next: operations,  Prev: Tutorial,  Up: 
 
 3 Invoking GNU `tar'
 ********************
-
-     _(This message will disappear, once this node revised.)_
 
 This chapter is about how one invokes the GNU `tar' command, from the
 command synopsis (*note Synopsis::).  There are numerous options, and
@@ -1634,6 +1630,7 @@ receives about what is going on.  These are the `--help' and
 * defaults::
 * verbose::
 * checkpoints::
+* warnings::
 * interactive::
 
 
@@ -1704,15 +1701,15 @@ while `--create' (`-c') will usually yield a diagnostic and inhibit
 archive.
 
    Besides successful exits, GNU `tar' may fail for many reasons.  Some
-reasons correspond to bad usage, that is, when the `tar' command is
-improperly written.  Errors may be encountered later, while
-encountering an error processing the archive or the files.  Some errors
-are recoverable, in which case the failure is delayed until `tar' has
-completed all its work.  Some errors are such that it would not
-meaningful, or at least risky, to continue processing: `tar' then
-aborts processing immediately.  All abnormal exits, whether immediate
-or delayed, should always be clearly diagnosed on `stderr', after a
-line stating the nature of the error.
+reasons correspond to bad usage, that is, when the `tar' command line
+is improperly written.  Errors may be encountered later, while
+processing the archive or the files.  Some errors are recoverable, in
+which case the failure is delayed until `tar' has completed all its
+work.  Some errors are such that it would be not meaningful, or at
+least risky, to continue processing: `tar' then aborts processing
+immediately.  All abnormal exits, whether immediate or delayed, should
+always be clearly diagnosed on `stderr', after a line stating the
+nature of the error.
 
    Possible exit codes of GNU `tar' are summarized in the following
 table:
@@ -1749,8 +1746,8 @@ File: tar.info,  Node: using tar options,  Next: Styles,  Prev: Synopsis,  Up: t
 GNU `tar' has a total of eight operating modes which allow you to
 perform a variety of tasks.  You are required to choose one operating
 mode each time you employ the `tar' program by specifying one, and only
-one operation as an argument to the `tar' command (two lists of four
-operations each may be found at *note frequent operations:: and *note
+one operation as an argument to the `tar' command (the corresponding
+options may be found at *note frequent operations:: and *note
 Operations::).  Depending on circumstances, you may also wish to
 customize how the chosen operating mode behaves.  For example, you may
 wish to change the way the output looks, or the format of the files
@@ -1801,18 +1798,14 @@ line invoking `tar'.  The different styles were developed at different
 times during the history of `tar'.  These styles will be presented
 below, from the most recent to the oldest.
 
-   Some options must take an argument.  (For example, `--file' (`-f'))
-takes the name of an archive file as an argument.  If you do not supply
-an archive file name, `tar' will use a default, but this can be
-confusing; thus, we recommend that you always supply a specific archive
-file name.)  Where you _place_ the arguments generally depends on which
-style of options you choose.  We will detail specific information
-relevant to each option style in the sections on the different option
-styles, below.  The differences are subtle, yet can often be very
-important; incorrect option placement can cause you to overwrite a
-number of important files.  We urge you to note these differences, and
-only use the option style(s) which makes the most sense to you until
-you feel comfortable with the others.
+   Some options must take an argument(1).  Where you _place_ the
+arguments generally depends on which style of options you choose.  We
+will detail specific information relevant to each option style in the
+sections on the different option styles, below.  The differences are
+subtle, yet can often be very important; incorrect option placement can
+cause you to overwrite a number of important files.  We urge you to
+note these differences, and only use the option style(s) which makes
+the most sense to you until you feel comfortable with the others.
 
    Some options _may_ take an argument.  Such options may have at most
 long and short forms, they do not have old style equivalent.  The rules
@@ -1825,6 +1818,13 @@ specifying mandatory arguments.  Please, pay special attention to them.
 * Short Options::               Short Option Style
 * Old Options::                 Old Option Style
 * Mixing::                      Mixing Option Styles
+
+   ---------- Footnotes ----------
+
+   (1) For example, `--file' (`-f') takes the name of an archive file
+as an argument.  If you do not supply an archive file name, `tar' will
+use a default, but this can be confusing; thus, we recommend that you
+always supply a specific archive file name.
 
 
 File: tar.info,  Node: Long Options,  Next: Short Options,  Up: Styles
@@ -1924,8 +1924,6 @@ File: tar.info,  Node: Old Options,  Next: Mixing,  Prev: Short Options,  Up: St
 
 3.3.3 Old Option Style
 ----------------------
-
-     _(This message will disappear, once this node revised.)_
 
 Like short options, "old options" are single letters.  However, old
 options must be written together as a single clumped set, without
@@ -2066,7 +2064,7 @@ File: tar.info,  Node: All Options,  Next: help,  Prev: Styles,  Up: tar invocat
 =====================
 
 The coming manual sections contain an alphabetical listing of all `tar'
-operations and options, with brief descriptions and cross references to
+operations and options, with brief descriptions and cross-references to
 more in-depth explanations in the body of the manual.  They also
 contain an alphabetically arranged table of the short option forms with
 their corresponding long option.  You can use this table as a reference
@@ -2108,8 +2106,8 @@ File: tar.info,  Node: Operation Summary,  Next: Option Summary,  Up: All Option
      Creates a new `tar' archive.  *Note create::.
 
 `--delete'
-     Deletes members from the archive.  Don't try this on a archive on a
-     tape!  *Note delete::.
+     Deletes members from the archive.  Don't try this on an archive on
+     a tape!  *Note delete::.
 
 `--diff'
 `-d'
@@ -2168,8 +2166,8 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      most platforms restoring the access time also requires `tar' to
      restore the data modification time too, so this option may also
      cause problems if other programs are writing the file at the same
-     time.  (Tar attempts to detect this situation, but cannot do so
-     reliably due to race conditions.)  Worse, on most platforms
+     time (`tar' attempts to detect this situation, but cannot do so
+     reliably due to race conditions).  Worse, on most platforms
      restoring the access time also updates the status change time,
      which means that this option is incompatible with incremental
      backups.
@@ -2192,11 +2190,11 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      `--atime-preserve=replace', but this may change in the future as
      support for `--atime-preserve=system' improves.
 
-     If your operating system does not support
+     If your operating or file system does not support
      `--atime-preserve=system', you might be able to preserve access
-     times reliably by by using the `mount' command.  For example, you
-     can mount the file system read-only, or access the file system via
-     a read-only loopback mount, or use the `noatime' mount option
+     times reliably by using the `mount' command.  For example, you can
+     mount the file system read-only, or access the file system via a
+     read-only loopback mount, or use the `noatime' mount option
      available on some systems.  However, mounting typically requires
      superuser privileges and can be a pain to manage.
 
@@ -2237,7 +2235,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      it reads through the archive.  It is intended for when you want a
      visual indication that `tar' is still running, but don't want to
      see `--verbose' output.  You can also instruct `tar' to execute a
-     list of actions on each checkpoint, see `--checklist-action'
+     list of actions on each checkpoint, see `--checkpoint-action'
      below.  For a detailed description, see *note checkpoints::.
 
 `--checkpoint-action=ACTION'
@@ -2319,6 +2317,9 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      When performing operations, `tar' will skip files that match
      PATTERN.  *Note exclude::.
 
+`--exclude-backups'
+     Exclude backup and lock files.  *Note exclude-backups: exclude.
+
 `--exclude-from=FILE'
 `-X FILE'
      Similar to `--exclude', except `tar' will use the list of patterns
@@ -2329,7 +2330,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      tag file, but still dump the directory node and the tag file
      itself.
 
-     *Note exclude::.
+     *Note exclude-caches: exclude.
 
 `--exclude-caches-under'
      Exclude from dump any directory containing a valid cache directory
@@ -2343,21 +2344,23 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--exclude-tag=FILE'
      Exclude from dump any directory containing file named FILE, but
-     dump the directory node and FILE itself.  *Note exclude::.
+     dump the directory node and FILE itself.  *Note exclude-tag:
+     exclude.
 
 `--exclude-tag-under=FILE'
      Exclude from dump the contents of any directory containing file
-     named FILE, but dump the directory node itself.  *Note exclude::.
+     named FILE, but dump the directory node itself.  *Note
+     exclude-tag-under: exclude.
 
 `--exclude-tag-all=FILE'
      Exclude from dump any directory containing file named FILE.  *Note
-     exclude::.
+     exclude-tag-all: exclude.
 
 `--exclude-vcs'
      Exclude from dump directories and files, that are internal for some
      widely used version control systems.
 
-     *Note exclude::.
+     *Note exclude-vcs: exclude.
 
 `--file=ARCHIVE'
 `-f ARCHIVE'
@@ -2486,6 +2489,16 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      will only operate on archives that have a label matching the
      pattern specified in NAME.  *Note Tape Files::.
 
+`--level=N'
+     Force incremental backup of level N.  As of GNU `tar' version
+     1.23, the option `--level=0' truncates the snapshot file, thereby
+     forcing the level 0 dump.  Other values of N are effectively
+     ignored.  *Note --level=0::, for details and examples.
+
+     The use of this option is valid only in conjunction with the
+     `--listed-incremental' option.  *Note Incremental Dumps::, for a
+     detailed description.
+
 `--listed-incremental=SNAPSHOT-FILE'
 `-g SNAPSHOT-FILE'
      During a `--create' operation, specifies that the archive that
@@ -2493,6 +2506,10 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      SNAPSHOT-FILE to determine which files to backup.  With other
      operations, informs `tar' that the archive is in incremental
      format.  *Note Incremental Dumps::.
+
+`--lzip'
+     This option tells `tar' to read or write archives through `lzip'.
+     *Note gzip::.
 
 `--lzma'
      This option tells `tar' to read or write archives through `lzma'.
@@ -2523,7 +2540,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      multi-volume `tar' archive.  *Note Using Multiple Tapes::.
 
 `--new-volume-script'
-     (see -info-script)
+     (see `--info-script')
 
 `--newer=DATE'
 `--after-date=DATE'
@@ -2592,6 +2609,11 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      When extracting an archive, subtract the user's umask from files
      from the permissions specified in the archive.  This is the
      default behavior for ordinary users.
+
+`--no-seek'
+     The archive media does not support seeks to arbitrary locations.
+     Usually `tar' determines automatically whether the archive can be
+     seeked or not.  Use this option to disable this mechanism.
 
 `--no-unquote'
      Treat all input file or member names literally, do not interpret
@@ -2666,10 +2688,10 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      This option does not affect extraction from archives.
 
 `--pax-option=KEYWORD-LIST'
-     This option is meaningful only with POSIX.1-2001 archives (*note
-     posix::).  It modifies the way `tar' handles the extended header
-     keywords.  KEYWORD-LIST is a comma-separated list of keyword
-     options.  *Note PAX keywords::, for a detailed discussion.
+     This option enables creation of the archive in POSIX.1-2001 format
+     (*note posix::) and modifies the way `tar' handles the extended
+     header keywords.  KEYWORD-LIST is a comma-separated list of
+     keyword options.  *Note PAX keywords::, for a detailed discussion.
 
 `--portability'
 `--old-archive'
@@ -2763,7 +2785,9 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      Assume that the archive media supports seeks to arbitrary
      locations.  Usually `tar' determines automatically whether the
      archive can be seeked or not.  This option is intended for use in
-     cases when such recognition fails.
+     cases when such recognition fails.  It takes effect only if the
+     archive is open for reading (e.g. with `--list' or `--extract'
+     options).
 
 `--show-defaults'
      Displays the default options used by `tar' and exits successfully.
@@ -2771,8 +2795,11 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      example of what you can see using this option:
 
           $ tar --show-defaults
-          --format=gnu -f- -b20 --quoting-style=escape \
+          --format=gnu -f- -b20 --quoting-style=escape
           --rmt-command=/usr/libexec/rmt --rsh-command=/usr/bin/rsh
+
+     Notice, that this option outputs only one line.  The example output
+     above has been split to fit page boundaries.
 
 `--show-omitted-dirs'
      Instructs `tar' to mention the directories it is skipping when
@@ -2810,8 +2837,6 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
           tar --extract --file archive.tar --strip-components=2
 
      would extract this file to file `name'.
-
-     , summary
 
 `--suffix=SUFFIX'
      Alters the suffix `tar' uses when backing up files from the default
@@ -2907,6 +2932,11 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      of which volume of a multi-volume archive it is working in FILE.
      *Note volno-file::.
 
+`--warning=KEYWORD'
+     Enable or disable warning messages identified by KEYWORD.  The
+     messages are suppressed if KEYWORD is prefixed with `no-'.  *Note
+     warnings::.
+
 `--wildcards'
      Use wildcards when matching member names with patterns.  *Note
      controlling pattern-matching::.
@@ -2998,10 +3028,11 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.22
-     Copyright (C) 2008 Free Software Foundation, Inc.
-     This is free software.  You may redistribute copies of it under the terms
-     of the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.
+     tar (GNU tar) 1.23
+     Copyright (C) 2010 Free Software Foundation, Inc.
+     Copyright (C) 2010 Free Software Foundation, Inc.
+     License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+     This is free software: you are free to change and redistribute it.
      There is NO WARRANTY, to the extent permitted by law.
 
      Written by John Gilmore and Jay Fenlason.
@@ -3041,7 +3072,7 @@ description.
 
    If you only wish to check the spelling of an option, running `tar
 --usage' may be a better choice.  This will display a terse list of
-`tar' option without accompanying explanations.
+`tar' options without accompanying explanations.
 
    The short help output is quite succinct, and you might have to get
 back to the full documentation for precise points.  If you are reading
@@ -3069,7 +3100,7 @@ source of information about GNU `tar' is this Texinfo documentation.
 
    (1) There are plans to merge the `cpio' and `tar' packages into a
 single one which would be called `paxutils'.  So, who knows if, one of
-this days, the `--version' would not output `tar (GNU paxutils) 3.2'
+this days, the `--version' would not output `tar (GNU paxutils) 3.2'.
 
 
 File: tar.info,  Node: defaults,  Next: verbose,  Prev: help,  Up: tar invocation
@@ -3082,7 +3113,7 @@ explicitly specify another values.  To obtain a list of such defaults,
 use `--show-defaults' option.  This will output the values in the form
 of `tar' command line options:
 
-     tar --show-defaults
+     $ tar --show-defaults
      --format=gnu -f- -b20 --quoting-style=escape
      --rmt-command=/etc/rmt --rsh-command=/usr/bin/rsh
 
@@ -3215,7 +3246,7 @@ reason.
 message it would normally produce, the block number within the archive
 where the message was triggered.  Also, supplementary messages are
 triggered when reading blocks full of NULs, or when hitting end of file
-on the archive.  As of now, if the archive if properly terminated with
+on the archive.  As of now, if the archive is properly terminated with
 a NUL block, the reading of the file may stop before end of file is
 met, so the position of end of file will not usually show when
 `--block-number' (`-R') is used.  Note that GNU `tar' drains the
@@ -3234,7 +3265,7 @@ of the tape).  *Note backup::.
 --checkpoint-action=dot'.  *Note dot: checkpoints.
 
 
-File: tar.info,  Node: checkpoints,  Next: interactive,  Prev: verbose,  Up: tar invocation
+File: tar.info,  Node: checkpoints,  Next: warnings,  Prev: verbose,  Up: tar invocation
 
 3.8 Checkpoints
 ===============
@@ -3374,10 +3405,117 @@ can be used without `--checkpoint'.  In this case, the default
 checkpoint frequency (at each 10th record) is assumed.
 
 
-File: tar.info,  Node: interactive,  Prev: checkpoints,  Up: tar invocation
+File: tar.info,  Node: warnings,  Next: interactive,  Prev: checkpoints,  Up: tar invocation
 
-3.9 Asking for Confirmation During Operations
-=============================================
+3.9 Controlling Warning Messages
+================================
+
+Sometimes, while performing the requested task, GNU `tar' notices some
+conditions that are not exactly errors, but which the user should be
+aware of.  When this happens, `tar' issues a "warning message"
+describing the condition.  Warning messages are output to the standard
+error and they do not affect the exit code of `tar' command.
+
+   GNU `tar' allows the user to suppress some or all of its warning
+messages:
+
+`--warning=KEYWORD'
+     Control display of the warning messages identified by KEYWORD.  If
+     KEYWORD starts with the prefix `no-', such messages are
+     suppressed.  Otherwise, they are enabled.
+
+     Multiple `--warning' messages accumulate.
+
+     The tables below list allowed values for KEYWORD along with the
+     warning messages they control.
+
+Keywords controlling `tar' operation
+------------------------------------
+
+all
+     Enable all warning messages.  This is the default.  
+
+none
+     Disable all warning messages.  
+
+filename-with-nuls
+     `%s: file name read contains nul character' 
+
+alone-zero-block
+     `A lone zero block at %s'
+
+Keywords applicable for `tar --create'
+--------------------------------------
+
+cachedir
+     `%s: contains a cache directory tag %s; %s' 
+
+file-shrank
+     `%s: File shrank by %s bytes; padding with zeros' 
+
+xdev
+     `%s: file is on a different filesystem; not dumped' 
+
+file-ignored
+     `%s: Unknown file type; file ignored'
+     `%s: socket ignored'
+     `%s: door ignored' 
+
+file-unchanged
+     `%s: file is unchanged; not dumped' 
+
+ignore-archive
+     `%s: file is the archive; not dumped' 
+
+file-removed
+     `%s: File removed before we read it' 
+
+file-changed
+     `%s: file changed as we read it'
+
+Keywords applicable for `tar --extract'
+---------------------------------------
+
+timestamp
+     `%s: implausibly old time stamp %s'
+     `%s: time stamp %s is %s s in the future' 
+
+contiguous-cast
+     `Extracting contiguous files as regular files' 
+
+symlink-cast
+     `Attempting extraction of symbolic links as hard links' 
+
+unknown-cast
+     `%s: Unknown file type `%c', extracted as normal file' 
+
+ignore-newer
+     `Current %s is newer or same age' 
+
+unknown-keyword
+     `Ignoring unknown extended header keyword `%s''
+
+Keywords controlling incremental extraction:
+--------------------------------------------
+
+rename-directory
+     `%s: Directory has been renamed from %s'
+     `%s: Directory has been renamed' 
+
+new-directory
+     `%s: Directory is new' 
+
+xdev
+     `%s: directory is on a different device: not purging' 
+
+bad-dumpdir
+     `Malformed dumpdir: 'X' never used'
+
+
+File: tar.info,  Node: interactive,  Prev: warnings,  Up: tar invocation
+
+3.10 Asking for Confirmation During Operations
+==============================================
 
 Typically, `tar' carries out a command without stopping for further
 instructions.  In some situations however, you may want to exclude some
@@ -3532,8 +3670,6 @@ File: tar.info,  Node: Operations,  Next: append,  Up: Advanced tar
 4.2.1 The Five Advanced `tar' Operations
 ----------------------------------------
 
-     _(This message will disappear, once this node revised.)_
-
 In the last chapter, you learned about the first three operations to
 `tar'.  This chapter presents the remaining five operations to `tar':
 `--append', `--update', `--concatenate', `--delete', and `--compare'.
@@ -3543,8 +3679,8 @@ covered in the last chapter; however, since they perform specialized
 functions, they are quite useful when you do need to use them.  We will
 give examples using the same directory and files that you created in
 the last chapter.  As you may recall, the directory is called
-`practice', the files are `jazz', `blues', `folk', `rock', and the two
-archive files you created are `collection.tar' and `music.tar'.
+`practice', the files are `jazz', `blues', `folk', and the two archive
+files you created are `collection.tar' and `music.tar'.
 
    We will also use the archive files `afiles.tar' and `bfiles.tar'.
 The archive `afiles.tar' contains the members `apple', `angst', and
@@ -3588,8 +3724,6 @@ File: tar.info,  Node: append,  Next: update,  Prev: Operations,  Up: Advanced t
 4.2.2 How to Add Files to Existing Archives: `--append'
 -------------------------------------------------------
 
-     _(This message will disappear, once this node revised.)_
-
 If you want to add files to an existing archive, you don't need to
 create a new archive; you can use `--append' (`-r').  The archive must
 already exist in order to use `--append'.  (A related operation is the
@@ -3608,7 +3742,7 @@ listed, with their data modification times, owners, etc.
 
    Other operations don't deal with these members as perfectly as you
 might prefer; if you were to use `--extract' to extract the archive,
-only the most recently added copy of a member with the same name as four
+only the most recently added copy of a member with the same name as
 other members would end up in the working directory.  This is because
 `--extract' extracts an archive in the order the members appeared in
 the archive; the most recently archived members will be extracted last.
@@ -3632,13 +3766,13 @@ would extract only the second copy.  *Note --occurrence: Option
 Summary, for the description of `--occurrence' option.
 
    If you want to replace an archive member, use `--delete' to delete
-the member you want to remove from the archive, , and then use
-`--append' to add the member you want to be in the archive.  Note that
-you can not change the order of the archive; the most recently added
-member will still appear last.  In this sense, you cannot truly
-"replace" one member with another.  (Replacing one member with another
-will not work on certain types of media, such as tapes; see *note
-delete:: and *note Media::, for more information.)
+the member you want to remove from the archive, and then use `--append'
+to add the member you want to be in the archive.  Note that you can not
+change the order of the archive; the most recently added member will
+still appear last.  In this sense, you cannot truly "replace" one
+member with another.  (Replacing one member with another will not work
+on certain types of media, such as tapes; see *note delete:: and *note
+Media::, for more information.)
 
 * Menu:
 
@@ -3648,16 +3782,14 @@ delete:: and *note Media::, for more information.)
    ---------- Footnotes ----------
 
    (1) Unless you give it `--keep-old-files' option, or the disk copy
-is newer than the the one in the archive and you invoke `tar' with
-`--keep-newer-files' option
+is newer than the one in the archive and you invoke `tar' with
+`--keep-newer-files' option.
 
 
 File: tar.info,  Node: appending files,  Next: multiple,  Up: append
 
 4.2.2.1 Appending Files to an Archive
 .....................................
-
-     _(This message will disappear, once this node revised.)_
 
 The simplest way to add a file to an already existing archive is the
 `--append' (`-r') operation, which writes specified files into the
@@ -3758,8 +3890,6 @@ File: tar.info,  Node: update,  Next: concatenate,  Prev: append,  Up: Advanced 
 4.2.3 Updating an Archive
 -------------------------
 
-     _(This message will disappear, once this node revised.)_
-
 In the previous section, you learned how to use `--append' to add a
 file to an existing archive.  A related operation is `--update' (`-u').
 The `--update' operation updates a `tar' archive by comparing the date
@@ -3809,7 +3939,7 @@ the archive, you will see `blues' and `classical' at its end.  There
 will be a total of two versions of the member `blues'; the one at the
 end will be newer and larger, since you added text before updating it.
 
-   (The reason `tar' does not overwrite the older file when updating it
+   The reason `tar' does not overwrite the older file when updating it
 is because writing to the middle of a section of tape is a difficult
 process.  Tapes are not designed to go backward.  *Note Media::, for
 more information about tapes.
@@ -3834,7 +3964,7 @@ one or more archives to the end of another archive, you should use the
    To use `--concatenate', give the first archive with `--file' option
 and name the rest of archives to be concatenated on the command line.
 The members, and their member names, will be copied verbatim from those
-archives to the first one.  (1) The new, concatenated archive will be
+archives to the first one(1).  The new, concatenated archive will be
 called by the same name as the one given with the `--file' option.  As
 usual, if you omit `--file', `tar' will use the value of the environment
 variable `TAPE', or, if this has not been set, the default archive name.
@@ -3908,8 +4038,6 @@ File: tar.info,  Node: delete,  Next: compare,  Prev: concatenate,  Up: Advanced
 4.2.5 Removing Archive Members Using `--delete'
 -----------------------------------------------
 
-     _(This message will disappear, once this node revised.)_
-
 You can remove members from an archive by using the `--delete' option.
 Specify the name of the archive with `--file' (`-f') and then specify
 the names of the members to be deleted; if you list no member names,
@@ -3944,7 +4072,6 @@ directory, and then,
      folk
      jazz
      rock
-     $
 
    The `--delete' option has been reported to work properly when `tar'
 acts as a filter from `stdin' to `stdout'.
@@ -3954,8 +4081,6 @@ File: tar.info,  Node: compare,  Prev: delete,  Up: Advanced tar
 
 4.2.6 Comparing Archive Members with the File System
 ----------------------------------------------------
-
-     _(This message will disappear, once this node revised.)_
 
 The `--compare' (`-d'), or `--diff' operation compares specified
 archive members against files with the same names, and then reports
@@ -3984,7 +4109,7 @@ report an error message.)
    The spirit behind the `--compare' (`--diff', `-d') option is to
 check whether the archive represents the current state of files on
 disk, more than validating the integrity of the archive media.  For
-this later goal, *Note verify::.
+this latter goal, *Note verify::.
 
 
 File: tar.info,  Node: create options,  Next: extract options,  Prev: Advanced tar,  Up: operations
@@ -4034,9 +4159,9 @@ stored in the archive.
      modification time of members when creating archives, instead of
      their actual modification times.  The argument DATE can be either
      a textual date representation in almost arbitrary format (*note
-     Date input formats::) or a name of the existing file, starting
-     with `/' or `.'.  In the latter case, the modification time of
-     that file will be used.
+     Date input formats::) or a name of an existing file, starting with
+     `/' or `.'.  In the latter case, the modification time of that
+     file will be used.
 
      The following example will set the modification date to 00:00:00
      UTC, January 1, 1970:
@@ -4070,7 +4195,9 @@ stored in the archive.
      anonymous archives.  For example:
 
           $ tar -c -f archive.tar --owner=0 .
-          # Or:
+
+     or:
+
           $ tar -c -f archive.tar --owner=root .
 
 `--group=GROUP'
@@ -4094,8 +4221,6 @@ File: tar.info,  Node: extract options,  Next: backup,  Prev: create options,  U
 4.4 Options Used by `--extract'
 ===============================
 
-     _(This message will disappear, once this node revised.)_
-
 The previous chapter showed how to use `--extract' to extract an
 archive into the file system.  Various options cause `tar' to extract
 more information than just file contents, such as the owner, the
@@ -4116,8 +4241,6 @@ File: tar.info,  Node: Reading,  Next: Writing,  Up: extract options
 
 4.4.1 Options to Help Read Archives
 -----------------------------------
-
-     _(This message will disappear, once this node revised.)_
 
 Normally, `tar' will request data in full record increments from an
 archive storage device.  If the device cannot return a full record,
@@ -4438,7 +4561,7 @@ after extracting `foo/file2' the directory timestamp will be offset
 again.
 
    To correctly restore directory meta-information in such cases, use
-`delay-directory-restore' command line option:
+the `--delay-directory-restore' command line option:
 
 `--delay-directory-restore'
      Delays restoring of the modification times and permissions of
@@ -4502,7 +4625,7 @@ the standard input of an external program:
      Extract files and pipe their contents to the standard input of
      COMMAND. When this option is used, instead of creating the files
      specified, `tar' invokes COMMAND and pipes the contents of the
-     files to its standard output. COMMAND may contain command line
+     files to its standard output. The COMMAND may contain command line
      arguments. The program is executed via `sh -c'. Notice, that
      COMMAND is executed once for each regular file extracted.
      Non-regular files (directories, etc.) are ignored when this option
@@ -4540,7 +4663,7 @@ from the following environment variables:
 
 `TAR_ATIME'
      Time of last access. It is a decimal number, representing seconds
-     since the epoch.  If the archive provides times with nanosecond
+     since the Epoch.  If the archive provides times with nanosecond
      precision, the nanoseconds are appended to the timestamp after a
      decimal point.
 
@@ -4559,8 +4682,24 @@ from the following environment variables:
 `TAR_GID'
      GID of the file owner.
 
-   In addition to these variables, `TAR_VERSION' contains the GNU `tar'
-version number.
+   Additionally, the following variables contain information about tar
+mode and the archive being processed:
+
+`TAR_VERSION'
+     GNU `tar' version number.
+
+`TAR_ARCHIVE'
+     The name of the archive `tar' is processing.
+
+`TAR_BLOCKING_FACTOR'
+     Current blocking factor (*note Blocking::).
+
+`TAR_VOLUME'
+     Ordinal number of the volume `tar' is processing.
+
+`TAR_FORMAT'
+     Format of the archive being processed. *Note Formats::, for a
+     complete list of archive format names.
 
    If COMMAND exits with a non-0 status, `tar' will print an error
 message similar to the following:
@@ -4662,14 +4801,14 @@ well as individual extracted members.  Other GNU programs (`cp',
    Backup options may prove unexpectedly useful when extracting archives
 containing many members having identical name, or when extracting
 archives on systems having file name limitations, making different
-members appear has having similar names through the side-effect of name
-truncation.  (This is true only if we have a good scheme for truncated
-backup names, which I'm not sure at all: I suspect work is needed in
-this area.)  When any existing file is backed up before being
-overwritten by extraction, then clashing files are automatically be
-renamed to be unique, and the true name is kept for only the last file
-of a series of clashing files.  By using verbose mode, users may track
-exactly what happens.
+members appear as having similar names through the side-effect of name
+truncation.
+
+   When any existing file is backed up before being overwritten by
+extraction, then clashing files are automatically be renamed to be
+unique, and the true name is kept for only the last file of a series of
+clashing files.  By using verbose mode, users may track exactly what
+happens.
 
    At the detail level, some decisions are still experimental, and may
 change in the future, we are waiting comments from our users.  So,
@@ -4741,7 +4880,7 @@ they both support the `tar' program.
    For example, here is how you might copy a directory's contents from
 one disk to another, while preserving the dates, modes, owners and
 link-structure of all the files therein.  In this case, the transfer
-medium is a "pipe", which is one a Unix redirection mechanism:
+medium is a "pipe":
 
      $ (cd sourcedir; tar -cf - .) | (cd targetdir; tar -xf -)
 
@@ -4749,11 +4888,13 @@ You can avoid subshells by using `-C' option:
 
      $ tar -C sourcedir -cf - . | tar -C targetdir -xf -
 
-The command also works using short option forms:
+The command also works using long option forms:
 
      $ (cd sourcedir; tar --create --file=- . ) \
             | (cd targetdir; tar --extract --file=-)
-     # Or:
+
+or
+
      $ tar --directory sourcedir --create --file=- . ) \
             | tar --directory targetdir --extract --file=-
 
@@ -4785,23 +4926,16 @@ File: tar.info,  Node: Backups,  Next: Choosing,  Prev: operations,  Up: Top
 5 Performing Backups and Restoring Files
 ****************************************
 
-     _(This message will disappear, once this node revised.)_
-
-GNU `tar' is distributed along with the scripts which the Free Software
-Foundation uses for performing backups.  There is no corresponding
-scripts available yet for doing restoration of files.  Even if there is
-a good chance those scripts may be satisfying to you, they are not the
-only scripts or methods available for doing backups and restore.  You
-may well create your own, or use more sophisticated packages dedicated
-to that purpose.
+GNU `tar' is distributed along with the scripts for performing backups
+and restores.  Even if there is a good chance those scripts may be
+satisfying to you, they are not the only scripts or methods available
+for doing backups and restore.  You may well create your own, or use
+more sophisticated packages dedicated to that purpose.
 
    Some users are enthusiastic about `Amanda' (The Advanced Maryland
 Automatic Network Disk Archiver), a backup system developed by James da
 Silva `jds@cs.umd.edu' and available on many Unix systems.  This is
-free software, and it is available at these places:
-
-     http://www.cs.umd.edu/projects/amanda/amanda.html
-     ftp://ftp.cs.umd.edu/pub/amanda
+free software, and it is available from `http://www.amanda.org'.
 
    This chapter documents both the provided shell scripts and `tar'
 options which are more specific to usage as a backup tool.
@@ -4937,17 +5071,26 @@ then be modified as follows:
                 --listed-incremental=/var/log/usr.snar-1 \
                 /usr
 
+   You can force `level 0' backups either by removing the snapshot file
+before running `tar', or by supplying the `--level=0' option, e.g.:
+
+     $ tar --create \
+                --file=archive.2.tar \
+                --listed-incremental=/var/log/usr.snar-0 \
+                --level=0 \
+                /usr
+
    Incremental dumps depend crucially on time stamps, so the results are
 unreliable if you modify a file's time stamps during dumping (e.g.,
 with the `--atime-preserve=replace' option), or if you set the clock
 backwards.
 
    Metadata stored in snapshot files include device numbers, which,
-obviously are supposed to be a non-volatile values.  However, it turns
+obviously are supposed to be non-volatile values.  However, it turns
 out that NFS devices have undependable values when an automounter gets
 in the picture.  This can lead to a great deal of spurious redumping in
 incremental dumps, so it is somewhat useless to compare two NFS devices
-numbers over time.  The solution implemented currently is to considers
+numbers over time.  The solution implemented currently is to consider
 all NFS devices as being equal when it comes to comparing directories;
 this is fairly gross, but there does not seem to be a better way to go.
 
@@ -4982,7 +5125,7 @@ the usual practice is to use `--listed-incremental=/dev/null'.
 Alternatively, you can use `--incremental', which needs no arguments.
 In general, `--incremental' (`-G') can be used as a shortcut for
 `--listed-incremental' when listing or extracting incremental backups
-(for more information, regarding this option, *note incremental-op::).
+(for more information regarding this option, *note incremental-op::).
 
    When extracting from the incremental backup GNU `tar' attempts to
 restore the exact state the file system had when the archive was
@@ -5004,7 +5147,19 @@ system, one would do(1):
    To list the contents of an incremental archive, use `--list' (*note
 list::), as usual.  To obtain more information about the archive, use
 `--listed-incremental' or `--incremental' combined with two `--verbose'
-options(2):
+optionsTwo
+`--verbose' options were selected to avoid breaking usual
+verbose listing output (`--list --verbose') when using in
+scripts.
+
+
+
+
+
+Versions of GNU `tar' up to 1.15.1 used to dump verbatim binary
+contents of the DUMPDIR header (with terminating nulls) when
+`--incremental' or `--listed-incremental' option was
+given, no matter what the verbosity level(2):
 
      tar --list --incremental --verbose --verbose archive.tar
 
@@ -5043,7 +5198,7 @@ contents of the DUMPDIR header (with terminating nulls) when
 `--incremental' or `--listed-incremental' option was given, no matter
 what the verbosity level.  This behavior, and, especially, the binary
 output it produced were considered inconvenient and were changed in
-version 1.16
+version 1.16.
 
 
 File: tar.info,  Node: Backup Levels,  Next: Backup Parameters,  Prev: Incremental Dumps,  Up: Backups
@@ -5069,7 +5224,7 @@ it possible to restore a file system to within one day of accuracy by
 only extracting two archives--the last weekly (full) dump and the last
 daily (level one) dump.  The only information lost would be in files
 changed or created since the last daily backup.  (Doing dumps more than
-once a day is usually not worth the trouble).
+once a day is usually not worth the trouble.)
 
    GNU `tar' comes with scripts you can use to do full and level-one
 (actually, even level-two and so on) dumps.  Using scripts (shell
@@ -5184,8 +5339,8 @@ File: tar.info,  Node: General-Purpose Variables,  Next: Magnetic Tape Control, 
      (for `restore').  These should be accessible from the machine on
      which the backup script is run.
 
-     If the list of file systems is very long you may wish to store it
-     in a separate file.  This file is usually named
+     If the list of individual files is very long you may wish to store
+     it in a separate file.  This file is usually named
      `/etc/backup/files', but this name may be overridden in
      `backup-specs' using `FILELIST' variable.
 
@@ -5250,7 +5405,7 @@ File: tar.info,  Node: Magnetic Tape Control,  Next: User Hooks,  Prev: General-
 ---------------------------
 
 Backup scripts access tape device using special "hook functions".
-These functions take a single argument - the name of the tape device.
+These functions take a single argument -- the name of the tape device.
 Their names are kept in the following variables:
 
  -- Backup variable: MT_BEGIN
@@ -5323,7 +5478,7 @@ function taking four arguments:
           File system name with directory separators replaced with
           colons.  This is useful, e.g., for creating unique files.
 
-   Following variables keep the names of user hook functions
+   Following variables keep the names of user hook functions:
 
  -- Backup variable: DUMP_BEGIN
      Dump begin function.  It is executed before dumping the file
@@ -5394,9 +5549,9 @@ The syntax for running a backup script is:
 
      backup --level=LEVEL --time=TIME
 
-   The `level' option requests the dump level.  Thus, to produce a full
-dump, specify `--level=0' (this is the default, so `--level' may be
-omitted if its value is `0').  (1)
+   The `--level' option requests the dump level.  Thus, to produce a
+full dump, specify `--level=0' (this is the default, so `--level' may
+be omitted if its value is `0')(1).
 
    The `--time' option determines when should the backup be run.  TIME
 may take three forms:
@@ -5405,7 +5560,7 @@ HH:MM
      The dump must be run at HH hours MM minutes.
 
 HH
-     The dump must be run at HH hours
+     The dump must be run at HH hours.
 
 now
      The dump must be run immediately.
@@ -5488,7 +5643,8 @@ and files specified in `backup-specs' (*note BACKUP_DIRS:
 General-Purpose Variables.).
 
    You may select the file systems (and/or files) to restore by giving
-`restore' list of "patterns" in its command line.  For example, running
+`restore' a list of "patterns" in its command line.  For example,
+running
 
      restore 'albert:*'
 
@@ -5513,7 +5669,7 @@ option, as shown in the example below:
 
 `-a'
 `--all'
-     Restore all file systems and files specified in `backup-specs'
+     Restore all file systems and files specified in `backup-specs'.
 
 `-l LEVEL'
 `--level=LEVEL'
@@ -5555,8 +5711,6 @@ File: tar.info,  Node: Choosing,  Next: Date input formats,  Prev: Backups,  Up:
 6 Choosing Files and Names for `tar'
 ************************************
 
-     _(This message will disappear, once this node revised.)_
-
 Certain options to `tar' enable you to specify a name for your archive.
 Other options let you decide which files to include or exclude from the
 archive, based on when or whether files were modified, whether the file
@@ -5583,8 +5737,6 @@ File: tar.info,  Node: file,  Next: Selecting Archive Members,  Up: Choosing
 
 6.1 Choosing and Naming Archive Files
 =====================================
-
-     _(This message will disappear, once this node revised.)_
 
 By default, `tar' uses an archive file name that was compiled when it
 was built on the system; usually this name refers to some physical tape
@@ -5645,11 +5797,11 @@ use the following:
 
      --file=HOSTNAME:/DEV/FILE-NAME
 
-`tar' will complete the remote connection, if possible, and prompt you
+`tar' will set up the remote connection, if possible, and prompt you
 for a username and password.  If you use
-`--file=@HOSTNAME:/DEV/FILE-NAME', `tar' will complete the remote
-connection, if possible, using your username as the username on the
-remote machine.
+`--file=@HOSTNAME:/DEV/FILE-NAME', `tar' will attempt to set up the
+remote connection using your username as the username on the remote
+machine.
 
    If the archive file name includes a colon (`:'), then it is assumed
 to be a file on another machine.  If the archive file is
@@ -5658,11 +5810,11 @@ is accessed using the `rsh' program, with a username of USER.  If the
 username is omitted (along with the `@' sign), then your user name will
 be used.  (This is the normal `rsh' behavior.)  It is necessary for the
 remote machine, in addition to permitting your `rsh' access, to have
-the `rmt' program installed (This command is included in the GNU `tar'
+the `rmt' program installed (this command is included in the GNU `tar'
 distribution and by default is installed under `PREFIX/libexec/rmt',
-were PREFIX means your installation prefix).  If you need to use a file
-whose name includes a colon, then the remote tape drive behavior can be
-inhibited by using the `--force-local' option.
+where PREFIX means your installation prefix).  If you need to use a
+file whose name includes a colon, then the remote tape drive behavior
+can be inhibited by using the `--force-local' option.
 
    When the archive is being created to `/dev/null', GNU `tar' tries to
 minimize input and output operations.  The Amanda backup system, when
@@ -5774,11 +5926,11 @@ the files from that file, `small-files', to create the archive
 `little.tgz'.  (The `-z' option to `tar' compresses the archive with
 `gzip'; *note gzip:: for more information.)
 
-     $ find .  -size -400 -print > small-files
+     $ find . -size -400 -print > small-files
      $ tar -c -v -z -T small-files -f little.tgz
 
 In the file list given by `-T' option, any file name beginning with `-'
-character is considered a `tar' option and is processed accordingly.(1)
+character is considered a `tar' option and is processed accordingly(1).
 For example, the common use of this feature is to change to another
 directory by specifying `-C' option:
 
@@ -5799,6 +5951,7 @@ resulting archive `foo.tar' will contain:
      passwd
      hosts
      libc.a
+
 
 
    Notice that the option parsing algorithm used with `-T' is stricter
@@ -5841,7 +5994,7 @@ consecutive lines.
 
 File: tar.info,  Node: nul,  Up: files
 
-6.3.1 `NUL' Terminated File Names
+6.3.1 `NUL'-Terminated File Names
 ---------------------------------
 
 The `--null' option causes `--files-from=FILE-OF-NAMES' (`-T
@@ -5850,7 +6003,7 @@ newline, so files whose names contain newlines can be archived using
 `--files-from'.
 
 `--null'
-     Only consider `NUL' terminated file names, instead of files that
+     Only consider `NUL'-terminated file names, instead of files that
      terminate in a newline.
 
 `--no-null'
@@ -5866,30 +6019,30 @@ larger than 800K in length and put that list into a file called
 `long-files'.  The `-print0' option to `find' is just like `-print',
 except that it separates files with a `NUL' rather than with a newline.
 You can then run `tar' with both the `--null' and `-T' options to
-specify that `tar' get the files from that file, `long-files', to
+specify that `tar' gets the files from that file, `long-files', to
 create the archive `big.tgz'.  The `--null' option to `tar' will cause
 `tar' to recognize the `NUL' separator between files.
 
-     $ find .  -size +800 -print0 > long-files
+     $ find . -size +800 -print0 > long-files
      $ tar -c -v --null --files-from=long-files --file=big.tar
 
    The `--no-null' option can be used if you need to read both
-zero-terminated and newline-terminated files on the same command line.
+`NUL'-terminated and newline-terminated files on the same command line.
 For example, if `flist' is a newline-terminated file, then the
 following command can be used to combine it with the above command:
 
-     $ find .  -size +800 -print0 |
+     $ find . -size +800 -print0 |
        tar -c -f big.tar --null -T - --no-null -T flist
 
    This example uses short options for typographic reasons, to avoid
 very long lines.
 
-   GNU `tar' is able to automatically detect null-terminated file
+   GNU `tar' is able to automatically detect `NUL'-terminated file
 lists, so it is safe to use them even without the `--null' option.  In
 this case `tar' will print a warning and continue reading such a file
 as if `--null' were actually given:
 
-     $ find .  -size +800 -print0 | tar -c -f big.tar -T -
+     $ find . -size +800 -print0 | tar -c -f big.tar -T -
      tar: -: file name read contains nul character
 
    The null terminator, however, remains in effect only for this
@@ -5902,8 +6055,6 @@ File: tar.info,  Node: exclude,  Next: wildcards,  Prev: files,  Up: Choosing
 
 6.4 Excluding Some Files
 ========================
-
-     _(This message will disappear, once this node revised.)_
 
 To avoid operating on files whose names match a particular pattern, use
 the `--exclude' or `--exclude-from' options.
@@ -5941,45 +6092,56 @@ difficult to catch using text editors.
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-   As of version 1.22, the following files are excluded:
+     As of version 1.23, the following files are excluded:
 
-   * `CVS/', and everything under it
+        * `CVS/', and everything under it
 
-   * `RCS/', and everything under it
+        * `RCS/', and everything under it
 
-   * `SCCS/', and everything under it
+        * `SCCS/', and everything under it
 
-   * `.git/', and everything under it
+        * `.git/', and everything under it
 
-   * `.gitignore'
+        * `.gitignore'
 
-   * `.cvsignore'
+        * `.cvsignore'
 
-   * `.svn/', and everything under it
+        * `.svn/', and everything under it
 
-   * `.arch-ids/', and everything under it
+        * `.arch-ids/', and everything under it
 
-   * `{arch}/', and everything under it
+        * `{arch}/', and everything under it
 
-   * `=RELEASE-ID'
+        * `=RELEASE-ID'
 
-   * `=meta-update'
+        * `=meta-update'
 
-   * `=update'
+        * `=update'
 
-   * `.bzr'
+        * `.bzr'
 
-   * `.bzrignore'
+        * `.bzrignore'
 
-   * `.bzrtags'
+        * `.bzrtags'
 
-   * `.hg'
+        * `.hg'
 
-   * `.hgignore'
+        * `.hgignore'
 
-   * `.hgrags'
+        * `.hgrags'
 
-   * `_darcs'
+        * `_darcs'
+
+`--exclude-backups'
+     Exclude backup and lock files.  This option causes exclusion of
+     files that match the following shell globbing patterns:
+
+    .#*
+
+    *~
+
+    #*#
+
 
    When creating an archive, the `--exclude-caches' option family
 causes `tar' to exclude all directories that contain a "cache directory
@@ -6516,10 +6678,10 @@ File: tar.info,  Node: transform,  Next: after,  Prev: quoting styles,  Up: Choo
 ===================================
 
 `Tar' archives contain detailed information about files stored in them
-and full file names are part of that information.  When storing file to
-an archive, its file name is recorded in it, along with the actual file
-contents.  When restoring from an archive, a file is created on disk
-with exactly the same name as that stored in the archive.  In the
+and full file names are part of that information.  When storing a file
+to an archive, its file name is recorded in it, along with the actual
+file contents.  When restoring from an archive, a file is created on
+disk with exactly the same name as that stored in the archive.  In the
 majority of cases this is the desired behavior of a file archiver.
 However, there are some cases when it is not.
 
@@ -6595,7 +6757,7 @@ where REGEXP is a "regular expression", REPLACE is a replacement for
 each file name part that matches REGEXP.  Both REGEXP and REPLACE are
 described in detail in *note The "s" Command: (sed)The "s" Command.
 
-   Any delimiter can be used in lieue of `/', the only requirement being
+   Any delimiter can be used in lieu of `/', the only requirement being
 that it be used consistently throughout the expression. For example,
 the following two expressions are equivalent:
 
@@ -6615,7 +6777,7 @@ a semicolon.
      first.
 
 `i'
-     Use case-insensitive matching
+     Use case-insensitive matching.
 
 `x'
      REGEXP is an "extended regular expression" (*note Extended regular
@@ -6702,7 +6864,7 @@ this case, `/lib/libc.so.6' would become:
 
        /usr/local/lib/libc.so.6 -> /usr/local/libc-2.3.2.so
 
-   This is definitely not desired.  To avoid this, the `S' flag are
+   This is definitely not desired.  To avoid this, the `S' flag is
 used, which excludes symbolic link targets from filename
 transformations.  The result is:
 
@@ -6744,8 +6906,6 @@ File: tar.info,  Node: after,  Next: recurse,  Prev: transform,  Up: Choosing
 
 6.8 Operating Only on New Files
 ===============================
-
-     _(This message will disappear, once this node revised.)_
 
 The `--after-date=DATE' (`--newer=DATE', `-N DATE') option causes `tar'
 to only work on files whose data modification or status change times
@@ -6827,8 +6987,6 @@ File: tar.info,  Node: recurse,  Next: one,  Prev: after,  Up: Choosing
 6.9 Descending into Directories
 ===============================
 
-     _(This message will disappear, once this node revised.)_
-
 Usually, `tar' will recursively explore all directories (either those
 given on the command line or through the `--files-from' option) for the
 various files they contain.  However, you may not always want `tar' to
@@ -6836,11 +6994,11 @@ act this way.
 
    The `--no-recursion' option inhibits `tar''s recursive descent into
 specified directories.  If you specify `--no-recursion', you can use
-the `find' utility for hunting through levels of directories to
-construct a list of file names which you could then pass to `tar'.
-`find' allows you to be more selective when choosing which files to
-archive; see *note files::, for more information on using `find' with
-`tar', or look.
+the `find' (*note find: (find)Top.)  utility for hunting through levels
+of directories to construct a list of file names which you could then
+pass to `tar'.  `find' allows you to be more selective when choosing
+which files to archive; see *note files::, for more information on
+using `find' with `tar'.
 
 `--no-recursion'
      Prevents `tar' from recursively descending directories.
@@ -6892,8 +7050,6 @@ File: tar.info,  Node: one,  Prev: recurse,  Up: Choosing
 
 6.10 Crossing File System Boundaries
 ====================================
-
-     _(This message will disappear, once this node revised.)_
 
 `tar' will normally automatically cross file system boundaries in order
 to archive files which are part of a directory tree.  You can change
@@ -6961,7 +7117,7 @@ three files will be written in the current directory.
 
 which records the third file in the archive under the name `red/cherry'
 so that, if the archive is extracted using `tar --extract', the third
-file will be written in a subdirectory named `orange-colored'.
+file will be written in a subdirectory named `red'.
 
    You can use the `--directory' option to make the archive independent
 of the original name of the directory holding the files.  The following
@@ -7009,16 +7165,14 @@ File: tar.info,  Node: absolute,  Prev: directory,  Up: one
 6.10.2 Absolute File Names
 --------------------------
 
-     _(This message will disappear, once this node revised.)_
+By default, GNU `tar' drops a leading `/' on input or output, and
+complains about file names containing a `..' component.  There is an
+option that turns off this behavior:
 
 `--absolute-names'
 `-P'
      Do not strip leading slashes from file names, and permit file names
      containing a `..' file name component.
-
-   By default, GNU `tar' drops a leading `/' on input or output, and
-complains about file names containing a `..' component.  This option
-turns off this behavior.
 
    When `tar' extracts archive members from an archive, it strips any
 leading slashes (`/') from the member name.  This causes absolute
@@ -7039,7 +7193,7 @@ for other people with a non-GNU `tar' program to use.  Therefore, GNU
 `tar' also strips leading slashes from member names when putting
 members into the archive.  For example, if you ask `tar' to add the file
 `/bin/ls' to an archive, it will do so, but the member name will be
-`bin/ls'.(1)
+`bin/ls'(1).
 
    If you use the `--absolute-names' (`-P') option, `tar' will do none
 of these transformations.
@@ -7546,132 +7700,4 @@ and others.
    This chapter was originally produced by Franc,ois Pinard
 (<pinard@iro.umontreal.ca>) from the `getdate.y' source code, and then
 edited by K. Berry (<kb@cs.umb.edu>).
-
-
-File: tar.info,  Node: Formats,  Next: Media,  Prev: Date input formats,  Up: Top
-
-8 Controlling the Archive Format
-********************************
-
-Due to historical reasons, there are several formats of tar archives.
-All of them are based on the same principles, but have some subtle
-differences that often make them incompatible with each other.
-
-   GNU tar is able to create and handle archives in a variety of
-formats.  The most frequently used formats are (in alphabetical order):
-
-gnu
-     Format used by GNU `tar' versions up to 1.13.25.  This format
-     derived from an early POSIX standard, adding some improvements
-     such as sparse file handling and incremental archives.
-     Unfortunately these features were implemented in a way
-     incompatible with other archive formats.
-
-     Archives in `gnu' format are able to hold file names of unlimited
-     length.
-
-oldgnu
-     Format used by GNU `tar' of versions prior to 1.12.
-
-v7
-     Archive format, compatible with the V7 implementation of tar.  This
-     format imposes a number of limitations.  The most important of them
-     are:
-
-       1. The maximum length of a file name is limited to 99 characters.
-
-       2. The maximum length of a symbolic link is limited to 99
-          characters.
-
-       3. It is impossible to store special files (block and character
-          devices, fifos etc.)
-
-       4. Maximum value of user or group ID is limited to 2097151
-          (7777777 octal)
-
-       5. V7 archives do not contain symbolic ownership information
-          (user and group name of the file owner).
-
-     This format has traditionally been used by Automake when producing
-     Makefiles.  This practice will change in the future, in the
-     meantime, however this means that projects containing file names
-     more than 99 characters long will not be able to use GNU `tar'
-     1.22 and Automake prior to 1.9.
-
-ustar
-     Archive format defined by POSIX.1-1988 specification.  It stores
-     symbolic ownership information.  It is also able to store special
-     files.  However, it imposes several restrictions as well:
-
-       1. The maximum length of a file name is limited to 256
-          characters, provided that the file name can be split at a
-          directory separator in two parts, first of them being at most
-          155 bytes long.  So, in most cases the maximum file name
-          length will be shorter than 256 characters.
-
-       2. The maximum length of a symbolic link name is limited to 100
-          characters.
-
-       3. Maximum size of a file the archive is able to accommodate is
-          8GB
-
-       4. Maximum value of UID/GID is 2097151.
-
-       5. Maximum number of bits in device major and minor numbers is
-          21.
-
-star
-     Format used by Jo"rg Schilling `star' implementation.  GNU `tar'
-     is able to read `star' archives but currently does not produce
-     them.
-
-posix
-     Archive format defined by POSIX.1-2001 specification.  This is the
-     most flexible and feature-rich format.  It does not impose any
-     restrictions on file sizes or file name lengths.  This format is
-     quite recent, so not all tar implementations are able to handle it
-     properly.  However, this format is designed in such a way that any
-     tar implementation able to read `ustar' archives will be able to
-     read most `posix' archives as well, with the only exception that
-     any additional information (such as long file names etc.) will in
-     such case be extracted as plain text files along with the files it
-     refers to.
-
-     This archive format will be the default format for future versions
-     of GNU `tar'.
-
-
-   The following table summarizes the limitations of each of these
-formats:
-
-Format  UID            File Size      File Name      Devn
--------------------------------------------------------------------- 
-gnu     1.8e19         Unlimited      Unlimited      63
-oldgnu  1.8e19         Unlimited      Unlimited      63
-v7      2097151        8GB            99             n/a
-ustar   2097151        8GB            256            21
-posix   Unlimited      Unlimited      Unlimited      Unlimited
-
-   The default format for GNU `tar' is defined at compilation time.
-You may check it by running `tar --help', and examining the last lines
-of its output.  Usually, GNU `tar' is configured to create archives in
-`gnu' format, however, future version will switch to `posix'.
-
-* Menu:
-
-* Compression::                 Using Less Space through Compression
-* Attributes::                  Handling File Attributes
-* Portability::                 Making `tar' Archives More Portable
-* cpio::                        Comparison of `tar' and `cpio'
-
-
-File: tar.info,  Node: Compression,  Next: Attributes,  Up: Formats
-
-8.1 Using Less Space through Compression
-========================================
-
-* Menu:
-
-* gzip::                        Creating and Reading Compressed Archives
-* sparse::                      Archiving Sparse Files
 

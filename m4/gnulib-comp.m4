@@ -1,7 +1,7 @@
 # -*- buffer-read-only: t -*- vi: set ro:
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2009 Free Software Foundation, Inc.
+# Copyright (C) 2002-2010 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -51,18 +51,20 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gl_LIBSOURCES_LIST], [])
   m4_pushdef([gl_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='.#bootmp/lib'
+  gl_source_base='gnu'
   gl_FUNC_ALLOCA
   gl_ARGMATCH
   gl_ARGP
   m4_ifdef([AM_XGETTEXT_OPTION],
-    [AM_XGETTEXT_OPTION([--flag=argp_error:2:c-format])
-     AM_XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
+    [AM_][XGETTEXT_OPTION([--flag=argp_error:2:c-format])
+     AM_][XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
   gl_BACKUPFILE
+  AC_REQUIRE([AC_C_INLINE])
   gl_FUNC_BTOWC
   gl_WCHAR_MODULE_INDICATOR([btowc])
-  gl_CANONICALIZE_LGPL
-  gl_MODULE_INDICATOR([canonicalize-lgpl])
+  gl_FUNC_CANONICALIZE_FILENAME_MODE
+  gl_MODULE_INDICATOR([canonicalize])
+  gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
   gl_FUNC_CHDIR_LONG
   gl_FUNC_CHOWN
   gl_UNISTD_MODULE_INDICATOR([chown])
@@ -74,31 +76,36 @@ AC_DEFUN([gl_INIT],
   gl_CLOSEOUT
   gl_CHECK_TYPE_STRUCT_DIRENT_D_INO
   gl_DIRENT_H
+  gl_DIRENT_SAFER
+  gl_MODULE_INDICATOR([dirent-safer])
   gl_FUNC_DIRFD
   gl_DIRENT_MODULE_INDICATOR([dirfd])
   gl_DIRNAME
+  gl_MODULE_INDICATOR([dirname])
+  gl_DIRNAME_LGPL
   gl_DOUBLE_SLASH_ROOT
   gl_FUNC_DUP2
   gl_UNISTD_MODULE_INDICATOR([dup2])
   gl_ENVIRON
   gl_UNISTD_MODULE_INDICATOR([environ])
-  AC_REQUIRE([gl_HEADER_ERRNO_H])
+  gl_HEADER_ERRNO_H
   gl_ERROR
   m4_ifdef([AM_XGETTEXT_OPTION],
-    [AM_XGETTEXT_OPTION([--flag=error:3:c-format])
-     AM_XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+    [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
+     AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
   gl_EXCLUDE
-  gl_EXITFAIL
   gl_FUNC_FCHDIR
   gl_UNISTD_MODULE_INDICATOR([fchdir])
   gl_FUNC_FCLOSE
   gl_STDIO_MODULE_INDICATOR([fclose])
+  gl_FUNC_FCNTL
+  gl_FCNTL_MODULE_INDICATOR([fcntl])
   gl_FCNTL_H
-  gl_FCNTL_SAFER
-  gl_MODULE_INDICATOR([fcntl-safer])
+  gl_FUNC_FDOPENDIR
+  gl_DIRENT_MODULE_INDICATOR([fdopendir])
   gl_FILEBLOCKS
   gl_FLOAT_H
-  # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
+  gl_FUNC_FNMATCH_POSIX
   gl_FUNC_FNMATCH_GNU
   gl_FUNC_FPENDING
   gl_FUNC_FSEEKO
@@ -110,9 +117,13 @@ AC_DEFUN([gl_INIT],
   gl_GETDATE
   gl_FUNC_GETDELIM
   gl_STDIO_MODULE_INDICATOR([getdelim])
+  gl_FUNC_GETDTABLESIZE
+  gl_UNISTD_MODULE_INDICATOR([getdtablesize])
   gl_FUNC_GETLINE
   gl_STDIO_MODULE_INDICATOR([getline])
-  gl_GETOPT
+  gl_FUNC_GETOPT_GNU
+  gl_MODULE_INDICATOR([getopt-gnu])
+  gl_FUNC_GETOPT_POSIX
   gl_FUNC_GETPAGESIZE
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
   dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.
@@ -121,11 +132,13 @@ AC_DEFUN([gl_INIT],
   AC_SUBST([LTLIBINTL])
   gl_GETTIME
   gl_FUNC_GETTIMEOFDAY
+  gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
   gl_HASH
   gl_HUMAN
   gl_INLINE
   gl_INTTOSTR
   gl_INTTYPES_H
+  gl_LANGINFO_H
   gl_FUNC_LCHOWN
   gl_UNISTD_MODULE_INDICATOR([lchown])
   gl_LOCALCHARSET
@@ -143,20 +156,27 @@ AC_DEFUN([gl_INIT],
   gl_MBCHAR
   gl_FUNC_MBRTOWC
   gl_WCHAR_MODULE_INDICATOR([mbrtowc])
-  gl_FUNC_MBSCASECMP
   gl_STRING_MODULE_INDICATOR([mbscasecmp])
   gl_FUNC_MBSINIT
   gl_WCHAR_MODULE_INDICATOR([mbsinit])
+  gl_FUNC_MBSRTOWCS
+  gl_WCHAR_MODULE_INDICATOR([mbsrtowcs])
   gl_MBITER
+  gl_FUNC_MEMCHR
+  gl_STRING_MODULE_INDICATOR([memchr])
   gl_FUNC_MEMPCPY
   gl_STRING_MODULE_INDICATOR([mempcpy])
   gl_FUNC_MEMRCHR
   gl_STRING_MODULE_INDICATOR([memrchr])
+  gl_FUNC_MKDIR
   gt_FUNC_MKDTEMP
   gl_STDLIB_MODULE_INDICATOR([mkdtemp])
   gl_FUNC_MKTIME
+  gl_TIME_MODULE_INDICATOR([mktime])
   gl_MODECHANGE
-  AC_REQUIRE([gl_MULTIARCH])
+  gl_MULTIARCH
+  gl_FUNC_NL_LANGINFO
+  gl_LANGINFO_MODULE_INDICATOR([nl_langinfo])
   AC_FUNC_OBSTACK
   dnl Note: AC_FUNC_OBSTACK does AC_LIBSOURCES([obstack.h, obstack.c]).
   gl_FUNC_OPEN
@@ -164,6 +184,9 @@ AC_DEFUN([gl_INIT],
   gl_FCNTL_MODULE_INDICATOR([open])
   gl_FUNC_OPENAT
   gl_PATHMAX
+  gl_PRIV_SET
+  AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
+  AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
   gl_QUOTE
   gl_QUOTEARG
   gl_FUNC_RAWMEMCHR
@@ -173,10 +196,13 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_REALLOC_POSIX
   gl_STDLIB_MODULE_INDICATOR([realloc-posix])
   gl_REGEX
+  gl_FUNC_RMDIR
+  gl_UNISTD_MODULE_INDICATOR([rmdir])
   gl_FUNC_RPMATCH
   gl_STDLIB_MODULE_INDICATOR([rpmatch])
   gl_SAFE_READ
   gl_SAFE_WRITE
+  gl_SAME
   gl_SAVE_CWD
   gl_SAVEDIR
   gl_FUNC_SETENV
@@ -187,10 +213,13 @@ AC_DEFUN([gl_INIT],
   gl_FUNC_SNPRINTF
   gl_STDIO_MODULE_INDICATOR([snprintf])
   gt_TYPE_SSIZE_T
+  gl_FUNC_STAT
+  gl_SYS_STAT_MODULE_INDICATOR([stat])
   gl_STAT_TIME
   gl_STAT_BIRTHTIME
   gl_STDARG_H
   AM_STDBOOL_H
+  gl_STDDEF_H
   gl_STDINT_H
   gl_STDIO_H
   gl_STDLIB_H
@@ -230,13 +259,20 @@ AC_DEFUN([gl_INIT],
   gl_TIMESPEC
   gl_UNISTD_H
   gl_UNISTD_SAFER
+  gl_FUNC_UNLINK
+  gl_UNISTD_MODULE_INDICATOR([unlink])
   gl_UNLINKDIR
   gl_FUNC_GLIBC_UNLOCKED_IO
   gl_FUNC_UNSETENV
   gl_STDLIB_MODULE_INDICATOR([unsetenv])
-  gl_FUNC_UTIME
   gl_UTIMENS
   gl_FUNC_VASNPRINTF
+  gl_FUNC_VASPRINTF
+  gl_STDIO_MODULE_INDICATOR([vasprintf])
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=asprintf:2:c-format])
+     AM_][XGETTEXT_OPTION([--flag=vasprintf:2:c-format])])
+  gl_VERSION_ETC
   gl_FUNC_VSNPRINTF
   gl_STDIO_MODULE_INDICATOR([vsnprintf])
   gl_WCHAR_H
@@ -252,6 +288,9 @@ AC_DEFUN([gl_INIT],
   gl_XSIZE
   gl_XSTRNDUP
   gl_XSTRTOL
+  gl_XVASPRINTF
+  m4_ifdef([AM_XGETTEXT_OPTION],
+    [AM_][XGETTEXT_OPTION([--flag=xasprintf:1:c-format])])
   m4_ifval(gl_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gl_LIBSOURCES_DIR])[ ||
       for gl_file in ]gl_LIBSOURCES_LIST[ ; do
@@ -274,7 +313,7 @@ AC_DEFUN([gl_INIT],
     if test -n "$gl_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $gl_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $gl_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         gl_libobjs="$gl_libobjs $i.$ac_objext"
         gl_ltlibobjs="$gl_ltlibobjs $i.lo"
       done
@@ -290,7 +329,7 @@ AC_DEFUN([gl_INIT],
   m4_pushdef([gltests_LIBSOURCES_LIST], [])
   m4_pushdef([gltests_LIBSOURCES_DIR], [])
   gl_COMMON
-  gl_source_base='.#bootmp/tests'
+  gl_source_base='tests'
   m4_ifval(gltests_LIBSOURCES_LIST, [
     m4_syscmd([test ! -d ]m4_defn([gltests_LIBSOURCES_DIR])[ ||
       for gl_file in ]gltests_LIBSOURCES_LIST[ ; do
@@ -313,7 +352,7 @@ AC_DEFUN([gl_INIT],
     if test -n "$gltests_LIBOBJS"; then
       # Remove the extension.
       sed_drop_objext='s/\.o$//;s/\.obj$//'
-      for i in `for i in $gltests_LIBOBJS; do echo "$i"; done | sed "$sed_drop_objext" | sort | uniq`; do
+      for i in `for i in $gltests_LIBOBJS; do echo "$i"; done | sed -e "$sed_drop_objext" | sort | uniq`; do
         gltests_libobjs="$gltests_libobjs $i.$ac_objext"
         gltests_ltlibobjs="$gltests_ltlibobjs $i.lo"
       done
@@ -321,10 +360,10 @@ AC_DEFUN([gl_INIT],
     AC_SUBST([gltests_LIBOBJS], [$gltests_libobjs])
     AC_SUBST([gltests_LTLIBOBJS], [$gltests_ltlibobjs])
   ])
-  LIBTAR_LIBDEPS="$gl_libdeps"
-  AC_SUBST([LIBTAR_LIBDEPS])
-  LIBTAR_LTLIBDEPS="$gl_ltlibdeps"
-  AC_SUBST([LIBTAR_LTLIBDEPS])
+  LIBGNU_LIBDEPS="$gl_libdeps"
+  AC_SUBST([LIBGNU_LIBDEPS])
+  LIBGNU_LTLIBDEPS="$gl_ltlibdeps"
+  AC_SUBST([LIBGNU_LTLIBDEPS])
 ])
 
 # Like AC_LIBOBJ, except that the module name goes
@@ -348,7 +387,7 @@ AC_DEFUN([gl_REPLACE_FUNCS], [
 AC_DEFUN([gl_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gl_LIBSOURCES_DIR], [.#bootmp/lib])
+      m4_define([gl_LIBSOURCES_DIR], [gnu])
       m4_append([gl_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
@@ -375,7 +414,7 @@ AC_DEFUN([gltests_REPLACE_FUNCS], [
 AC_DEFUN([gltests_LIBSOURCES], [
   m4_foreach([_gl_NAME], [$1], [
     m4_if(_gl_NAME, [alloca.c], [], [
-      m4_define([gltests_LIBSOURCES_DIR], [.#bootmp/tests])
+      m4_define([gltests_LIBSOURCES_DIR], [tests])
       m4_append([gltests_LIBSOURCES_LIST], _gl_NAME, [ ])
     ])
   ])
@@ -384,11 +423,16 @@ AC_DEFUN([gltests_LIBSOURCES], [
 # This macro records the list of files which have been installed by
 # gnulib-tool and may be removed by future gnulib-tool invocations.
 AC_DEFUN([gl_FILE_LIST], [
+  build-aux/arg-nonnull.h
+  build-aux/c++defs.h
   build-aux/config.rpath
-  build-aux/link-warning.h
+  build-aux/gitlog-to-changelog
+  build-aux/warn-on-use.h
   doc/getdate.texi
   lib/alloca.c
   lib/alloca.in.h
+  lib/areadlink-with-size.c
+  lib/areadlink.h
   lib/argmatch.c
   lib/argmatch.h
   lib/argp-ba.c
@@ -402,30 +446,39 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/argp-pin.c
   lib/argp-pv.c
   lib/argp-pvh.c
+  lib/argp-version-etc.c
+  lib/argp-version-etc.h
   lib/argp-xinl.c
   lib/argp.h
   lib/asnprintf.c
+  lib/asprintf.c
   lib/at-func.c
   lib/backupfile.c
   lib/backupfile.h
+  lib/basename-lgpl.c
   lib/basename.c
+  lib/bitrotate.h
   lib/btowc.c
   lib/c-ctype.c
   lib/c-ctype.h
-  lib/canonicalize-lgpl.c
+  lib/canonicalize.c
   lib/canonicalize.h
   lib/chdir-long.c
   lib/chdir-long.h
   lib/chown.c
+  lib/close-hook.c
+  lib/close-hook.h
   lib/close-stream.c
   lib/close-stream.h
   lib/close.c
   lib/closeout.c
   lib/closeout.h
   lib/config.charset
-  lib/creat-safer.c
+  lib/dirent--.h
+  lib/dirent-safer.h
   lib/dirent.in.h
   lib/dirfd.c
+  lib/dirname-lgpl.c
   lib/dirname.c
   lib/dirname.h
   lib/dup-safer.c
@@ -442,10 +495,12 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/fchown-stub.c
   lib/fchownat.c
   lib/fclose.c
-  lib/fcntl--.h
-  lib/fcntl-safer.h
+  lib/fcntl.c
   lib/fcntl.in.h
   lib/fd-safer.c
+  lib/fdopendir.c
+  lib/file-set.c
+  lib/file-set.h
   lib/fileblocks.c
   lib/float+.h
   lib/float.in.h
@@ -463,6 +518,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/getdate.h
   lib/getdate.y
   lib/getdelim.c
+  lib/getdtablesize.c
   lib/getline.c
   lib/getopt.c
   lib/getopt.in.h
@@ -472,6 +528,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/gettext.h
   lib/gettime.c
   lib/gettimeofday.c
+  lib/hash-pjw.c
+  lib/hash-pjw.h
+  lib/hash-triple.c
+  lib/hash-triple.h
   lib/hash.c
   lib/hash.h
   lib/human.c
@@ -481,6 +541,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/inttostr.c
   lib/inttostr.h
   lib/inttypes.in.h
+  lib/langinfo.in.h
   lib/lchown.c
   lib/localcharset.c
   lib/localcharset.h
@@ -495,30 +556,41 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mbrtowc.c
   lib/mbscasecmp.c
   lib/mbsinit.c
+  lib/mbsrtowcs-state.c
+  lib/mbsrtowcs.c
   lib/mbuiter.h
+  lib/memchr.c
+  lib/memchr.valgrind
   lib/mempcpy.c
   lib/memrchr.c
+  lib/mkdir.c
   lib/mkdirat.c
   lib/mkdtemp.c
+  lib/mktime-internal.h
   lib/mktime.c
   lib/modechange.c
   lib/modechange.h
+  lib/nl_langinfo.c
   lib/obstack.c
   lib/obstack.h
   lib/offtostr.c
-  lib/open-safer.c
   lib/open.c
   lib/openat-die.c
   lib/openat-priv.h
   lib/openat-proc.c
   lib/openat.c
   lib/openat.h
+  lib/opendir-safer.c
   lib/pathmax.h
   lib/pipe-safer.c
   lib/printf-args.c
   lib/printf-args.h
   lib/printf-parse.c
   lib/printf-parse.h
+  lib/priv-set.c
+  lib/priv-set.h
+  lib/progname.c
+  lib/progname.h
   lib/quote.c
   lib/quote.h
   lib/quotearg.c
@@ -535,12 +607,15 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/regex_internal.c
   lib/regex_internal.h
   lib/regexec.c
+  lib/rmdir.c
   lib/rpmatch.c
   lib/safe-read.c
   lib/safe-read.h
   lib/safe-write.c
   lib/safe-write.h
   lib/same-inode.h
+  lib/same.c
+  lib/same.h
   lib/save-cwd.c
   lib/save-cwd.h
   lib/savedir.c
@@ -551,8 +626,10 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/snprintf.c
   lib/stat-macros.h
   lib/stat-time.h
+  lib/stat.c
   lib/stdarg.in.h
   lib/stdbool.in.h
+  lib/stddef.in.h
   lib/stdint.in.h
   lib/stdio-impl.h
   lib/stdio-write.c
@@ -596,21 +673,22 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/uniwidth.h
   lib/uniwidth/cjk.h
   lib/uniwidth/width.c
+  lib/unlink.c
+  lib/unlinkat.c
   lib/unlinkdir.c
   lib/unlinkdir.h
   lib/unlocked-io.h
   lib/unsetenv.c
-  lib/utime.c
   lib/utimens.c
   lib/utimens.h
   lib/vasnprintf.c
   lib/vasnprintf.h
+  lib/vasprintf.c
   lib/verify.h
   lib/version-etc-fsf.c
   lib/version-etc.c
   lib/version-etc.h
   lib/vsnprintf.c
-  lib/w32sock.h
   lib/wchar.in.h
   lib/wcrtomb.c
   lib/wctype.in.h
@@ -618,6 +696,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/write.c
   lib/xalloc-die.c
   lib/xalloc.h
+  lib/xasprintf.c
   lib/xgetcwd.c
   lib/xgetcwd.h
   lib/xmalloc.c
@@ -629,6 +708,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xstrtol.h
   lib/xstrtoul.c
   lib/xstrtoumax.c
+  lib/xvasprintf.c
+  lib/xvasprintf.h
   m4/00gnulib.m4
   m4/alloca.m4
   m4/argmatch.m4
@@ -636,7 +717,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/backupfile.m4
   m4/bison.m4
   m4/btowc.m4
-  m4/canonicalize-lgpl.m4
+  m4/canonicalize.m4
   m4/chdir-long.m4
   m4/chown.m4
   m4/clock_time.m4
@@ -645,6 +726,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/closeout.m4
   m4/codeset.m4
   m4/d-ino.m4
+  m4/dirent-safer.m4
   m4/dirent_h.m4
   m4/dirfd.m4
   m4/dirname.m4
@@ -656,12 +738,13 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/errno_h.m4
   m4/error.m4
   m4/exclude.m4
-  m4/exitfail.m4
   m4/extensions.m4
   m4/fchdir.m4
   m4/fclose.m4
-  m4/fcntl-safer.m4
+  m4/fcntl-o.m4
+  m4/fcntl.m4
   m4/fcntl_h.m4
+  m4/fdopendir.m4
   m4/fileblocks.m4
   m4/float_h.m4
   m4/fnmatch.m4
@@ -673,6 +756,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/getcwd.m4
   m4/getdate.m4
   m4/getdelim.m4
+  m4/getdtablesize.m4
   m4/getline.m4
   m4/getopt.m4
   m4/getpagesize.m4
@@ -697,6 +781,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/inttypes-pri.m4
   m4/inttypes.m4
   m4/inttypes_h.m4
+  m4/langinfo_h.m4
   m4/lchown.m4
   m4/lcmessage.m4
   m4/lib-ld.m4
@@ -715,15 +800,20 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/mbchar.m4
   m4/mbiter.m4
   m4/mbrtowc.m4
-  m4/mbscasecmp.m4
   m4/mbsinit.m4
+  m4/mbsrtowcs.m4
   m4/mbstate_t.m4
+  m4/memchr.m4
   m4/mempcpy.m4
   m4/memrchr.m4
+  m4/mkdir.m4
   m4/mkdtemp.m4
   m4/mktime.m4
+  m4/mmap-anon.m4
+  m4/mode_t.m4
   m4/modechange.m4
   m4/multiarch.m4
+  m4/nl_langinfo.m4
   m4/nls.m4
   m4/open.m4
   m4/openat.m4
@@ -731,6 +821,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/po.m4
   m4/printf-posix.m4
   m4/printf.m4
+  m4/priv-set.m4
   m4/progtest.m4
   m4/quote.m4
   m4/quotearg.m4
@@ -738,9 +829,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/readlink.m4
   m4/realloc.m4
   m4/regex.m4
+  m4/rmdir.m4
   m4/rpmatch.m4
   m4/safe-read.m4
   m4/safe-write.m4
+  m4/same.m4
   m4/save-cwd.m4
   m4/savedir.m4
   m4/setenv.m4
@@ -749,8 +842,10 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/snprintf.m4
   m4/ssize_t.m4
   m4/stat-time.m4
+  m4/stat.m4
   m4/stdarg.m4
   m4/stdbool.m4
+  m4/stddef_h.m4
   m4/stdint.m4
   m4/stdint_h.m4
   m4/stdio_h.m4
@@ -782,20 +877,22 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/uintmax_t.m4
   m4/unistd-safer.m4
   m4/unistd_h.m4
+  m4/unlink.m4
   m4/unlinkdir.m4
   m4/unlocked-io.m4
   m4/utimbuf.m4
-  m4/utime.m4
   m4/utimens.m4
-  m4/utimes-null.m4
   m4/utimes.m4
   m4/vasnprintf.m4
+  m4/vasprintf.m4
+  m4/version-etc.m4
   m4/visibility.m4
   m4/vsnprintf.m4
-  m4/wchar.m4
+  m4/warn-on-use.m4
+  m4/wchar_h.m4
   m4/wchar_t.m4
   m4/wcrtomb.m4
-  m4/wctype.m4
+  m4/wctype_h.m4
   m4/wcwidth.m4
   m4/wint_t.m4
   m4/write.m4
@@ -804,4 +901,5 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/xsize.m4
   m4/xstrndup.m4
   m4/xstrtol.m4
+  m4/xvasprintf.m4
 ])

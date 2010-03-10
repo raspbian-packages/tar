@@ -1,7 +1,7 @@
 /* Diff files from a tar archive.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1999, 2000, 2001,
-   2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2003, 2004, 2005, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
 
    Written by John Gilmore, on 1987-04-30.
 
@@ -66,8 +66,7 @@ report_difference (struct tar_stat_info *st, const char *fmt, ...)
       fprintf (stdlis, "\n");
     }
 
-  if (exit_status == TAREXIT_SUCCESS)
-    exit_status = TAREXIT_DIFFERS;
+  set_exit_status (TAREXIT_DIFFERS);
 }
 
 /* Take a buffer returned by read_and_process and do nothing with it.  */
@@ -380,7 +379,8 @@ diff_dumpdir (void)
   else
     dev = stat_data.st_dev;
 
-  dumpdir_buffer = get_directory_contents (current_stat_info.file_name, dev);
+  dumpdir_buffer = directory_contents
+                    (scan_directory (current_stat_info.file_name, dev, false));
 
   if (dumpdir_buffer)
     {
@@ -460,7 +460,7 @@ diff_archive (void)
     {
       if (now_verifying)
 	fprintf (stdlis, _("Verify "));
-      print_header (&current_stat_info, -1);
+      print_header (&current_stat_info, current_header, -1);
     }
 
   switch (current_header->header.typeflag)
@@ -578,7 +578,9 @@ verify_volume (void)
   flush_read ();
   while (1)
     {
-      enum read_header status = read_header (false);
+      enum read_header status = read_header (&current_header, 
+                                             &current_stat_info, 
+                                             read_header_auto);
 
       if (status == HEADER_FAILURE)
 	{
@@ -588,7 +590,8 @@ verify_volume (void)
 	    {
 	      counter++;
 	      set_next_block_after (current_header);
-	      status = read_header (false);
+	      status = read_header (&current_header, &current_stat_info,
+	                            read_header_auto);
 	    }
 	  while (status == HEADER_FAILURE);
 
@@ -606,11 +609,13 @@ verify_volume (void)
             {
 	      char buf[UINTMAX_STRSIZE_BOUND];
 
-	      status = read_header (false);
+	      status = read_header (&current_header, &current_stat_info, 
+	                            read_header_auto);
 	      if (status == HEADER_ZERO_BLOCK)
 	        break;
-	      WARN ((0, 0, _("A lone zero block at %s"),
-	  	    STRINGIFY_BIGINT (current_block_ordinal (), buf)));
+	      WARNOPT (WARN_ALONE_ZERO_BLOCK,
+		       (0, 0, _("A lone zero block at %s"),
+			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
             }
 	}
       

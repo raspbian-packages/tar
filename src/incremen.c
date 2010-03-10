@@ -1,7 +1,7 @@
 /* GNU dump extensions to tar.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1999, 2000, 2001,
-   2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+   2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -73,6 +73,7 @@ struct directory
 				   the original directory structure */
     const char *tagfile;        /* Tag file, if the directory falls under
 				   exclusion_tag_under */
+    char *caname;               /* canonical name */
     char *name;	     	        /* file name of directory */
   };
 
@@ -212,19 +213,19 @@ static Hash_table *directory_meta_table;
 
 /* Calculate the hash of a directory.  */
 static size_t
-hash_directory_name (void const *entry, size_t n_buckets)
+hash_directory_canonical_name (void const *entry, size_t n_buckets)
 {
   struct directory const *directory = entry;
-  return hash_string (directory->name, n_buckets);
+  return hash_string (directory->caname, n_buckets);
 }
 
 /* Compare two directories for equality of their names. */
 static bool
-compare_directory_names (void const *entry1, void const *entry2)
+compare_directory_canonical_names (void const *entry1, void const *entry2)
 {
   struct directory const *directory1 = entry1;
   struct directory const *directory2 = entry2;
-  return strcmp (directory1->name, directory2->name) == 0;
+  return strcmp (directory1->caname, directory2->caname) == 0;
 }
 
 static size_t
@@ -245,9 +246,11 @@ compare_directory_meta (void const *entry1, void const *entry2)
             && directory1->inode_number == directory2->inode_number;
 }
 
-/* Make a directory entry for given NAME */
+/* Make a directory entry for given relative NAME and canonical name CANAME.
+   The latter is "stolen", i.e. the returned directory contains pointer to
+   it. */
 static struct directory *
-make_directory (const char *name)
+make_directory (const char *name, char *caname)
 {
   size_t namelen = strlen (name);
   struct directory *directory = xmalloc (sizeof (*directory));
@@ -260,6 +263,7 @@ make_directory (const char *name)
   directory->name = xmalloc (namelen + 1);
   memcpy (directory->name, name, namelen);
   directory->name[namelen] = 0;
+  directory->caname = caname;
   directory->tagfile = NULL;
   return directory;
 }
@@ -267,6 +271,7 @@ make_directory (const char *name)
 static void
 free_directory (struct directory *dir)
 {
+  free (dir->caname);
   free (dir->name);
   free (dir);
 }
@@ -274,7 +279,8 @@ free_directory (struct directory *dir)
 static struct directory *
 attach_directory (const char *name)
 {
-  struct directory *dir = make_directory (name);
+  char *cname = normalize_filename (name);
+  struct directory *dir = make_directory (name, cname);
   if (dirtail)
     dirtail->next = dir;
   else
@@ -284,24 +290,6 @@ attach_directory (const char *name)
 }
 		 
 
-static void
-replace_prefix (char **pname, const char *samp, size_t slen,
-		const char *repl, size_t rlen)
-{
-  char *name = *pname;
-  size_t nlen = strlen (name);
-  if (nlen > slen && memcmp (name, samp, slen) == 0 && ISSLASH (name[slen]))
-    {
-      if (rlen > slen)
-	{
-	  name = xrealloc (name, nlen - slen + rlen + 1);
-	  *pname = name;
-	}
-      memmove (name + rlen, name + slen, nlen - slen + 1);
-      memcpy (name, repl, rlen);
-    }
-}
-
 void
 dirlist_replace_prefix (const char *pref, const char *repl)
 {
@@ -338,8 +326,8 @@ note_directory (char const *name, struct timespec mtime,
 
   if (! ((directory_table
 	  || (directory_table = hash_initialize (0, 0,
-						 hash_directory_name,
-						 compare_directory_names, 0)))
+						 hash_directory_canonical_name,
+						 compare_directory_canonical_names, 0)))
 	 && hash_insert (directory_table, directory)))
     xalloc_die ();
 
@@ -362,11 +350,36 @@ find_directory (const char *name)
     return 0;
   else
     {
-      struct directory *dir = make_directory (name);
+      char *caname = normalize_filename (name);
+      struct directory *dir = make_directory (name, caname);
       struct directory *ret = hash_lookup (directory_table, dir);
       free_directory (dir);
       return ret;
     }
+}
+
+#if 0
+/* Remove directory entry for the given CANAME */
+void
+remove_directory (const char *caname)
+{
+  struct directory *dir = make_directory (caname, xstrdup (caname));
+  struct directory *ret = hash_delete (directory_table, dir);
+  if (ret)
+    free_directory (ret);
+  free_directory (dir);
+}
+#endif
+
+/* If first OLD_PREFIX_LEN bytes of DIR->NAME name match OLD_PREFIX,
+   replace them with NEW_PREFIX. */
+void
+rebase_directory (struct directory *dir,
+		  const char *old_prefix, size_t old_prefix_len,
+		  const char *new_prefix, size_t new_prefix_len)
+{
+  replace_prefix (&dir->name, old_prefix, old_prefix_len,
+		  new_prefix, new_prefix_len);
 }
 
 /* Return a directory entry for a given combination of device and inode
@@ -378,7 +391,7 @@ find_directory_meta (dev_t dev, ino_t ino)
     return 0;
   else
     {
-      struct directory *dir = make_directory ("");
+      struct directory *dir = make_directory ("", NULL);
       struct directory *ret;
       dir->device_number = dev;
       dir->inode_number = ino;
@@ -400,19 +413,23 @@ update_parent_directory (const char *name)
     {
       struct stat st;
       if (deref_stat (dereference_option, p, &st) != 0)
-	stat_diag (name);
+	{
+	  if (errno != ENOENT) 
+	    stat_diag (directory->name);
+	  /* else: should have been already reported */
+	}
       else
 	directory->mtime = get_stat_mtime (&st);
     }
   free (p);
 }
 
-#define PD_VERBOSE        0x10
-#define PD_FORCE_CHILDREN 0x20
+#define PD_FORCE_CHILDREN 0x10
+#define PD_FORCE_INIT     0x20
 #define PD_CHILDREN(f) ((f) & 3)
 
 static struct directory *
-procdir (char *name_buffer, struct stat *stat_data,
+procdir (const char *name_buffer, struct stat *stat_data,
 	 dev_t device,
 	 int flag,
 	 char *entry)
@@ -423,15 +440,31 @@ procdir (char *name_buffer, struct stat *stat_data,
   if ((directory = find_directory (name_buffer)) != NULL)
     {
       if (DIR_IS_INITED (directory))
-	return directory;
+	{
+	  if (flag & PD_FORCE_INIT)
+	    {
+	      assign_string (&directory->name, name_buffer);
+	    }
+	  else
+	    {
+	      *entry = 'N'; /* Avoid duplicating this directory */
+	      return directory;
+	    }
+	}
 
+      if (strcmp (directory->name, name_buffer))
+	{
+	  *entry = 'N';
+	  return directory;
+	}
+      
       /* With NFS, the same file can have two different devices
 	 if an NFS directory is mounted in multiple locations,
 	 which is relatively common when automounting.
 	 To avoid spurious incremental redumping of
 	 directories, consider all NFS devices as equal,
 	 relying on the i-node to establish differences.  */
-
+      
       if (! ((!check_device_option
 	      || (DIR_IS_NFS (directory) && nfs)
 	      || directory->device_number == stat_data->st_dev)
@@ -444,10 +477,11 @@ procdir (char *name_buffer, struct stat *stat_data,
 	    {
 	      if (strcmp (d->name, name_buffer))
 		{
-		  if (verbose_option)
-		    WARN ((0, 0, _("%s: Directory has been renamed from %s"),
-			   quotearg_colon (name_buffer),
-			   quote_n (1, d->name)));
+		  WARNOPT (WARN_RENAME_DIRECTORY,
+			   (0, 0,
+			    _("%s: Directory has been renamed from %s"),
+			    quotearg_colon (name_buffer),
+			    quote_n (1, d->name)));
 		  directory->orig = d;
 		  DIR_SET_FLAG (directory, DIRF_RENAMED);
 		  dirlist_replace_prefix (d->name, name_buffer);
@@ -456,9 +490,9 @@ procdir (char *name_buffer, struct stat *stat_data,
 	    }
 	  else
 	    {
-	      if (verbose_option)
-		WARN ((0, 0, _("%s: Directory has been renamed"),
-		       quotearg_colon (name_buffer)));
+	      WARNOPT (WARN_RENAME_DIRECTORY,
+		       (0, 0, _("%s: Directory has been renamed"),
+			quotearg_colon (name_buffer)));
 	      directory->children = ALL_CHILDREN;
 	      directory->device_number = stat_data->st_dev;
 	      directory->inode_number = stat_data->st_ino;
@@ -468,14 +502,14 @@ procdir (char *name_buffer, struct stat *stat_data,
 	}
       else
 	directory->children = CHANGED_CHILDREN;
-
+      
       DIR_SET_FLAG (directory, DIRF_FOUND);
     }
   else
     {
       struct directory *d = find_directory_meta (stat_data->st_dev,
 						 stat_data->st_ino);
-
+      
       directory = note_directory (name_buffer,
 				  get_stat_mtime(stat_data),
 				  stat_data->st_dev,
@@ -488,10 +522,10 @@ procdir (char *name_buffer, struct stat *stat_data,
 	{
 	  if (strcmp (d->name, name_buffer))
 	    {
-	      if (flag & PD_VERBOSE)
-		WARN ((0, 0, _("%s: Directory has been renamed from %s"),
-		       quotearg_colon (name_buffer),
-		       quote_n (1, d->name)));
+	      WARNOPT (WARN_RENAME_DIRECTORY,
+		       (0, 0, _("%s: Directory has been renamed from %s"),
+			quotearg_colon (name_buffer),
+			quote_n (1, d->name)));
 	      directory->orig = d;
 	      DIR_SET_FLAG (directory, DIRF_RENAMED);
 	      dirlist_replace_prefix (d->name, name_buffer);
@@ -501,9 +535,9 @@ procdir (char *name_buffer, struct stat *stat_data,
       else
 	{
 	  DIR_SET_FLAG (directory, DIRF_NEW);
-	  if (flag & PD_VERBOSE)
-	    WARN ((0, 0, _("%s: Directory is new"),
-		   quotearg_colon (name_buffer)));
+	  WARNOPT (WARN_NEW_DIRECTORY,
+		   (0, 0, _("%s: Directory is new"),
+		    quotearg_colon (name_buffer)));
 	  directory->children =
 	    (listed_incremental_option
 	     || (OLDER_STAT_TIME (*stat_data, m)
@@ -519,6 +553,12 @@ procdir (char *name_buffer, struct stat *stat_data,
   if (one_file_system_option && device != stat_data->st_dev
       /* ... except if it was explicitely given in the command line */
       && !is_individual_file (name_buffer))
+    /* FIXME: 
+	WARNOPT (WARN_XDEV,
+		 (0, 0,
+		  _("%s: directory is on a different filesystem; not dumped"),
+		  quotearg_colon (directory->name)));
+    */
     directory->children = NO_CHILDREN;
   else if (flag & PD_FORCE_CHILDREN)
     {
@@ -541,8 +581,7 @@ procdir (char *name_buffer, struct stat *stat_data,
 	     an exclusion tag. */
 	  exclusion_tag_warning (name_buffer, tag_file_name,
 				 _("directory not dumped"));
-	  if (entry)
-	    *entry = 'N';
+	  *entry = 'N';
 	  directory->children = NO_CHILDREN;
 	  break;
 
@@ -643,44 +682,47 @@ makedumpdir (struct directory *directory, const char *dir)
   free (array);
 }
 
-/* Recursively scan the given directory. */
-static const char *
-scan_directory (char *dir, dev_t device)
+/* Recursively scan the given directory DIR.
+   DEVICE is the device number where DIR resides (for --one-file-system).
+   If CMDLINE is true, the directory name was explicitly listed in the
+   command line.
+   Unless *PDIR is NULL, store there a pointer to the struct directory
+   describing DIR. */
+struct directory *
+scan_directory (char *dir, dev_t device, bool cmdline)
 {
   char *dirp = savedir (dir);	/* for scanning directory */
-  char *name_buffer;		/* directory, `/', and directory member */
-  size_t name_buffer_size;	/* allocated size of name_buffer, minus 2 */
-  size_t name_length;		/* used length in name_buffer */
+  namebuf_t nbuf;
+  char *tmp;
   struct stat stat_data;
   struct directory *directory;
+  char ch;
   
   if (! dirp)
     savedir_error (dir);
 
-  name_buffer_size = strlen (dir) + NAME_FIELD_SIZE;
-  name_buffer = xmalloc (name_buffer_size + 2);
-  strcpy (name_buffer, dir);
-  if (! ISSLASH (dir[strlen (dir) - 1]))
-    strcat (name_buffer, "/");
-  name_length = strlen (name_buffer);
-
-  if (deref_stat (dereference_option, name_buffer, &stat_data))
+  tmp = xstrdup (dir);
+  zap_slashes (tmp);
+  
+  if (deref_stat (dereference_option, tmp, &stat_data))
     {
-      stat_diag (name_buffer);
-      /* FIXME: used to be
-           children = CHANGED_CHILDREN;
-	 but changed to: */
-      free (name_buffer);
+      dir_removed_diag (tmp, cmdline, stat_diag);
+      free (tmp);
       free (dirp);
       return NULL;
     }
 
-  directory = procdir (name_buffer, &stat_data, device, 0, NULL);
+  directory = procdir (tmp, &stat_data, device,
+		       (cmdline ? PD_FORCE_INIT : 0),
+		       &ch);
+  
+  free (tmp);
+
+  nbuf = namebuf_create (dir);
 
   if (dirp && directory->children != NO_CHILDREN)
     {
       char *entry;	/* directory entry being scanned */
-      size_t entrylen;	/* length of directory entry */
       dumpdir_iter_t itr;
 
       makedumpdir (directory, dirp);
@@ -689,38 +731,30 @@ scan_directory (char *dir, dev_t device)
 	   entry;
 	   entry = dumpdir_next (itr))
 	{
-	  entrylen = strlen (entry);
-	  if (name_buffer_size <= entrylen - 1 + name_length)
-	    {
-	      do
-		name_buffer_size += NAME_FIELD_SIZE;
-	      while (name_buffer_size <= entrylen - 1 + name_length);
-	      name_buffer = xrealloc (name_buffer, name_buffer_size + 2);
-	    }
-	  strcpy (name_buffer + name_length, entry + 1);
+	  char *full_name = namebuf_name (nbuf, entry + 1);
 
 	  if (*entry == 'I') /* Ignored entry */
 	    *entry = 'N';
-	  else if (excluded_name (name_buffer))
+	  else if (excluded_name (full_name))
 	    *entry = 'N';
 	  else
 	    {
-	      if (deref_stat (dereference_option, name_buffer, &stat_data))
+	      if (deref_stat (dereference_option, full_name, &stat_data))
 		{
-		  stat_diag (name_buffer);
+		  file_removed_diag (full_name, false, stat_diag);
 		  *entry = 'N';
 		  continue;
 		}
 
 	      if (S_ISDIR (stat_data.st_mode))
 		{
-		  int pd_flag = (verbose_option ? PD_VERBOSE : 0);
+		  int pd_flag = 0;
 		  if (!recursion_option)
 		    pd_flag |= PD_FORCE_CHILDREN | NO_CHILDREN;
 		  else if (directory->children == ALL_CHILDREN)
 		    pd_flag |= PD_FORCE_CHILDREN | ALL_CHILDREN;
 		  *entry = 'D';
-		  procdir (name_buffer, &stat_data, device, pd_flag, entry);
+		  procdir (full_name, &stat_data, device, pd_flag, entry);
 		}
 
 	      else if (one_file_system_option && device != stat_data.st_dev)
@@ -742,17 +776,35 @@ scan_directory (char *dir, dev_t device)
       free (itr);
     }
 
-  free (name_buffer);
+  namebuf_free (nbuf);
+
   if (dirp)
     free (dirp);
 
-  return directory->dump ? directory->dump->contents : NULL;
+  return directory;
 }
 
+/* Return pointer to the contents of the directory DIR */
 const char *
-get_directory_contents (char *dir, dev_t device)
+directory_contents (struct directory *dir)
 {
-  return scan_directory (dir, device);
+  if (!dir)
+    return NULL;
+  return dir->dump ? dir->dump->contents : NULL;
+}
+
+/* A "safe" version of directory_contents, which never returns NULL. */
+const char *
+safe_directory_contents (struct directory *dir)
+{
+  const char *ret = directory_contents (dir);
+  return ret ? ret : "\0\0\0\0";
+}
+
+void
+name_fill_directory (struct name *name, dev_t device, bool cmdline)
+{
+  name->directory = scan_directory (name->name, device, cmdline);
 }
 
 
@@ -815,17 +867,19 @@ store_rename (struct directory *dir, struct obstack *stk)
     }
 }
 
-const char *
-append_incremental_renames (const char *dump)
+void
+append_incremental_renames (struct directory *dir)
 {
   struct obstack stk;
   size_t size;
   struct directory *dp;
+  const char *dump;
   
   if (dirhead == NULL)
-    return dump;
+    return;
 
   obstack_init (&stk);
+  dump = directory_contents (dir);
   if (dump)
     {
       size = dumpdir_size (dump) - 1;
@@ -840,11 +894,10 @@ append_incremental_renames (const char *dump)
   if (obstack_object_size (&stk) != size)
     {
       obstack_1grow (&stk, 0);
-      dump = obstack_finish (&stk);
+      dumpdir_free (dir->dump);
+      dir->dump = dumpdir_create (obstack_finish (&stk));
     }
-  else
-    obstack_free (&stk, NULL);
-  return dump;
+  obstack_free (&stk, NULL);
 }
 
 
@@ -869,8 +922,8 @@ read_incr_db_01 (int version, const char *initbuf)
   uintmax_t u;
   time_t sec;
   long int nsec;
-  char *buf = 0;
-  size_t bufsize;
+  char *buf = NULL;
+  size_t bufsize = 0;
   char *ebuf;
   long lineno = 1;
 
@@ -1229,13 +1282,16 @@ void
 read_directory_file (void)
 {
   int fd;
-  char *buf = 0;
-  size_t bufsize;
+  char *buf = NULL;
+  size_t bufsize = 0;
+  int flags = O_RDWR | O_CREAT;
 
+  if (incremental_level == 0)
+    flags |= O_TRUNC;
   /* Open the file for both read and write.  That way, we can write
      it later without having to reopen it, and don't have to worry if
      we chdir in the meantime.  */
-  fd = open (listed_incremental_option, O_RDWR | O_CREAT, MODE_RW);
+  fd = open (listed_incremental_option, flags, MODE_RW);
   if (fd < 0)
     {
       open_error (listed_incremental_option);
@@ -1250,6 +1306,13 @@ read_directory_file (void)
       return;
     }
 
+  /* Consume the first name from the name list and reset the
+     list afterwards.  This is done to change to the new
+     directory, if the first name is a chdir request (-C dir),
+     which is necessary to recreate absolute file names. */
+  name_from_list ();
+  blank_name_list ();
+  
   if (0 < getline (&buf, &bufsize, listed_incremental_stream))
     {
       char *ebuf;
@@ -1347,7 +1410,7 @@ write_directory_file (void)
   if (! fp)
     return;
 
-  if (fseek (fp, 0L, SEEK_SET) != 0)
+  if (fseeko (fp, 0L, SEEK_SET) != 0)
     seek_error (listed_incremental_option);
   if (sys_truncate (fileno (fp)) != 0)
     truncate_error (listed_incremental_option);
@@ -1504,7 +1567,8 @@ dumpdir_ok (char *dumpdir)
     }
 
   if (has_tempdir)
-    WARN ((0, 0, _("Malformed dumpdir: 'X' never used")));
+    WARNOPT (WARN_BAD_DUMPDIR,
+	     (0, 0, _("Malformed dumpdir: 'X' never used")));
 
   return true;
 }

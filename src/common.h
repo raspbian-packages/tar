@@ -1,7 +1,8 @@
 /* Common declarations for the tar program.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1999, 2000, 2001,
-   2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+   2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, 
+   Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -60,6 +61,8 @@
 #define obstack_chunk_alloc xmalloc
 #define obstack_chunk_free free
 #include <obstack.h>
+#include <progname.h>
+#include <xvasprintf.h>
 
 #include <paxlib.h>
 
@@ -69,9 +72,6 @@
 #define LG_256 8
 
 /* Information gleaned from the command line.  */
-
-/* Name of this program.  */
-GLOBAL const char *program_name;
 
 /* Main command option.  */
 
@@ -85,7 +85,8 @@ enum subcommand
   DIFF_SUBCOMMAND,		/* -d */
   EXTRACT_SUBCOMMAND,		/* -x */
   LIST_SUBCOMMAND,		/* -t */
-  UPDATE_SUBCOMMAND		/* -u */
+  UPDATE_SUBCOMMAND,		/* -u */
+  TEST_LABEL_SUBCOMMAND,        /* --test-label */
 };
 
 GLOBAL enum subcommand subcommand_option;
@@ -185,6 +186,8 @@ GLOBAL enum old_files old_files_option;
 
 /* Specified file name for incremental list.  */
 GLOBAL const char *listed_incremental_option;
+/* Incremental dump level */
+GLOBAL int incremental_level;
 /* Check device numbers when doing incremental dumps. */
 GLOBAL bool check_device_option;
 
@@ -318,33 +321,47 @@ GLOBAL const char **archive_name_cursor;
 /* Output index file name.  */
 GLOBAL char const *index_file_name;
 
+/* Opaque structure for keeping directory meta-data */
+struct directory;
+
 /* Structure for keeping track of filenames and lists thereof.  */
 struct name
   {
     struct name *next;          /* Link to the next element */
+    struct name *prev;          /* Link to the previous element */
+
+    char *name;                 /* File name or globbing pattern */
+    size_t length;		/* cached strlen (name) */
+    int matching_flags;         /* wildcard flags if name is a pattern */
+    bool cmdline;               /* true if this name was given in the
+				   command line */
+    
     int change_dir;		/* Number of the directory to change to.
 				   Set with the -C option. */
     uintmax_t found_count;	/* number of times a matching file has
 				   been found */
-    int matching_flags;		/* this name is a regexp, not literal */
-    char const *dir_contents;	/* for incremental_option */
-
-    size_t length;		/* cached strlen(name) */
-    char name[1];
+    
+    /* The following members are used for incremental dumps only,
+       if this struct name represents a directory;
+       see incremen.c */
+    struct directory *directory;/* directory meta-data and contents */
+    struct name *parent;        /* pointer to the parent hierarchy */
+    struct name *child;         /* pointer to the first child */
+    struct name *sibling;       /* pointer to the next sibling */
+    char *caname;               /* canonical name */
   };
 
 /* Obnoxious test to see if dimwit is trying to dump the archive.  */
 GLOBAL dev_t ar_dev;
 GLOBAL ino_t ar_ino;
 
+GLOBAL int seek_option;
 GLOBAL bool seekable_archive;
 
 GLOBAL dev_t root_device;
 
 /* Unquote filenames */
 GLOBAL bool unquote_option;
-
-GLOBAL bool test_label_option; /* Test archive volume label and exit */
 
 /* Show file or archive names after transformation.
    In particular, when creating archive in verbose mode, list member names
@@ -379,9 +396,13 @@ extern enum access_mode access_mode;
 extern FILE *stdlis;
 extern bool write_archive_to_stdout;
 extern char *volume_label;
+extern size_t volume_label_count;
 extern char *continued_file_name;
 extern uintmax_t continued_file_size;
 extern uintmax_t continued_file_offset;
+extern off_t records_written;
+
+char *drop_volume_label_suffix (const char *label);
 
 size_t available_space_after (union block *pointer);
 off_t current_block_ordinal (void);
@@ -428,19 +449,19 @@ bool cachedir_file_p (const char *name);
 bool file_dumpable_p (struct tar_stat_info *st);
 void create_archive (void);
 void pad_archive (off_t size_left);
-void dump_file (const char *st, int top_level, dev_t parent_device);
+void dump_file (const char *st, bool top_level, dev_t parent_device);
 union block *start_header (struct tar_stat_info *st);
 void finish_header (struct tar_stat_info *st, union block *header,
 		    off_t block_ordinal);
 void simple_finish_header (union block *header);
 union block * write_extended (bool global, struct tar_stat_info *st,
 			      union block *old_header);
-union block *start_private_header (const char *name, size_t size);
+union block *start_private_header (const char *name, size_t size, time_t t);
 void write_eot (void);
 void check_links (void);
 void exclusion_tag_warning (const char *dirname, const char *tagname,
 			    const char *message);
-enum exclusion_tag_type check_exclusion_tags (char *dirname,
+enum exclusion_tag_type check_exclusion_tags (const char *dirname,
 					      const char **tag_file_name);
      
 #define GID_TO_CHARS(val, where) gid_to_chars (val, where, sizeof (where))
@@ -496,9 +517,16 @@ char *dumpdir_locate (dumpdir_t dump, const char *name);
 char *dumpdir_next (dumpdir_iter_t itr);
 char *dumpdir_first (dumpdir_t dump, int all, dumpdir_iter_t *pitr);
 
+struct directory *scan_directory (char *dir, dev_t device, bool cmdline);
+void name_fill_directory (struct name *name, dev_t device, bool cmdline);
+const char *directory_contents (struct directory *dir);
+const char *safe_directory_contents (struct directory *dir);
 
-const char *get_directory_contents (char *dir_name, dev_t device);
-const char *append_incremental_renames (const char *dump);
+void rebase_directory (struct directory *dir,
+		       const char *samp, size_t slen,
+		       const char *repl, size_t rlen);
+
+void append_incremental_renames (struct directory *dir);
 void read_directory_file (void);
 void write_directory_file (void);
 void purge_directory (char const *directory_name);
@@ -520,6 +548,17 @@ enum read_header
   HEADER_FAILURE		/* ill-formed header, or bad checksum */
 };
 
+/* Operation mode for read_header: */
+
+enum read_header_mode
+{
+  read_header_auto,             /* process extended headers automatically */
+  read_header_x_raw,            /* return raw extended headers (return
+				   HEADER_SUCCESS_EXTENDED) */
+  read_header_x_global          /* when POSIX global extended header is read,
+				   decode it and return
+				   HEADER_SUCCESS_EXTENDED */
+};
 extern union block *current_header;
 extern enum archive_format current_format;
 extern size_t recent_long_name_blocks;
@@ -532,7 +571,8 @@ char const *tartime (struct timespec t, bool full_time);
 #define GID_FROM_HEADER(where) gid_from_header (where, sizeof (where))
 #define MAJOR_FROM_HEADER(where) major_from_header (where, sizeof (where))
 #define MINOR_FROM_HEADER(where) minor_from_header (where, sizeof (where))
-#define MODE_FROM_HEADER(where) mode_from_header (where, sizeof (where))
+#define MODE_FROM_HEADER(where, hbits) \
+  mode_from_header (where, sizeof (where), hbits)
 #define OFF_FROM_HEADER(where) off_from_header (where, sizeof (where))
 #define SIZE_FROM_HEADER(where) size_from_header (where, sizeof (where))
 #define TIME_FROM_HEADER(where) time_from_header (where, sizeof (where))
@@ -542,20 +582,22 @@ char const *tartime (struct timespec t, bool full_time);
 gid_t gid_from_header (const char *buf, size_t size);
 major_t major_from_header (const char *buf, size_t size);
 minor_t minor_from_header (const char *buf, size_t size);
-mode_t mode_from_header (const char *buf, size_t size);
+mode_t mode_from_header (const char *buf, size_t size, unsigned *hbits);
 off_t off_from_header (const char *buf, size_t size);
 size_t size_from_header (const char *buf, size_t size);
 time_t time_from_header (const char *buf, size_t size);
 uid_t uid_from_header (const char *buf, size_t size);
-uintmax_t uintmax_from_header (const char * buf, size_t size);
+uintmax_t uintmax_from_header (const char *buf, size_t size);
 
 void list_archive (void);
+void test_archive_label (void);
 void print_for_mkdir (char *dirname, int length, mode_t mode);
-void print_header (struct tar_stat_info *st, off_t block_ordinal);
+void print_header (struct tar_stat_info *st, union block *blk,
+	           off_t block_ordinal);
 void read_and (void (*do_something) (void));
-enum read_header read_header_primitive (bool raw_extended_headers,
-					struct tar_stat_info *info);
-enum read_header read_header (bool raw_extended_headers);
+enum read_header read_header (union block **return_block,
+			      struct tar_stat_info *info,
+			      enum read_header_mode m);
 enum read_header tar_checksum (union block *header, bool silent);
 void skip_file (off_t size);
 void skip_member (void);
@@ -565,6 +607,15 @@ void skip_member (void);
 void assign_string (char **dest, const char *src);
 char *quote_copy_string (const char *str);
 int unquote_string (char *str);
+char *zap_slashes (char *name);
+char *normalize_filename (const char *name);
+void replace_prefix (char **pname, const char *samp, size_t slen,
+		     const char *repl, size_t rlen);
+
+typedef struct namebuf *namebuf_t;
+namebuf_t namebuf_create (const char *dir);
+void namebuf_free (namebuf_t buf);
+char *namebuf_name (namebuf_t buf, const char *name);
 
 void code_ns_fraction (int ns, char *p);
 char const *code_timespec (struct timespec ts, char *sbuf);
@@ -594,6 +645,7 @@ int deref_stat (bool deref, char const *name, struct stat *buf);
 
 int chdir_arg (char const *dir);
 void chdir_do (int dir);
+int chdir_count (void);
 
 void close_diag (char const *name);
 void open_diag (char const *name);
@@ -602,6 +654,10 @@ void readlink_diag (char const *name);
 void savedir_diag (char const *name);
 void seek_diag_details (char const *name, off_t offset);
 void stat_diag (char const *name);
+void file_removed_diag (const char *name, bool top_level,
+			void (*diagfn) (char const *name));
+void dir_removed_diag (char const *name, bool top_level,
+		       void (*diagfn) (char const *name));
 void write_error_details (char const *name, size_t status, size_t size);
 void write_fatal (char const *name) __attribute__ ((noreturn));
 void write_fatal_details (char const *name, ssize_t status, size_t size)
@@ -629,12 +685,14 @@ void name_add_dir (const char *name);
 void name_term (void);
 const char *name_next (int change_dirs);
 void name_gather (void);
-struct name *addname (char const *string, int change_dir);
+struct name *addname (char const *string, int change_dir,
+		      bool cmdline, struct name *parent);
+void remname (struct name *name);
 bool name_match (const char *name);
 void names_notfound (void);
 void collect_and_sort_names (void);
 struct name *name_scan (const char *name);
-char *name_from_list (void);
+struct name const *name_from_list (void);
 void blank_name_list (void);
 char *new_name (const char *dir_name, const char *name);
 size_t stripped_prefix_len (char const *file_name, size_t num);
@@ -666,6 +724,7 @@ void usage (int) __attribute__ ((noreturn));
 int tar_timespec_cmp (struct timespec a, struct timespec b);
 const char *archive_format_string (enum archive_format fmt);
 const char *subcommand_string (enum subcommand c);
+void set_exit_status (int val);
 
 /* Module update.c.  */
 
@@ -681,7 +740,7 @@ void xheader_decode_global (struct xheader *xhdr);
 void xheader_store (char const *keyword, struct tar_stat_info *st,
 		    void const *data);
 void xheader_read (struct xheader *xhdr, union block *header, size_t size);
-void xheader_write (char type, char *name, struct xheader *xhdr);
+void xheader_write (char type, char *name, time_t t, struct xheader *xhdr);
 void xheader_write_global (struct xheader *xhdr);
 void xheader_finish (struct xheader *hdr);
 void xheader_destroy (struct xheader *hdr);
@@ -752,3 +811,49 @@ void set_comression_program_by_suffix (const char *name, const char *defprog);
 void checkpoint_compile_action (const char *str);
 void checkpoint_finish_compile (void);
 void checkpoint_run (bool do_write);
+
+/* Module warning.c */
+#define WARN_ALONE_ZERO_BLOCK    0x00000001
+#define WARN_BAD_DUMPDIR         0x00000002
+#define WARN_CACHEDIR            0x00000004
+#define WARN_CONTIGUOUS_CAST     0x00000008
+#define WARN_FILE_CHANGED        0x00000010
+#define WARN_FILE_IGNORED        0x00000020
+#define WARN_FILE_REMOVED        0x00000040
+#define WARN_FILE_SHRANK         0x00000080
+#define WARN_FILE_UNCHANGED      0x00000100
+#define WARN_FILENAME_WITH_NULS  0x00000200
+#define WARN_IGNORE_ARCHIVE      0x00000400
+#define WARN_IGNORE_NEWER        0x00000800
+#define WARN_NEW_DIRECTORY       0x00001000
+#define WARN_RENAME_DIRECTORY    0x00002000
+#define WARN_SYMLINK_CAST        0x00004000
+#define WARN_TIMESTAMP           0x00008000
+#define WARN_UNKNOWN_CAST        0x00010000
+#define WARN_UNKNOWN_KEYWORD     0x00020000
+#define WARN_XDEV                0x00040000
+
+/* The warnings composing WARN_VERBOSE_WARNINGS are enabled by default
+   in verbose mode */
+#define WARN_VERBOSE_WARNINGS    (WARN_RENAME_DIRECTORY|WARN_NEW_DIRECTORY)
+#define WARN_ALL                 (0xffffffff & ~WARN_VERBOSE_WARNINGS)
+
+void set_warning_option (const char *arg);
+
+extern int warning_option;
+
+#define WARNOPT(opt,args)			\
+  do						\
+    {						\
+      if (warning_option & opt) WARN (args);	\
+    }						\
+  while (0)
+
+/* Module unlink.c */
+
+void queue_deferred_unlink (const char *name, bool is_dir);
+void finish_deferred_unlinks (void);
+
+/* Module exit.c */
+extern void (*fatal_exit_hook) (void);
+
