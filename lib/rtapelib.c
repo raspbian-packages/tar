@@ -425,7 +425,10 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
   }
 
   /* FIXME: Should somewhat validate the decoding, here.  */
-
+  if (gethostbyname (remote_host) == NULL)
+    error (EXIT_ON_EXEC_ERROR, 0, _("Cannot connect to %s: resolve failed"),
+	   remote_host);
+	  
   if (remote_user && *remote_user == '\0')
     remote_user = 0;
 
@@ -570,7 +573,8 @@ rmt_read__ (int handle, char *buffer, size_t length)
 
   sprintf (command_buffer, "R%lu\n", (unsigned long) length);
   if (do_command (handle, command_buffer) == -1
-      || (status = get_status (handle)) == SAFE_READ_ERROR)
+      || (status = get_status (handle)) == SAFE_READ_ERROR
+      || status > length)
     return SAFE_READ_ERROR;
 
   for (counter = 0; counter < status; counter += rlen, buffer += rlen)
@@ -706,6 +710,12 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 	    || (status = get_status (handle), status == -1))
 	  return -1;
 
+	if (status > sizeof (struct mtop))
+	  {
+	    errno = EOVERFLOW;
+	    return -1;
+	  }
+	
 	for (; status > 0; status -= counter, argument += counter)
 	  {
 	    counter = safe_read (READ_SIDE (handle), argument, status);

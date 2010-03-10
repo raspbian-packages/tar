@@ -1,5 +1,113 @@
-GNU tar NEWS - User visible changes. 2009-03-05
+GNU tar NEWS - User visible changes. 2010-03-10
 Please send GNU tar bug reports to <bug-tar@gnu.org>
+
+
+version 1.23 - Sergey Poznyakoff, 2010-03-10
+
+* Record size autodetection
+
+When listing or extracting archives, the actual record size is
+reported only if the archive is read from a device (as opposed
+to regular files and pipes).
+
+* Seekable archives
+
+When a read-only operation (e.g. --list or --extract) is requested
+on a regular file, tar attemtps to speed up accesses by using lseek.
+
+* New command line option `--warning'
+
+The `--warning' command line option allows to suppress or enable
+particular warning messages during `tar' run.  It takes a single
+argument (a `keyword'), identifying the class of warning messages
+to affect.  If the argument is prefixed with `no-', such warning
+messages are suppressed.  For example,
+
+  tar --warning=no-alone-zero-block -x -f archive
+
+suppresses the output of `A lone zero block' diagnostics, which is
+normally issued if `archive' ends with a single block of zeros.
+
+See Tar Manual, section 3.9 "Controlling Warning Messages", for a
+detailed discussion.
+
+* New command line option `--level'
+
+The `--level=N' option sets the incremental dump level N.  It
+is valid when used in conjunction with the -c and --listed-incremental
+options.  So far the only meaningful value for N is 0.  The
+`--level=0' option forces creating the level 0 dump, by truncating
+the snapshot file if it exists.
+
+* Files removed during incremental dumps
+
+If a file or directory is removed while incremental dump is
+in progress, tar exact actions depend on whether this file
+was explicitly listed in the command line, or was found
+during file system scan.
+
+If the file was explicitly listed in the command line, tar
+issues error message and exits with the code 2, meaning
+fatal error.
+
+Otherwise, if the file was found during the file system scan,
+tar issues a warning, saying "File removed before we read it",
+and sets exit code to 1, which means "some files differ".
+If the --warning=no-file-removed option is given, no warning
+is issued and exit code remains 0.
+
+* Modification times of PAX extended headers.
+
+Modification times in ustar header blocks of extended headers
+are set to mtimes of the corresponding archive members.  This
+can be overridden by the
+
+  --pax-opion='exthdr.mtime=STRING'
+
+command line option.  The STRING is either number of seconds since
+the Epoch or a `Time reference' (see below).
+
+Modification times in ustar header blocks of global extended
+headers are set to the time when tar was invoked.
+
+This can be overridden by the
+
+  --pax-opion='globexthdr.mtime=STRING'
+
+command line option.  The STRING is either number of seconds since
+the Epoch or a `Time reference' (see below).
+
+* Time references in --pax-option argument.
+
+Any value from the --pax-option argument that is enclosed in a pair
+of curly braces represents a time reference.  The string between the 
+braces is understood either as a textual time representation, as described in
+chapter 7, "Date input formats", of the Tar manual, or as a name of
+an existing file, starting with `/' or `.'.  In the latter
+case, it is replaced with the modification time of that file.
+
+* Environment of --to-command script.
+
+The environment passed to the --to-command script is extended with
+the following variables:
+
+   TAR_VERSION          GNU tar version number
+   TAR_ARCHIVE          The name of the archive
+   TAR_VOLUME           Ordinal number of the volume
+   TAR_FORMAT           Format of the archive
+   TAR_BLOCKING_FACTOR  Current blocking factor
+
+* Bugfixes
+** Fix handling of hard link targets by -c --transform.
+** Fix hard links recognition with -c --remove-files.
+** Fix restoring files from backup (debian bug #508199).
+** Correctly restore modes and permissions on existing directories.
+** The --remove-files option removes files only if they were
+succesfully stored in the archive.
+** Fix storing and listing of the volume labels in POSIX format.
+** Improve algorithm for splitting long file names (ustar
+format).
+** Fix possible memory overflow in the rmt client code (CVE-2010-0624).
 
 
 version 1.22 - Sergey Poznyakoff, 2009-03-05
@@ -1091,7 +1199,7 @@ Versions 1.07 back to 1.00 by Jay Fenlason.
 
 
 Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2003,
-2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 
 This file is part of GNU tar.
 

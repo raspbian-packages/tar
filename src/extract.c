@@ -1,7 +1,7 @@
 /* Extract files from a tar archive.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1998, 1999, 2000,
-   2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2001, 2003, 2004, 2005, 2006, 2007, 2010 Free Software Foundation, Inc.
 
    Written by John Gilmore, on 1985-11-19.
 
@@ -24,6 +24,7 @@
 #include <utimens.h>
 #include <errno.h>
 #include <xgetcwd.h>
+#include <priv-set.h>
 
 #include "common.h"
 
@@ -144,7 +145,8 @@ set_mode (char const *file_name,
 	  char typeflag)
 {
   mode_t mode;
-
+  bool failed;
+  
   if (0 < same_permissions_option
       && permstatus != INTERDIR_PERMSTATUS)
     {
@@ -186,7 +188,17 @@ set_mode (char const *file_name,
       mode = cur_info->st_mode ^ invert_permissions;
     }
 
-  if (chmod (file_name, mode) != 0)
+  failed = chmod (file_name, mode) != 0;
+  if (failed && errno == EPERM)
+    {
+      /* On Solaris, chmod may fail if we don't have PRIV_ALL.  */
+      if (priv_set_restore_linkdir () == 0)
+	{
+	  failed = chmod (file_name, mode) != 0;
+	  priv_set_remove_linkdir ();
+	}
+    }
+  if (failed)
     chmod_error_details (file_name, mode);
 }
 
@@ -195,8 +207,9 @@ static void
 check_time (char const *file_name, struct timespec t)
 {
   if (t.tv_sec <= 0)
-    WARN ((0, 0, _("%s: implausibly old time stamp %s"),
-	   file_name, tartime (t, true)));
+    WARNOPT (WARN_TIMESTAMP,
+	     (0, 0, _("%s: implausibly old time stamp %s"),
+	      file_name, tartime (t, true)));
   else if (timespec_cmp (volume_start_time, t) < 0)
     {
       struct timespec now;
@@ -212,8 +225,9 @@ check_time (char const *file_name, struct timespec t)
 	      diff.tv_nsec += BILLION;
 	      diff.tv_sec--;
 	    }
-	  WARN ((0, 0, _("%s: time stamp %s is %s s in the future"),
-		 file_name, tartime (t, true), code_timespec (diff, buf)));
+	  WARNOPT (WARN_TIMESTAMP,
+		   (0, 0, _("%s: time stamp %s is %s s in the future"),
+		    file_name, tartime (t, true), code_timespec (diff, buf)));
 	}
     }
 }
@@ -474,9 +488,13 @@ file_newer_p (const char *file_name, struct tar_stat_info *tar_stat)
 
   if (stat (file_name, &st))
     {
-      stat_warn (file_name);
-      /* Be on the safe side: if the file does exist assume it is newer */
-      return errno != ENOENT;
+      if (errno != ENOENT)
+	{
+	  stat_warn (file_name);
+	  /* Be on the safe side: if the file does exist assume it is newer */
+	  return true;
+	}
+      return false;
     }
   if (!S_ISDIR (st.st_mode)
       && tar_timespec_cmp (tar_stat->mtime, get_stat_mtime (&st)) <= 0)
@@ -486,17 +504,24 @@ file_newer_p (const char *file_name, struct tar_stat_info *tar_stat)
   return false;
 }
 
+#define RECOVER_NO 0
+#define RECOVER_OK 1
+#define RECOVER_SKIP 2
+
 /* Attempt repairing what went wrong with the extraction.  Delete an
    already existing file or create missing intermediate directories.
-   Return nonzero if we somewhat increased our chances at a successful
-   extraction.  errno is properly restored on zero return.  */
+   Return RECOVER_OK if we somewhat increased our chances at a successful
+   extraction, RECOVER_NO if there are no chances, and RECOVER_SKIP if the
+   caller should skip extraction of that member.  The value of errno is
+   properly restored on returning RECOVER_NO.  */
+
 static int
 maybe_recoverable (char *file_name, int *interdir_made)
 {
   int e = errno;
 
   if (*interdir_made)
-    return 0;
+    return RECOVER_NO;
 
   switch (errno)
     {
@@ -506,13 +531,13 @@ maybe_recoverable (char *file_name, int *interdir_made)
       switch (old_files_option)
 	{
 	case KEEP_OLD_FILES:
-	  return 0;
+	  return RECOVER_SKIP;
 
 	case KEEP_NEWER_FILES:
 	  if (file_newer_p (file_name, &current_stat_info))
 	    {
 	      errno = e;
-	      return 0;
+	      return RECOVER_NO;
 	    }
 	  /* FALL THROUGH */
 
@@ -522,7 +547,7 @@ maybe_recoverable (char *file_name, int *interdir_made)
 	  {
 	    int r = remove_any_file (file_name, ORDINARY_REMOVE_OPTION);
 	    errno = EEXIST;
-	    return r;
+	    return r > 0 ? RECOVER_OK : RECOVER_NO;
 	  }
 
 	case UNLINK_FIRST_OLD_FILES:
@@ -534,15 +559,15 @@ maybe_recoverable (char *file_name, int *interdir_made)
       if (! make_directories (file_name))
 	{
 	  errno = ENOENT;
-	  return 0;
+	  return RECOVER_NO;
 	}
       *interdir_made = 1;
-      return 1;
+      return RECOVER_OK;
 
     default:
       /* Just say we can't do anything about it...  */
 
-      return 0;
+      return RECOVER_NO;
     }
 }
 
@@ -659,6 +684,7 @@ extract_dir (char *file_name, int typeflag)
 		}
 	      if (S_ISDIR (st.st_mode))
 		{
+		  status = 0;
 		  mode = st.st_mode;
 		  break;
 		}
@@ -666,13 +692,21 @@ extract_dir (char *file_name, int typeflag)
 	  errno = EEXIST;
 	}
 
-      if (maybe_recoverable (file_name, &interdir_made))
-	continue;
-
-      if (errno != EEXIST)
+      switch (maybe_recoverable (file_name, &interdir_made))
 	{
-	  mkdir_error (file_name);
-	  return 1;
+	case RECOVER_OK:
+	  continue;
+
+	case RECOVER_SKIP:
+	  break;
+
+	case RECOVER_NO:
+	  if (errno != EEXIST)
+	    {
+	      mkdir_error (file_name);
+	      return 1;
+	    }
+	  break;
 	}
       break;
     }
@@ -721,7 +755,8 @@ open_output_file (char *file_name, int typeflag, mode_t mode)
       if (!conttype_diagnosed)
 	{
 	  conttype_diagnosed = 1;
-	  WARN ((0, 0, _("Extracting contiguous files as regular files")));
+	  WARNOPT (WARN_CONTIGUOUS_CAST,
+		   (0, 0, _("Extracting contiguous files as regular files")));
 	}
     }
   fd = open (file_name, openflag, mode);
@@ -760,13 +795,18 @@ extract_file (char *file_name, int typeflag)
     }
   else
     {
+      int recover = RECOVER_NO;
       do
 	fd = open_output_file (file_name, typeflag, mode ^ invert_permissions);
-      while (fd < 0 && maybe_recoverable (file_name, &interdir_made));
+      while (fd < 0
+	     && (recover = maybe_recoverable (file_name, &interdir_made))
+	         == RECOVER_OK);
 
       if (fd < 0)
 	{
 	  skip_member ();
+	  if (recover == RECOVER_SKIP)
+	    return 0;
 	  open_error (file_name);
 	  return 1;
 	}
@@ -994,7 +1034,9 @@ extract_symlink (char *file_name, int typeflag)
   if (!warned_once)
     {
       warned_once = 1;
-      WARN ((0, 0, _("Attempting extraction of symbolic links as hard links")));
+      WARNOPT (WARN_SYMBOLIC_CAST,
+	       (0, 0,
+		_("Attempting extraction of symbolic links as hard links")));
     }
   return extract_link (file_name, typeflag);
 #endif
@@ -1050,8 +1092,6 @@ extract_fifo (char *file_name, int typeflag)
 static int
 extract_volhdr (char *file_name, int typeflag)
 {
-  if (verbose_option)
-    fprintf (stdlis, _("Reading %s\n"), quote (current_stat_info.file_name));
   skip_member ();
   return 0;
 }
@@ -1152,9 +1192,10 @@ prepare_to_extract (char const *file_name, int typeflag, tar_extractor_t *fun)
       break;
 
     default:
-      WARN ((0, 0,
-	     _("%s: Unknown file type `%c', extracted as normal file"),
-	     quotearg_colon (file_name), typeflag));
+      WARNOPT (WARN_UNKNOWN_CAST,
+	       (0, 0,
+		_("%s: Unknown file type `%c', extracted as normal file"),
+		quotearg_colon (file_name), typeflag));
       *fun = extract_file;
     }
 
@@ -1178,8 +1219,9 @@ prepare_to_extract (char const *file_name, int typeflag, tar_extractor_t *fun)
     case KEEP_NEWER_FILES:
       if (file_newer_p (file_name, &current_stat_info))
 	{
-	  WARN ((0, 0, _("Current %s is newer or same age"),
-		 quote (file_name)));
+	  WARNOPT (WARN_IGNORE_NEWER,
+		   (0, 0, _("Current %s is newer or same age"),
+		    quote (file_name)));
 	  return 0;
 	}
       break;
@@ -1198,6 +1240,11 @@ extract_archive (void)
   char typeflag;
   tar_extractor_t fun;
 
+  fatal_exit_hook = extract_finish;
+  
+  /* Try to disable the ability to unlink a directory.  */
+  priv_set_remove_linkdir ();
+
   set_next_block_after (current_header);
   decode_header (current_header, &current_stat_info, &current_format, 1);
   if (!current_stat_info.file_name[0]
@@ -1210,7 +1257,7 @@ extract_archive (void)
 
   /* Print the block from current_header and current_stat.  */
   if (verbose_option)
-    print_header (&current_stat_info, -1);
+    print_header (&current_stat_info, current_header, -1);
 
   /* Restore stats for all non-ancestor directories, unless
      it is an incremental archive.
@@ -1358,19 +1405,4 @@ rename_directory (char *src, char *dst)
       return false;
     }
   return true;
-}
-
-void
-fatal_exit (void)
-{
-  extract_finish ();
-  error (TAREXIT_FAILURE, 0, _("Error is not recoverable: exiting now"));
-  abort ();
-}
-
-void
-xalloc_die (void)
-{
-  error (0, 0, "%s", _("memory exhausted"));
-  fatal_exit ();
 }

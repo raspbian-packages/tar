@@ -1,7 +1,7 @@
 /* Miscellaneous functions, not really specific to GNU tar.
 
    Copyright (C) 1988, 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001,
-   2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2003, 2004, 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -25,6 +25,7 @@
 #include <xgetcwd.h>
 #include <unlinkdir.h>
 #include <utimens.h>
+#include <canonicalize.h>
 
 #if HAVE_STROPTS_H
 # include <stropts.h>
@@ -214,6 +215,46 @@ unquote_string (char *string)
     *destination = '\0';
   return result;
 }
+
+/* Zap trailing slashes.  */
+char *
+zap_slashes (char *name)
+{
+  char *q;
+
+  if (!name || *name == 0)
+    return name;
+  q = name + strlen (name) - 1;
+  while (q > name && ISSLASH (*q))
+    *q-- = '\0';
+  return name;
+}
+
+char *
+normalize_filename (const char *name)
+{
+  return zap_slashes (canonicalize_filename_mode (name, CAN_MISSING));
+}
+
+
+void
+replace_prefix (char **pname, const char *samp, size_t slen,
+		const char *repl, size_t rlen)
+{
+  char *name = *pname;
+  size_t nlen = strlen (name);
+  if (nlen > slen && memcmp (name, samp, slen) == 0 && ISSLASH (name[slen]))
+    {
+      if (rlen > slen)
+	{
+	  name = xrealloc (name, nlen - slen + rlen + 1);
+	  *pname = name;
+	}
+      memmove (name + rlen, name + slen, nlen - slen + 1);
+      memcpy (name, repl, rlen);
+    }
+}
+
 
 /* Handling numbers.  */
 
@@ -257,6 +298,10 @@ code_timespec (struct timespec t, char sbuf[TIMESPEC_STRSIZE_BOUND])
   char *np;
   bool negative = s < 0;
 
+  /* ignore invalid values of ns */
+  if (BILLION <= ns || ns < 0)
+    ns = 0;
+  
   if (negative && ns != 0)
     {
       s++;
@@ -417,6 +462,15 @@ maybe_backup_file (const char *file_name, bool this_is_the_archive)
 {
   struct stat file_stat;
 
+  assign_string (&before_backup_name, file_name);
+
+  /* A run situation may exist between Emacs or other GNU programs trying to
+     make a backup for the same file simultaneously.  If theoretically
+     possible, real problems are unlikely.  Doing any better would require a
+     convention, GNU-wide, for all programs doing backups.  */
+
+  assign_string (&after_backup_name, 0);
+
   /* Check if we really need to backup the file.  */
 
   if (this_is_the_archive && _remdev (file_name))
@@ -438,14 +492,6 @@ maybe_backup_file (const char *file_name, bool this_is_the_archive)
       && (S_ISBLK (file_stat.st_mode) || S_ISCHR (file_stat.st_mode)))
     return true;
 
-  assign_string (&before_backup_name, file_name);
-
-  /* A run situation may exist between Emacs or other GNU programs trying to
-     make a backup for the same file simultaneously.  If theoretically
-     possible, real problems are unlikely.  Doing any better would require a
-     convention, GNU-wide, for all programs doing backups.  */
-
-  assign_string (&after_backup_name, 0);
   after_backup_name = find_backup_file_name (file_name, backup_type);
   if (! after_backup_name)
     xalloc_die ();
@@ -531,17 +577,25 @@ struct wd
 static struct wd *wd;
 
 /* The number of working directories in the vector.  */
-static size_t wds;
+static size_t wd_count;
 
 /* The allocated size of the vector.  */
 static size_t wd_alloc;
+
+int
+chdir_count ()
+{
+  if (wd_count == 0)
+    return wd_count;
+  return wd_count - 1;
+}
 
 /* DIR is the operand of a -C option; add it to vector of chdir targets,
    and return the index of its location.  */
 int
 chdir_arg (char const *dir)
 {
-  if (wds == wd_alloc)
+  if (wd_count == wd_alloc)
     {
       if (wd_alloc == 0)
 	{
@@ -551,11 +605,11 @@ chdir_arg (char const *dir)
       else
 	wd = x2nrealloc (wd, &wd_alloc, sizeof *wd);
 
-      if (! wds)
+      if (! wd_count)
 	{
-	  wd[wds].name = ".";
-	  wd[wds].saved = 0;
-	  wds++;
+	  wd[wd_count].name = ".";
+	  wd[wd_count].saved = 0;
+	  wd_count++;
 	}
     }
 
@@ -567,12 +621,12 @@ chdir_arg (char const *dir)
 	for (dir += 2;  ISSLASH (*dir);  dir++)
 	  continue;
       if (! dir[dir[0] == '.'])
-	return wds - 1;
+	return wd_count - 1;
     }
 
-  wd[wds].name = dir;
-  wd[wds].saved = 0;
-  return wds++;
+  wd[wd_count].name = dir;
+  wd[wd_count].saved = 0;
+  return wd_count++;
 }
 
 /* Change to directory I.  If I is 0, change to the initial working
@@ -696,6 +750,36 @@ stat_diag (char const *name)
 }
 
 void
+file_removed_diag (const char *name, bool top_level,
+		   void (*diagfn) (char const *name))
+{
+  if (!top_level && errno == ENOENT)
+    {
+      WARNOPT (WARN_FILE_REMOVED,
+	       (0, 0, _("%s: File removed before we read it"),
+		quotearg_colon (name)));
+      set_exit_status (TAREXIT_DIFFERS);
+    }      
+  else
+    diagfn (name);
+}
+
+void
+dir_removed_diag (const char *name, bool top_level,
+		   void (*diagfn) (char const *name))
+{
+  if (!top_level && errno == ENOENT)
+    {
+      WARNOPT (WARN_FILE_REMOVED,
+	       (0, 0, _("%s: Directory removed before we read it"),
+		quotearg_colon (name)));
+      set_exit_status (TAREXIT_DIFFERS);
+    }
+  else
+    diagfn (name);
+}
+
+void
 write_fatal_details (char const *name, ssize_t status, size_t size)
 {
   write_error_details (name, status, size);
@@ -746,3 +830,45 @@ page_aligned_alloc (void **ptr, size_t size)
   *ptr = xmalloc (size1);
   return ptr_align (*ptr, alignment);
 }
+
+
+
+struct namebuf
+{
+  char *buffer;		/* directory, `/', and directory member */
+  size_t buffer_size;	/* allocated size of name_buffer */
+  size_t dir_length;	/* length of directory part in buffer */
+};
+
+namebuf_t
+namebuf_create (const char *dir)
+{
+  namebuf_t buf = xmalloc (sizeof (*buf));
+  buf->buffer_size = strlen (dir) + 2;
+  buf->buffer = xmalloc (buf->buffer_size);
+  strcpy (buf->buffer, dir);
+  buf->dir_length = strlen (buf->buffer);
+  if (!ISSLASH (buf->buffer[buf->dir_length - 1]))
+    buf->buffer[buf->dir_length++] = DIRECTORY_SEPARATOR;
+  return buf;
+}
+
+void
+namebuf_free (namebuf_t buf)
+{
+  free (buf->buffer);
+  free (buf);
+}
+
+char *
+namebuf_name (namebuf_t buf, const char *name)
+{
+  size_t len = strlen (name);
+  while (buf->dir_length + len + 1 >= buf->buffer_size)
+    buf->buffer = x2realloc (buf->buffer, &buf->buffer_size);
+  strcpy (buf->buffer + buf->dir_length, name);
+  return buf->buffer;
+}
+
+
+  

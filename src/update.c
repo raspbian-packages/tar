@@ -1,7 +1,7 @@
 /* Update a tar archive.
 
    Copyright (C) 1988, 1992, 1994, 1996, 1997, 1999, 2000, 2001, 2003,
-   2004, 2005, 2007 Free Software Foundation, Inc.
+   2004, 2005, 2007, 2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -114,7 +114,9 @@ update_archive (void)
 
   while (!found_end)
     {
-      enum read_header status = read_header (false);
+      enum read_header status = read_header (&current_header, 
+                                             &current_stat_info, 
+                                             read_header_auto);
 
       switch (status)
 	{
@@ -137,13 +139,35 @@ update_archive (void)
 
 		chdir_do (name->change_dir);
 		if (deref_stat (dereference_option,
-				current_stat_info.file_name, &s) == 0
-		    && (tar_timespec_cmp (get_stat_mtime (&s),
-				          current_stat_info.mtime)
-			<= 0))
-		  add_avoided_name (current_stat_info.file_name);
+				current_stat_info.file_name, &s) == 0)
+		  {
+		    if (S_ISDIR (s.st_mode))
+		      {
+			char *p, *dirp;
+			dirp = savedir (name->name);
+			if (!dirp)
+			  savedir_error (name->name);
+			else
+			  {
+			    namebuf_t nbuf = namebuf_create (name->name);
+			    
+			    for (p = dirp; *p; p += strlen (p) + 1)
+			      addname (namebuf_name (nbuf, p),
+				       0, false, NULL);
+			    
+			    namebuf_free (nbuf);
+			    free (dirp);
+			    
+			    remname (name);
+			  }
+		      }
+		    else if (tar_timespec_cmp (get_stat_mtime (&s),
+					       current_stat_info.mtime)
+			     <= 0)
+		      remname (name);
+		  }
 	      }
-
+	    
 	    skip_member ();
 	    break;
 	  }
@@ -189,10 +213,10 @@ update_archive (void)
   output_start = current_block->buffer;
 
   {
-    char *file_name;
-
-    while ((file_name = name_from_list ()) != NULL)
+    struct name const *p;
+    while ((p = name_from_list ()) != NULL)
       {
+	char *file_name = p->name;
 	if (excluded_name (file_name))
 	  continue;
 	if (interactive_option && !confirm ("add", file_name))

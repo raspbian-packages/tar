@@ -1,7 +1,7 @@
-# serial 17
+# serial 27
 # See if we need to use our replacement for Solaris' openat et al functions.
 
-dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
+dnl Copyright (C) 2004-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,20 +10,53 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_OPENAT],
 [
+  AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
+  GNULIB_OPENAT=1
+
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+  GNULIB_FCHMODAT=1
+  GNULIB_FSTATAT=1
+  GNULIB_MKDIRAT=1
+
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  GNULIB_FCHOWNAT=1
+  GNULIB_UNLINKAT=1
+
   AC_LIBOBJ([openat-proc])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
-  AC_CHECK_FUNCS_ONCE([fdopendir])
-  AC_REPLACE_FUNCS([fchmodat mkdirat openat])
+  AC_REPLACE_FUNCS([fchmodat fstatat mkdirat openat unlinkat])
   AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
+  AC_REQUIRE([gl_FUNC_UNLINK])
   case $ac_cv_func_openat+$ac_cv_func_lstat_dereferences_slashed_symlink in
-  yes+yes) ;;
-  yes+*) AC_LIBOBJ([fstatat]);;
+  yes+yes)
+    # GNU/Hurd has unlinkat, but it has the same bug as unlink.
+    if test $REPLACE_UNLINK = 1; then
+      AC_LIBOBJ([unlinkat])
+      REPLACE_UNLINKAT=1
+    fi ;;
+  yes+*)
+    # Solaris 9 has *at functions, but uniformly mishandles trailing
+    # slash in all of them.
+    AC_LIBOBJ([openat])
+    REPLACE_OPENAT=1
+    AC_LIBOBJ([fstatat])
+    REPLACE_FSTATAT=1
+    AC_LIBOBJ([unlinkat])
+    REPLACE_UNLINKAT=1
+    ;;
   *)
-    AC_DEFINE([__OPENAT_PREFIX], [[rpl_]],
-      [Define to rpl_ if the openat replacement function should be used.])
+    HAVE_OPENAT=0
+    HAVE_UNLINKAT=0 # No known system with unlinkat but not openat
+    HAVE_FSTATAT=0 # No known system with fstatat but not openat
     gl_PREREQ_OPENAT;;
   esac
+  if test $ac_cv_func_fchmodat != yes; then
+    HAVE_FCHMODAT=0
+  fi
+  if test $ac_cv_func_mkdirat != yes; then
+    HAVE_MKDIRAT=0
+  fi
   gl_FUNC_FCHOWNAT
 ])
 
@@ -41,7 +74,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
      ln -s conftest.no-such $gl_dangle
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
-	  [[
+          [[
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -51,10 +84,10 @@ int
 main ()
 {
   return (fchownat (AT_FDCWD, "$gl_dangle", -1, getgid (),
-		    AT_SYMLINK_NOFOLLOW) != 0
-	  && errno == ENOENT);
+                    AT_SYMLINK_NOFOLLOW) != 0
+          && errno == ENOENT);
 }
-	  ]])],
+          ]])],
     [gl_cv_func_fchownat_nofollow_works=yes],
     [gl_cv_func_fchownat_nofollow_works=no],
     [gl_cv_func_fchownat_nofollow_works=no],
@@ -69,23 +102,23 @@ main ()
 # Also use the replacement function if fchownat is simply not available.
 AC_DEFUN([gl_FUNC_FCHOWNAT],
 [
-  # Assume we'll use the replacement function.
-  # The only case in which we won't is when we have fchownat, and it works.
-  use_replacement_fchownat=yes
-
-  AC_CHECK_FUNC([fchownat], [have_fchownat=yes], [have_fchownat=no])
-  if test $have_fchownat = yes; then
-    gl_FUNC_FCHOWNAT_DEREF_BUG([], [use_replacement_fchownat=no])
+  AC_REQUIRE([gl_FUNC_CHOWN])
+  AC_CHECK_FUNC([fchownat],
+    [gl_FUNC_FCHOWNAT_DEREF_BUG([REPLACE_FCHOWNAT=1
+      AC_DEFINE([FCHOWNAT_NOFOLLOW_BUG], [1], [Define to 1 if your
+      platform has fchownat, but it cannot perform lchown tasks.])])],
+    [HAVE_FCHOWNAT=0])
+  if test $REPLACE_CHOWN = 1; then
+    REPLACE_FCHOWNAT=1
   fi
-
-  if test $use_replacement_fchownat = yes; then
+  if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
     AC_LIBOBJ([fchownat])
-    AC_DEFINE([fchownat], [rpl_fchownat],
-      [Define to rpl_fchownat if the replacement function should be used.])
   fi
 ])
 
 AC_DEFUN([gl_PREREQ_OPENAT],
 [
+  AC_REQUIRE([AC_C_INLINE])
+  AC_REQUIRE([gl_PROMOTED_TYPE_MODE_T])
   :
 ])

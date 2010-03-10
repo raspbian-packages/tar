@@ -1,212 +1,401 @@
 # Danish messages for GNU tar.
 # Copyright (C) 1996 Free Software Foundation, Inc.
-# Keld Jørn Simonsen <keld@dkuug.dk>, 2000-2001.
+# This file is distributed under the same license as the tar package.
 # Claus Hindsgaul <claus_h@image.dk>, 2001.
+# Keld Jørn Simonsen <keld@dkuug.dk>, 2000-2001,2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU tar 1.13.25\n"
+"Project-Id-Version: GNU tar 1.22\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2009-03-05 09:18+0200\n"
-"PO-Revision-Date: 2002-03-27 13:57+0100\n"
+"POT-Creation-Date: 2010-03-10 12:53+0200\n"
+"PO-Revision-Date: 2009-05-26 13:57+0200\n"
 "Last-Translator: Keld Jørn Simonsen <keld@dkuug.dk>\n"
-"Language-Team: Danish <dansk@klid.dk>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/argmatch.c:133
+#: gnu/argmatch.c:135
 #, c-format
 msgid "invalid argument %s for %s"
 msgstr "ugyldigt argument %s for %s"
 
-#: lib/argmatch.c:134
+#: gnu/argmatch.c:136
 #, c-format
 msgid "ambiguous argument %s for %s"
 msgstr "flertydigt argument '%s' for %s"
 
-#: lib/argmatch.c:153
+#: gnu/argmatch.c:155
 #, c-format
 msgid "Valid arguments are:"
 msgstr "Gyldige argumenter er:"
 
-#: lib/argp-help.c:147
+#: gnu/argp-help.c:149
 #, c-format
 msgid "ARGP_HELP_FMT: %s value is less than or equal to %s"
 msgstr ""
 
-#: lib/argp-help.c:220
+#: gnu/argp-help.c:222
 #, c-format
 msgid "%.*s: ARGP_HELP_FMT parameter requires a value"
 msgstr ""
 
-#: lib/argp-help.c:226
+#: gnu/argp-help.c:228
 #, c-format
 msgid "%.*s: ARGP_HELP_FMT parameter must be positive"
 msgstr ""
 
-#: lib/argp-help.c:235
+#: gnu/argp-help.c:237
 #, c-format
 msgid "%.*s: Unknown ARGP_HELP_FMT parameter"
 msgstr ""
 
-#: lib/argp-help.c:247
+#: gnu/argp-help.c:249
 #, c-format
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr ""
 
-#: lib/argp-help.c:1246
+#: gnu/argp-help.c:1246
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr ""
 
-#: lib/argp-help.c:1639
+#: gnu/argp-help.c:1639
 msgid "Usage:"
-msgstr ""
+msgstr "Brug:"
 
-#: lib/argp-help.c:1643
+#: gnu/argp-help.c:1643
 msgid "  or: "
-msgstr ""
+msgstr "  eller: "
 
-#: lib/argp-help.c:1655
-#, fuzzy
+#: gnu/argp-help.c:1655
 msgid " [OPTION...]"
-msgstr ""
-"\n"
-"Brug: %s [FLAG]...\n"
+msgstr " [FLAG...}"
 
-#: lib/argp-help.c:1682
-#, fuzzy, c-format
+#: gnu/argp-help.c:1682
+#, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
-msgstr "Prøv '%s --help' for mere information.\n"
+msgstr "Prøv '%s --help' eller '%s --usage' for mere information.\n"
 
-#: lib/argp-help.c:1710 src/tar.c:1256
-#, fuzzy, c-format
+#: gnu/argp-help.c:1710
+#, c-format
 msgid "Report bugs to %s.\n"
-msgstr ""
-"\n"
-"Rapportér fejl til <bugs-tar@gnu.org>.\n"
+msgstr "Rapportér fejl til %s.\n"
 
-#: lib/argp-help.c:1929 lib/error.c:125
+#: gnu/argp-help.c:1929 gnu/error.c:155
 msgid "Unknown system error"
 msgstr "Ukendt systemfejl"
 
-#: lib/argp-parse.c:81 src/tar.c:774
+#: gnu/argp-parse.c:83
 msgid "give this help list"
 msgstr ""
 
-#: lib/argp-parse.c:82 src/tar.c:775
+#: gnu/argp-parse.c:84
 msgid "give a short usage message"
 msgstr ""
 
-#: lib/argp-parse.c:83 src/tar.c:468 src/tar.c:470 src/tar.c:539
-#: tests/genfile.c:129
+#: gnu/argp-parse.c:85 src/tar.c:488 src/tar.c:490 src/tar.c:559
+#: tests/genfile.c:131
 msgid "NAME"
 msgstr ""
 
-#: lib/argp-parse.c:83
+#: gnu/argp-parse.c:85
 msgid "set the program name"
 msgstr ""
 
-#: lib/argp-parse.c:84
+#: gnu/argp-parse.c:86
 msgid "SECS"
 msgstr ""
 
-#: lib/argp-parse.c:85 src/tar.c:780
+#: gnu/argp-parse.c:87
 msgid "hang for SECS seconds (default 3600)"
 msgstr ""
 
-#: lib/argp-parse.c:142 src/tar.c:776
+#: gnu/argp-parse.c:144
 msgid "print program version"
 msgstr ""
 
-#: lib/argp-parse.c:158
+#: gnu/argp-parse.c:160
 #, c-format
 msgid "(PROGRAM ERROR) No version known!?"
 msgstr ""
 
-#: lib/argp-parse.c:611
-#, fuzzy, c-format
+#: gnu/argp-parse.c:613
+#, c-format
 msgid "%s: Too many arguments\n"
-msgstr "%s: flag '%s' kræver et argument\n"
+msgstr "%s: For mange argumenter\n"
 
-#: lib/argp-parse.c:754
+#: gnu/argp-parse.c:756
 msgid "(PROGRAM ERROR) Option should have been recognized!?"
 msgstr ""
 
-#: lib/closeout.c:112
+#: gnu/closeout.c:114
 msgid "write error"
 msgstr "skrivefejl"
 
-#: lib/getopt.c:526 lib/getopt.c:542
-#, c-format
-msgid "%s: option `%s' is ambiguous\n"
+#: gnu/getopt.c:531 gnu/getopt.c:547
+#, fuzzy, c-format
+msgid "%s: option '%s' is ambiguous\n"
 msgstr "%s: flag '%s' er flertydigt\n"
 
-#: lib/getopt.c:575 lib/getopt.c:579
-#, c-format
-msgid "%s: option `--%s' doesn't allow an argument\n"
+#: gnu/getopt.c:580 gnu/getopt.c:584
+#, fuzzy, c-format
+msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "%s: flag '%s' tillader ikke et argument\n"
 
-#: lib/getopt.c:588 lib/getopt.c:593
-#, c-format
-msgid "%s: option `%c%s' doesn't allow an argument\n"
+#: gnu/getopt.c:593 gnu/getopt.c:598
+#, fuzzy, c-format
+msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "%s: flag '%c%s' tillader ikke et argument\n"
 
-#: lib/getopt.c:636 lib/getopt.c:655 lib/getopt.c:971 lib/getopt.c:990
-#, c-format
-msgid "%s: option `%s' requires an argument\n"
+#: gnu/getopt.c:641 gnu/getopt.c:660 gnu/getopt.c:963 gnu/getopt.c:982
+#, fuzzy, c-format
+msgid "%s: option '%s' requires an argument\n"
 msgstr "%s: flag '%s' kræver et argument\n"
 
-#: lib/getopt.c:693 lib/getopt.c:696
-#, c-format
-msgid "%s: unrecognized option `--%s'\n"
+#: gnu/getopt.c:698 gnu/getopt.c:701
+#, fuzzy, c-format
+msgid "%s: unrecognized option '--%s'\n"
 msgstr "%s: ukendt flag '--%s'\n"
 
-#: lib/getopt.c:704 lib/getopt.c:707
-#, c-format
-msgid "%s: unrecognized option `%c%s'\n"
+#: gnu/getopt.c:709 gnu/getopt.c:712
+#, fuzzy, c-format
+msgid "%s: unrecognized option '%c%s'\n"
 msgstr "%s: ukendt flag '%c%s'\n"
 
-#: lib/getopt.c:759 lib/getopt.c:762
-#, c-format
-msgid "%s: illegal option -- %c\n"
-msgstr "%s: ulovligt flag -- %c\n"
-
-#: lib/getopt.c:768 lib/getopt.c:771
-#, c-format
-msgid "%s: invalid option -- %c\n"
+#: gnu/getopt.c:761 gnu/getopt.c:764
+#, fuzzy, c-format
+msgid "%s: invalid option -- '%c'\n"
 msgstr "%s: ugyldigt flag -- %c\n"
 
-#: lib/getopt.c:823 lib/getopt.c:839 lib/getopt.c:1043 lib/getopt.c:1061
-#, c-format
-msgid "%s: option requires an argument -- %c\n"
+#: gnu/getopt.c:814 gnu/getopt.c:831 gnu/getopt.c:1034 gnu/getopt.c:1052
+#, fuzzy, c-format
+msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: flag kræver et argument -- %c\n"
 
-#: lib/getopt.c:892 lib/getopt.c:908
-#, c-format
-msgid "%s: option `-W %s' is ambiguous\n"
+#: gnu/getopt.c:884 gnu/getopt.c:900
+#, fuzzy, c-format
+msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "%s: flag '-W %s' er flertydigt\n"
 
-#: lib/getopt.c:932 lib/getopt.c:950
-#, c-format
-msgid "%s: option `-W %s' doesn't allow an argument\n"
+#: gnu/getopt.c:924 gnu/getopt.c:942
+#, fuzzy, c-format
+msgid "%s: option '-W %s' doesn't allow an argument\n"
 msgstr "%s: flag '-W %s' tillader ikke et argument\n"
 
-#: lib/obstack.c:423 lib/obstack.c:425 lib/xalloc-die.c:34 src/extract.c:1374
+#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "hovedlager opbrugt"
 
-#: lib/openat-die.c:35
+#: gnu/openat-die.c:36
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "Kan ikke ændre arbejdskatalog"
 
-#: lib/openat-die.c:48
+#: gnu/openat-die.c:54
 #, fuzzy, c-format
 msgid "failed to return to initial working directory"
 msgstr "Kan ikke gemme arbejdskatalog"
+
+#. TRANSLATORS:
+#. Get translations for open and closing quotation marks.
+#.
+#. The message catalog should translate "`" to a left
+#. quotation mark suitable for the locale, and similarly for
+#. "'".  If the catalog has no translation,
+#. locale_quoting_style quotes `like this', and
+#. clocale_quoting_style quotes "like this".
+#.
+#. For example, an American English Unicode locale should
+#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
+#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
+#. MARK).  A British English Unicode locale should instead
+#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK)
+#. and U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+#.
+#. If you don't know what to put here, please see
+#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+#. and use glyphs suitable for your language.
+#: gnu/quotearg.c:274
+msgid "`"
+msgstr "'"
+
+#: gnu/quotearg.c:275
+msgid "'"
+msgstr "'"
+
+#. TRANSLATORS: A regular expression testing for an affirmative answer
+#. (english: "yes").  Testing the first character may be sufficient.
+#. Take care to consider upper and lower case.
+#. To enquire the regular expression that your system uses for this
+#. purpose, you can use the command
+#. locale -k LC_MESSAGES | grep '^yesexpr='
+#: gnu/rpmatch.c:149
+msgid "^[yY]"
+msgstr "^[jJyY]"
+
+#. TRANSLATORS: A regular expression testing for a negative answer
+#. (english: "no").  Testing the first character may be sufficient.
+#. Take care to consider upper and lower case.
+#. To enquire the regular expression that your system uses for this
+#. purpose, you can use the command
+#. locale -k LC_MESSAGES | grep '^noexpr='
+#: gnu/rpmatch.c:162
+msgid "^[nN]"
+msgstr "^[nN]"
+
+#: gnu/version-etc.c:76
+#, c-format
+msgid "Packaged by %s (%s)\n"
+msgstr ""
+
+#: gnu/version-etc.c:79
+#, c-format
+msgid "Packaged by %s\n"
+msgstr ""
+
+#. TRANSLATORS: Translate "(C)" to the copyright symbol
+#. (C-in-a-circle), if this symbol is available in the user's
+#. locale.  Otherwise, do not translate "(C)"; leave it as-is.
+#: gnu/version-etc.c:86
+msgid "(C)"
+msgstr ""
+
+#: gnu/version-etc.c:88
+msgid ""
+"\n"
+"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl."
+"html>.\n"
+"This is free software: you are free to change and redistribute it.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+"\n"
+msgstr ""
+
+#. TRANSLATORS: %s denotes an author name.
+#: gnu/version-etc.c:104
+#, fuzzy, c-format
+msgid "Written by %s.\n"
+msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: gnu/version-etc.c:108
+#, fuzzy, c-format
+msgid "Written by %s and %s.\n"
+msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: gnu/version-etc.c:112
+#, fuzzy, c-format
+msgid "Written by %s, %s, and %s.\n"
+msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:119
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:126
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:133
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:141
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:149
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:158
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: gnu/version-etc.c:169
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s, and others.\n"
+msgstr ""
+
+#. TRANSLATORS: The placeholder indicates the bug-reporting address
+#. for this package.  Please add _another line_ saying
+#. "Report translation bugs to <...>\n" with the address for translation
+#. bugs (typically your translation team's web or email address).
+#: gnu/version-etc.c:247
+#, fuzzy, c-format
+msgid ""
+"\n"
+"Report bugs to: %s\n"
+msgstr "Rapportér fejl til %s.\n"
+
+#: gnu/version-etc.c:249
+#, fuzzy, c-format
+msgid "Report %s bugs to: %s\n"
+msgstr ""
+"\n"
+"Rapportér fejl til <bugs-tar@gnu.org>.\n"
+
+#: gnu/version-etc.c:253
+#, c-format
+msgid "%s home page: <%s>\n"
+msgstr ""
+
+#: gnu/version-etc.c:255
+#, c-format
+msgid "%s home page: <http://www.gnu.org/software/%s/>\n"
+msgstr ""
+
+#: gnu/version-etc.c:258
+msgid "General help using GNU software: <http://www.gnu.org/gethelp/>\n"
+msgstr ""
 
 #. TRANSLATORS: %s after `Cannot' is a function name, e.g. `Cannot open'.
 #. Directly translating this to another language will not work, first because
@@ -242,14 +431,14 @@ msgid "%s: Cannot hard link to %s"
 msgstr "%s: Kan ikke oprette lænke til %s"
 
 #: lib/paxerror.c:179 lib/paxerror.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Read error at byte %s, while reading %lu byte"
 msgid_plural "%s: Read error at byte %s, while reading %lu bytes"
 msgstr[0] "%s: Læsefejl ved byte %s, ved læsning af %lu byte"
 msgstr[1] "%s: Læsefejl ved byte %s, ved læsning af %lu byte"
 
 #: lib/paxerror.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Warning: Read error at byte %s, while reading %lu byte"
 msgid_plural "%s: Warning: Read error at byte %s, while reading %lu bytes"
 msgstr[0] "%s: Advarsel: Læsefejl ved byte %s, ved læsning af %lu byte"
@@ -271,21 +460,21 @@ msgid "%s: Cannot create symlink to %s"
 msgstr "%s: Kan ikke oprette symbolsk lænke til '%s'"
 
 #: lib/paxerror.c:349
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Wrote only %lu of %lu byte"
 msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Kunne kun skrive %lu af %lu byte"
 msgstr[1] "%s: Kunne kun skrive %lu af %lu byte"
 
 #: lib/paxnames.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Removing leading `%s' from member names"
-msgstr "Fjerner indledende '%.*s' fra medlemsnavne"
+msgstr "Fjerner indledende '%s' fra medlemsnavne"
 
 #: lib/paxnames.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "Removing leading `%s' from hard link targets"
-msgstr "Fjerner indledende '/' fra absolutte lænker"
+msgstr "Fjerner indledende '%s' fra absolutte lænkemål"
 
 #: lib/paxnames.c:169
 #, fuzzy
@@ -295,53 +484,6 @@ msgstr "Fjerner indledende '%.*s' fra medlemsnavne"
 #: lib/paxnames.c:170
 msgid "Substituting `.' for empty hard link target"
 msgstr ""
-
-#. TRANSLATORS:
-#. Get translations for open and closing quotation marks.
-#.
-#. The message catalog should translate "`" to a left
-#. quotation mark suitable for the locale, and similarly for
-#. "'".  If the catalog has no translation,
-#. locale_quoting_style quotes `like this', and
-#. clocale_quoting_style quotes "like this".
-#.
-#. For example, an American English Unicode locale should
-#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
-#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
-#. MARK).  A British English Unicode locale should instead
-#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK) and
-#. U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
-#.
-#. If you don't know what to put here, please see
-#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
-#. and use glyphs suitable for your language.
-#: lib/quotearg.c:249
-msgid "`"
-msgstr "'"
-
-#: lib/quotearg.c:250
-msgid "'"
-msgstr "'"
-
-#. TRANSLATORS: A regular expression testing for an affirmative answer
-#. (english: "yes").  Testing the first character may be sufficient.
-#. Take care to consider upper and lower case.
-#. To enquire the regular expression that your system uses for this
-#. purpose, you can use the command
-#. locale -k LC_MESSAGES | grep '^yesexpr='
-#: lib/rpmatch.c:147
-msgid "^[yY]"
-msgstr "^[jJyY]"
-
-#. TRANSLATORS: A regular expression testing for a negative answer
-#. (english: "no").  Testing the first character may be sufficient.
-#. Take care to consider upper and lower case.
-#. To enquire the regular expression that your system uses for this
-#. purpose, you can use the command
-#. locale -k LC_MESSAGES | grep '^noexpr='
-#: lib/rpmatch.c:160
-msgid "^[nN]"
-msgstr "^[nN]"
 
 #: lib/rtapelib.c:299
 #, c-format
@@ -358,299 +500,199 @@ msgstr "standard-ind"
 msgid "stdout"
 msgstr "standard-ud"
 
-#: lib/rtapelib.c:512
+#: lib/rtapelib.c:429
+#, c-format
+msgid "Cannot connect to %s: resolve failed"
+msgstr ""
+
+#: lib/rtapelib.c:515
 #, c-format
 msgid "Cannot execute remote shell"
 msgstr "Kan ikke eksekvere fjern skal"
 
-#. TRANSLATORS: Translate "(C)" to the copyright symbol
-#. (C-in-a-circle), if this symbol is available in the user's
-#. locale.  Otherwise, do not translate "(C)"; leave it as-is.
-#: lib/version-etc.c:65
-msgid "(C)"
-msgstr ""
-
-#: lib/version-etc.c:67
-msgid ""
-"\n"
-"License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl."
-"html>.\n"
-"This is free software: you are free to change and redistribute it.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-"\n"
-msgstr ""
-
-#. TRANSLATORS: %s denotes an author name.
-#: lib/version-etc.c:83
-#, fuzzy, c-format
-msgid "Written by %s.\n"
-msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
-
-#. TRANSLATORS: Each %s denotes an author name.
-#: lib/version-etc.c:87
-#, fuzzy, c-format
-msgid "Written by %s and %s.\n"
-msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
-
-#. TRANSLATORS: Each %s denotes an author name.
-#: lib/version-etc.c:91
-#, fuzzy, c-format
-msgid "Written by %s, %s, and %s.\n"
-msgstr "Skrevet af François Pinard <pinard@iro.umontreal.ca>"
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:97
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:103
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:109
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, %s, and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:116
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, %s, %s, and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:123
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, %s, %s, %s,\n"
-"and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:131
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, %s, %s, %s,\n"
-"%s, and %s.\n"
-msgstr ""
-
-#. TRANSLATORS: Each %s denotes an author name.
-#. You can use line breaks, estimating that each author name occupies
-#. ca. 16 screen columns and that a screen line has ca. 80 columns.
-#: lib/version-etc.c:141
-#, c-format
-msgid ""
-"Written by %s, %s, %s,\n"
-"%s, %s, %s, %s,\n"
-"%s, %s, and others.\n"
-msgstr ""
-
-#. TRANSLATORS: The placeholder indicates the bug-reporting address
-#. for this package.  Please add _another line_ saying
-#. "Report translation bugs to <...>\n" with the address for translation
-#. bugs (typically your translation team's web or email address).
-#: lib/version-etc.c:181 rmt/rmt.c:315
-#, fuzzy, c-format
-msgid ""
-"\n"
-"Report bugs to <%s>.\n"
-msgstr ""
-"\n"
-"Rapportér fejl til <bugs-tar@gnu.org>.\n"
-
-#: lib/version-etc.c:182
-#, c-format
-msgid "%s home page: <http://www.gnu.org/software/%s/>.\n"
-msgstr ""
-
-#: lib/version-etc.c:184
-msgid "General help using GNU software: <http://www.gnu.org/gethelp/>.\n"
-msgstr ""
-
-#: rmt/rmt.c:142
-msgid "Input string too long"
-msgstr ""
-
-#: rmt/rmt.c:161
-msgid "Number syntax error"
-msgstr ""
-
-#: rmt/rmt.c:180
-msgid "rmtd: Cannot allocate buffer space\n"
-msgstr "rmtd: Kan ikke allokere plads til buffer\n"
-
-#: rmt/rmt.c:182
-msgid "Cannot allocate buffer space"
-msgstr "Kan ikke allokere plads til buffer"
-
-#: rmt/rmt.c:304
-#, c-format
-msgid "Try `%s --help' for more information.\n"
-msgstr "Prøv '%s --help' for mere information.\n"
-
-#: rmt/rmt.c:308
-#, fuzzy, c-format
-msgid ""
-"Usage: %s [OPTION]\n"
-"Manipulate a tape drive, accepting commands from a remote process.\n"
-"\n"
-"  --version  Output version info.\n"
-"  --help     Output this help.\n"
-msgstr ""
-"Brug: %s [FLAG]\n"
-"Behandl en båndstation, med kommandoer fra en anden proces.\n"
-"\n"
-"      --help            vis denne hjælpetekst\n"
-"      --version         vis programversion\n"
-
-#: rmt/rmt.c:397
-#, fuzzy
-msgid "Seek offset error"
-msgstr "Søgeposition uden for område"
-
-#: rmt/rmt.c:406 rmt/rmt.c:547 rmt/rmt.c:557
-msgid "Seek offset out of range"
-msgstr "Søgeposition uden for område"
-
-#: rmt/rmt.c:428
+#: rmt/rmt.c:413
 msgid "Seek direction out of range"
 msgstr "Søgeretning uden for område"
 
-#: rmt/rmt.c:472
-msgid "rmtd: Premature eof\n"
+#: rmt/rmt.c:419
+#, fuzzy
+msgid "Invalid seek direction"
+msgstr "Ugyldig modus angivet i flag"
+
+#: rmt/rmt.c:427
+#, fuzzy
+msgid "Invalid seek offset"
+msgstr "Ugyldigt tidsstempel"
+
+#: rmt/rmt.c:433
+msgid "Seek offset out of range"
+msgstr "Søgeposition uden for område"
+
+#: rmt/rmt.c:474 rmt/rmt.c:525 rmt/rmt.c:589
+#, fuzzy
+msgid "Invalid byte count"
+msgstr "Ugyldig båndlængde"
+
+#: rmt/rmt.c:480 rmt/rmt.c:531 rmt/rmt.c:595 rmt/rmt.c:606
+#, fuzzy
+msgid "Byte count out of range"
+msgstr "Søgeposition uden for område"
+
+#: rmt/rmt.c:539
+#, fuzzy
+msgid "Premature eof"
 msgstr "rmtd: For tidlig filafslutning\n"
 
-#: rmt/rmt.c:474
-msgid "Premature end of file"
-msgstr "For tidlig filafslutning"
+#: rmt/rmt.c:582
+#, fuzzy
+msgid "Invalid operation code"
+msgstr "%s: ugyldigt flag -- %c\n"
 
-#: rmt/rmt.c:672
+#: rmt/rmt.c:617 rmt/rmt.c:661
+msgid "Operation not supported"
+msgstr ""
+
+#: rmt/rmt.c:645
+#, fuzzy
+msgid "Unexpected arguments"
+msgstr "Uventet filslutning i arkivet"
+
+#: rmt/rmt.c:670
+msgid "Manipulate a tape drive, accepting commands from a remote process"
+msgstr ""
+
+#: rmt/rmt.c:677 src/tar.c:423 src/tar.c:427 src/tar.c:557 src/tar.c:572
+#: src/tar.c:703 src/tar.c:741 tests/genfile.c:167
+msgid "NUMBER"
+msgstr ""
+
+#: rmt/rmt.c:678
+msgid "set debug level"
+msgstr ""
+
+#: rmt/rmt.c:679 src/tar.c:421 src/tar.c:562 src/tar.c:638 src/tar.c:642
+#: src/tar.c:654 src/tar.c:664 src/tar.c:667 src/tar.c:669 src/tar.c:756
+#: tests/genfile.c:133 tests/genfile.c:181 tests/genfile.c:185
+#: tests/genfile.c:188 tests/genfile.c:194
+msgid "FILE"
+msgstr ""
+
+#: rmt/rmt.c:680
+msgid "set debug output file name"
+msgstr ""
+
+#: rmt/rmt.c:696 rmt/rmt.c:764
+#, fuzzy, c-format
+msgid "cannot open %s"
+msgstr "kan ikke ændre ejer (chown) '%s'"
+
+#: rmt/rmt.c:761 tests/genfile.c:885 tests/genfile.c:902
+#, c-format
+msgid "too many arguments"
+msgstr ""
+
+#: rmt/rmt.c:803
 msgid "Garbage command"
 msgstr "Ugyldig kommando"
 
-#: src/buffer.c:290 src/buffer.c:295 src/buffer.c:541 src/buffer.c:1128
-#: src/delete.c:210 src/list.c:167 src/update.c:165
+#: src/buffer.c:321 src/buffer.c:326 src/buffer.c:572 src/buffer.c:1176
+#: src/buffer.c:1222 src/buffer.c:1251 src/delete.c:211 src/list.c:171
+#: src/update.c:189
 msgid "This does not look like a tar archive"
 msgstr "Dette ligner ikke et tar-arkiv"
 
-#: src/buffer.c:354 src/buffer.c:363
+#: src/buffer.c:385 src/buffer.c:394
 #, fuzzy
 msgid "Total bytes written"
 msgstr "Totalt antal byte skrevet: %s (%sB, %sB/s)\n"
 
-#: src/buffer.c:361 src/buffer.c:375
+#: src/buffer.c:392 src/buffer.c:406
 msgid "Total bytes read"
 msgstr ""
 
-#: src/buffer.c:365
+#: src/buffer.c:396
 #, fuzzy, c-format
 msgid "Total bytes deleted: %s\n"
 msgstr "Totalt antal byte skrevet: %s (%sB, %sB/s)\n"
 
-#: src/buffer.c:454
+#: src/buffer.c:485
 msgid "(pipe)"
 msgstr "(datakanal)"
 
-#: src/buffer.c:477
+#: src/buffer.c:508
 msgid "Invalid value for record_size"
 msgstr "Ugyldig værdi for record_size"
 
-#: src/buffer.c:480
+#: src/buffer.c:511
 msgid "No archive name given"
 msgstr "Arkivnavn er ikke opgivet"
 
-#: src/buffer.c:524
+#: src/buffer.c:555
 msgid "Cannot verify stdin/stdout archive"
 msgstr "Kan ikke verificere standard-ind/standard-ud arkiver"
 
-#: src/buffer.c:538
+#: src/buffer.c:569
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr ""
 
-#: src/buffer.c:593 src/tar.c:2317
+#: src/buffer.c:626 src/tar.c:2429
 msgid "Cannot update compressed archives"
 msgstr "Kan ikke opdatere komprimerede arkiver"
 
-#: src/buffer.c:672
+#: src/buffer.c:705
 msgid "At beginning of tape, quitting now"
 msgstr "Ved begyndelsen af båndet, afslutter nu"
 
-#: src/buffer.c:678
+#: src/buffer.c:711
 msgid "Too many errors, quitting"
 msgstr "For mange fejl, afslutter"
 
-#: src/buffer.c:697
+#: src/buffer.c:744
 #, fuzzy, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "Poststørrelse = %lu blokke"
 msgstr[1] "Poststørrelse = %lu blokke"
 
-#: src/buffer.c:718
+#: src/buffer.c:765
 #, fuzzy, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
 msgstr[0] "Ikke-justeret blok (%lu byte) i arkiv"
 msgstr[1] "Ikke-justeret blok (%lu byte) i arkiv"
 
-#: src/buffer.c:795
+#: src/buffer.c:842
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr "Kunne ikke gå tilbage i arkivfilen. Den kan være ulæselig uden -i"
 
-#: src/buffer.c:827
+#: src/buffer.c:874
 msgid "rmtlseek not stopped at a record boundary"
 msgstr ""
 
-#: src/buffer.c:881
+#: src/buffer.c:928
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: indeholder ugyldigt delarkivs-nummer"
 
-#: src/buffer.c:916
+#: src/buffer.c:963
 msgid "Volume number overflow"
 msgstr "Overløb på delarkiv-nummer"
 
-#: src/buffer.c:931
+#: src/buffer.c:978
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "Klargør delarkiv nummer %d for %s og tryk retur: "
 
-#: src/buffer.c:937
+#: src/buffer.c:984
 msgid "EOF where user reply was expected"
 msgstr "Filafslutning hvor svar fra bruger var forventet"
 
-#: src/buffer.c:942 src/buffer.c:974
+#: src/buffer.c:989 src/buffer.c:1021
 msgid "WARNING: Archive is incomplete"
 msgstr "ADVARSEL: Arkivet er ufuldstændigt"
 
-#: src/buffer.c:956
+#: src/buffer.c:1003
 #, fuzzy, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -662,124 +704,124 @@ msgstr ""
 " !          Start en skal\n"
 " ?          Skriv denne list\n"
 
-#: src/buffer.c:961
+#: src/buffer.c:1008
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr ""
 
-#: src/buffer.c:962
+#: src/buffer.c:1009
 #, c-format
 msgid " ?             Print this list\n"
 msgstr ""
 
-#: src/buffer.c:969
+#: src/buffer.c:1016
 msgid "No new volume; exiting.\n"
 msgstr "Intet nyt delarkiv; afslutter.\n"
 
-#: src/buffer.c:1002
+#: src/buffer.c:1049
 msgid "File name not specified. Try again.\n"
 msgstr ""
 
-#: src/buffer.c:1015
+#: src/buffer.c:1062
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr ""
 
-#: src/buffer.c:1066
+#: src/buffer.c:1113
 #, fuzzy, c-format
 msgid "%s command failed"
 msgstr "'%s'-kommando mislykkedes"
 
-#: src/buffer.c:1221
+#: src/buffer.c:1294
 #, fuzzy, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr "%s fortsætter ikke i dette delarkiv"
 
-#: src/buffer.c:1225
+#: src/buffer.c:1298
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "%s fortsætter ikke i dette delarkiv"
 
-#: src/buffer.c:1239
+#: src/buffer.c:1312
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s har forkert størrelse (%s != %s + %s)"
 
-#: src/buffer.c:1253
+#: src/buffer.c:1326
 #, fuzzy, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Dette delarkiv kommer ude af rækkefølge"
 
-#: src/buffer.c:1303
+#: src/buffer.c:1404 src/buffer.c:1430
 #, c-format
 msgid "Archive not labeled to match %s"
 msgstr "Arkivet er ikke navngivet til at passe med %s"
 
-#: src/buffer.c:1306
+#: src/buffer.c:1434
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "Volumenet '%s' stemmer ikke overens med %s"
 
-#: src/buffer.c:1402
+#: src/buffer.c:1530
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
 msgstr ""
 
-#: src/buffer.c:1621
+#: src/buffer.c:1749
 msgid "write did not end on a block boundary"
 msgstr ""
 
-#: src/compare.c:96
+#: src/compare.c:95
 #, fuzzy, c-format
 msgid "Could only read %lu of %lu byte"
 msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Kunne kun læse %lu af %lu byte"
 msgstr[1] "Kunne kun læse %lu af %lu byte"
 
-#: src/compare.c:106 src/compare.c:388
+#: src/compare.c:105 src/compare.c:388
 msgid "Contents differ"
 msgstr "Indhold er forskelligt"
 
-#: src/compare.c:132 src/extract.c:790 src/incremen.c:1399 src/list.c:372
-#: src/list.c:1323
+#: src/compare.c:131 src/extract.c:830 src/incremen.c:1462 src/list.c:386
+#: src/list.c:1376 src/xheader.c:710
 msgid "Unexpected EOF in archive"
 msgstr "Uventet filslutning i arkivet"
 
-#: src/compare.c:180 src/compare.c:196 src/compare.c:314 src/compare.c:412
+#: src/compare.c:179 src/compare.c:195 src/compare.c:313 src/compare.c:412
 msgid "File type differs"
 msgstr "Filtype er forskellig"
 
-#: src/compare.c:183 src/compare.c:203 src/compare.c:328
+#: src/compare.c:182 src/compare.c:202 src/compare.c:327
 msgid "Mode differs"
 msgstr "Modus er forskellig"
 
-#: src/compare.c:206
+#: src/compare.c:205
 msgid "Uid differs"
 msgstr "Bruger-ID er forskellig"
 
-#: src/compare.c:208
+#: src/compare.c:207
 msgid "Gid differs"
 msgstr "Gruppe-ID er forskellig"
 
-#: src/compare.c:212
+#: src/compare.c:211
 msgid "Mod time differs"
 msgstr "Modificeringstid er forskellig"
 
-#: src/compare.c:216 src/compare.c:420
+#: src/compare.c:215 src/compare.c:420
 msgid "Size differs"
 msgstr "Størrelse er forskellig"
 
-#: src/compare.c:270
+#: src/compare.c:269
 #, c-format
 msgid "Not linked to %s"
 msgstr "Ikke lænket til %s"
 
-#: src/compare.c:293
+#: src/compare.c:292
 msgid "Symlink differs"
 msgstr "Symbolsk lænke er forskellig"
 
-#: src/compare.c:322
+#: src/compare.c:321
 msgid "Device number differs"
 msgstr "Enhedsnummer er forskellig"
 
@@ -801,34 +843,34 @@ msgstr ""
 msgid "Verification may fail to locate original files."
 msgstr ""
 
-#: src/compare.c:596
+#: src/compare.c:599
 #, fuzzy, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "VERIFIKASIONSFEJL: %d ukendte hoveder fundet"
 msgstr[1] "VERIFIKASIONSFEJL: %d ukendte hoveder fundet"
 
-#: src/compare.c:612 src/list.c:144
+#: src/compare.c:617 src/list.c:148
 #, c-format
 msgid "A lone zero block at %s"
 msgstr ""
 
-#: src/create.c:67
+#: src/create.c:68
 #, c-format
 msgid "%s: contains a cache directory tag %s; %s"
 msgstr ""
 
-#: src/create.c:272
+#: src/create.c:273
 #, c-format
 msgid "value %s out of %s range %s..%s; substituting %s"
 msgstr "værdi %s ud af %s område %s..%s; erstatter %s"
 
-#: src/create.c:278
+#: src/create.c:279
 #, c-format
 msgid "value %s out of %s range %s..%s"
 msgstr "værdi %s ud af %s område %s..%s"
 
-#: src/create.c:338
+#: src/create.c:339
 msgid "Generating negative octal headers"
 msgstr "Genererer negative oktale hoveder"
 
@@ -847,438 +889,439 @@ msgstr "%s: file er uændret; ikke lagret"
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: file er uændret; ikke lagret"
 
-#: src/create.c:1076
+#: src/create.c:1078
 #, fuzzy, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
 msgstr[0] "%s: Filen formindsket med %s byte, fylder ud med nuller"
 msgstr[1] "%s: Filen formindsket med %s byte, fylder ud med nuller"
 
-#: src/create.c:1177
+#: src/create.c:1175
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: fil er på et andet filesystem.  Ikke lagret"
 
-#: src/create.c:1221 src/create.c:1232 src/incremen.c:551 src/incremen.c:557
+#: src/create.c:1219 src/create.c:1230 src/incremen.c:590 src/incremen.c:596
 msgid "contents not dumped"
 msgstr ""
 
-#: src/create.c:1361
+#: src/create.c:1362
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Ukendt filtype; filen blev ignoreret"
 
-#: src/create.c:1464
+#: src/create.c:1472
 #, fuzzy, c-format
-msgid "Missing links to %s.\n"
+msgid "Missing links to %s."
 msgstr " lænke til %s\n"
 
-#: src/create.c:1535
+#: src/create.c:1543
 #, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "%s: file er uændret; ikke lagret"
 
-#: src/create.c:1543
+#: src/create.c:1552
 #, c-format
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: fil er det samme som arkivet; ikke lagret"
 
-#: src/create.c:1573
-#, c-format
-msgid "%s: File removed before we read it"
-msgstr "%s: Fil fjernet før vi læste den"
-
-#: src/create.c:1591 src/incremen.c:543
+#: src/create.c:1593 src/incremen.c:583
 msgid "directory not dumped"
 msgstr ""
 
-#: src/create.c:1659
+#: src/create.c:1664
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr "%s: Fil ændredes mens vi læste den"
 
-#: src/create.c:1739
+#: src/create.c:1731
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: sokkel ignoreret"
 
-#: src/create.c:1744
+#: src/create.c:1737
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: dør ignoreret"
 
-#: src/delete.c:216 src/list.c:181 src/update.c:170
+#: src/delete.c:217 src/list.c:185 src/update.c:194
 msgid "Skipping to next header"
 msgstr "Hopper til næste hoved"
 
-#: src/delete.c:281
+#: src/delete.c:283
 msgid "Deleting non-header from archive"
 msgstr "Sletter ikke-hoved fra arkivet"
 
-#: src/extract.c:198
+#: src/extract.c:211
 #, c-format
 msgid "%s: implausibly old time stamp %s"
 msgstr ""
 
-#: src/extract.c:215
+#: src/extract.c:229
 #, fuzzy, c-format
 msgid "%s: time stamp %s is %s s in the future"
 msgstr "%s: tidsstempel %s er %lu s i fremtiden"
 
-#: src/extract.c:395
+#: src/extract.c:409
 #, c-format
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Uventet uoverensstemmelse ved oprettelse af katalog"
 
-#: src/extract.c:588
+#: src/extract.c:613
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Katalog omdøbt før dets status kunne blive udtrukket"
 
-#: src/extract.c:724
+#: src/extract.c:759
 msgid "Extracting contiguous files as regular files"
 msgstr "Udtrækker sammenhængende filer som almindelige filer"
 
-#: src/extract.c:997
+#: src/extract.c:1039
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Forsøger at udtrække symbolske lænker som hårde lænker"
 
-#: src/extract.c:1054
-#, c-format
-msgid "Reading %s\n"
-msgstr "Læser %s\n"
-
-#: src/extract.c:1143
+#: src/extract.c:1183
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Kan ikke udtrække -- filen er fortsat fra et tidligere delarkiv"
 
-#: src/extract.c:1150 src/list.c:1090
+#: src/extract.c:1190 src/list.c:1109
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "Uventet filafslutning i ødelagte navne"
 
-#: src/extract.c:1156
+#: src/extract.c:1197
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Ukendt filtype '%c', udtrukket som en almindelig fil"
 
-#: src/extract.c:1181
+#: src/extract.c:1223
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr ""
 
-#: src/extract.c:1227
+#: src/extract.c:1274
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Kunne ikke sikkerhedskopiere denne fil"
 
-#: src/extract.c:1355
+#: src/extract.c:1402
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s: Kan ikke omdøbe til %s"
 
-#: src/extract.c:1367
-#, c-format
-msgid "Error is not recoverable: exiting now"
-msgstr "Fejl kan ikke reddes; afslutter nu"
-
-#: src/incremen.c:448 src/incremen.c:492
+#: src/incremen.c:482 src/incremen.c:526
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Kataloget er blevet omdøbt"
 
-#: src/incremen.c:460
+#: src/incremen.c:494
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Kataloget er blevet omdøbt"
 
-#: src/incremen.c:505
+#: src/incremen.c:539
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Kataloget er nyt"
 
-#: src/incremen.c:903 src/incremen.c:920
+#: src/incremen.c:956 src/incremen.c:973
 msgid "Invalid time stamp"
 msgstr "Ugyldigt tidsstempel"
 
-#: src/incremen.c:959
+#: src/incremen.c:1012
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "Ugyldig modus angivet i flag"
 
-#: src/incremen.c:974
+#: src/incremen.c:1027
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:994
+#: src/incremen.c:1047
 msgid "Invalid device number"
 msgstr "Ugyldigt enhedsnummer"
 
-#: src/incremen.c:1009
+#: src/incremen.c:1062
 msgid "Invalid inode number"
 msgstr "Ugyldigt inode-nummer"
 
-#: src/incremen.c:1060 src/incremen.c:1097
+#: src/incremen.c:1113 src/incremen.c:1150
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
-#: src/incremen.c:1067 src/incremen.c:1105
+#: src/incremen.c:1120 src/incremen.c:1158
 msgid "Read error in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1069 src/incremen.c:1109 src/incremen.c:1161
-#: src/incremen.c:1219
+#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
+#: src/incremen.c:1272
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "Uventet filslutning i arkivet"
 
-#: src/incremen.c:1076 src/incremen.c:1116
+#: src/incremen.c:1129 src/incremen.c:1169
 msgid "Unexpected field value in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1211
+#: src/incremen.c:1264
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1262 src/incremen.c:1265
+#: src/incremen.c:1325 src/incremen.c:1328
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1284
+#: src/incremen.c:1347
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1439
+#: src/incremen.c:1502
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1449
+#: src/incremen.c:1512
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1462
+#: src/incremen.c:1525
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr ""
 
-#: src/incremen.c:1475
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1481
+#: src/incremen.c:1544
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr ""
 
-#: src/incremen.c:1501
+#: src/incremen.c:1564
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1507
+#: src/incremen.c:1571
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
-#: src/incremen.c:1551
+#: src/incremen.c:1615
 #, fuzzy, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "kan ikke oprette kataloget '%s'"
 
-#: src/incremen.c:1613
+#: src/incremen.c:1677
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr ""
 
-#: src/incremen.c:1626
+#: src/incremen.c:1690
 #, fuzzy, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: fil er på et andet filesystem.  Ikke lagret"
 
-#: src/incremen.c:1634
+#: src/incremen.c:1698
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Sletter %s\n"
 
-#: src/incremen.c:1639
+#: src/incremen.c:1703
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "Kan ikke slette %s"
 
-#: src/list.c:113
+#: src/list.c:115
 #, c-format
 msgid "%s: Omitting"
 msgstr "Udelader %s"
 
-#: src/list.c:131
+#: src/list.c:133
 #, c-format
 msgid "block %s: ** Block of NULs **\n"
 msgstr "blok %s: ** Blok med NUL-er **\n"
 
-#: src/list.c:155
+#: src/list.c:159
 #, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Slut på fil **\n"
 
-#: src/list.c:178 src/list.c:1063 src/list.c:1291
+#: src/list.c:182 src/list.c:1081 src/list.c:1344
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
-#. TRANSLATORS: %s is type of the value (gid_t, uid_t, etc.)
-#: src/list.c:671
+#. TRANSLATORS: %s is type of the value (gid_t, uid_t,
+#. etc.)
+#: src/list.c:689
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Blank-tegn i hovedet hvor numerisk %s værdi var forventet"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:726
+#: src/list.c:744
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr "Arkiv oktal værdi %.*s er udenfor %s område; antager to-komplement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:737
+#: src/list.c:755
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Arkiv oktal værdi %.*s er udenfor %s område"
 
-#: src/list.c:758
+#: src/list.c:776
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arkiv indeholder forældede base-64 hoveder"
 
-#: src/list.c:772
+#: src/list.c:790
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arkiv base-64 streng med fortegn %s er uden for %s område"
 
-#: src/list.c:803
+#: src/list.c:821
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Arkiv base-256 værdi er uden for %s område"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:832
+#: src/list.c:850
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arkiv indeholder %.*s hvor numerisk %s værdi var forventet"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:854
+#: src/list.c:872
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Arkiv værdi %s er udenfor %s område %s..%s"
 
-#: src/list.c:1226
+#: src/list.c:1245
 #, c-format
 msgid " link to %s\n"
 msgstr " lænke til %s\n"
 
-#: src/list.c:1234
+#: src/list.c:1253
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " ukendt filtype %s\n"
 
-#: src/list.c:1252
+#: src/list.c:1271
 #, c-format
 msgid "--Long Link--\n"
 msgstr ""
 
-#: src/list.c:1256
+#: src/list.c:1275
 #, c-format
 msgid "--Long Name--\n"
 msgstr ""
 
-#: src/list.c:1260
+#: src/list.c:1279
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Volumenhoved--\n"
 
-#: src/list.c:1268
+#: src/list.c:1287
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Fortsætter ved byte %s--\n"
 
-#: src/list.c:1296
+#: src/list.c:1349
 msgid "Creating directory:"
 msgstr "Opretter katalog:"
 
-#: src/misc.c:456
+#: src/misc.c:502
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Omdøber %s til %s\n"
 
-#: src/misc.c:465 src/misc.c:483
+#: src/misc.c:511 src/misc.c:529
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Kan ikke omdøbe til %s"
 
-#: src/misc.c:488
+#: src/misc.c:534
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Omdøber %s tilbage til %s\n"
 
-#: src/misc.c:615
+#: src/misc.c:669
 msgid "Cannot save working directory"
 msgstr "Kan ikke gemme arbejdskatalog"
 
-#: src/misc.c:621
+#: src/misc.c:675
 msgid "Cannot change working directory"
 msgstr "Kan ikke ændre arbejdskatalog"
 
-#: src/misc.c:711
+#: src/misc.c:759
+#, c-format
+msgid "%s: File removed before we read it"
+msgstr "%s: Fil fjernet før vi læste den"
+
+#: src/misc.c:774
+#, fuzzy, c-format
+msgid "%s: Directory removed before we read it"
+msgstr "%s: Fil fjernet før vi læste den"
+
+#: src/misc.c:795
 msgid "child process"
 msgstr "underproces"
 
-#: src/misc.c:720
+#: src/misc.c:804
 msgid "interprocess channel"
 msgstr "mellemproces-kanal"
 
-#. TRANSLATORS: The following three msgids form a single sentence.
-#.
-#: src/names.c:593
-msgid "Pattern matching characters used in file names. Please,"
+#: src/names.c:601
+msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:595
-msgid "use --wildcards to enable pattern matching, or --no-wildcards to"
+#: src/names.c:603
+msgid ""
+"Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
+"this warning"
 msgstr ""
 
-#: src/names.c:597
-msgid "suppress this warning."
-msgstr ""
-
-#: src/names.c:612 src/names.c:630
+#: src/names.c:619 src/names.c:637
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Blev ikke fundet i arkivet"
 
-#: src/names.c:615
+#: src/names.c:622
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Blev ikke fundet i arkivet"
 
-#: src/tar.c:79
+#: src/names.c:894
+msgid ""
+"Using -C option inside file list is not allowed with --listed-incremental"
+msgstr ""
+
+#: src/names.c:900
+msgid "Only one -C option is allowed with --listed-incremental"
+msgstr ""
+
+#: src/tar.c:81
 #, c-format
 msgid "Options `-%s' and `-%s' both want standard input"
 msgstr "Flagene '-%s' and '-%s' vil begge have standard inddata"
 
-#: src/tar.c:156
+#: src/tar.c:158
 #, fuzzy, c-format
 msgid "%s: Invalid archive format"
 msgstr "%s: ugyldig gruppe"
 
-#: src/tar.c:180
+#: src/tar.c:182
 msgid "GNU features wanted on incompatible archive format"
 msgstr "GNU-funktioner forsøgt på inkompatibelt arkiv-format"
 
-#: src/tar.c:241
+#: src/tar.c:250
 #, c-format
 msgid ""
 "Unknown quoting style `%s'. Try `%s --quoting-style=help' to get a list."
 msgstr ""
 
-#: src/tar.c:336
+#: src/tar.c:347
 #, fuzzy
 msgid ""
 "GNU `tar' saves many files together into a single tape or disk archive, and "
@@ -1297,7 +1340,7 @@ msgstr ""
 "  %s -tvf arkiv.tar         # List alle filer i arkiv.tar udførligt.\n"
 "  %s -xf arkiv.tar          # Udtræk alle filer fra arkiv.tar.\n"
 
-#: src/tar.c:345
+#: src/tar.c:356
 #, fuzzy
 msgid ""
 "The backup suffix is `~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
@@ -1321,88 +1364,81 @@ msgstr ""
 "                  ellers simple\n"
 "  never, simple   lav simple sikkerhedskopier\n"
 
-#: src/tar.c:370
+#: src/tar.c:386
 msgid "Main operation mode:"
 msgstr ""
 
-#: src/tar.c:373
+#: src/tar.c:389
 msgid "list the contents of an archive"
 msgstr ""
 
-#: src/tar.c:375
+#: src/tar.c:391
 msgid "extract files from an archive"
 msgstr ""
 
-#: src/tar.c:378
+#: src/tar.c:394
 #, fuzzy
 msgid "create a new archive"
 msgstr "Uventet filslutning i arkivet"
 
-#: src/tar.c:380
+#: src/tar.c:396
 msgid "find differences between archive and file system"
 msgstr ""
 
-#: src/tar.c:383
+#: src/tar.c:399
 #, fuzzy
 msgid "append files to the end of an archive"
 msgstr "%d overflødige byte ignoreret ved slutningen på arkiv"
 
-#: src/tar.c:385
+#: src/tar.c:401
 msgid "only append files newer than copy in archive"
 msgstr ""
 
-#: src/tar.c:387
+#: src/tar.c:403
 msgid "append tar files to an archive"
 msgstr ""
 
-#: src/tar.c:390
+#: src/tar.c:406
 msgid "delete from the archive (not on mag tapes!)"
 msgstr ""
 
-#: src/tar.c:392
+#: src/tar.c:408
 msgid "test the archive volume label and exit"
 msgstr ""
 
-#: src/tar.c:397
+#: src/tar.c:413
 msgid "Operation modifiers:"
 msgstr ""
 
-#: src/tar.c:400
+#: src/tar.c:416
 msgid "handle sparse files efficiently"
 msgstr ""
 
-#: src/tar.c:401
+#: src/tar.c:417
 msgid "MAJOR[.MINOR]"
 msgstr ""
 
-#: src/tar.c:402
+#: src/tar.c:418
 msgid "set version of the sparse format to use (implies --sparse)"
 msgstr ""
 
-#: src/tar.c:404
+#: src/tar.c:420
 msgid "handle old GNU-format incremental backup"
 msgstr ""
 
-#: src/tar.c:405 src/tar.c:542 src/tar.c:622 src/tar.c:626 src/tar.c:638
-#: src/tar.c:648 src/tar.c:651 src/tar.c:653 src/tar.c:736 tests/genfile.c:131
-#: tests/genfile.c:179 tests/genfile.c:183 tests/genfile.c:186
-msgid "FILE"
-msgstr ""
-
-#: src/tar.c:406
+#: src/tar.c:422
 msgid "handle new GNU-format incremental backup"
 msgstr ""
 
-#: src/tar.c:408
+#: src/tar.c:424
+msgid "dump level for created listed-incremental archive"
+msgstr ""
+
+#: src/tar.c:426
 msgid "do not exit with nonzero on unreadable files"
 msgstr ""
 
-#: src/tar.c:409 src/tar.c:537 src/tar.c:552 src/tar.c:685 src/tar.c:721
-#: tests/genfile.c:165
-msgid "NUMBER"
-msgstr ""
-
-#: src/tar.c:410
+#: src/tar.c:428
 msgid ""
 "process only the NUMBERth occurrence of each file in the archive; this "
 "option is valid only in conjunction with one of the subcommands --delete, --"
@@ -1410,577 +1446,565 @@ msgid ""
 "command line or via the -T option; NUMBER defaults to 1"
 msgstr ""
 
-#: src/tar.c:416
+#: src/tar.c:434
 msgid "archive is seekable"
 msgstr ""
 
-#: src/tar.c:418
-msgid "do not check device numbers when creating incremental archives"
-msgstr ""
-
-#: src/tar.c:421
-msgid "check device numbers when creating incremental archives (default)"
-msgstr ""
-
-#: src/tar.c:427
-msgid "Overwrite control:"
-msgstr ""
-
-#: src/tar.c:430
-msgid "attempt to verify the archive after writing it"
-msgstr ""
-
-#: src/tar.c:432
-msgid "remove files after adding them to the archive"
-msgstr ""
-
-#: src/tar.c:434
-msgid "don't replace existing files when extracting"
-msgstr ""
-
 #: src/tar.c:436
-msgid "don't replace existing files that are newer than their archive copies"
+msgid "archive is not seekable"
 msgstr ""
 
 #: src/tar.c:438
-msgid "overwrite existing files when extracting"
+msgid "do not check device numbers when creating incremental archives"
 msgstr ""
 
-#: src/tar.c:440
-msgid "remove each file prior to extracting over it"
+#: src/tar.c:441
+msgid "check device numbers when creating incremental archives (default)"
 msgstr ""
 
-#: src/tar.c:442
-msgid "empty hierarchies prior to extracting directory"
+#: src/tar.c:447
+msgid "Overwrite control:"
 msgstr ""
 
-#: src/tar.c:444
-msgid "preserve metadata of existing directories"
-msgstr ""
-
-#: src/tar.c:446
-msgid "overwrite metadata of existing directories when extracting (default)"
+#: src/tar.c:450
+msgid "attempt to verify the archive after writing it"
 msgstr ""
 
 #: src/tar.c:452
+msgid "remove files after adding them to the archive"
+msgstr ""
+
+#: src/tar.c:454
+msgid "don't replace existing files when extracting"
+msgstr ""
+
+#: src/tar.c:456
+msgid "don't replace existing files that are newer than their archive copies"
+msgstr ""
+
+#: src/tar.c:458
+msgid "overwrite existing files when extracting"
+msgstr ""
+
+#: src/tar.c:460
+msgid "remove each file prior to extracting over it"
+msgstr ""
+
+#: src/tar.c:462
+msgid "empty hierarchies prior to extracting directory"
+msgstr ""
+
+#: src/tar.c:464
+msgid "preserve metadata of existing directories"
+msgstr ""
+
+#: src/tar.c:466
+msgid "overwrite metadata of existing directories when extracting (default)"
+msgstr ""
+
+#: src/tar.c:472
 msgid "Select output stream:"
 msgstr ""
 
-#: src/tar.c:455
+#: src/tar.c:475
 #, fuzzy
 msgid "extract files to standard output"
 msgstr "Fejl ved skrivning til standard uddata"
 
-#: src/tar.c:456 src/tar.c:515 src/tar.c:517 tests/genfile.c:162
-#: tests/genfile.c:189
+#: src/tar.c:476 src/tar.c:535 src/tar.c:537 tests/genfile.c:191
 msgid "COMMAND"
 msgstr ""
 
-#: src/tar.c:457
+#: src/tar.c:477
 msgid "pipe extracted files to another program"
 msgstr ""
 
-#: src/tar.c:459
+#: src/tar.c:479
 msgid "ignore exit codes of children"
 msgstr ""
 
-#: src/tar.c:461
+#: src/tar.c:481
 msgid "treat non-zero exit codes of children as error"
 msgstr ""
 
-#: src/tar.c:466
+#: src/tar.c:486
 msgid "Handling of file attributes:"
 msgstr ""
 
-#: src/tar.c:469
+#: src/tar.c:489
 msgid "force NAME as owner for added files"
 msgstr ""
 
-#: src/tar.c:471
+#: src/tar.c:491
 msgid "force NAME as group for added files"
 msgstr ""
 
-#: src/tar.c:472 src/tar.c:671
+#: src/tar.c:492 src/tar.c:689
 msgid "DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:473
+#: src/tar.c:493
 msgid "set mtime for added files from DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:474
+#: src/tar.c:494
 msgid "CHANGES"
 msgstr ""
 
-#: src/tar.c:475
+#: src/tar.c:495
 msgid "force (symbolic) mode CHANGES for added files"
 msgstr ""
 
-#: src/tar.c:477
+#: src/tar.c:497
 msgid "METHOD"
 msgstr ""
 
-#: src/tar.c:478
+#: src/tar.c:498
 msgid ""
 "preserve access times on dumped files, either by restoring the times after "
 "reading (METHOD='replace'; default) or by not setting the times in the first "
 "place (METHOD='system')"
 msgstr ""
 
-#: src/tar.c:482
+#: src/tar.c:502
 msgid "don't extract file modified time"
 msgstr ""
 
-#: src/tar.c:484
-msgid "try extracting files with the same ownership"
+#: src/tar.c:504
+msgid ""
+"try extracting files with the same ownership as exists in the archive "
+"(default for superuser)"
 msgstr ""
 
-#: src/tar.c:486
-msgid "extract files as yourself"
+#: src/tar.c:506
+msgid "extract files as yourself (default for ordinary users)"
 msgstr ""
 
-#: src/tar.c:488
+#: src/tar.c:508
 msgid "always use numbers for user/group names"
 msgstr ""
 
-#: src/tar.c:490
+#: src/tar.c:510
 msgid "extract information about file permissions (default for superuser)"
 msgstr ""
 
-#: src/tar.c:494
+#: src/tar.c:514
 msgid ""
 "apply the user's umask when extracting permissions from the archive (default "
 "for ordinary users)"
 msgstr ""
 
-#: src/tar.c:496
+#: src/tar.c:516
 msgid "sort names to extract to match archive"
 msgstr ""
 
-#: src/tar.c:499
+#: src/tar.c:519
 msgid "same as both -p and -s"
 msgstr ""
 
-#: src/tar.c:501
+#: src/tar.c:521
 msgid ""
 "delay setting modification times and permissions of extracted directories "
 "until the end of extraction"
 msgstr ""
 
-#: src/tar.c:504
+#: src/tar.c:524
 msgid "cancel the effect of --delay-directory-restore option"
 msgstr ""
 
-#: src/tar.c:509
+#: src/tar.c:529
 msgid "Device selection and switching:"
 msgstr ""
 
-#: src/tar.c:511
+#: src/tar.c:531
 msgid "ARCHIVE"
 msgstr ""
 
-#: src/tar.c:512
+#: src/tar.c:532
 msgid "use archive file or device ARCHIVE"
 msgstr ""
 
-#: src/tar.c:514
+#: src/tar.c:534
 msgid "archive file is local even if it has a colon"
 msgstr ""
 
-#: src/tar.c:516
+#: src/tar.c:536
 msgid "use given rmt COMMAND instead of rmt"
 msgstr ""
 
-#: src/tar.c:518
+#: src/tar.c:538
 msgid "use remote COMMAND instead of rsh"
 msgstr ""
 
-#: src/tar.c:522
+#: src/tar.c:542
 msgid "specify drive and density"
 msgstr ""
 
-#: src/tar.c:536
+#: src/tar.c:556
 #, fuzzy
 msgid "create/list/extract multi-volume archive"
 msgstr "Kan ikke verificere arkiv som går over flere delarkiver"
 
-#: src/tar.c:538
+#: src/tar.c:558
 msgid "change tape after writing NUMBER x 1024 bytes"
 msgstr ""
 
-#: src/tar.c:540
+#: src/tar.c:560
 msgid "run script at end of each tape (implies -M)"
 msgstr ""
 
-#: src/tar.c:543
+#: src/tar.c:563
 msgid "use/update the volume number in FILE"
 msgstr ""
 
-#: src/tar.c:548
+#: src/tar.c:568
 msgid "Device blocking:"
 msgstr ""
 
-#: src/tar.c:550
+#: src/tar.c:570
 msgid "BLOCKS"
 msgstr ""
 
-#: src/tar.c:551
+#: src/tar.c:571
 msgid "BLOCKS x 512 bytes per record"
 msgstr ""
 
-#: src/tar.c:553
+#: src/tar.c:573
 msgid "NUMBER of bytes per record, multiple of 512"
 msgstr ""
 
-#: src/tar.c:555
+#: src/tar.c:575
 msgid "ignore zeroed blocks in archive (means EOF)"
 msgstr ""
 
-#: src/tar.c:557
+#: src/tar.c:577
 msgid "reblock as we read (for 4.2BSD pipes)"
 msgstr ""
 
-#: src/tar.c:562
+#: src/tar.c:582
 #, fuzzy
 msgid "Archive format selection:"
 msgstr "Konflikt i flagene for arkiv-format"
 
-#: src/tar.c:564 tests/genfile.c:152
+#: src/tar.c:584 tests/genfile.c:154
 msgid "FORMAT"
 msgstr ""
 
-#: src/tar.c:565
+#: src/tar.c:585
 msgid "create archive of the given format"
 msgstr ""
 
-#: src/tar.c:567
+#: src/tar.c:587
 msgid "FORMAT is one of the following:"
 msgstr ""
 
-#: src/tar.c:568
+#: src/tar.c:588
 msgid "old V7 tar format"
 msgstr ""
 
-#: src/tar.c:571
+#: src/tar.c:591
 msgid "GNU format as per tar <= 1.12"
 msgstr ""
 
-#: src/tar.c:573
+#: src/tar.c:593
 msgid "GNU tar 1.13.x format"
 msgstr ""
 
-#: src/tar.c:575
+#: src/tar.c:595
 msgid "POSIX 1003.1-1988 (ustar) format"
 msgstr ""
 
-#: src/tar.c:577
+#: src/tar.c:597
 msgid "POSIX 1003.1-2001 (pax) format"
 msgstr ""
 
-#: src/tar.c:578
+#: src/tar.c:598
 msgid "same as pax"
 msgstr ""
 
-#: src/tar.c:581
+#: src/tar.c:601
 msgid "same as --format=v7"
 msgstr ""
 
-#: src/tar.c:584
+#: src/tar.c:604
 msgid "same as --format=posix"
 msgstr ""
 
-#: src/tar.c:585
+#: src/tar.c:605
 msgid "keyword[[:]=value][,keyword[[:]=value]]..."
 msgstr ""
 
-#: src/tar.c:586
+#: src/tar.c:606
 msgid "control pax keywords"
 msgstr ""
 
-#: src/tar.c:587
+#: src/tar.c:607
 msgid "TEXT"
 msgstr ""
 
-#: src/tar.c:588
+#: src/tar.c:608
 msgid ""
 "create archive with volume name TEXT; at list/extract time, use TEXT as a "
 "globbing pattern for volume name"
 msgstr ""
 
-#: src/tar.c:593
+#: src/tar.c:613
 #, fuzzy
 msgid "Compression options:"
 msgstr "Konflikt i komprimeringsflag"
 
-#: src/tar.c:595
+#: src/tar.c:615
 msgid "use archive suffix to determine the compression program"
 msgstr ""
 
-#: src/tar.c:597
+#: src/tar.c:617
 msgid "do not use archive suffix to determine the compression program"
 msgstr ""
 
-#: src/tar.c:600
-msgid "filter the archive through bzip2"
-msgstr ""
-
-#: src/tar.c:602
-#, fuzzy
-msgid "filter the archive through gzip"
-msgstr "%s: fil er det samme som arkivet; ikke lagret"
-
-#: src/tar.c:606
-#, fuzzy
-msgid "filter the archive through compress"
-msgstr "%s: fil er det samme som arkivet; ikke lagret"
-
-#: src/tar.c:609
-#, fuzzy
-msgid "filter the archive through lzma"
-msgstr "%s: fil er det samme som arkivet; ikke lagret"
-
-#: src/tar.c:611
-#, fuzzy
-msgid "filter the archive through lzop"
-msgstr "%s: fil er det samme som arkivet; ikke lagret"
-
-#: src/tar.c:613
-#, fuzzy
-msgid "filter the archive through xz"
-msgstr "%s: fil er det samme som arkivet; ikke lagret"
-
-#: src/tar.c:614
+#: src/tar.c:619
 msgid "PROG"
 msgstr ""
 
-#: src/tar.c:615
+#: src/tar.c:620
 msgid "filter through PROG (must accept -d)"
 msgstr ""
 
-#: src/tar.c:620
+#: src/tar.c:636
 msgid "Local file selection:"
 msgstr ""
 
-#: src/tar.c:623
+#: src/tar.c:639
 msgid "add given FILE to the archive (useful if its name starts with a dash)"
 msgstr ""
 
-#: src/tar.c:624
+#: src/tar.c:640
 msgid "DIR"
 msgstr ""
 
-#: src/tar.c:625
+#: src/tar.c:641
 #, fuzzy
 msgid "change to directory DIR"
 msgstr "Kan ikke ændre arbejdskatalog"
 
-#: src/tar.c:627
+#: src/tar.c:643
 msgid "get names to extract or create from FILE"
 msgstr ""
 
-#: src/tar.c:629
+#: src/tar.c:645
 msgid "-T reads null-terminated names, disable -C"
 msgstr ""
 
-#: src/tar.c:631
+#: src/tar.c:647
 msgid "disable the effect of the previous --null option"
 msgstr ""
 
-#: src/tar.c:633
+#: src/tar.c:649
 msgid "unquote filenames read with -T (default)"
 msgstr ""
 
-#: src/tar.c:635
+#: src/tar.c:651
 msgid "do not unquote filenames read with -T"
 msgstr ""
 
-#: src/tar.c:636 tests/genfile.c:135
+#: src/tar.c:652 tests/genfile.c:137
 msgid "PATTERN"
 msgstr ""
 
-#: src/tar.c:637
+#: src/tar.c:653
 msgid "exclude files, given as a PATTERN"
 msgstr ""
 
-#: src/tar.c:639
+#: src/tar.c:655
 msgid "exclude patterns listed in FILE"
 msgstr ""
 
-#: src/tar.c:641
+#: src/tar.c:657
 msgid ""
 "exclude contents of directories containing CACHEDIR.TAG, except for the tag "
 "file itself"
 msgstr ""
 
-#: src/tar.c:644
+#: src/tar.c:660
 msgid "exclude everything under directories containing CACHEDIR.TAG"
 msgstr ""
 
-#: src/tar.c:647
+#: src/tar.c:663
 msgid "exclude directories containing CACHEDIR.TAG"
 msgstr ""
 
-#: src/tar.c:649
+#: src/tar.c:665
 msgid "exclude contents of directories containing FILE, except for FILE itself"
 msgstr ""
 
-#: src/tar.c:652
+#: src/tar.c:668
 msgid "exclude everything under directories containing FILE"
 msgstr ""
 
-#: src/tar.c:654
+#: src/tar.c:670
 msgid "exclude directories containing FILE"
 msgstr ""
 
-#: src/tar.c:656
+#: src/tar.c:672
 msgid "exclude version control system directories"
 msgstr ""
 
-#: src/tar.c:658
+#: src/tar.c:674
+msgid "exclude backup and lock files"
+msgstr ""
+
+#: src/tar.c:676
 msgid "avoid descending automatically in directories"
 msgstr ""
 
-#: src/tar.c:660
+#: src/tar.c:678
 msgid "stay in local file system when creating archive"
 msgstr ""
 
-#: src/tar.c:662
+#: src/tar.c:680
 msgid "recurse into directories (default)"
 msgstr ""
 
-#: src/tar.c:664
+#: src/tar.c:682
 #, fuzzy
 msgid "don't strip leading `/'s from file names"
 msgstr "Fjerner indledende '/' fra absolutte lænker"
 
-#: src/tar.c:666
+#: src/tar.c:684
 msgid "follow symlinks; archive and dump the files they point to"
 msgstr ""
 
-#: src/tar.c:668
+#: src/tar.c:686
 msgid "follow hard links; archive and dump the files they refer to"
 msgstr ""
 
-#: src/tar.c:669
+#: src/tar.c:687
 msgid "MEMBER-NAME"
 msgstr ""
 
-#: src/tar.c:670
+#: src/tar.c:688
 msgid "begin at member MEMBER-NAME in the archive"
 msgstr ""
 
-#: src/tar.c:672
+#: src/tar.c:690
 msgid "only store files newer than DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:674
+#: src/tar.c:692
 msgid "DATE"
 msgstr ""
 
-#: src/tar.c:675
+#: src/tar.c:693
 msgid "compare date and time when data changed only"
 msgstr ""
 
-#: src/tar.c:676
+#: src/tar.c:694
 msgid "CONTROL"
 msgstr ""
 
-#: src/tar.c:677
+#: src/tar.c:695
 msgid "backup before removal, choose version CONTROL"
 msgstr ""
 
-#: src/tar.c:678 src/tar.c:753 src/tar.c:755 tests/genfile.c:168
+#: src/tar.c:696 src/tar.c:773 src/tar.c:775 tests/genfile.c:170
 msgid "STRING"
 msgstr ""
 
-#: src/tar.c:679
+#: src/tar.c:697
 msgid ""
 "backup before removal, override usual suffix ('~' unless overridden by "
 "environment variable SIMPLE_BACKUP_SUFFIX)"
 msgstr ""
 
-#: src/tar.c:684
+#: src/tar.c:702
 msgid "File name transformations:"
 msgstr ""
 
-#: src/tar.c:686
+#: src/tar.c:704
 msgid "strip NUMBER leading components from file names on extraction"
 msgstr ""
 
-#: src/tar.c:688
+#: src/tar.c:706
 msgid "EXPRESSION"
 msgstr ""
 
-#: src/tar.c:689
+#: src/tar.c:707
 msgid "use sed replace EXPRESSION to transform file names"
 msgstr ""
 
-#: src/tar.c:695
+#: src/tar.c:713
 msgid "File name matching options (affect both exclude and include patterns):"
 msgstr ""
 
-#: src/tar.c:698
+#: src/tar.c:716
 msgid "ignore case"
 msgstr ""
 
-#: src/tar.c:700
+#: src/tar.c:718
 msgid "patterns match file name start"
 msgstr ""
 
-#: src/tar.c:702
+#: src/tar.c:720
 msgid "patterns match after any `/' (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:704
+#: src/tar.c:722
 msgid "case sensitive matching (default)"
 msgstr ""
 
-#: src/tar.c:706
+#: src/tar.c:724
 msgid "use wildcards (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:708
+#: src/tar.c:726
 msgid "verbatim string matching"
 msgstr ""
 
-#: src/tar.c:710
+#: src/tar.c:728
 #, fuzzy
 msgid "wildcards do not match `/'"
 msgstr "Volumenet '%s' stemmer ikke overens med %s"
 
-#: src/tar.c:712
+#: src/tar.c:730
 msgid "wildcards match `/' (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:717
+#: src/tar.c:735
 msgid "Informative output:"
 msgstr ""
 
-#: src/tar.c:720
+#: src/tar.c:738
 msgid "verbosely list files processed"
 msgstr ""
 
-#: src/tar.c:722
+#: src/tar.c:739
+msgid "KEYWORD"
+msgstr ""
+
+#: src/tar.c:740
+msgid "warning control"
+msgstr ""
+
+#: src/tar.c:742
 msgid "display progress messages every NUMBERth record (default 10)"
 msgstr ""
 
-#: src/tar.c:724
+#: src/tar.c:744
 msgid "ACTION"
 msgstr ""
 
-#: src/tar.c:725
+#: src/tar.c:745
 msgid "execute ACTION on each checkpoint"
 msgstr ""
 
-#: src/tar.c:728
+#: src/tar.c:748
 msgid "print a message if not all links are dumped"
 msgstr ""
 
-#: src/tar.c:729
+#: src/tar.c:749
 msgid "SIGNAL"
 msgstr ""
 
-#: src/tar.c:730
+#: src/tar.c:750
 msgid ""
 "print total bytes after processing the archive; with an argument - print "
 "total bytes when this SIGNAL is delivered; Allowed signals are: SIGHUP, "
@@ -1988,275 +2012,291 @@ msgid ""
 "accepted"
 msgstr ""
 
-#: src/tar.c:735
+#: src/tar.c:755
 msgid "print file modification dates in UTC"
 msgstr ""
 
-#: src/tar.c:737
+#: src/tar.c:757
 msgid "send verbose output to FILE"
 msgstr ""
 
-#: src/tar.c:739
+#: src/tar.c:759
 msgid "show block number within archive with each message"
 msgstr ""
 
-#: src/tar.c:741
+#: src/tar.c:761
 msgid "ask for confirmation for every action"
 msgstr ""
 
-#: src/tar.c:744
+#: src/tar.c:764
 msgid "show tar defaults"
 msgstr ""
 
-#: src/tar.c:746
+#: src/tar.c:766
 msgid ""
 "when listing or extracting, list each directory that does not match search "
 "criteria"
 msgstr ""
 
-#: src/tar.c:748
+#: src/tar.c:768
 msgid "show file or archive names after transformation"
 msgstr ""
 
-#: src/tar.c:751
+#: src/tar.c:771
 msgid "STYLE"
 msgstr ""
 
-#: src/tar.c:752
+#: src/tar.c:772
 msgid "set name quoting style; see below for valid STYLE values"
 msgstr ""
 
-#: src/tar.c:754
+#: src/tar.c:774
 msgid "additionally quote characters from STRING"
 msgstr ""
 
-#: src/tar.c:756
+#: src/tar.c:776
 msgid "disable quoting for characters from STRING"
 msgstr ""
 
-#: src/tar.c:761
+#: src/tar.c:781
 msgid "Compatibility options:"
 msgstr ""
 
-#: src/tar.c:764
+#: src/tar.c:784
 msgid ""
 "when creating, same as --old-archive; when extracting, same as --no-same-"
 "owner"
 msgstr ""
 
-#: src/tar.c:769
+#: src/tar.c:789
 msgid "Other options:"
 msgstr ""
 
-#: src/tar.c:772
+#: src/tar.c:792
 msgid "disable use of some potentially harmful options"
 msgstr ""
 
-#: src/tar.c:920
-msgid "You may not specify more than one `-Acdtrux' option"
+#: src/tar.c:927
+#, fuzzy
+msgid "You may not specify more than one `-Acdtrux' or `--test-label' option"
 msgstr "Du kan ikke angive mere end et af '-Acdtrux'-flagene"
 
-#: src/tar.c:930
+#: src/tar.c:937
 msgid "Conflicting compression options"
 msgstr "Konflikt i komprimeringsflag"
 
-#: src/tar.c:986
+#: src/tar.c:993
 #, fuzzy, c-format
 msgid "Unknown signal name: %s"
 msgstr " ukendt filtype %s\n"
 
-#: src/tar.c:1010
+#: src/tar.c:1017
 #, fuzzy
 msgid "Date sample file not found"
 msgstr "Datofil ikke fundet"
 
-#: src/tar.c:1018
+#: src/tar.c:1025
 #, c-format
 msgid "Substituting %s for unknown date format %s"
 msgstr "Erstatter %s for ukendt dato-format %s"
 
-#: src/tar.c:1043
+#: src/tar.c:1054
 #, c-format
 msgid "Option %s: Treating date `%s' as %s"
 msgstr ""
 
-#: src/tar.c:1120
+#: src/tar.c:1132
 #, fuzzy, c-format
 msgid "%s: file list already read"
 msgstr "%s: fil er det samme som arkivet; ikke lagret"
 
-#: src/tar.c:1185
+#: src/tar.c:1198
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr ""
 
-#: src/tar.c:1250
-msgid "Valid arguments for --quoting-style options are:"
+#: src/tar.c:1265 src/tar.c:1269 src/tar.c:1273 src/tar.c:1277 src/tar.c:1281
+#: src/tar.c:1285
+#, fuzzy, c-format
+msgid "filter the archive through %s"
+msgstr "%s: fil er det samme som arkivet; ikke lagret"
+
+#: src/tar.c:1290
+msgid "Valid arguments for the --quoting-style option are:"
 msgstr ""
 
-#: src/tar.c:1253
+#: src/tar.c:1294
 msgid ""
 "\n"
 "*This* tar defaults to:\n"
 msgstr ""
 
-#: src/tar.c:1294
+#: src/tar.c:1393
 msgid "Invalid blocking factor"
 msgstr "Ugyldig blokfaktor"
 
-#: src/tar.c:1401
+#: src/tar.c:1500
 msgid "Invalid tape length"
 msgstr "Ugyldig båndlængde"
 
-#: src/tar.c:1441
+#: src/tar.c:1511
+msgid "Invalid incremental level value"
+msgstr ""
+
+#: src/tar.c:1557
 msgid "More than one threshold date"
 msgstr "Mere end én grænse-dato"
 
-#: src/tar.c:1496 src/tar.c:1499
+#: src/tar.c:1612 src/tar.c:1615
 msgid "Invalid sparse version value"
 msgstr ""
 
-#: src/tar.c:1584
+#: src/tar.c:1700
 msgid "--atime-preserve='system' is not supported on this platform"
 msgstr ""
 
-#: src/tar.c:1609
+#: src/tar.c:1725
 msgid "--checkpoint value is not an integer"
 msgstr ""
 
-#: src/tar.c:1710
-#, c-format
-msgid "%s: Invalid group"
+#: src/tar.c:1830
+#, fuzzy
+msgid "Invalid group"
 msgstr "%s: ugyldig gruppe"
 
-#: src/tar.c:1717
+#: src/tar.c:1837
 msgid "Invalid mode given on option"
 msgstr "Ugyldig modus angivet i flag"
 
-#: src/tar.c:1774
+#: src/tar.c:1894
 #, fuzzy
 msgid "Invalid number"
 msgstr "Ugyldigt inode-nummer"
 
-#: src/tar.c:1796
+#: src/tar.c:1916
 msgid "Invalid owner"
 msgstr "Ugyldig ejer"
 
-#: src/tar.c:1822
+#: src/tar.c:1946
 msgid ""
 "The --preserve option is deprecated, use --preserve-permissions --preserve-"
 "order instead"
 msgstr ""
 
-#: src/tar.c:1832
+#: src/tar.c:1956
 msgid "Invalid record size"
 msgstr "Ugyldig poststørrelse"
 
-#: src/tar.c:1835
+#: src/tar.c:1959
 #, c-format
 msgid "Record size must be a multiple of %d."
 msgstr "Poststørrelse skal være deleligt med %d."
 
-#: src/tar.c:1872
+#: src/tar.c:2000
 #, fuzzy
 msgid "Invalid number of elements"
 msgstr "Ugyldig båndlængde"
 
-#: src/tar.c:1892
+#: src/tar.c:2020
 msgid "Only one --to-command option allowed"
 msgstr ""
 
-#: src/tar.c:1968
+#: src/tar.c:2100
 #, c-format
 msgid "Malformed density argument: %s"
 msgstr ""
 
-#: src/tar.c:1994
+#: src/tar.c:2126
 #, fuzzy, c-format
 msgid "Unknown density: `%c'"
 msgstr "Ukendt mønster '%s'"
 
-#: src/tar.c:2011
+#: src/tar.c:2143
 #, c-format
 msgid "Options `-[0-7][lmh]' not supported by *this* tar"
 msgstr ""
 "Flagene '-[0-7][lmh]' understøttes ikke af *denne* implementering af tar"
 
-#: src/tar.c:2046
+#: src/tar.c:2156
 msgid "[FILE]..."
 msgstr ""
 
-#: src/tar.c:2152
+#: src/tar.c:2274
 #, c-format
 msgid "Old option `%c' requires an argument."
 msgstr "Gammelt flag '%c' behøver et argument."
 
-#: src/tar.c:2234
+#: src/tar.c:2355
 msgid "--occurrence is meaningless without a file list"
 msgstr ""
 
-#: src/tar.c:2240
+#: src/tar.c:2361
 msgid "--occurrence cannot be used in the requested operation mode"
 msgstr ""
 
-#: src/tar.c:2270
+#: src/tar.c:2379
 #, fuzzy
 msgid "Multiple archive files require `-M' option"
 msgstr "Ved flere arkivfiler kræves '-M'-flaget"
 
-#: src/tar.c:2275
+#: src/tar.c:2384
 msgid "Cannot combine --listed-incremental with --newer"
 msgstr "Kan ikke kombinere --listed-incremental med --newer"
 
-#: src/tar.c:2292
+#: src/tar.c:2387
+msgid "--level is meaningless without --listed-incremental"
+msgstr ""
+
+#: src/tar.c:2404
 #, fuzzy, c-format
 msgid "%s: Volume label is too long (limit is %lu byte)"
 msgid_plural "%s: Volume label is too long (limit is %lu bytes)"
 msgstr[0] "%s: etikette på delarkiv er for lang (grænse er %lu byte)"
 msgstr[1] "%s: etikette på delarkiv er for lang (grænse er %lu byte)"
 
-#: src/tar.c:2305
+#: src/tar.c:2417
 msgid "Cannot verify multi-volume archives"
 msgstr "Kan ikke verificere arkiv som går over flere delarkiver"
 
-#: src/tar.c:2307
+#: src/tar.c:2419
 msgid "Cannot verify compressed archives"
 msgstr "Kan ikke verificere komprimerede arkiver"
 
-#: src/tar.c:2313
+#: src/tar.c:2425
 msgid "Cannot use multi-volume compressed archives"
 msgstr "Kan ikke bruge komprimerede arkiver som går over flere delarkiver"
 
-#: src/tar.c:2319
+#: src/tar.c:2431
 #, fuzzy
 msgid "Cannot concatenate compressed archives"
 msgstr "Kan ikke opdatere komprimerede arkiver"
 
-#: src/tar.c:2331
+#: src/tar.c:2443
 msgid "--pax-option can be used only on POSIX archives"
 msgstr ""
 
-#: src/tar.c:2349
+#: src/tar.c:2461
 msgid "Volume length cannot be less than record size"
 msgstr ""
 
-#: src/tar.c:2352
+#: src/tar.c:2464
 msgid "--preserve-order is not compatible with --listed-incremental"
 msgstr ""
 
-#: src/tar.c:2363
+#: src/tar.c:2475
 msgid "Cowardly refusing to create an empty archive"
 msgstr "Nægter stædigt at oprette et tomt arkiv"
 
-#: src/tar.c:2388
+#: src/tar.c:2501
 msgid "Options `-Aru' are incompatible with `-f -'"
 msgstr "Flagene '-Aru' er inkompatible med '-f -'"
 
-#: src/tar.c:2477
-msgid "You must specify one of the `-Acdtrux' options"
+#: src/tar.c:2592
+#, fuzzy
+msgid "You must specify one of the `-Acdtrux' or `--test-label'  options"
 msgstr "Du skal angive et af '-Acdtrux'-flagene"
 
-#: src/tar.c:2528
+#: src/tar.c:2646
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr ""
@@ -2268,79 +2308,84 @@ msgid_plural "%s: File shrank by %s bytes"
 msgstr[0] "%s: Filen formindskedes med %s byte"
 msgstr[1] "%s: Filen formindskedes med %s byte"
 
-#: src/xheader.c:156
+#: src/xheader.c:163
 #, c-format
 msgid "Keyword %s is unknown or not yet implemented"
 msgstr ""
 
-#: src/xheader.c:182
+#: src/xheader.c:173
+#, fuzzy
+msgid "Time stamp is out of allowed range"
+msgstr "Tidsstempel uden for område"
+
+#: src/xheader.c:204
 #, c-format
 msgid "Pattern %s cannot be used"
 msgstr ""
 
-#: src/xheader.c:192
+#: src/xheader.c:218
 #, c-format
 msgid "Keyword %s cannot be overridden"
 msgstr ""
 
-#: src/xheader.c:496
+#: src/xheader.c:541
 msgid "Malformed extended header: missing length"
 msgstr ""
 
-#: src/xheader.c:504
+#: src/xheader.c:549
 msgid "Extended header length is out of allowed range"
 msgstr ""
 
-#: src/xheader.c:511
+#: src/xheader.c:556
 #, fuzzy, c-format
 msgid "Extended header length %*s is out of range"
 msgstr "Arkiv base-64 streng med fortegn %s er uden for %s område"
 
-#: src/xheader.c:523
+#: src/xheader.c:568
 msgid "Malformed extended header: missing blank after length"
 msgstr ""
 
-#: src/xheader.c:531
+#: src/xheader.c:576
 msgid "Malformed extended header: missing equal sign"
 msgstr ""
 
-#: src/xheader.c:537
+#: src/xheader.c:582
 msgid "Malformed extended header: missing newline"
 msgstr ""
 
-#: src/xheader.c:574
+#: src/xheader.c:620
 #, c-format
 msgid "Ignoring unknown extended header keyword `%s'"
 msgstr ""
 
-#: src/xheader.c:778
+#: src/xheader.c:830
 #, c-format
 msgid "Generated keyword/value pair is too long (keyword=%s, length=%s)"
 msgstr ""
 
 #. TRANSLATORS: The first %s is the pax extended header keyword
 #. (atime, gid, etc.).
-#: src/xheader.c:810
+#: src/xheader.c:862
 #, fuzzy, c-format
 msgid "Extended header %s=%s is out of range %s..%s"
 msgstr "Arkiv værdi %s er udenfor %s område %s..%s"
 
-#: src/xheader.c:941 src/xheader.c:971 src/xheader.c:1285
+#: src/xheader.c:993 src/xheader.c:1023 src/xheader.c:1337
 #, c-format
 msgid "Malformed extended header: invalid %s=%s"
 msgstr ""
 
-#: src/xheader.c:1238 src/xheader.c:1263 src/xheader.c:1313
+#: src/xheader.c:1290 src/xheader.c:1315 src/xheader.c:1365
 #, c-format
 msgid "Malformed extended header: excess %s=%s"
 msgstr ""
 
-#: src/xheader.c:1326
+#: src/xheader.c:1378
 #, c-format
 msgid "Malformed extended header: invalid %s: unexpected delimiter %c"
 msgstr ""
 
-#: src/xheader.c:1336
+#: src/xheader.c:1388
 #, c-format
 msgid "Malformed extended header: invalid %s: odd number of values"
 msgstr ""
@@ -2382,236 +2427,300 @@ msgstr "Skriver kontrolpunkt %d"
 msgid "Read checkpoint %u"
 msgstr "Læser kontrolpunkt %d"
 
-#: tests/genfile.c:111
+#: tests/genfile.c:112
 #, fuzzy
 msgid ""
 "genfile manipulates data files for GNU paxutils test suite.\n"
 "OPTIONS are:\n"
 msgstr "Generér datafiler for GNU tar testpakke.\n"
 
-#: tests/genfile.c:126
+#: tests/genfile.c:128
 #, fuzzy
 msgid "File creation options:"
 msgstr "Konflikt i komprimeringsflag"
 
-#: tests/genfile.c:127 tests/genfile.c:138
+#: tests/genfile.c:129 tests/genfile.c:140
 msgid "SIZE"
 msgstr ""
 
-#: tests/genfile.c:128
+#: tests/genfile.c:130
 msgid "Create file of the given SIZE"
 msgstr ""
 
-#: tests/genfile.c:130
+#: tests/genfile.c:132
 #, fuzzy
 msgid "Write to file NAME, instead of standard output"
 msgstr "Fejl ved skrivning til standard uddata"
 
-#: tests/genfile.c:132
+#: tests/genfile.c:134
 msgid "Read file names from FILE"
 msgstr ""
 
-#: tests/genfile.c:134
+#: tests/genfile.c:136
 msgid "-T reads null-terminated names"
 msgstr ""
 
-#: tests/genfile.c:136
+#: tests/genfile.c:138
 msgid "Fill the file with the given PATTERN. PATTERN is 'default' or 'zeros'"
 msgstr ""
 
-#: tests/genfile.c:139
+#: tests/genfile.c:141
 msgid "Size of a block for sparse file"
 msgstr ""
 
-#: tests/genfile.c:141
+#: tests/genfile.c:143
 msgid "Generate sparse file. Rest of the command line gives the file map."
 msgstr ""
 
-#: tests/genfile.c:143
+#: tests/genfile.c:145
 msgid "OFFSET"
 msgstr ""
 
-#: tests/genfile.c:144
+#: tests/genfile.c:146
 msgid "Seek to the given offset before writing data"
 msgstr ""
 
-#: tests/genfile.c:150
+#: tests/genfile.c:152
 msgid "File statistics options:"
 msgstr ""
 
-#: tests/genfile.c:153
+#: tests/genfile.c:155
 msgid "Print contents of struct stat for each given file. Default FORMAT is: "
 msgstr ""
 
-#: tests/genfile.c:160
+#: tests/genfile.c:162
 msgid "Synchronous execution options:"
 msgstr ""
 
-#: tests/genfile.c:163
+#: tests/genfile.c:164
+#, fuzzy
+msgid "OPTION"
+msgstr " [FLAG...}"
+
+#: tests/genfile.c:165
 msgid ""
-"Execute given COMMAND. Useful with --checkpoint and one of --cut, --append, "
-"--touch"
+"Execute ARGS. Useful with --checkpoint and one of --cut, --append, --touch, "
+"--unlink"
 msgstr ""
 
-#: tests/genfile.c:166
+#: tests/genfile.c:168
 msgid "Perform given action (see below) upon reaching checkpoint NUMBER"
 msgstr ""
 
-#: tests/genfile.c:169
+#: tests/genfile.c:171
 msgid "Set date for next --touch option"
 msgstr ""
 
-#: tests/genfile.c:172
+#: tests/genfile.c:174
 msgid "Display executed checkpoints and exit status of COMMAND"
 msgstr ""
 
-#: tests/genfile.c:177
+#: tests/genfile.c:179
 msgid ""
 "Synchronous execution actions. These are executed when checkpoint number "
 "given by --checkpoint option is reached."
 msgstr ""
 
-#: tests/genfile.c:180
+#: tests/genfile.c:182
 msgid ""
 "Truncate FILE to the size specified by previous --length option (or 0, if it "
 "is not given)"
 msgstr ""
 
-#: tests/genfile.c:184
+#: tests/genfile.c:186
 msgid "Append SIZE bytes to FILE. SIZE is given by previous --length option."
 msgstr ""
 
-#: tests/genfile.c:187
+#: tests/genfile.c:189
 msgid "Update the access and modification times of FILE"
 msgstr ""
 
-#: tests/genfile.c:190
+#: tests/genfile.c:192
 msgid "Execute COMMAND"
 msgstr ""
 
-#: tests/genfile.c:240
+#: tests/genfile.c:195
+msgid "Unlink FILE"
+msgstr ""
+
+#: tests/genfile.c:245
 #, fuzzy, c-format
 msgid "Invalid size: %s"
 msgstr "Ugyldigt tidsstempel"
 
-#: tests/genfile.c:245
+#: tests/genfile.c:250
 #, fuzzy, c-format
 msgid "Number out of allowed range: %s"
 msgstr "Inode-nummer uden for område"
 
-#: tests/genfile.c:248
+#: tests/genfile.c:253
 #, c-format
 msgid "Negative size: %s"
 msgstr ""
 
-#: tests/genfile.c:261 tests/genfile.c:558
+#: tests/genfile.c:266 tests/genfile.c:568
 #, c-format
 msgid "stat(%s) failed"
 msgstr ""
 
-#: tests/genfile.c:264
+#: tests/genfile.c:269
 #, c-format
 msgid "requested file length %lu, actual %lu"
 msgstr ""
 
-#: tests/genfile.c:268
+#: tests/genfile.c:273
 #, c-format
 msgid "created file is not sparse"
 msgstr ""
 
-#: tests/genfile.c:353
+#: tests/genfile.c:362
 #, c-format
 msgid "Error parsing number near `%s'"
 msgstr ""
 
-#: tests/genfile.c:359
+#: tests/genfile.c:368
 #, fuzzy, c-format
 msgid "Unknown date format"
 msgstr "Ukendt systemfejl"
 
-#: tests/genfile.c:382
+#: tests/genfile.c:392
 msgid "[ARGS...]"
 msgstr ""
 
-#: tests/genfile.c:419 tests/genfile.c:459 tests/genfile.c:512
-#: tests/genfile.c:662 tests/genfile.c:676
+#: tests/genfile.c:429 tests/genfile.c:469 tests/genfile.c:522
+#: tests/genfile.c:672 tests/genfile.c:686
 #, fuzzy, c-format
 msgid "cannot open `%s'"
 msgstr "kan ikke ændre ejer (chown) '%s'"
 
-#: tests/genfile.c:425
+#: tests/genfile.c:435
 #, fuzzy
 msgid "cannot seek"
 msgstr "Kan ikke lukke"
 
-#: tests/genfile.c:442
+#: tests/genfile.c:452
 #, c-format
 msgid "file name contains null character"
 msgstr ""
 
-#: tests/genfile.c:507
+#: tests/genfile.c:517
 #, c-format
 msgid "cannot generate sparse files on standard output, use --file option"
 msgstr ""
 
-#: tests/genfile.c:585
+#: tests/genfile.c:595
 #, c-format
 msgid "incorrect mask (near `%s')"
 msgstr ""
 
-#: tests/genfile.c:591 tests/genfile.c:624
+#: tests/genfile.c:601 tests/genfile.c:634
 #, fuzzy, c-format
 msgid "Unknown field `%s'"
 msgstr "Ukendt mønster '%s'"
 
-#: tests/genfile.c:651
+#: tests/genfile.c:661
 #, fuzzy, c-format
 msgid "cannot set time on `%s'"
 msgstr "kan ikke oprette kataloget '%s'"
 
-#: tests/genfile.c:805
+#: tests/genfile.c:700
+#, fuzzy, c-format
+msgid "cannot unlink `%s'"
+msgstr "kan ikke ændre ejer (chown) '%s'"
+
+#: tests/genfile.c:826
 #, c-format
 msgid "Command exited successfully\n"
 msgstr ""
 
-#: tests/genfile.c:807
+#: tests/genfile.c:828
 #, fuzzy, c-format
 msgid "Command failed with status %d\n"
 msgstr "Underproces døde med signal %d"
 
-#: tests/genfile.c:811
+#: tests/genfile.c:832
 #, c-format
 msgid "Command terminated on signal %d\n"
 msgstr ""
 
-#: tests/genfile.c:813
+#: tests/genfile.c:834
 #, c-format
 msgid "Command stopped on signal %d\n"
 msgstr ""
 
-#: tests/genfile.c:816
+#: tests/genfile.c:837
 #, c-format
 msgid "Command dumped core\n"
 msgstr ""
 
-#: tests/genfile.c:819
+#: tests/genfile.c:840
 #, c-format
 msgid "Command terminated\n"
 msgstr ""
 
-#: tests/genfile.c:851
+#: tests/genfile.c:872
 #, fuzzy, c-format
 msgid "--stat requires file names"
 msgstr "--Ødelagte filnavne--\n"
 
-#: tests/genfile.c:864
-#, c-format
-msgid "too many arguments"
-msgstr ""
+#~ msgid "%s: illegal option -- %c\n"
+#~ msgstr "%s: ulovligt flag -- %c\n"
 
-#~ msgid "Warning: the -I option is not supported; perhaps you meant -j or -T?"
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Report bugs to <%s>.\n"
 #~ msgstr ""
-#~ "Advarsel: -I flaget er ikke understøttet; måske mente du -j eller -T?"
+#~ "\n"
+#~ "Rapportér fejl til <bugs-tar@gnu.org>.\n"
+
+#~ msgid "Reading %s\n"
+#~ msgstr "Læser %s\n"
+
+#~ msgid "Error is not recoverable: exiting now"
+#~ msgstr "Fejl kan ikke reddes; afslutter nu"
+
+#, fuzzy
+#~ msgid "filter the archive through compress"
+#~ msgstr "%s: fil er det samme som arkivet; ikke lagret"
+
+#, fuzzy
+#~ msgid "filter the archive through lzma"
+#~ msgstr "%s: fil er det samme som arkivet; ikke lagret"
+
+#, fuzzy
+#~ msgid "filter the archive through lzop"
+#~ msgstr "%s: fil er det samme som arkivet; ikke lagret"
+
+#~ msgid "rmtd: Cannot allocate buffer space\n"
+#~ msgstr "rmtd: Kan ikke allokere plads til buffer\n"
+
+#~ msgid "Cannot allocate buffer space"
+#~ msgstr "Kan ikke allokere plads til buffer"
+
+#~ msgid "Try `%s --help' for more information.\n"
+#~ msgstr "Prøv '%s --help' for mere information.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Usage: %s [OPTION]\n"
+#~ "Manipulate a tape drive, accepting commands from a remote process.\n"
+#~ "\n"
+#~ "  --version  Output version info.\n"
+#~ "  --help     Output this help.\n"
+#~ msgstr ""
+#~ "Brug: %s [FLAG]\n"
+#~ "Behandl en båndstation, med kommandoer fra en anden proces.\n"
+#~ "\n"
+#~ "      --help            vis denne hjælpetekst\n"
+#~ "      --version         vis programversion\n"
+
+#, fuzzy
+#~ msgid "Seek offset error"
+#~ msgstr "Søgeposition uden for område"
+
+#~ msgid "Premature end of file"
+#~ msgstr "For tidlig filafslutning"
 
 #~ msgid "block size"
 #~ msgstr "blokstørrelse"
@@ -2646,9 +2755,6 @@ msgstr ""
 
 #~ msgid "Visible long name error"
 #~ msgstr "Fejl på et langt navn"
-
-#~ msgid "Time stamp out of range"
-#~ msgstr "Tidsstempel uden for område"
 
 #~ msgid "Device number out of range"
 #~ msgstr "Enhedsnummer er uden for område"
@@ -3033,6 +3139,10 @@ msgstr ""
 
 #~ msgid "Obsolete option name replaced by --read-full-records"
 #~ msgstr "Forældet flag skiftet ud med --read-full-records"
+
+#~ msgid "Warning: the -I option is not supported; perhaps you meant -j or -T?"
+#~ msgstr ""
+#~ "Advarsel: -I flaget er ikke understøttet; måske mente du -j eller -T?"
 
 #~ msgid "Obsolete option name replaced by --touch"
 #~ msgstr "Forældet flag skiftet ud med --touch"
