@@ -11,8 +11,11 @@ configure-stamp:
 	dh_testdir
 	cp -f /usr/share/misc/config.sub build-aux/config.sub
 	cp -f /usr/share/misc/config.guess build-aux/config.guess
-	RSH="/usr/bin/rsh" CFLAGS="-O2 -g -Wall" \
-		./configure --prefix=/usr --libexecdir=/usr/sbin $(CONFARGS)
+	RSH="/usr/bin/rsh" CFLAGS="-O2 -g -Wall" ./configure \
+		--prefix=/usr \
+		--libexecdir=/usr/sbin \
+		--with-lzma=xz \
+		$(CONFARGS) 
 	touch configure-stamp
 
 build: build-stamp
