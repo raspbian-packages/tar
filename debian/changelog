@@ -1,10 +1,10 @@
-tar (1.23-2) UNRELEASED; urgency=low
+tar (1.23-2) unstable; urgency=low
 
   * use xz when lzma is called for, and stop suggesting both lzma since it's
     no longer used, and xz-utils since it's now priority required,
     closes: #582706, #523494
 
- -- Bdale Garbee <bdale@gag.com>  Wed, 23 May 2010 05:21:37 -0600
+ -- Bdale Garbee <bdale@gag.com>  Mon, 14 Jun 2010 11:05:57 -0600
 
 tar (1.23-1) unstable; urgency=low
 
