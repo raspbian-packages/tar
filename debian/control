@@ -4,11 +4,11 @@ Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 5), gettext, autoconf, autotools-dev
-Standards-Version: 3.8.2
+Standards-Version: 3.8.4
 
 Package: tar
 Architecture: any
-Pre-Depends: ${shlibs:Depends}
+Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
 Essential: yes
 Conflicts: cpio (<= 2.4.2-38)
 Replaces: cpio (<< 2.4.2-39)
