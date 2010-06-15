@@ -1,3 +1,10 @@
+tar (1.23-3) UNRELEASED; urgency=low
+
+  * add xz-utils back to the Suggests list since it may note be 'required'
+    forever
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 15 Jun 2010 09:32:39 -0600
+
 tar (1.23-2) unstable; urgency=low
 
   * use xz when lzma is called for, and stop suggesting both lzma since it's
