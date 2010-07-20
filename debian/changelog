@@ -5,6 +5,15 @@ tar (1.23-3) UNRELEASED; urgency=low
 
  -- Bdale Garbee <bdale@gag.com>  Tue, 15 Jun 2010 09:32:39 -0600
 
+tar (1.23-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * src/extract.c: Apply upstream git commit b60e56fd which fixes a dead loop
+    on extracting existing symlinks with the -k option, closes: #577978,
+    #576876.
+
+ -- Michael Banck <mbanck@debian.org>  Sun, 18 Jul 2010 17:14:48 +0200
+
 tar (1.23-2) unstable; urgency=low
 
   * use xz when lzma is called for, and stop suggesting both lzma since it's
