@@ -1,7 +1,8 @@
 tar (1.23-3) UNRELEASED; urgency=low
 
-  * add xz-utils back to the Suggests list since it may note be 'required'
+  * add xz-utils back to the Suggests list since it may not be 'required'
     forever
+  * current debhelper includes trigger support, closes: #561598
 
  -- Bdale Garbee <bdale@gag.com>  Tue, 15 Jun 2010 09:32:39 -0600
 
