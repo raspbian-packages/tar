@@ -1,10 +1,12 @@
-tar (1.23-3) UNRELEASED; urgency=low
+tar (1.23-3) UNRELEASED; urgency=medium
 
   * add xz-utils back to the Suggests list since it may not be 'required'
     forever
   * current debhelper includes trigger support, closes: #561598
+  * patch from upstream to fix ability of rmt to accept mixed file mode
+    representations, closes: #587702, #597672
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 15 Jun 2010 09:32:39 -0600
+ -- Bdale Garbee <bdale@gag.com>  Wed, 22 Sep 2010 00:33:16 -0600
 
 tar (1.23-2.1) unstable; urgency=low
 
