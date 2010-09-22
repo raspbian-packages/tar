@@ -1,4 +1,4 @@
-tar (1.23-3) UNRELEASED; urgency=medium
+tar (1.23-3) unstable; urgency=medium
 
   * add xz-utils back to the Suggests list since it may not be 'required'
     forever
