@@ -4,7 +4,7 @@ Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 5), gettext, autoconf, autotools-dev
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 
 Package: tar
 Architecture: any
