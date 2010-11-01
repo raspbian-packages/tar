@@ -274,6 +274,7 @@ decode_open_flag (const char *mstr, int *pmode)
 	      rmt_error_message (EINVAL, "invalid open mode");
 	      return 1;
 	    }
+	}
     }
   else
     mode = numeric_mode;
