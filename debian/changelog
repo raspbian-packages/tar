@@ -1,3 +1,10 @@
+tar (1.23-4) unstable; urgency=low
+
+  * revert patch to src/create.c introduced in 2004 to fix a dpkg bug long
+    since resolved, closes: #598345
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 29 Sep 2010 06:01:21 +0900
+
 tar (1.23-3) unstable; urgency=medium
 
   * add xz-utils back to the Suggests list since it may not be 'required'
