@@ -1,7 +1,7 @@
 /* Common declarations for the tar program.
 
    Copyright (C) 1988, 1992, 1993, 1994, 1996, 1997, 1999, 2000, 2001,
-   2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, 
+   2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation,
    Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -105,6 +105,8 @@ GLOBAL bool absolute_names_option;
 
 /* Display file times in UTC */
 GLOBAL bool utc_option;
+/* Output file timestamps to the full resolution */
+GLOBAL bool full_time_option;
 
 /* This variable tells how to interpret newer_mtime_option, below.  If zero,
    files get archived if their mtime is not less than newer_mtime_option.
@@ -335,12 +337,12 @@ struct name
     int matching_flags;         /* wildcard flags if name is a pattern */
     bool cmdline;               /* true if this name was given in the
 				   command line */
-    
+
     int change_dir;		/* Number of the directory to change to.
 				   Set with the -C option. */
     uintmax_t found_count;	/* number of times a matching file has
 				   been found */
-    
+
     /* The following members are used for incremental dumps only,
        if this struct name represents a directory;
        see incremen.c */
@@ -354,6 +356,11 @@ struct name
 /* Obnoxious test to see if dimwit is trying to dump the archive.  */
 GLOBAL dev_t ar_dev;
 GLOBAL ino_t ar_ino;
+
+/* Flags for reading, searching, and fstatatting files.  */
+GLOBAL int open_read_flags;
+GLOBAL int open_searchdir_flags;
+GLOBAL int fstatat_flags;
 
 GLOBAL int seek_option;
 GLOBAL bool seekable_archive;
@@ -425,9 +432,10 @@ void archive_read_error (void);
 off_t seek_archive (off_t size);
 void set_start_time (void);
 
-void mv_begin (struct tar_stat_info *st);
+void mv_begin_write (const char *file_name, off_t totsize, off_t sizeleft);
+
+void mv_begin_read (struct tar_stat_info *st);
 void mv_end (void);
-void mv_total_size (off_t size);
 void mv_size_left (off_t size);
 
 void buffer_write_global_xheader (void);
@@ -443,13 +451,14 @@ enum dump_status
   };
 
 void add_exclusion_tag (const char *name, enum exclusion_tag_type type,
-			bool (*)(const char*));
-bool cachedir_file_p (const char *name);
+			bool (*predicate) (int));
+bool cachedir_file_p (int fd);
+char *get_directory_entries (struct tar_stat_info *st);
 
-bool file_dumpable_p (struct tar_stat_info *st);
 void create_archive (void);
 void pad_archive (off_t size_left);
-void dump_file (const char *st, bool top_level, dev_t parent_device);
+void dump_file (struct tar_stat_info *parent, char const *name,
+		char const *fullname);
 union block *start_header (struct tar_stat_info *st);
 void finish_header (struct tar_stat_info *st, union block *header,
 		    off_t block_ordinal);
@@ -459,33 +468,18 @@ union block * write_extended (bool global, struct tar_stat_info *st,
 union block *start_private_header (const char *name, size_t size, time_t t);
 void write_eot (void);
 void check_links (void);
+int subfile_open (struct tar_stat_info const *dir, char const *file, int flags);
+void restore_parent_fd (struct tar_stat_info const *st);
 void exclusion_tag_warning (const char *dirname, const char *tagname,
 			    const char *message);
-enum exclusion_tag_type check_exclusion_tags (const char *dirname,
+enum exclusion_tag_type check_exclusion_tags (struct tar_stat_info const *st,
 					      const char **tag_file_name);
-     
-#define GID_TO_CHARS(val, where) gid_to_chars (val, where, sizeof (where))
-#define MAJOR_TO_CHARS(val, where) major_to_chars (val, where, sizeof (where))
-#define MINOR_TO_CHARS(val, where) minor_to_chars (val, where, sizeof (where))
-#define MODE_TO_CHARS(val, where) mode_to_chars (val, where, sizeof (where))
-#define OFF_TO_CHARS(val, where) off_to_chars (val, where, sizeof (where))
-#define SIZE_TO_CHARS(val, where) size_to_chars (val, where, sizeof (where))
-#define TIME_TO_CHARS(val, where) time_to_chars (val, where, sizeof (where))
-#define UID_TO_CHARS(val, where) uid_to_chars (val, where, sizeof (where))
-#define UINTMAX_TO_CHARS(val, where) uintmax_to_chars (val, where, sizeof (where))
-#define UNAME_TO_CHARS(name,buf) string_to_chars (name, buf, sizeof(buf))
-#define GNAME_TO_CHARS(name,buf) string_to_chars (name, buf, sizeof(buf))
 
-bool gid_to_chars (gid_t gid, char *buf, size_t size);
-bool major_to_chars (major_t m, char *buf, size_t size);
-bool minor_to_chars (minor_t m, char *buf, size_t size);
-bool mode_to_chars (mode_t m, char *buf, size_t size);
+#define OFF_TO_CHARS(val, where) off_to_chars (val, where, sizeof (where))
+#define TIME_TO_CHARS(val, where) time_to_chars (val, where, sizeof (where))
+
 bool off_to_chars (off_t off, char *buf, size_t size);
-bool size_to_chars (size_t v, char *buf, size_t size);
 bool time_to_chars (time_t t, char *buf, size_t size);
-bool uid_to_chars (uid_t uid, char *buf, size_t size);
-bool uintmax_to_chars (uintmax_t v, char *buf, size_t size);
-void string_to_chars (char const *s, char *buf, size_t size);
 
 /* Module diffarch.c.  */
 
@@ -507,18 +501,8 @@ bool rename_directory (char *src, char *dst);
 void delete_archive_members (void);
 
 /* Module incremen.c.  */
-typedef struct dumpdir *dumpdir_t;
-typedef struct dumpdir_iter *dumpdir_iter_t;
 
-dumpdir_t dumpdir_create0 (const char *contents, const char *cmask);
-dumpdir_t dumpdir_create (const char *contents);
-void dumpdir_free (dumpdir_t);
-char *dumpdir_locate (dumpdir_t dump, const char *name);
-char *dumpdir_next (dumpdir_iter_t itr);
-char *dumpdir_first (dumpdir_t dump, int all, dumpdir_iter_t *pitr);
-
-struct directory *scan_directory (char *dir, dev_t device, bool cmdline);
-void name_fill_directory (struct name *name, dev_t device, bool cmdline);
+struct directory *scan_directory (struct tar_stat_info *st);
 const char *directory_contents (struct directory *dir);
 const char *safe_directory_contents (struct directory *dir);
 
@@ -531,7 +515,7 @@ void read_directory_file (void);
 void write_directory_file (void);
 void purge_directory (char const *directory_name);
 void list_dumpdir (char *buffer, size_t size);
-void update_parent_directory (const char *name);
+void update_parent_directory (struct tar_stat_info *st);
 
 size_t dumpdir_size (const char *p);
 bool is_dumpdir (struct tar_stat_info *stat_info);
@@ -568,25 +552,10 @@ void decode_header (union block *header, struct tar_stat_info *stat_info,
 		    enum archive_format *format_pointer, int do_user_group);
 char const *tartime (struct timespec t, bool full_time);
 
-#define GID_FROM_HEADER(where) gid_from_header (where, sizeof (where))
-#define MAJOR_FROM_HEADER(where) major_from_header (where, sizeof (where))
-#define MINOR_FROM_HEADER(where) minor_from_header (where, sizeof (where))
-#define MODE_FROM_HEADER(where, hbits) \
-  mode_from_header (where, sizeof (where), hbits)
 #define OFF_FROM_HEADER(where) off_from_header (where, sizeof (where))
-#define SIZE_FROM_HEADER(where) size_from_header (where, sizeof (where))
-#define TIME_FROM_HEADER(where) time_from_header (where, sizeof (where))
-#define UID_FROM_HEADER(where) uid_from_header (where, sizeof (where))
 #define UINTMAX_FROM_HEADER(where) uintmax_from_header (where, sizeof (where))
 
-gid_t gid_from_header (const char *buf, size_t size);
-major_t major_from_header (const char *buf, size_t size);
-minor_t minor_from_header (const char *buf, size_t size);
-mode_t mode_from_header (const char *buf, size_t size, unsigned *hbits);
 off_t off_from_header (const char *buf, size_t size);
-size_t size_from_header (const char *buf, size_t size);
-time_t time_from_header (const char *buf, size_t size);
-uid_t uid_from_header (const char *buf, size_t size);
 uintmax_t uintmax_from_header (const char *buf, size_t size);
 
 void list_archive (void);
@@ -605,7 +574,6 @@ void skip_member (void);
 /* Module misc.c.  */
 
 void assign_string (char **dest, const char *src);
-char *quote_copy_string (const char *str);
 int unquote_string (char *str);
 char *zap_slashes (char *name);
 char *normalize_filename (const char *name);
@@ -622,6 +590,8 @@ char const *code_timespec (struct timespec ts, char *sbuf);
 enum { BILLION = 1000000000, LOG10_BILLION = 9 };
 enum { TIMESPEC_STRSIZE_BOUND =
          UINTMAX_STRSIZE_BOUND + LOG10_BILLION + sizeof "-." - 1 };
+
+bool must_be_dot_or_slash (char const *);
 
 enum remove_option
 {
@@ -641,8 +611,10 @@ int remove_any_file (const char *file_name, enum remove_option option);
 bool maybe_backup_file (const char *file_name, bool this_is_the_archive);
 void undo_last_backup (void);
 
-int deref_stat (bool deref, char const *name, struct stat *buf);
+int deref_stat (char const *name, struct stat *buf);
 
+extern int chdir_current;
+extern int chdir_fd;
 int chdir_arg (char const *dir);
 void chdir_do (int dir);
 int chdir_count (void);
@@ -667,11 +639,12 @@ pid_t xfork (void);
 void xpipe (int fd[2]);
 
 void *page_aligned_alloc (void **ptr, size_t size);
-int set_file_atime (int fd, char const *file,
-		    struct timespec const timespec[2]);
+int set_file_atime (int fd, int parentfd, char const *file,
+		    struct timespec atime);
 
 /* Module names.c.  */
 
+extern size_t name_count;
 extern struct name *gnu_list_name;
 
 void gid_to_gname (gid_t gid, char **gname);
@@ -690,6 +663,7 @@ struct name *addname (char const *string, int change_dir,
 void remname (struct name *name);
 bool name_match (const char *name);
 void names_notfound (void);
+void label_notfound (void);
 void collect_and_sort_names (void);
 struct name *name_scan (const char *name);
 struct name const *name_from_list (void);
@@ -716,9 +690,9 @@ bool contains_dot_dot (char const *name);
 void usage (int);
 
 int confirm (const char *message_action, const char *name);
-void request_stdin (const char *option);
 
 void tar_stat_init (struct tar_stat_info *st);
+bool tar_stat_close (struct tar_stat_info *st);
 void tar_stat_destroy (struct tar_stat_info *st);
 void usage (int) __attribute__ ((noreturn));
 int tar_timespec_cmp (struct timespec a, struct timespec b);
@@ -734,7 +708,6 @@ void update_archive (void);
 
 /* Module xheader.c.  */
 
-void xheader_init (struct xheader *xhdr);
 void xheader_decode (struct tar_stat_info *stat);
 void xheader_decode_global (struct xheader *xhdr);
 void xheader_store (char const *keyword, struct tar_stat_info *st,
@@ -800,12 +773,11 @@ bool utf8_convert (bool to_utf, char const *input, char **output);
 
 void set_transform_expr (const char *expr);
 bool transform_name (char **pinput, int type);
-bool transform_member_name (char **pinput, int type);
 bool transform_name_fp (char **pinput, int type,
 			char *(*fun)(char *, void *), void *);
 
 /* Module suffix.c */
-void set_comression_program_by_suffix (const char *name, const char *defprog);
+void set_compression_program_by_suffix (const char *name, const char *defprog);
 
 /* Module checkpoint.c */
 void checkpoint_compile_action (const char *str);
@@ -836,7 +808,7 @@ void checkpoint_run (bool do_write);
 /* The warnings composing WARN_VERBOSE_WARNINGS are enabled by default
    in verbose mode */
 #define WARN_VERBOSE_WARNINGS    (WARN_RENAME_DIRECTORY|WARN_NEW_DIRECTORY)
-#define WARN_ALL                 (0xffffffff & ~WARN_VERBOSE_WARNINGS)
+#define WARN_ALL                 (~WARN_VERBOSE_WARNINGS)
 
 void set_warning_option (const char *arg);
 
@@ -856,4 +828,3 @@ void finish_deferred_unlinks (void);
 
 /* Module exit.c */
 extern void (*fatal_exit_hook) (void);
-

@@ -31,6 +31,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_mbstate_t || defined __need_wint_t || (defined __hpux && ((defined _INTTYPES_INCLUDED && !defined strtoimax) || defined _GL_JUST_INCLUDE_SYSTEM_WCHAR_H)) || defined _GL_ALREADY_INCLUDING_WCHAR_H
 /* Special invocation convention:
@@ -84,11 +85,15 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
-/* Define wint_t.  (Also done in wctype.in.h.)  */
+/* Define wint_t and WEOF.  (Also done in wctype.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
 # ifndef WEOF
 #  define WEOF -1
+# endif
+#else
+# ifndef WEOF
+#  define WEOF ((wint_t) -1)
 # endif
 #endif
 
@@ -405,7 +410,7 @@ _GL_WARN_ON_USE (wcsnrtombs, "wcsnrtombs is unportable - "
 _GL_FUNCDECL_RPL (wcwidth, int, (wchar_t));
 _GL_CXXALIAS_RPL (wcwidth, int, (wchar_t));
 # else
-#  if !defined wcwidth && !@HAVE_DECL_WCWIDTH@
+#  if !@HAVE_DECL_WCWIDTH@
 /* wcwidth exists but is not declared.  */
 _GL_FUNCDECL_SYS (wcwidth, int, (wchar_t));
 #  endif

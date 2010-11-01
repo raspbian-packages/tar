@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 15
+# wcwidth.m4 serial 17
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,16 +34,15 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
     HAVE_DECL_WCWIDTH=0
   fi
 
-  if test $ac_cv_func_wcwidth = no; then
-    REPLACE_WCWIDTH=1
-  else
+  if test $ac_cv_func_wcwidth = yes; then
     dnl On MacOS X 10.3, wcwidth(0x0301) (COMBINING ACUTE ACCENT) returns 1.
     dnl On OSF/1 5.1, wcwidth(0x200B) (ZERO WIDTH SPACE) returns 1.
     dnl This leads to bugs in 'ls' (coreutils).
     AC_CACHE_CHECK([whether wcwidth works reasonably in UTF-8 locales],
       [gl_cv_func_wcwidth_works],
       [
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <locale.h>
 /* AIX 3.2.5 declares wcwidth in <string.h>. */
 #include <string.h>
@@ -68,13 +67,15 @@ int main ()
     if (wcwidth (0x0301) > 0 || wcwidth (0x200B) > 0)
       return 1;
   return 0;
-}], [gl_cv_func_wcwidth_works=yes], [gl_cv_func_wcwidth_works=no],
+}]])],
+          [gl_cv_func_wcwidth_works=yes],
+          [gl_cv_func_wcwidth_works=no],
           [
 changequote(,)dnl
            case "$host_os" in
-                     # Guess yes on glibc systems.
-             *-gnu*) gl_cv_func_wcwidth_works="guessing yes";;
-             *)      gl_cv_func_wcwidth_works="guessing no";;
+                     # Guess yes on glibc and AIX 7 systems.
+             *-gnu* | aix[7-9]*) gl_cv_func_wcwidth_works="guessing yes";;
+             *)                  gl_cv_func_wcwidth_works="guessing no";;
            esac
 changequote([,])dnl
           ])
@@ -84,11 +85,13 @@ changequote([,])dnl
       *no) REPLACE_WCWIDTH=1 ;;
     esac
   fi
-  if test $REPLACE_WCWIDTH = 1; then
+  if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1; then
     AC_LIBOBJ([wcwidth])
   fi
-
-  if test $REPLACE_WCWIDTH = 1 || test $HAVE_DECL_WCWIDTH = 0; then
+  if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1 \
+     || test $HAVE_DECL_WCWIDTH = 0; then
     gl_REPLACE_WCHAR_H
   fi
+  dnl We don't substitute HAVE_WCWIDTH. We assume that if the system does not
+  dnl have the wcwidth function, then it does not declare it.
 ])

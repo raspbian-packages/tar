@@ -41,13 +41,13 @@ $1)],$2,$3,$4,$5,$6)
 m4_define([AT_TAR_WITH_HOOK],[
   m4_pushdef([AT_TAR_CHECK_HOOK],[$1])
   $2
-  
+
   m4_popdef([AT_TAR_CHECK_HOOK])])
 
 m4_define([TAR_IGNREC_HOOK],[
   AT_CHECK([grep -v '^.*tar: Record size = ' stderr; exit 0])
 ])
-  
+
 m4_define([RE_CHECK],[
 AT_DATA([$1.re],[$2])
 awk '{print NR " " $[]0}' $1 > $[]$.1
@@ -123,6 +123,7 @@ m4_include([append01.at])
 m4_include([append02.at])
 
 m4_include([xform-h.at])
+m4_include([xform01.at])
 
 m4_include([exclude.at])
 m4_include([exclude01.at])
@@ -130,6 +131,7 @@ m4_include([exclude02.at])
 m4_include([exclude03.at])
 m4_include([exclude04.at])
 m4_include([exclude05.at])
+m4_include([exclude06.at])
 
 m4_include([delete01.at])
 m4_include([delete02.at])
@@ -145,9 +147,19 @@ m4_include([extrac05.at])
 m4_include([extrac06.at])
 m4_include([extrac07.at])
 m4_include([extrac08.at])
+m4_include([extrac09.at])
+m4_include([extrac10.at])
+m4_include([extrac11.at])
+m4_include([extrac12.at])
+m4_include([extrac13.at])
+m4_include([extrac14.at])
+m4_include([extrac15.at])
 
 m4_include([label01.at])
 m4_include([label02.at])
+m4_include([label03.at])
+m4_include([label04.at])
+m4_include([label05.at])
 
 m4_include([backup01.at])
 
@@ -158,6 +170,7 @@ m4_include([incr01.at])
 m4_include([incr02.at])
 m4_include([listed01.at])
 m4_include([listed02.at])
+m4_include([listed03.at])
 m4_include([incr03.at])
 m4_include([incr04.at])
 m4_include([incr05.at])
@@ -178,6 +191,7 @@ m4_include([ignfail.at])
 m4_include([link01.at])
 m4_include([link02.at])
 m4_include([link03.at])
+m4_include([link04.at])
 
 m4_include([longv7.at])
 m4_include([long01.at])
@@ -192,6 +206,7 @@ m4_include([multiv04.at])
 m4_include([multiv05.at])
 m4_include([multiv06.at])
 m4_include([multiv07.at])
+m4_include([multiv08.at])
 
 m4_include([old.at])
 
@@ -226,6 +241,9 @@ m4_include([grow.at])
 
 m4_include([remfiles01.at])
 m4_include([remfiles02.at])
+m4_include([remfiles03.at])
+
+m4_include([sigpipe.at])
 
 m4_include([star/gtarfail.at])
 m4_include([star/gtarfail2.at])

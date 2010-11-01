@@ -1,4 +1,4 @@
-# getopt.m4 serial 24
+# getopt.m4 serial 31
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,7 @@ AC_DEFUN([gl_GETOPT_IFELSE],
 AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([AC_PROG_AWK]) dnl for awk that supports ENVIRON
 
   dnl Persuade Solaris <unistd.h> to declare optarg, optind, opterr, optopt.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
@@ -79,8 +80,13 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl Existence of the variable, in and of itself, is not a reason to replace
   dnl getopt, but knowledge of the variable is needed to determine how to
   dnl reset and whether a reset reparses the environment.
-  if test -z "$gl_replace_getopt" && test $gl_getopt_required = GNU; then
-    AC_CHECK_DECLS([optreset], [], [],
+  dnl Solaris supports neither optreset nor optind=0, but keeps no state that
+  dnl needs a reset beyond setting optind=1; detect Solaris by getopt_clip.
+  if test -z "$gl_replace_getopt"; then
+    AC_CHECK_DECLS([optreset], [],
+      [AC_CHECK_DECLS([getopt_clip], [], [],
+        [[#include <getopt.h>]])
+      ],
       [[#include <getopt.h>]])
   fi
 
@@ -89,17 +95,21 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl is left over from earlier calls, and neither setting optind = 0 nor
   dnl setting optreset = 1 get rid of this internal state.
   dnl POSIX is silent on optind vs. optreset, so we allow either behavior.
+  dnl POSIX 2008 does not specify leading '+' behavior, but see
+  dnl http://austingroupbugs.net/view.php?id=191 for a recommendation on
+  dnl the next version of POSIX.  For now, we only guarantee leading '+'
+  dnl behavior with getopt-gnu.
   if test -z "$gl_replace_getopt"; then
     AC_CACHE_CHECK([whether getopt is POSIX compatible],
       [gl_cv_func_getopt_posix],
       [
-        dnl This test fails on mingw and succeeds on all other platforms.
+        dnl This test fails on mingw and succeeds on many other platforms.
         AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
-#if !HAVE_DECL_OPTRESET
+#if !HAVE_DECL_OPTRESET && !HAVE_DECL_GETOPT_CLIP
 # define OPTIND_MIN 0
 #else
 # define OPTIND_MIN 1
@@ -167,14 +177,29 @@ main ()
     if (!(optind == 1))
       return 12;
   }
+  /* Detect MacOS 10.5, AIX 7.1 bug.  */
+  {
+    char *argv[3] = { "program", "-ab", NULL };
+    optind = OPTIND_MIN;
+    opterr = 0;
+    if (getopt (2, argv, "ab:") != 'a')
+      return 13;
+    if (getopt (2, argv, "ab:") != '?')
+      return 14;
+    if (optopt != 'b')
+      return 15;
+    if (optind != 2)
+      return 16;
+  }
 
   return 0;
 }
 ]])],
           [gl_cv_func_getopt_posix=yes], [gl_cv_func_getopt_posix=no],
           [case "$host_os" in
-             mingw*) gl_cv_func_getopt_posix="guessing no";;
-             *)      gl_cv_func_getopt_posix="guessing yes";;
+             mingw*)         gl_cv_func_getopt_posix="guessing no";;
+             darwin* | aix*) gl_cv_func_getopt_posix="guessing no";;
+             *)              gl_cv_func_getopt_posix="guessing yes";;
            esac
           ])
       ])
@@ -189,7 +214,16 @@ main ()
        # optstring is necessary for programs like m4 that have POSIX-mandated
        # semantics for supporting options interspersed with files.
        # Also, since getopt_long is a GNU extension, we require optind=0.
-       gl_had_POSIXLY_CORRECT=${POSIXLY_CORRECT:+yes}
+       # Bash ties 'set -o posix' to a non-exported POSIXLY_CORRECT;
+       # so take care to revert to the correct (non-)export state.
+dnl GNU Coding Standards currently allow awk but not env; besides, env
+dnl is ambiguous with environment values that contain newlines.
+       gl_awk_probe='BEGIN { if ("POSIXLY_CORRECT" in ENVIRON) print "x" }'
+       case ${POSIXLY_CORRECT+x}`$AWK "$gl_awk_probe" </dev/null` in
+         xx) gl_had_POSIXLY_CORRECT=exported ;;
+         x)  gl_had_POSIXLY_CORRECT=yes      ;;
+         *)  gl_had_POSIXLY_CORRECT=         ;;
+       esac
        POSIXLY_CORRECT=1
        export POSIXLY_CORRECT
        AC_RUN_IFELSE(
@@ -234,6 +268,15 @@ main ()
                if (getopt (3, argv, "-p") != 'p')
                  return 7;
              }
+             /* This code fails on glibc 2.11.  */
+             {
+               char *argv[] = { "program", "-b", "-a", NULL };
+               optind = opterr = 0;
+               if (getopt (3, argv, "+:a:b") != 'b')
+                 return 8;
+               if (getopt (3, argv, "+:a:b") != ':')
+                 return 9;
+             }
              return 0;
            ]])],
         [gl_cv_func_getopt_gnu=yes],
@@ -245,9 +288,11 @@ main ()
            *)                   gl_cv_func_getopt_gnu=yes;;
          esac
         ])
-       if test "$gl_had_POSIXLY_CORRECT" != yes; then
-         AS_UNSET([POSIXLY_CORRECT])
-       fi
+       case $gl_had_POSIXLY_CORRECT in
+         exported) ;;
+         yes) AS_UNSET([POSIXLY_CORRECT]); POSIXLY_CORRECT=1 ;;
+         *) AS_UNSET([POSIXLY_CORRECT]) ;;
+       esac
       ])
     if test "$gl_cv_func_getopt_gnu" = "no"; then
       gl_replace_getopt=yes

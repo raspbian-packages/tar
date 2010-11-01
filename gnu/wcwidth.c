@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Determine the number of screen columns needed for a character.
-   Copyright (C) 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,10 +28,9 @@
 #include "streq.h"
 #include "uniwidth.h"
 
-#undef wcwidth
-
 int
-rpl_wcwidth (wchar_t wc)
+wcwidth (wchar_t wc)
+#undef wcwidth
 {
   /* In UTF-8 locales, use a Unicode aware width function.  */
   const char *encoding = locale_charset ();

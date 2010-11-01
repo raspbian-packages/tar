@@ -28,8 +28,7 @@
 #include <argmatch.h>
 #include <argp.h>
 #include <argcv.h>
-#include <getdate.h>
-#include <utimens.h>
+#include <parse-datetime.h>
 #include <inttostr.h>
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -364,7 +363,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
       break;
 
     case OPT_DATE:
-      if (!get_date (&touch_time, arg, NULL))
+      if (! parse_datetime (&touch_time, arg, NULL))
 	argp_error (state, _("Unknown date format"));
       break;
 
@@ -582,13 +581,13 @@ print_stat (const char *name)
 	printf ("%lu", (unsigned long) st.st_ino);
       else if (strncmp (p, "mode", 4) == 0)
 	{
-	  mode_t mask = ~0;
+	  unsigned val = st.st_mode;
 
 	  if (ispunct ((unsigned char) p[4]))
 	    {
 	      char *q;
 
-	      mask = strtoul (p + 5, &q, 8);
+	      val &= strtoul (p + 5, &q, 8);
 	      if (*q)
 		{
 		  printf ("\n");
@@ -600,7 +599,7 @@ print_stat (const char *name)
 	      printf ("\n");
 	      error (EXIT_FAILURE, 0, _("Unknown field `%s'"), p);
 	    }
-	  printf ("%0o", st.st_mode & mask);
+	  printf ("%0o", val);
 	}
       else if (strcmp (p, "nlink") == 0)
 	printf ("%lu", (unsigned long) st.st_nlink);
@@ -656,7 +655,7 @@ exec_checkpoint (struct action *p)
 	struct timespec ts[2];
 
 	ts[0] = ts[1] = p->ts;
-	if (utimens (p->name, ts) != 0)
+	if (utimensat (AT_FDCWD, p->name, ts, 0) != 0)
 	  {
 	    error (0, errno, _("cannot set time on `%s'"), p->name);
 	    break;
@@ -699,7 +698,7 @@ exec_checkpoint (struct action *p)
       if (unlink (p->name))
 	error (0, errno, _("cannot unlink `%s'"), p->name);
       break;
-      
+
     default:
       abort ();
     }
@@ -855,7 +854,7 @@ main (int argc, char **argv)
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 
-  get_date (&touch_time, "now", NULL);
+  parse_datetime (&touch_time, "now", NULL);
 
   /* Decode command options.  */
 
