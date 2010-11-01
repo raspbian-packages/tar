@@ -27,7 +27,7 @@ struct compression_suffix
 };
 
 static struct compression_suffix compression_suffixes[] = {
-#define __CAT2__(a,b) a ## b  
+#define __CAT2__(a,b) a ## b
 #define S(s,p) #s, sizeof (#s) - 1, __CAT2__(p,_PROGRAM)
   { S(gz,   GZIP) },
   { S(tgz,  GZIP) },
@@ -54,7 +54,7 @@ static const char *
 find_compression_program (const char *name, const char *defprog)
 {
   char *suf = strrchr (name, '.');
-    
+
   if (suf)
     {
       int i;
@@ -74,10 +74,9 @@ find_compression_program (const char *name, const char *defprog)
 }
 
 void
-set_comression_program_by_suffix (const char *name, const char *defprog)
+set_compression_program_by_suffix (const char *name, const char *defprog)
 {
   const char *program = find_compression_program (name, defprog);
   if (program)
     use_compress_program_option = program;
 }
-

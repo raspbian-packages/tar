@@ -19,12 +19,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
-AC_INIT([GNU tar], [1.23], [bug-tar@gnu.org])
+AC_INIT([GNU tar], [1.24], [bug-tar@gnu.org])
 AC_CONFIG_SRCDIR([src/tar.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AC_PREREQ([2.63])
-AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-shar std-options silent-rules])
+AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-xz dist-shar std-options silent-rules])
 
 # Enable silent rules by default:
 AM_SILENT_RULES([yes])
@@ -40,8 +40,8 @@ AC_ISC_POSIX
 AC_C_INLINE
 
 AC_CHECK_HEADERS_ONCE(fcntl.h linux/fd.h memory.h net/errno.h \
-  sgtty.h string.h stropts.h \
-  sys/param.h sys/device.h sys/filio.h sys/gentape.h \
+  sgtty.h string.h \
+  sys/param.h sys/device.h sys/gentape.h \
   sys/inet.h sys/io/trioctl.h \
   sys/mtio.h sys/time.h sys/tprintf.h sys/tape.h \
   unistd.h locale.h)
@@ -90,7 +90,7 @@ gl_INIT
 # paxutils modules
 tar_PAXUTILS
 
-AC_CHECK_FUNCS(fsync getdtablesize lstat mkfifo readlink symlink setlocale utimes)
+AC_CHECK_FUNCS_ONCE([fchmod fchown fsync lstat mkfifo readlink symlink])
 AC_CHECK_DECLS([getgrgid],,, [#include <grp.h>])
 AC_CHECK_DECLS([getpwuid],,, [#include <pwd.h>])
 AC_CHECK_DECLS([time],,, [#include <time.h>])

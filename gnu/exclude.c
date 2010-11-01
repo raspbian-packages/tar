@@ -136,6 +136,26 @@ fnmatch_pattern_has_wildcards (const char *str, int options)
   return false;
 }
 
+static void
+unescape_pattern (char *str)
+{
+  int inset = 0;
+  char *q = str;
+  do
+    {
+      if (inset)
+        {
+          if (*q == ']')
+            inset = 0;
+        }
+      else if (*q == '[')
+        inset = 1;
+      else if (*q == '\\')
+        q++;
+    }
+  while ((*str++ = *q++));
+}
+
 /* Return a newly allocated and empty exclude list.  */
 
 struct exclude *
@@ -344,7 +364,7 @@ excluded_file_pattern_p (struct exclude_segment const *seg, char const *f)
     {
       char const *pattern = exclude[i].pattern;
       int options = exclude[i].options;
-      if (excluded != exclude_fnmatch (pattern, f, options))
+      if (exclude_fnmatch (pattern, f, options))
         return !excluded;
     }
   return excluded;
@@ -482,6 +502,8 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
         seg = new_exclude_segment (ex, exclude_hash, options);
 
       str = xstrdup (pattern);
+      if (options & EXCLUDE_WILDCARDS)
+        unescape_pattern (str);
       p = hash_insert (seg->v.table, str);
       if (p != str)
         free (str);

@@ -41,11 +41,12 @@ Copyright @copyright{} 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001,
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.1 or
+under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation; with no
-Invariant Sections, with the Front-Cover Texts being ``A GNU Manual,''
+Invariant Sections, with the Front-Cover Texts being ``A GNU Manual'',
 and with the Back-Cover Texts as in (a) below.  A copy of the license
-is included in the section entitled "GNU Free Documentation License".
+is included in the section entitled ``GNU Free Documentation
+License''.
 
 (a) The FSF's Back-Cover Text is: ``You have the freedom to
 copy and modify this GNU manual.  Buying copies from the FSF
@@ -106,6 +107,7 @@ document.  The rest of the menu lists all the lower level nodes.
 * Date input formats::
 * Formats::
 * Media::
+* Reliability and security::
 
 Appendices
 
@@ -115,7 +117,7 @@ Appendices
 * Tar Internals::
 * Genfile::
 * Free Software Needs Free Documentation::
-* Copying This Manual::
+* GNU Free Documentation License::
 * Index of Command Line Options::
 * Index::
 
@@ -316,7 +318,7 @@ Date input formats
 * Pure numbers in date strings::   19931219, 1440.
 * Seconds since the Epoch::        @@1078100502.
 * Specifying time zone rules::     TZ="America/New_York", TZ="UTC0".
-* Authors of get_date::            Bellovin, Eggert, Salz, Berets, et al.
+* Authors of parse_datetime::      Bellovin, Eggert, Salz, Berets, et al.
 
 Controlling the Archive Format
 
@@ -329,6 +331,10 @@ Using Less Space through Compression
 
 * gzip::                        Creating and Reading Compressed Archives
 * sparse::                      Archiving Sparse Files
+
+Creating and Reading Compressed Archives
+
+* lbzip2::  Using lbzip2 with @GNUTAR{}.
 
 Making @command{tar} Archives More Portable
 
@@ -449,7 +455,7 @@ operations (@samp{create}, @samp{list}, and @samp{extract}) as well as
 two frequently used options (@samp{file} and @samp{verbose}).  The other
 chapters do not refer to the tutorial frequently; however, if a section
 discusses something which is a complex variant of a basic concept, there
-may be a cross reference to that basic concept.  (The entire book,
+may be a cross-reference to that basic concept.  (The entire book,
 including the tutorial, assumes that the reader understands some basic
 concepts of using a Unix-type operating system; @pxref{Tutorial}.)
 
@@ -2461,7 +2467,7 @@ This option tells @command{tar} to read or write archives through
 @item --check-device
 Check device numbers when creating a list of modified files for
 incremental archiving.  This is the default.  @xref{device numbers},
-for a detailed description. 
+for a detailed description.
 
 @opsummary{checkpoint}
 @item --checkpoint[=@var{number}]
@@ -2553,9 +2559,9 @@ directories until the end of extraction. @xref{Directory Modification Times and 
 @item --dereference
 @itemx -h
 
-When creating a @command{tar} archive, @command{tar} will archive the
-file that a symbolic link points to, rather than archiving the
-symlink.  @xref{dereference}.
+When reading or writing a file to be archived, @command{tar} accesses
+the file that a symbolic link points to, rather than the symlink
+itself.  @xref{dereference}.
 
 @opsummary{directory}
 @item --directory=@var{dir}
@@ -2683,6 +2689,30 @@ Creates a @acronym{POSIX.1-2001 archive}.
 @end table
 
 @xref{Formats}, for a detailed discussion of these formats.
+
+@opsummary{full-time}
+@item --full-time
+This option instructs @command{tar} to print file times to their full
+resolution.  Usually this means 1-second resolution, but that depends
+on the underlying file system.  The @option{--full-time} option takes
+effect only when detailed output (verbosity level 2 or higher) has
+been requested using the @option{--verbose} option, e.g., when listing
+or extracting archives:
+
+@smallexample
+$ @kbd{tar -t -v --full-time -f archive.tar}
+@end smallexample
+
+@noindent
+or, when creating an archive:
+
+@smallexample
+$ @kbd{tar -c -vv --full-time -f archive.tar .}
+@end smallexample
+
+Notice, thar when creating the archive you need to specify
+@option{--verbose} twice to get a detailed output (@pxref{verbose
+tutorial}).
 
 @opsummary{group}
 @item --group=@var{group}
@@ -2900,7 +2930,7 @@ suffix.  @xref{--auto-compress}.  @xref{gzip}.
 @item --no-check-device
 Do not check device numbers when creating a list of modified files
 for incremental archiving.  @xref{device numbers}, for
-a detailed description. 
+a detailed description.
 
 @opsummary{no-delay-directory-restore}
 @item --no-delay-directory-restore
@@ -3125,10 +3155,13 @@ Specifies that @command{tar} should reblock its input, for reading
 from pipes on systems with buggy implementations.  @xref{Reading}.
 
 @opsummary{record-size}
-@item --record-size=@var{size}
+@item --record-size=@var{size}[@var{suf}]
 
 Instructs @command{tar} to use @var{size} bytes per record when accessing the
-archive.  @xref{Blocking Factor}.
+archive.  The argument can be suffixed with a @dfn{size suffix}, e.g.
+@option{--record-size=10K} for 10 Kilobytes.  @xref{size-suffixes},
+for a list of valid suffixes.   @xref{Blocking Factor}, for a detailed
+description of this option.
 
 @opsummary{recursion}
 @item --recursion
@@ -3210,7 +3243,7 @@ successfully.  This option is intended for use in shell scripts.
 Here is an example of what you can see using this option:
 
 @smallexample
-$ tar --show-defaults
+$ @kbd{tar --show-defaults}
 --format=gnu -f- -b20 --quoting-style=escape
 --rmt-command=/usr/libexec/rmt --rsh-command=/usr/bin/rsh
 @end smallexample
@@ -3278,11 +3311,15 @@ Alters the suffix @command{tar} uses when backing up files from the default
 @samp{~}.  @xref{backup}.
 
 @opsummary{tape-length}
-@item --tape-length=@var{num}
-@itemx -L @var{num}
+@item --tape-length=@var{num}[@var{suf}]
+@itemx -L @var{num}[@var{suf}]
 
 Specifies the length of tapes that @command{tar} is writing as being
-@w{@var{num} x 1024} bytes long.  @xref{Using Multiple Tapes}.
+@w{@var{num} x 1024} bytes long.  If optional @var{suf} is given, it
+specifies a multiplicative factor to be used instead of 1024.  For
+example, @samp{-L2M} means 2 megabytes.  @xref{size-suffixes}, for a
+list of allowed suffixes.  @xref{Using Multiple Tapes}, for a detailed
+discussion of this option.
 
 @opsummary{test-label}
 @item --test-label
@@ -3342,12 +3379,12 @@ To see transformed member names in verbose listings, use
 @opsummary{uncompress}
 @item --uncompress
 
-(See @option{--compress}. @pxref{gzip})
+(See @option{--compress}, @pxref{gzip})
 
 @opsummary{ungzip}
 @item --ungzip
 
-(See @option{--gzip}. @pxref{gzip})
+(See @option{--gzip}, @pxref{gzip})
 
 @opsummary{unlink-first}
 @item --unlink-first
@@ -4127,7 +4164,7 @@ Disable all warning messages.
 @samp{Current %s is newer or same age}
 @kwindex unknown-keyword
 @cindex @samp{Ignoring unknown extended header keyword `%s'}, warning message
-@item unknown-keyword           
+@item unknown-keyword
 @samp{Ignoring unknown extended header keyword `%s'}
 @end table
 
@@ -4383,7 +4420,7 @@ of those members listed, with their data modification times, owners, etc.
 
 Other operations don't deal with these members as perfectly as you might
 prefer; if you were to use @option{--extract} to extract the archive,
-only the most recently added copy of a member with the same name as 
+only the most recently added copy of a member with the same name as
 other members would end up in the working directory.  This is because
 @option{--extract} extracts an archive in the order the members appeared
 in the archive; the most recently archived members will be extracted
@@ -4551,7 +4588,7 @@ $ @kbd{tar --extract -vv --occurrence --file=collection.tar blues}
 @end smallexample
 
 @xref{Writing}, for more information on @option{--extract} and
-@xref{Option Summary, --occurrence}, for the description of
+see @ref{Option Summary, --occurrence}, for a description of
 @option{--occurrence} option.
 
 @node update
@@ -4599,7 +4636,7 @@ To see the @option{--update} option at work, create a new file,
 @file{classical}, in your practice directory, and some extra text to the
 file @file{blues}, using any text editor.  Then invoke @command{tar} with
 the @samp{update} operation and the @option{--verbose} (@option{-v})
-option specified, using the names of all the files in the practice
+option specified, using the names of all the files in the @file{practice}
 directory as file name arguments:
 
 @smallexample
@@ -4646,8 +4683,8 @@ To use @option{--concatenate}, give the first archive with
 @option{--file} option and name the rest of archives to be
 concatenated on the command line.  The members, and their member
 names, will be copied verbatim from those archives to the first
-one@footnote{This can cause multiple members to have the same name, for
-information on how this affects reading the archive, @ref{multiple}.}.
+one@footnote{This can cause multiple members to have the same name.  For
+information on how this affects reading the archive, see @ref{multiple}.}.
 The new, concatenated archive will be called by the same name as the
 one given with the @option{--file} option.  As usual, if you omit
 @option{--file}, @command{tar} will use the value of the environment
@@ -4811,7 +4848,7 @@ tar: funk not found in archive
 The spirit behind the @option{--compare} (@option{--diff},
 @option{-d}) option is to check whether the archive represents the
 current state of files on disk, more than validating the integrity of
-the archive media.  For this latter goal, @xref{verify}.
+the archive media.  For this latter goal, see @ref{verify}.
 
 @node create options
 @section Options Used by @option{--create}
@@ -4869,7 +4906,7 @@ either a textual date representation in almost arbitrary format
 with @samp{/} or @samp{.}.  In the latter case, the modification time
 of that file will be used.
 
-The following example will set the modification date to 00:00:00 UTC,
+The following example will set the modification date to 00:00:00,
 January 1, 1970:
 
 @smallexample
@@ -5536,9 +5573,9 @@ space, you can use @option{--starting-file=@var{name}} (@option{-K
 archive.  This assumes, of course, that there is now free space, or
 that you are now extracting into a different file system.  (You could
 also choose to suspend @command{tar}, remove unnecessary files from
-the file system, and then restart the same @command{tar} operation.
-In this case, @option{--starting-file} is not necessary.
-@xref{Incremental Dumps}, @xref{interactive}, and @ref{exclude}.)
+the file system, and then resume the same @command{tar} operation.
+In this case, @option{--starting-file} is not necessary.)  See also
+@ref{interactive}, and @ref{exclude}.
 
 @node Same Order
 @unnumberedsubsubsec Same Order
@@ -5692,16 +5729,20 @@ $ @kbd{tar -C sourcedir -cf - . | tar -C targetdir -xf -}
 The command also works using long option forms:
 
 @smallexample
+@group
 $ @kbd{(cd sourcedir; tar --create --file=- . ) \
        | (cd targetdir; tar --extract --file=-)}
+@end group
 @end smallexample
 
 @noindent
 or
 
 @smallexample
-$ @kbd{tar --directory sourcedir --create --file=- . ) \
+@group
+$ @kbd{tar --directory sourcedir --create --file=- . \
        | tar --directory targetdir --extract --file=-}
+@end group
 @end smallexample
 
 @noindent
@@ -5741,7 +5782,7 @@ sophisticated packages dedicated to that purpose.
 Some users are enthusiastic about @code{Amanda} (The Advanced Maryland
 Automatic Network Disk Archiver), a backup system developed by James
 da Silva @file{jds@@cs.umd.edu} and available on many Unix systems.
-This is free software, and it is available from @uref{http://www.amanda.org}. 
+This is free software, and it is available from @uref{http://www.amanda.org}.
 
 @FIXME{
 
@@ -5983,7 +6024,7 @@ Use device numbers when preparing a list of changed files
 for an incremental dump.  This is the default behavior.  The purpose
 of this option is to undo the effect of the @option{--no-check-device}
 if it was given in @env{TAR_OPTIONS} environment variable
-(@pxref{TAR_OPTIONS}). 
+(@pxref{TAR_OPTIONS}).
 @end table
 
 There is also another way to cope with changing device numbers.  It is
@@ -8069,8 +8110,8 @@ $ @kbd{tar --transform 's,^,/usr/local/,S', -c -v -f arch.tar \
        --show-transformed /lib}
 drwxr-xr-x root/root       0 2008-07-08 16:20 /usr/local/lib/
 -rwxr-xr-x root/root 1250840 2008-05-25 07:44 /usr/local/lib/libc-2.3.2.so
-lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 ->
-libc-2.3.2.so
+lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 \
+ -> libc-2.3.2.so
 @end smallexample
 
 Unlike @option{--strip-components}, @option{--transform} can be used
@@ -8516,7 +8557,10 @@ For example:
 $ @kbd{tar -c -f archive.tar -C / home}
 @end smallexample
 
-@include getdate.texi
+@xref{Integrity}, for some of the security-related implications
+of using this option.
+
+@include parse-datetime.texi
 
 @node Formats
 @chapter Controlling the Archive Format
@@ -8653,7 +8697,7 @@ switch to @samp{posix}.
 a wide variety of compression programs, namely: @command{gzip},
 @command{bzip2}, @command{lzip}, @command{lzma}, @command{lzop},
 @command{xz} and traditional @command{compress}. The latter is
-supported mostly for backward compatibility, and we recommend 
+supported mostly for backward compatibility, and we recommend
 against using it, because it is by far less effective than the other
 compression programs@footnote{It also had patent problems in the past.}.
 
@@ -8663,7 +8707,7 @@ commands.  The compression option is @option{-z} (@option{--gzip}) to
 create a @command{gzip} compressed archive, @option{-j}
 (@option{--bzip2}) to create a @command{bzip2} compressed archive,
 @option{--lzip} to create an @asis{lzip} compressed archive,
-@option{-J} (@option{--xz}) to create an @asis{XZ} archive, 
+@option{-J} (@option{--xz}) to create an @asis{XZ} archive,
 @option{--lzma} to create an @asis{LZMA} compressed
 archive, @option{--lzop} to create an @asis{LSOP} archive, and
 @option{-Z} (@option{--compress}) to use @command{compress} program.
@@ -8673,7 +8717,7 @@ For example:
 $ @kbd{tar cfz archive.tar.gz .}
 @end smallexample
 
-You can also let @GNUTAR{} select the compression program basing on
+You can also let @GNUTAR{} select the compression program based on
 the suffix of the archive file name. This is done using
 @option{--auto-compress} (@option{-a}) command line option. For
 example, the following invocation will use @command{bzip2} for
@@ -8691,7 +8735,7 @@ $ @kbd{tar cfa archive.tar.lzma .}
 @end smallexample
 
 For a complete list of file name suffixes recognized by @GNUTAR{},
-@ref{auto-compress}.
+see @ref{auto-compress}.
 
 Reading compressed archive is even simpler: you don't need to specify
 any additional options as @GNUTAR{} recognizes its format
@@ -8709,7 +8753,7 @@ The format recognition algorithm is based on @dfn{signatures}, a
 special byte sequences in the beginning of file, that are specific for
 certain compression formats.  If this approach fails, @command{tar}
 falls back to using archive name suffix to determine its format
-(@xref{auto-compress}, for a list of recognized suffixes).
+(@pxref{auto-compress}, for a list of recognized suffixes).
 
 The only case when you have to specify a decompression option while
 reading the archive is when reading from a pipe or from a tape drive
@@ -8738,7 +8782,94 @@ cannot append another @command{tar} archive to a compressed archive using
 @option{--concatenate} (@option{-A}).  Secondly, multi-volume
 archives cannot be compressed.
 
-The following table summarizes compression options used by @GNUTAR{}.
+The following options allow to select a particular compressor program:
+
+@table @option
+@opindex gzip
+@opindex ungzip
+@item -z
+@itemx --gzip
+@itemx --ungzip
+Filter the archive through @command{gzip}.
+
+@opindex xz
+@item -J
+@itemx --xz
+Filter the archive through @code{xz}.
+
+@item -j
+@itemx --bzip2
+Filter the archive through @code{bzip2}.
+
+@opindex lzip
+@item --lzip
+Filter the archive through @command{lzip}.
+
+@opindex lzma
+@item --lzma
+Filter the archive through @command{lzma}.
+
+@opindex lzop
+@item --lzop
+Filter the archive through @command{lzop}.
+
+@opindex compress
+@opindex uncompress
+@item -Z
+@itemx --compress
+@itemx --uncompress
+Filter the archive through @command{compress}.
+@end table
+
+When any of these options is given, @GNUTAR{} searches the compressor
+binary in the current path and invokes it.  The name of the compressor
+program is specified at compilation time using a corresponding
+@option{--with-@var{compname}} option to @command{configure}, e.g.
+@option{--with-bzip2} to select a specific @command{bzip2} binary.
+@xref{lbzip2}, for a detailed discussion.
+
+The output produced by @command{tar --help} shows the actual
+compressor names along with each of these options.
+
+You can use any of these options on physical devices (tape drives,
+etc.) and remote files as well as on normal files; data to or from
+such devices or remote files is reblocked by another copy of the
+@command{tar} program to enforce the specified (or default) record
+size.  The default compression parameters are used.  Most compression
+programs allow to override these by setting a program-specific
+environment variable.  For example, when using @command{gzip} you can
+use @env{GZIP} as in the example below:
+
+@smallexample
+$ @kbd{GZIP=--best tar cfz archive.tar.gz subdir}
+@end smallexample
+
+@noindent
+Another way would be to use the @option{-I} option instead (see
+below), e.g.:
+
+@smallexample
+$ @kbd{tar -cf archive.tar.gz -I 'gzip --best' subdir}
+@end smallexample
+
+@noindent
+Finally, the third, traditional, way to achieve the same result is to
+use pipe:
+
+@smallexample
+$ @kbd{tar cf - subdir | gzip --best -c - > archive.tar.gz}
+@end smallexample
+
+@cindex corrupted archives
+About corrupted compressed archives: compressed files have no
+redundancy, for maximum compression.  The adaptive nature of the
+compression scheme means that the compression tables are implicitly
+spread all over the archive.  If you lose a few blocks, the dynamic
+construction of the compression tables becomes unsynchronized, and there
+is little chance that you could recover later in the archive.
+
+Another compression options provide a better control over creating
+compressed archives.  These are:
 
 @table @option
 @anchor{auto-compress}
@@ -8765,77 +8896,6 @@ suffix.  The following suffixes are recognized:
 @item @samp{.lzo} @tab @command{lzop}
 @item @samp{.xz} @tab @command{xz}
 @end multitable
-
-@opindex gzip
-@opindex ungzip
-@item -z
-@itemx --gzip
-@itemx --ungzip
-Filter the archive through @command{gzip}.
-
-You can use @option{--gzip} and @option{--gunzip} on physical devices
-(tape drives, etc.) and remote files as well as on normal files; data
-to or from such devices or remote files is reblocked by another copy
-of the @command{tar} program to enforce the specified (or default) record
-size.  The default compression parameters are used; if you need to
-override them, set @env{GZIP} environment variable, e.g.:
-
-@smallexample
-$ @kbd{GZIP=--best tar cfz archive.tar.gz subdir}
-@end smallexample
-
-@noindent
-Another way would be to avoid the @option{--gzip} (@option{--gunzip}, @option{--ungzip}, @option{-z}) option and run
-@command{gzip} explicitly:
-
-@smallexample
-$ @kbd{tar cf - subdir | gzip --best -c - > archive.tar.gz}
-@end smallexample
-
-@cindex corrupted archives
-About corrupted compressed archives: @command{gzip}'ed files have no
-redundancy, for maximum compression.  The adaptive nature of the
-compression scheme means that the compression tables are implicitly
-spread all over the archive.  If you lose a few blocks, the dynamic
-construction of the compression tables becomes unsynchronized, and there
-is little chance that you could recover later in the archive.
-
-There are pending suggestions for having a per-volume or per-file
-compression in @GNUTAR{}.  This would allow for viewing the
-contents without decompression, and for resynchronizing decompression at
-every volume or file, in case of corrupted archives.  Doing so, we might
-lose some compressibility.  But this would have make recovering easier.
-So, there are pros and cons.  We'll see!
-
-@opindex bzip2
-@item -J
-@itemx --xz
-Filter the archive through @code{xz}.  Otherwise like
-@option{--gzip}.
-
-@item -j
-@itemx --bzip2
-Filter the archive through @code{bzip2}.  Otherwise like @option{--gzip}.
-
-@opindex lzip
-@item --lzip
-Filter the archive through @command{lzip}.  Otherwise like @option{--gzip}.
-
-@opindex lzma
-@item --lzma
-Filter the archive through @command{lzma}.  Otherwise like @option{--gzip}.
-
-@opindex lzop
-@item --lzop
-Filter the archive through @command{lzop}.  Otherwise like
-@option{--gzip}.
-
-@opindex compress
-@opindex uncompress
-@item -Z
-@itemx --compress
-@itemx --uncompress
-Filter the archive through @command{compress}.  Otherwise like @option{--gzip}.
 
 @opindex use-compress-program
 @item --use-compress-program=@var{prog}
@@ -8928,6 +8988,45 @@ The above is based on the following discussion:
   the DLT compression mode, the data will actually get bigger and one will
   end up with less space on the tape.
 @end ignore
+
+@menu
+* lbzip2::  Using lbzip2 with @GNUTAR{}.
+@end menu
+
+@node lbzip2
+@subsubsection Using lbzip2 with @GNUTAR{}.
+@cindex lbzip2
+@cindex Laszlo Ersek
+  @command{Lbzip2} is a multithreaded utility for handling
+@samp{bzip2} compression, written by Laszlo Ersek.  It makes use of
+multiple processors to speed up its operation and in general works
+considerably faster than @command{bzip2}.  For a detailed description
+of @command{lbzip2} see @uref{http://freshmeat.net/@/projects/@/lbzip2} and
+@uref{http://www.linuxinsight.com/@/lbzip2-parallel-bzip2-utility.html,
+lbzip2: parallel bzip2 utility}.
+
+  Recent versions of @command{lbzip2} are mostly command line compatible
+with @command{bzip2}, which makes it possible to automatically invoke
+it via the @option{--bzip2} @GNUTAR{} command line option.  To do so,
+@GNUTAR{} must be configured with the @option{--with-bzip2} command
+line option, like this:
+
+@smallexample
+$ @kbd{./configure --with-bzip2=lbzip2 [@var{other-options}]}
+@end smallexample
+
+  Once configured and compiled this way, @command{tar --help} will show the
+following:
+
+@smallexample
+@group
+$ @kbd{tar --help | grep -- --bzip2}
+  -j, --bzip2                filter the archive through lbzip2
+@end group
+@end smallexample
+
+@noindent
+which means that running @command{tar --bzip2} will invoke @command{lbzip2}.
 
 @node sparse
 @subsection Archiving Sparse Files
@@ -9220,27 +9319,25 @@ than System V's.
 Normally, when @command{tar} archives a symbolic link, it writes a
 block to the archive naming the target of the link.  In that way, the
 @command{tar} archive is a faithful record of the file system contents.
-@option{--dereference} (@option{-h}) is used with @option{--create} (@option{-c}), and causes
-@command{tar} to archive the files symbolic links point to, instead of
-the links themselves.  When this option is used, when @command{tar}
-encounters a symbolic link, it will archive the linked-to file,
-instead of simply recording the presence of a symbolic link.
+When @option{--dereference} (@option{-h}) is used with
+@option{--create} (@option{-c}), @command{tar} archives the files
+symbolic links point to, instead of
+the links themselves.
 
-The name under which the file is stored in the file system is not
-recorded in the archive.  To record both the symbolic link name and
-the file name in the system, archive the file under both names.  If
-all links were recorded automatically by @command{tar}, an extracted file
-might be linked to a file name that no longer exists in the file
-system.
-
-If a linked-to file is encountered again by @command{tar} while creating
-the same archive, an entire second copy of it will be stored.  (This
-@emph{might} be considered a bug.)
-
-So, for portable archives, do not archive symbolic links as such,
-and use @option{--dereference} (@option{-h}): many systems do not support
+When creating portable archives, use @option{--dereference}
+(@option{-h}): some systems do not support
 symbolic links, and moreover, your distribution might be unusable if
 it contains unresolved symbolic links.
+
+When reading from an archive, the @option{--dereference} (@option{-h})
+option causes @command{tar} to follow an already-existing symbolic
+link when @command{tar} writes or reads a file named in the archive.
+Ordinarily, @command{tar} does not follow such a link, though it may
+remove the link before writing a new file.  @xref{Dealing with Old
+Files}.
+
+The @option{--dereference} option is unsafe if an untrusted user can
+modify directories while @command{tar} is running.  @xref{Security}.
 
 @node hard links
 @subsection Hard Links
@@ -9370,7 +9467,7 @@ free from many of @samp{v7}'s drawbacks.
 @cindex ustar archive format
 Archive format defined by @acronym{POSIX}.1-1988 specification is called
 @code{ustar}.  Although it is more flexible than the V7 format, it
-still has many restrictions (@xref{Formats,ustar}, for the detailed
+still has many restrictions (@pxref{Formats,ustar}, for the detailed
 description of @code{ustar} format).  Along with V7 format,
 @code{ustar} format is a good choice for archives intended to be read
 with other implementations of @command{tar}.
@@ -9800,7 +9897,7 @@ The condensed file will contain both file map and file data, so no
 additional data will be needed to restore it.  If the original file
 name was @file{@var{dir}/@var{name}}, then the condensed file will be
 named @file{@var{dir}/@/GNUSparseFile.@var{n}/@/@var{name}}, where
-@var{n} is a decimal number@footnote{technically speaking, @var{n} is a
+@var{n} is a decimal number@footnote{Technically speaking, @var{n} is a
 @dfn{process @acronym{ID}} of the @command{tar} process which created the
 archive (@pxref{PAX keywords}).}.
 
@@ -10258,8 +10355,27 @@ that may be larger than will fit on the medium used to hold it.
 
 @xopindex{tape-length, short description}
 @item -L @var{num}
-@itemx --tape-length=@var{num}
-Change tape after writing @var{num} x 1024 bytes.
+@itemx --tape-length=@var{size}[@var{suf}]
+Change tape after writing @var{size} units of data.  Unless @var{suf} is
+given, @var{size} is treated as kilobytes, i.e. @samp{@var{size} x
+1024} bytes.  The following suffixes alter this behavior:
+
+@float Table, size-suffixes
+@caption{Size Suffixes}
+@multitable @columnfractions 0.2 0.3 0.3
+@headitem Suffix @tab Units            @tab Byte Equivalent
+@item b          @tab Blocks           @tab @var{size} x 512
+@item B          @tab Kilobytes        @tab @var{size} x 1024
+@item c          @tab Bytes            @tab @var{size}
+@item G          @tab Gigabytes        @tab @var{size} x 1024^3
+@item K          @tab Kilobytes        @tab @var{size} x 1024
+@item k          @tab Kilobytes        @tab @var{size} x 1024
+@item M          @tab Megabytes        @tab @var{size} x 1024^2
+@item P          @tab Petabytes        @tab @var{size} x 1024^5
+@item T          @tab Terabytes        @tab @var{size} x 1024^4
+@item w          @tab Words            @tab @var{size} x 2
+@end multitable
+@end float
 
 This option might be useful when your tape drivers do not properly
 detect end of physical tapes.  By being slightly conservative on the
@@ -11067,14 +11183,25 @@ tape:
 @anchor{tape-length}
 @table @option
 @opindex tape-length
-@item --tape-length=@var{size}
-@itemx -L @var{size}
-Set maximum length of a volume.  The @var{size} argument should then
-be the usable size of the tape in units of 1024 bytes.  This option
-selects @option{--multi-volume} automatically.  For example:
+@item --tape-length=@var{size}[@var{suf}]
+@itemx -L @var{size}[@var{suf}]
+Set maximum length of a volume.  The @var{suf}, if given, specifies
+units in which @var{size} is expressed, e.g. @samp{2M} mean 2
+megabytes (@pxref{size-suffixes}, for a list of allowed size
+suffixes).  Without @var{suf}, units of 1024 bytes (kilobyte) are
+assumed.
+
+This option selects @option{--multi-volume} automatically.  For example:
 
 @smallexample
 $ @kbd{tar --create --tape-length=41943040 --file=/dev/tape @var{files}}
+@end smallexample
+
+@noindent
+or, which is equivalent:
+
+@smallexample
+$ @kbd{tar --create --tape-length=4G --file=/dev/tape @var{files}}
 @end smallexample
 @end table
 
@@ -11300,9 +11427,9 @@ archive which will be displayed when the archive is listed with
 @option{--multi-volume} (@pxref{Using Multiple Tapes}), then the
 volume label will have @samp{Volume @var{nnn}} appended to the name
 you give, where @var{nnn} is the number of the volume of the archive.
-If you use the @option{--label=@var{volume-label}}) option when
+If you use the @option{--label=@var{volume-label}} option when
 reading an archive, it checks to make sure the label on the tape
-matches the one you give. @xref{label}.
+matches the one you gave.  @xref{label}.
 
 When @command{tar} writes an archive to tape, it creates a single
 tape file.  If multiple archives are written to the same tape, one
@@ -11351,15 +11478,16 @@ will usually see lots of spurious messages.
 @cindex Labeling an archive
 @cindex Labels on the archive media
 @cindex Labeling multi-volume archives
-@UNREVISED
 
 @opindex label
   To avoid problems caused by misplaced paper labels on the archive
-media, you can include a @dfn{label} entry---an archive member which
-contains the name of the archive---in the archive itself.  Use the
+media, you can include a @dfn{label} entry --- an archive member which
+contains the name of the archive --- in the archive itself.  Use the
 @option{--label=@var{archive-label}} (@option{-V @var{archive-label}})
-option in conjunction with the @option{--create} operation to include
-a label entry in the archive as it is being created.
+option@footnote{Until version 1.10, that option was called
+@option{--volume}, but is not available under that name anymore.} in
+conjunction with the @option{--create} operation to include a label
+entry in the archive as it is being created.
 
 @table @option
 @item --label=@var{archive-label}
@@ -11398,7 +11526,7 @@ V--------- 0 0        0 1992-03-07 12:01 iamalabel--Volume Header--
   However, @option{--list} option will cause listing entire
 contents of the archive, which may be undesirable (for example, if the
 archive is stored on a tape).  You can request checking only the volume
-by specifying @option{--test-label} option.  This option reads only the
+label by specifying @option{--test-label} option.  This option reads only the
 first block of an archive, so it can be used with slow storage
 devices.  For example:
 
@@ -11409,16 +11537,35 @@ iamalabel
 @end group
 @end smallexample
 
-  If @option{--test-label} is used with a single command line
-argument, @command{tar} compares the volume label with the
-argument.  It exits with code 0 if the two strings match, and with code
-2 otherwise.  In this case no output is displayed.  For example:
+  If @option{--test-label} is used with one or more command line
+arguments, @command{tar} compares the volume label with each
+argument.  It exits with code 0 if a match is found, and with code 1
+otherwise@footnote{Note that @GNUTAR{} versions up to 1.23 indicated
+mismatch with an exit code 2 and printed a spurious diagnostics on
+stderr.}.  No output is displayed, unless you also used the
+@option{--verbose} option.  For example:
 
 @smallexample
 @group
-$ @kbd{tar --test-label --file=iamanarchive 'iamalable'}
+$ @kbd{tar --test-label --file=iamanarchive 'iamalabel'}
 @result{} 0
-$ @kbd{tar --test-label --file=iamanarchive 'iamalable' alabel}
+$ @kbd{tar --test-label --file=iamanarchive 'alabel'}
+@result{} 1
+@end group
+@end smallexample
+
+  When used with the @option{--verbose} option, @command{tar}
+prints the actual volume label (if any), and a verbose diagnostics in
+case of a mismatch:
+
+@smallexample
+@group
+$ @kbd{tar --test-label --verbose --file=iamanarchive 'iamalabel'}
+iamalabel
+@result{} 0
+$ @kbd{tar --test-label --verbose --file=iamanarchive 'alabel'}
+iamalabel
+tar: Archive label mismatch
 @result{} 1
 @end group
 @end smallexample
@@ -11458,9 +11605,6 @@ up.  Since the volume numbering is automatically added in labels at
 creation time, it sounded logical to equally help the user taking care
 of it when the archive is being read.
 
-  The @option{--label} was once called @option{--volume}, but is not
-available under that name anymore.
-
   You can also use @option{--label} to get a common information on
 all tapes of a series.  For having this information different in each
 series created through a single script used on a regular basis, just
@@ -11474,13 +11618,19 @@ $ @kbd{tar --create --file=/dev/tape --multi-volume \
 @end group
 @end smallexample
 
-  Also note that each label has its own date and time, which corresponds
-to when @GNUTAR{} initially attempted to write it,
+  Some more notes about volume labels:
+
+@itemize @bullet
+@item Each label has its own date and time, which corresponds
+to the time when @GNUTAR{} initially attempted to write it,
 often soon after the operator launches @command{tar} or types the
-carriage return telling that the next tape is ready.  Comparing date
-labels does give an idea of tape throughput only if the delays for
-rewinding tapes and the operator switching them were negligible, which
-is usually not the case.
+carriage return telling that the next tape is ready.
+
+@item Comparing date labels to get an idea of tape throughput is
+unreliable.  It gives correct results only if the delays for rewinding
+tapes and the operator switching them were negligible, which is
+usually not the case.
+@end itemize
 
 @node verify
 @section Verifying Data as It is Stored
@@ -11572,6 +11722,275 @@ physical media, and can be a two position (write enabled/write
 disabled) switch, a notch which can be popped out or covered, a ring
 which can be removed from the center of a tape reel, or some other
 changeable feature.
+
+@node Reliability and security
+@chapter Reliability and Security
+
+The @command{tar} command reads and writes files as any other
+application does, and is subject to the usual caveats about
+reliability and security.  This section contains some commonsense
+advice on the topic.
+
+@menu
+* Reliability::
+* Security::
+@end menu
+
+@node Reliability
+@section Reliability
+
+Ideally, when @command{tar} is creating an archive, it reads from a
+file system that is not being modified, and encounters no errors or
+inconsistencies while reading and writing.  If this is the case, the
+archive should faithfully reflect what was read.  Similarly, when
+extracting from an archive, ideally @command{tar} ideally encounters
+no errors and the extracted files faithfully reflect what was in the
+archive.
+
+However, when reading or writing real-world file systems, several
+things can go wrong; these include permissions problems, corruption of
+data, and race conditions.
+
+@menu
+* Permissions problems::
+* Data corruption and repair::
+* Race conditions::
+@end menu
+
+@node Permissions problems
+@subsection Permissions Problems
+
+If @command{tar} encounters errors while reading or writing files, it
+normally reports an error and exits with nonzero status.  The work it
+does may therefore be incomplete.  For example, when creating an
+archive, if @command{tar} cannot read a file then it cannot copy the
+file into the archive.
+
+@node Data corruption and repair
+@subsection Data Corruption and Repair
+
+If an archive becomes corrupted by an I/O error, this may corrupt the
+data in an extracted file.  Worse, it may corrupt the file's metadata,
+which may cause later parts of the archive to become misinterpreted.
+An tar-format archive contains a checksum that most likely will detect
+errors in the metadata, but it will not detect errors in the data.
+
+If data corruption is a concern, you can compute and check your own
+checksums of an archive by using other programs, such as
+@command{cksum}.
+
+When attempting to recover from a read error or data corruption in an
+archive, you may need to skip past the questionable data and read the
+rest of the archive.  This requires some expertise in the archive
+format and in other software tools.
+
+@node Race conditions
+@subsection Race conditions
+
+If some other process is modifying the file system while @command{tar}
+is reading or writing files, the result may well be inconsistent due
+to race conditions.  For example, if another process creates some
+files in a directory while @command{tar} is creating an archive
+containing the directory's files, @command{tar} may see some of the
+files but not others, or it may see a file that is in the process of
+being created.  The resulting archive may not be a snapshot of the
+file system at any point in time.  If an application such as a
+database system depends on an accurate snapshot, restoring from the
+@command{tar} archive of a live file system may therefore break that
+consistency and may break the application.  The simplest way to avoid
+the consistency issues is to avoid making other changes to the file
+system while tar is reading it or writing it.
+
+When creating an archive, several options are available to avoid race
+conditions.  Some hosts have a way of snapshotting a file system, or
+of temporarily suspending all changes to a file system, by (say)
+suspending the only virtual machine that can modify a file system; if
+you use these facilities and have @command{tar -c} read from a
+snapshot when creating an archive, you can avoid inconsistency
+problems.  More drastically, before starting @command{tar} you could
+suspend or shut down all processes other than @command{tar} that have
+access to the file system, or you could unmount the file system and
+then mount it read-only.
+
+When extracting from an archive, one approach to avoid race conditions
+is to create a directory that no other process can write to, and
+extract into that.
+
+@node Security
+@section Security
+
+In some cases @command{tar} may be used in an adversarial situation,
+where an untrusted user is attempting to gain information about or
+modify otherwise-inaccessible files.  Dealing with untrusted data
+(that is, data generated by an untrusted user) typically requires
+extra care, because even the smallest mistake in the use of
+@command{tar} is more likely to be exploited by an adversary than by a
+race condition.
+
+@menu
+* Privacy::
+* Integrity::
+* Live untrusted data::
+* Security rules of thumb::
+@end menu
+
+@node Privacy
+@subsection Privacy
+
+Standard privacy concerns apply when using @command{tar}.  For
+example, suppose you are archiving your home directory into a file
+@file{/archive/myhome.tar}.  Any secret information in your home
+directory, such as your SSH secret keys, are copied faithfully into
+the archive.  Therefore, if your home directory contains any file that
+should not be read by some other user, the archive itself should be
+not be readable by that user.  And even if the archive's data are
+inaccessible to untrusted users, its metadata (such as size or
+last-modified date) may reveal some information about your home
+directory; if the metadata are intended to be private, the archive's
+parent directory should also be inaccessible to untrusted users.
+
+One precaution is to create @file{/archive} so that it is not
+accessible to any user, unless that user also has permission to access
+all the files in your home directory.
+
+Similarly, when extracting from an archive, take care that the
+permissions of the extracted files are not more generous than what you
+want.  Even if the archive itself is readable only to you, files
+extracted from it have their own permissions that may differ.
+
+@node Integrity
+@subsection Integrity
+
+When creating archives, take care that they are not writable by a
+untrusted user; otherwise, that user could modify the archive, and
+when you later extract from the archive you will get incorrect data.
+
+When @command{tar} extracts from an archive, by default it writes into
+files relative to the working directory.  If the archive was generated
+by an untrusted user, that user therefore can write into any file
+under the working directory.  If the working directory contains a
+symbolic link to another directory, the untrusted user can also write
+into any file under the referenced directory.  When extracting from an
+untrusted archive, it is therefore good practice to create an empty
+directory and run @command{tar} in that directory.
+
+When extracting from two or more untrusted archives, each one should
+be extracted independently, into different empty directories.
+Otherwise, the first archive could create a symbolic link into an area
+outside the working directory, and the second one could follow the
+link and overwrite data that is not under the working directory.  For
+example, when restoring from a series of incremental dumps, the
+archives should have been created by a trusted process, as otherwise
+the incremental restores might alter data outside the working
+directory.
+
+If you use the @option{--absolute-names} (@option{-P}) option when
+extracting, @command{tar} respects any file names in the archive, even
+file names that begin with @file{/} or contain @file{..}.  As this
+lets the archive overwrite any file in your system that you can write,
+the @option{--absolute-names} (@option{-P}) option should be used only
+for trusted archives.
+
+Conversely, with the @option{--keep-old-files} (@option{-k}) option,
+@command{tar} refuses to replace existing files when extracting; and
+with the @option{--no-overwrite-dir} option, @command{tar} refuses to
+replace the permissions or ownership of already-existing directories.
+These options may help when extracting from untrusted archives.
+
+@node Live untrusted data
+@subsection Dealing with Live Untrusted Data
+
+Extra care is required when creating from or extracting into a file
+system that is accessible to untrusted users.  For example, superusers
+who invoke @command{tar} must be wary about its actions being hijacked
+by an adversary who is reading or writing the file system at the same
+time that @command{tar} is operating.
+
+When creating an archive from a live file system, @command{tar} is
+vulnerable to denial-of-service attacks.  For example, an adversarial
+user could create the illusion of an indefinitely-deep directory
+hierarchy @file{d/e/f/g/...} by creating directories one step ahead of
+@command{tar}, or the illusion of an indefinitely-long file by
+creating a sparse file but arranging for blocks to be allocated just
+before @command{tar} reads them.  There is no easy way for
+@command{tar} to distinguish these scenarios from legitimate uses, so
+you may need to monitor @command{tar}, just as you'd need to monitor
+any other system service, to detect such attacks.
+
+While a superuser is extracting from an archive into a live file
+system, an untrusted user might replace a directory with a symbolic
+link, in hopes that @command{tar} will follow the symbolic link and
+extract data into files that the untrusted user does not have access
+to.  Even if the archive was generated by the superuser, it may
+contain a file such as @file{d/etc/passwd} that the untrusted user
+earlier created in order to break in; if the untrusted user replaces
+the directory @file{d/etc} with a symbolic link to @file{/etc} while
+@command{tar} is running, @command{tar} will overwrite
+@file{/etc/passwd}.  This attack can be prevented by extracting into a
+directory that is inaccessible to untrusted users.
+
+Similar attacks via symbolic links are also possible when creating an
+archive, if the untrusted user can modify an ancestor of a top-level
+argument of @command{tar}.  For example, an untrusted user that can
+modify @file{/home/eve} can hijack a running instance of @samp{tar -cf
+- /home/eve/Documents/yesterday} by replacing
+@file{/home/eve/Documents} with a symbolic link to some other
+location.  Attacks like these can be prevented by making sure that
+untrusted users cannot modify any files that are top-level arguments
+to @command{tar}, or any ancestor directories of these files.
+
+@node Security rules of thumb
+@subsection Security Rules of Thumb
+
+This section briefly summarizes rules of thumb for avoiding security
+pitfalls.
+
+@itemize @bullet
+
+@item
+Protect archives at least as much as you protect any of the files
+being archived.
+
+@item
+Extract from an untrusted archive only into an otherwise-empty
+directory.  This directory and its parent should be accessible only to
+trusted users.  For example:
+
+@example
+@group
+$ @kbd{chmod go-rwx .}
+$ @kbd{mkdir -m go-rwx dir}
+$ @kbd{cd dir}
+$ @kbd{tar -xvf /archives/got-it-off-the-net.tar.gz}
+@end group
+@end example
+
+As a corollary, do not do an incremental restore from an untrusted archive.
+
+@item
+Do not let untrusted users access files extracted from untrusted
+archives without checking first for problems such as setuid programs.
+
+@item
+Do not let untrusted users modify directories that are ancestors of
+top-level arguments of @command{tar}.  For example, while you are
+executing @samp{tar -cf /archive/u-home.tar /u/home}, do not let an
+untrusted user modify @file{/}, @file{/archive}, or @file{/u}.
+
+@item
+Pay attention to the diagnostics and exit status of @command{tar}.
+
+@item
+When archiving live file systems, monitor running instances of
+@command{tar} to detect denial-of-service attacks.
+
+@item
+Avoid unusual options such as @option{--absolute-names} (@option{-P}),
+@option{--dereference} (@option{-h}), @option{--overwrite},
+@option{--recursive-unlink}, and @option{--remove-files} unless you
+understand their security implications.
+
+@end itemize
 
 @node Changes
 @appendix Changes
@@ -11893,12 +12312,8 @@ Right margin of the text output. Used for wrapping.
 @appendix Free Software Needs Free Documentation
 @include freemanuals.texi
 
-@node Copying This Manual
-@appendix Copying This Manual
-
-@menu
-* GNU Free Documentation License::  License for copying this manual
-@end menu
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
 
 @include fdl.texi
 
@@ -11907,7 +12322,8 @@ Right margin of the text output. Used for wrapping.
 
 This appendix contains an index of all @GNUTAR{} long command line
 options. The options are listed without the preceding double-dash.
-For a cross-reference of short command line options, @ref{Short Option Summary}.
+For a cross-reference of short command line options, see
+@ref{Short Option Summary}.
 
 @printindex op
 

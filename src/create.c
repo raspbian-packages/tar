@@ -26,11 +26,15 @@
 #include "common.h"
 #include <hash.h>
 
+/* Error number to use when an impostor is discovered.
+   Pretend the impostor isn't there.  */
+enum { IMPOSTOR_ERRNO = ENOENT };
+
 struct link
   {
     dev_t dev;
     ino_t ino;
-    size_t nlink;
+    nlink_t nlink;
     char name[1];
   };
 
@@ -39,7 +43,7 @@ struct exclusion_tag
   const char *name;
   size_t length;
   enum exclusion_tag_type type;
-  bool (*predicate) (const char *name);
+  bool (*predicate) (int fd);
   struct exclusion_tag *next;
 };
 
@@ -47,7 +51,7 @@ static struct exclusion_tag *exclusion_tags;
 
 void
 add_exclusion_tag (const char *name, enum exclusion_tag_type type,
-		   bool (*predicate) (const char *name))
+		   bool (*predicate) (int fd))
 {
   struct exclusion_tag *tag = xmalloc (sizeof tag[0]);
   tag->next = exclusion_tags;
@@ -71,39 +75,24 @@ exclusion_tag_warning (const char *dirname, const char *tagname,
 	      message));
 }
 
-enum exclusion_tag_type 
-check_exclusion_tags (const char *dirname, const char **tag_file_name)
+enum exclusion_tag_type
+check_exclusion_tags (struct tar_stat_info const *st, char const **tag_file_name)
 {
-  static char *tagname;
-  static size_t tagsize;
   struct exclusion_tag *tag;
-  size_t dlen = strlen (dirname);
-  int addslash = !ISSLASH (dirname[dlen-1]);
-  size_t noff = 0;
-  
+
   for (tag = exclusion_tags; tag; tag = tag->next)
     {
-      size_t size = dlen + addslash + tag->length + 1;
-      if (size > tagsize)
+      int tagfd = subfile_open (st, tag->name, open_read_flags);
+      if (0 <= tagfd)
 	{
-	  tagsize = size;
-	  tagname = xrealloc (tagname, tagsize);
-	}
-
-      if (noff == 0)
-	{
-	  strcpy (tagname, dirname);
-	  noff = dlen;
-	  if (addslash)
-	    tagname[noff++] = '/';
-	}
-      strcpy (tagname + noff, tag->name);
-      if (access (tagname, F_OK) == 0
-	  && (!tag->predicate || tag->predicate (tagname)))
-	{
-	  if (tag_file_name)
-	    *tag_file_name = tag->name;
-	  return tag->type;
+	  bool satisfied = !tag->predicate || tag->predicate (tagfd);
+	  close (tagfd);
+	  if (satisfied)
+	    {
+	      if (tag_file_name)
+		*tag_file_name = tag->name;
+	      return tag->type;
+	    }
 	}
     }
 
@@ -121,22 +110,13 @@ check_exclusion_tags (const char *dirname, const char **tag_file_name)
 #define CACHEDIR_SIGNATURE_SIZE (sizeof CACHEDIR_SIGNATURE - 1)
 
 bool
-cachedir_file_p (const char *name)
+cachedir_file_p (int fd)
 {
-  bool tag_present = false;
-  int fd = open (name, O_RDONLY);
-  if (fd >= 0)
-    {
-      static char tagbuf[CACHEDIR_SIGNATURE_SIZE];
+  char tagbuf[CACHEDIR_SIGNATURE_SIZE];
 
-      if (read (fd, tagbuf, CACHEDIR_SIGNATURE_SIZE)
-	  == CACHEDIR_SIGNATURE_SIZE
-	  && memcmp (tagbuf, CACHEDIR_SIGNATURE, CACHEDIR_SIGNATURE_SIZE) == 0)
-	tag_present = true;
-
-      close (fd);
-    }
-  return tag_present;
+  return
+    (read (fd, tagbuf, CACHEDIR_SIGNATURE_SIZE) == CACHEDIR_SIGNATURE_SIZE
+     && memcmp (tagbuf, CACHEDIR_SIGNATURE, CACHEDIR_SIGNATURE_SIZE) == 0);
 }
 
 
@@ -214,6 +194,14 @@ to_base256 (int negative, uintmax_t value, char *where, size_t size)
   while (i);
 }
 
+#define GID_TO_CHARS(val, where) gid_to_chars (val, where, sizeof (where))
+#define MAJOR_TO_CHARS(val, where) major_to_chars (val, where, sizeof (where))
+#define MINOR_TO_CHARS(val, where) minor_to_chars (val, where, sizeof (where))
+#define MODE_TO_CHARS(val, where) mode_to_chars (val, where, sizeof (where))
+#define UID_TO_CHARS(val, where) uid_to_chars (val, where, sizeof (where))
+
+#define UNAME_TO_CHARS(name,buf) string_to_chars (name, buf, sizeof(buf))
+#define GNAME_TO_CHARS(name,buf) string_to_chars (name, buf, sizeof(buf))
 
 static bool
 to_chars (int negative, uintmax_t value, size_t valsize,
@@ -263,7 +251,7 @@ to_chars_subst (int negative, int gnu_format, uintmax_t value, size_t valsize,
 
 	 1. In OLDGNU_FORMAT all strings in a tar header end in \0
 	 2. Incremental archives use oldgnu_header.
-	 
+
 	 Apart from this they are completely identical. */
       uintmax_t s = (negsub &= archive_format == GNU_FORMAT) ? - sub : sub;
       char subbuf[UINTMAX_STRSIZE_BOUND + 1];
@@ -368,25 +356,25 @@ gid_substitute (int *negative)
   return r;
 }
 
-bool
+static bool
 gid_to_chars (gid_t v, char *p, size_t s)
 {
   return to_chars (v < 0, (uintmax_t) v, sizeof v, gid_substitute, p, s, "gid_t");
 }
 
-bool
+static bool
 major_to_chars (major_t v, char *p, size_t s)
 {
   return to_chars (v < 0, (uintmax_t) v, sizeof v, 0, p, s, "major_t");
 }
 
-bool
+static bool
 minor_to_chars (minor_t v, char *p, size_t s)
 {
   return to_chars (v < 0, (uintmax_t) v, sizeof v, 0, p, s, "minor_t");
 }
 
-bool
+static bool
 mode_to_chars (mode_t v, char *p, size_t s)
 {
   /* In the common case where the internal and external mode bits are the same,
@@ -433,12 +421,6 @@ off_to_chars (off_t v, char *p, size_t s)
 }
 
 bool
-size_to_chars (size_t v, char *p, size_t s)
-{
-  return to_chars (0, (uintmax_t) v, sizeof v, 0, p, s, "size_t");
-}
-
-bool
 time_to_chars (time_t v, char *p, size_t s)
 {
   return to_chars (v < 0, (uintmax_t) v, sizeof v, 0, p, s, "time_t");
@@ -460,19 +442,19 @@ uid_substitute (int *negative)
   return r;
 }
 
-bool
+static bool
 uid_to_chars (uid_t v, char *p, size_t s)
 {
   return to_chars (v < 0, (uintmax_t) v, sizeof v, uid_substitute, p, s, "uid_t");
 }
 
-bool
+static bool
 uintmax_to_chars (uintmax_t v, char *p, size_t s)
 {
   return to_chars (0, v, sizeof v, 0, p, s, "uintmax_t");
 }
 
-void
+static void
 string_to_chars (char const *str, char *p, size_t s)
 {
   tar_copy_str (p, str, s);
@@ -480,20 +462,25 @@ string_to_chars (char const *str, char *p, size_t s)
 }
 
 
-/* A file is considered dumpable if it is sparse and both --sparse and --totals
+/* A directory is always considered dumpable.
+   Otherwise, only regular and contiguous files are considered dumpable.
+   Such a file is dumpable if it is sparse and both --sparse and --totals
    are specified.
    Otherwise, it is dumpable unless any of the following conditions occur:
 
    a) it is empty *and* world-readable, or
    b) current archive is /dev/null */
 
-bool
-file_dumpable_p (struct tar_stat_info *st)
+static bool
+file_dumpable_p (struct stat const *st)
 {
+  if (S_ISDIR (st->st_mode))
+    return true;
+  if (! (S_ISREG (st->st_mode) || S_ISCTG (st->st_mode)))
+    return false;
   if (dev_null_output)
-    return totals_option && sparse_option && ST_IS_SPARSE (st->stat);
-  return !(st->archive_file_size == 0
-	   && (st->stat.st_mode & MODE_R) == MODE_R);
+    return totals_option && sparse_option && ST_IS_SPARSE (*st);
+  return ! (st->st_size == 0 && (st->st_mode & MODE_R) == MODE_R);
 }
 
 
@@ -618,7 +605,7 @@ write_ustar_long_name (const char *name)
   size_t length = strlen (name);
   size_t i, nlen;
   union block *header;
-  
+
   if (length > PREFIX_FIELD_SIZE + NAME_FIELD_SIZE + 1)
     {
       ERROR ((0, 0, _("%s: file name is too long (max %d); not dumped"),
@@ -713,7 +700,7 @@ write_extended (bool global, struct tar_stat_info *st, union block *old_header)
   char *p;
   int type;
   time_t t;
-  
+
   if (st->xhdr.buffer || st->xhdr.stk == NULL)
     return old_header;
 
@@ -1012,7 +999,6 @@ pad_archive (off_t size_left)
   union block *blk;
   while (size_left > 0)
     {
-      mv_size_left (size_left);
       blk = find_next_block ();
       memset (blk->buffer, 0, BLOCKSIZE);
       set_next_block_after (blk);
@@ -1038,12 +1024,10 @@ dump_regular_file (int fd, struct tar_stat_info *st)
 
   finish_header (st, blk, block_ordinal);
 
-  mv_begin (st);
+  mv_begin_write (st->file_name, st->stat.st_size, st->stat.st_size);
   while (size_left > 0)
     {
       size_t bufsize, count;
-      
-      mv_size_left (size_left);
 
       blk = find_next_block ();
 
@@ -1058,7 +1042,7 @@ dump_regular_file (int fd, struct tar_stat_info *st)
 	    memset (blk->buffer + size_left, 0, BLOCKSIZE - count);
 	}
 
-      count = (fd < 0) ? bufsize : safe_read (fd, blk->buffer, bufsize);
+      count = (fd <= 0) ? bufsize : safe_read (fd, blk->buffer, bufsize);
       if (count == SAFE_READ_ERROR)
 	{
 	  read_diag_details (st->orig_file_name,
@@ -1080,7 +1064,7 @@ dump_regular_file (int fd, struct tar_stat_info *st)
 			      size_left),
 		    quotearg_colon (st->orig_file_name),
 		    STRINGIFY_BIGINT (size_left, buf)));
-	  if (! ignore_failed_read_option) 
+	  if (! ignore_failed_read_option)
 	    set_exit_status (TAREXIT_DIFFERS);
 	  pad_archive (size_left - (bufsize - count));
 	  return dump_status_short;
@@ -1090,11 +1074,13 @@ dump_regular_file (int fd, struct tar_stat_info *st)
 }
 
 
+/* Copy info from the directory identified by ST into the archive.
+   DIRECTORY contains the directory's entries.  */
+
 static void
-dump_dir0 (char *directory,
-	   struct tar_stat_info *st, bool top_level, dev_t parent_device)
+dump_dir0 (struct tar_stat_info *st, char const *directory)
 {
-  dev_t our_device = st->stat.st_dev;
+  bool top_level = ! st->parent;
   const char *tag_file_name;
   union block *blk = NULL;
   off_t block_ordinal = current_block_ordinal ();
@@ -1129,7 +1115,7 @@ dump_dir0 (char *directory,
 	  size_t bufsize;
 	  ssize_t count;
 	  const char *buffer, *p_buffer;
-	  
+
 	  block_ordinal = current_block_ordinal ();
 	  buffer = safe_directory_contents (gnu_list_name->directory);
 	  totsize = dumpdir_size (buffer);
@@ -1137,12 +1123,10 @@ dump_dir0 (char *directory,
 	  finish_header (st, blk, block_ordinal);
 	  p_buffer = buffer;
 	  size_left = totsize;
-	  
-	  mv_begin (st);
-	  mv_total_size (totsize);
+
+	  mv_begin_write (st->file_name, totsize, totsize);
 	  while (size_left > 0)
 	    {
-	      mv_size_left (size_left);
 	      blk = find_next_block ();
 	      bufsize = available_space_after (blk);
 	      if (size_left < bufsize)
@@ -1157,7 +1141,6 @@ dump_dir0 (char *directory,
 	      p_buffer += bufsize;
 	      set_next_block_after (blk + (bufsize - 1) / BLOCKSIZE);
 	    }
-	  mv_end ();
 	}
       return;
     }
@@ -1167,7 +1150,7 @@ dump_dir0 (char *directory,
 
   if (one_file_system_option
       && !top_level
-      && parent_device != st->stat.st_dev)
+      && st->parent->stat.st_dev != st->stat.st_dev)
     {
       if (verbose_option)
 	WARNOPT (WARN_XDEV,
@@ -1179,13 +1162,13 @@ dump_dir0 (char *directory,
     {
       char *name_buf;
       size_t name_size;
-      
-      switch (check_exclusion_tags (st->orig_file_name, &tag_file_name))
+
+      switch (check_exclusion_tags (st, &tag_file_name))
 	{
 	case exclusion_tag_all:
 	  /* Handled in dump_file0 */
 	  break;
-	  
+
 	case exclusion_tag_none:
 	  {
 	    char const *entry;
@@ -1196,7 +1179,6 @@ dump_dir0 (char *directory,
 	    name_size = name_len = strlen (name_buf);
 
 	    /* Now output all the files in the directory.  */
-	    /* FIXME: Should speed this up by cd-ing into the dir.  */
 	    for (entry = directory; (entry_len = strlen (entry)) != 0;
 		 entry += entry_len + 1)
 	      {
@@ -1207,9 +1189,9 @@ dump_dir0 (char *directory,
 		  }
 		strcpy (name_buf + name_len, entry);
 		if (!excluded_name (name_buf))
-		  dump_file (name_buf, false, our_device);
+		  dump_file (st, entry, name_buf);
 	      }
-	    
+
 	    free (name_buf);
 	  }
 	  break;
@@ -1221,10 +1203,10 @@ dump_dir0 (char *directory,
 	  name_buf = xmalloc (name_size);
 	  strcpy (name_buf, st->orig_file_name);
 	  strcat (name_buf, tag_file_name);
-	  dump_file (name_buf, false, our_device);
+	  dump_file (st, tag_file_name, name_buf);
 	  free (name_buf);
 	  break;
-      
+
 	case exclusion_tag_under:
 	  exclusion_tag_warning (st->orig_file_name, tag_file_name,
 				 _("contents not dumped"));
@@ -1246,22 +1228,72 @@ ensure_slash (char **pstr)
   (*pstr)[len] = '\0';
 }
 
+/* If we just ran out of file descriptors, release a file descriptor
+   in the directory chain somewhere leading from DIR->parent->parent
+   up through the root.  Return true if successful, false (preserving
+   errno == EMFILE) otherwise.
+
+   Do not release DIR's file descriptor, or DIR's parent, as other
+   code assumes that they work.  On some operating systems, another
+   process can claim file descriptor resources as we release them, and
+   some calls or their emulations require multiple file descriptors,
+   so callers should not give up if a single release doesn't work.  */
+
 static bool
-dump_dir (int fd, struct tar_stat_info *st, bool top_level,
-	  dev_t parent_device)
+open_failure_recover (struct tar_stat_info const *dir)
 {
-  char *directory = fdsavedir (fd);
-  if (!directory)
+  if (errno == EMFILE && dir && dir->parent)
+    {
+      struct tar_stat_info *p;
+      for (p = dir->parent->parent; p; p = p->parent)
+	if (0 < p->fd && (! p->parent || p->parent->fd <= 0))
+	  {
+	    tar_stat_close (p);
+	    return true;
+	  }
+      errno = EMFILE;
+    }
+
+  return false;
+}
+
+/* Return the directory entries of ST, in a dynamically allocated buffer,
+   each entry followed by '\0' and the last followed by an extra '\0'.
+   Return null on failure, setting errno.  */
+char *
+get_directory_entries (struct tar_stat_info *st)
+{
+  while (! (st->dirstream = fdopendir (st->fd)))
+    if (! open_failure_recover (st))
+      return 0;
+  return streamsavedir (st->dirstream);
+}
+
+/* Dump the directory ST.  Return true if successful, false (emitting
+   diagnostics) otherwise.  Get ST's entries, recurse through its
+   subdirectories, and clean up file descriptors afterwards.  */
+static bool
+dump_dir (struct tar_stat_info *st)
+{
+  char *directory = get_directory_entries (st);
+  if (! directory)
     {
       savedir_diag (st->orig_file_name);
       return false;
     }
 
-  dump_dir0 (directory, st, top_level, parent_device);
+  dump_dir0 (st, directory);
 
+  restore_parent_fd (st);
   free (directory);
   return true;
 }
+
+
+/* Number of links a file can have without having to be entered into
+   the link table.  Typically this is 1, but in trickier circumstances
+   it is 0.  */
+static nlink_t trivial_link_count;
 
 
 /* Main functions of this module.  */
@@ -1270,6 +1302,8 @@ void
 create_archive (void)
 {
   struct name const *p;
+
+  trivial_link_count = name_count <= 1 && ! dereference_option;
 
   open_archive (ACCESS_WRITE);
   buffer_write_global_xheader ();
@@ -1284,12 +1318,13 @@ create_archive (void)
 
       while ((p = name_from_list ()) != NULL)
 	if (!excluded_name (p->name))
-	  dump_file (p->name, p->cmdline, (dev_t) 0);
+	  dump_file (0, p->name, p->name);
 
       blank_name_list ();
       while ((p = name_from_list ()) != NULL)
 	if (!excluded_name (p->name))
 	  {
+	    struct tar_stat_info st;
 	    size_t plen = strlen (p->name);
 	    if (buffer_size <= plen)
 	      {
@@ -1300,6 +1335,7 @@ create_archive (void)
 	    memcpy (buffer, p->name, plen);
 	    if (! ISSLASH (buffer[plen - 1]))
 	      buffer[plen++] = DIRECTORY_SEPARATOR;
+	    tar_stat_init (&st);
 	    q = directory_contents (gnu_list_name->directory);
 	    if (q)
 	      while (*q)
@@ -1307,6 +1343,23 @@ create_archive (void)
 		  size_t qlen = strlen (q);
 		  if (*q == 'Y')
 		    {
+		      if (! st.orig_file_name)
+			{
+			  int fd = openat (chdir_fd, p->name,
+					   open_searchdir_flags);
+			  if (fd < 0)
+			    {
+			      open_diag (p->name);
+			      break;
+			    }
+			  st.fd = fd;
+			  if (fstat (fd, &st.stat) != 0)
+			    {
+			      stat_diag (p->name);
+			      break;
+			    }
+			  st.orig_file_name = xstrdup (p->name);
+			}
 		      if (buffer_size < plen + qlen)
 			{
 			  while ((buffer_size *=2 ) < plen + qlen)
@@ -1314,10 +1367,11 @@ create_archive (void)
 			  buffer = xrealloc (buffer, buffer_size);
  			}
 		      strcpy (buffer + plen, q + 1);
-		      dump_file (buffer, false, (dev_t) 0);
+		      dump_file (&st, q + 1, buffer);
 		    }
 		  q += qlen + 1;
 		}
+	    tar_stat_destroy (&st);
 	  }
       free (buffer);
     }
@@ -1326,7 +1380,7 @@ create_archive (void)
       const char *name;
       while ((name = name_next (1)) != NULL)
 	if (!excluded_name (name))
-	  dump_file (name, true, (dev_t) 0);
+	  dump_file (0, name, name);
     }
 
   write_eot ();
@@ -1378,7 +1432,8 @@ static Hash_table *link_table;
 static bool
 dump_hard_link (struct tar_stat_info *st)
 {
-  if (link_table && (st->stat.st_nlink > 1 || remove_files_option))
+  if (link_table
+      && (trivial_link_count < st->stat.st_nlink || remove_files_option))
     {
       struct link lp;
       struct link *duplicate;
@@ -1425,7 +1480,7 @@ file_count_links (struct tar_stat_info *st)
 {
   if (hard_dereference_option)
     return;
-  if (st->stat.st_nlink > 1)
+  if (trivial_link_count < st->stat.st_nlink)
     {
       struct link *duplicate;
       char *linkname = NULL;
@@ -1433,7 +1488,7 @@ file_count_links (struct tar_stat_info *st)
 
       assign_string (&linkname, st->orig_file_name);
       transform_name (&linkname, XFORM_LINK);
-      
+
       lp = xmalloc (offsetof (struct link, name)
 				 + strlen (linkname) + 1);
       lp->ino = st->stat.st_ino;
@@ -1441,13 +1496,13 @@ file_count_links (struct tar_stat_info *st)
       lp->nlink = st->stat.st_nlink;
       strcpy (lp->name, linkname);
       free (linkname);
-      
+
       if (! ((link_table
 	      || (link_table = hash_initialize (0, 0, hash_link,
 						compare_links, 0)))
 	     && (duplicate = hash_insert (link_table, lp))))
 	xalloc_die ();
-      
+
       if (duplicate != lp)
 	abort ();
       lp->nlink--;
@@ -1474,26 +1529,96 @@ check_links (void)
     }
 }
 
-/* Dump a single file, recursing on directories.  P is the file name
-   to dump.  TOP_LEVEL tells whether this is a top-level call; zero
-   means no, positive means yes, and negative means the top level
-   of an incremental dump.  PARENT_DEVICE is the device of P's
-   parent directory; it is examined only if TOP_LEVEL is zero. */
+/* Assuming DIR is the working directory, open FILE, using FLAGS to
+   control the open.  A null DIR means to use ".".  If we are low on
+   file descriptors, try to release one or more from DIR's parents to
+   reuse it.  */
+int
+subfile_open (struct tar_stat_info const *dir, char const *file, int flags)
+{
+  int fd;
+
+  static bool initialized;
+  if (! initialized)
+    {
+      /* Initialize any tables that might be needed when file
+	 descriptors are exhausted, and whose initialization might
+	 require a file descriptor.  This includes the system message
+	 catalog and tar's message catalog.  */
+      initialized = true;
+      strerror (ENOENT);
+      gettext ("");
+    }
+
+  while ((fd = openat (dir ? dir->fd : chdir_fd, file, flags)) < 0
+	 && open_failure_recover (dir))
+    continue;
+  return fd;
+}
+
+/* Restore the file descriptor for ST->parent, if it was temporarily
+   closed to conserve file descriptors.  On failure, set the file
+   descriptor to the negative of the corresponding errno value.  Call
+   this every time a subdirectory is ascended from.  */
+void
+restore_parent_fd (struct tar_stat_info const *st)
+{
+  struct tar_stat_info *parent = st->parent;
+  if (parent && ! parent->fd)
+    {
+      int parentfd = openat (st->fd, "..", open_searchdir_flags);
+      struct stat parentstat;
+
+      if (parentfd < 0)
+	parentfd = - errno;
+      else if (! (fstat (parentfd, &parentstat) == 0
+		  && parent->stat.st_ino == parentstat.st_ino
+		  && parent->stat.st_dev == parentstat.st_dev))
+	{
+	  close (parentfd);
+	  parentfd = IMPOSTOR_ERRNO;
+	}
+
+      if (parentfd < 0)
+	{
+	  int origfd = openat (chdir_fd, parent->orig_file_name,
+			       open_searchdir_flags);
+	  if (0 <= origfd)
+	    {
+	      if (fstat (parentfd, &parentstat) == 0
+		  && parent->stat.st_ino == parentstat.st_ino
+		  && parent->stat.st_dev == parentstat.st_dev)
+		parentfd = origfd;
+	      else
+		close (origfd);
+	    }
+	}
+
+      parent->fd = parentfd;
+    }
+}
+
+/* Dump a single file, recursing on directories.  ST is the file's
+   status info, NAME its name relative to the parent directory, and P
+   its full name (which may be relative to the working directory).  */
 
 /* FIXME: One should make sure that for *every* path leading to setting
    exit_status to failure, a clear diagnostic has been issued.  */
 
 static void
-dump_file0 (struct tar_stat_info *st, const char *p,
-	    bool top_level, dev_t parent_device)
+dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
 {
   union block *header;
   char type;
   off_t original_size;
   struct timespec original_ctime;
-  struct timespec restore_times[2];
   off_t block_ordinal = -1;
+  int fd = 0;
   bool is_dir;
+  struct tar_stat_info const *parent = st->parent;
+  bool top_level = ! parent;
+  int parentfd = top_level ? chdir_fd : parent->fd;
+  void (*diag) (char const *) = 0;
 
   if (interactive_option && !confirm ("add", p))
     return;
@@ -1504,14 +1629,34 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 
   transform_name (&st->file_name, XFORM_REGFILE);
 
-  if (deref_stat (dereference_option, p, &st->stat) != 0)
+  if (parentfd < 0 && ! top_level)
     {
-      file_removed_diag (p, top_level, stat_diag);
+      errno = - parentfd;
+      diag = open_diag;
+    }
+  else if (fstatat (parentfd, name, &st->stat, fstatat_flags) != 0)
+    diag = stat_diag;
+  else if (file_dumpable_p (&st->stat))
+    {
+      fd = subfile_open (parent, name, open_read_flags);
+      if (fd < 0)
+	diag = open_diag;
+      else
+	{
+	  st->fd = fd;
+	  if (fstat (fd, &st->stat) != 0)
+	    diag = stat_diag;
+	}
+    }
+  if (diag)
+    {
+      file_removed_diag (p, top_level, diag);
       return;
     }
+
   st->archive_file_size = original_size = st->stat.st_size;
-  st->atime = restore_times[0] = get_stat_atime (&st->stat);
-  st->mtime = restore_times[1] = get_stat_mtime (&st->stat);
+  st->atime = get_stat_atime (&st->stat);
+  st->mtime = get_stat_mtime (&st->stat);
   st->ctime = original_ctime = get_stat_ctime (&st->stat);
 
 #ifdef S_ISHIDDEN
@@ -1529,10 +1674,10 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 
   /* See if we want only new files, and check if this one is too old to
      put in the archive.
-     
+
      This check is omitted if incremental_option is set *and* the
      requested file is not explicitely listed in the command line. */
-  
+
   if (!(incremental_option && !is_individual_file (p))
       && !S_ISDIR (st->stat.st_mode)
       && OLDER_TAR_STAT_TIME (*st, m)
@@ -1562,23 +1707,7 @@ dump_file0 (struct tar_stat_info *st, const char *p,
   if (is_dir || S_ISREG (st->stat.st_mode) || S_ISCTG (st->stat.st_mode))
     {
       bool ok;
-      int fd = -1;
       struct stat final_stat;
-
-      if (is_dir || file_dumpable_p (st))
-	{
-	  fd = open (p,
-		     (O_RDONLY | O_BINARY
-		      | (is_dir ? O_DIRECTORY | O_NONBLOCK : 0)
-		      | (atime_preserve_option == system_atime_preserve
-			 ? O_NOATIME
-			 : 0)));
-	  if (fd < 0)
-	    {
-	      file_removed_diag (p, top_level, open_diag);
-	      return;
-	    }
-	}
 
       if (is_dir)
 	{
@@ -1586,27 +1715,23 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 	  ensure_slash (&st->orig_file_name);
 	  ensure_slash (&st->file_name);
 
-	  if (check_exclusion_tags (st->orig_file_name, &tag_file_name)
-	      == exclusion_tag_all)
+	  if (check_exclusion_tags (st, &tag_file_name) == exclusion_tag_all)
 	    {
 	      exclusion_tag_warning (st->orig_file_name, tag_file_name,
 				     _("directory not dumped"));
-	      if (fd >= 0)
-		close (fd);
 	      return;
 	    }
-	  
-	  ok = dump_dir (fd, st, top_level, parent_device);
 
-	  /* dump_dir consumes FD if successful.  */
-	  if (ok)
-	    fd = -1;
+	  ok = dump_dir (st);
+
+	  fd = st->fd;
+	  parentfd = top_level ? chdir_fd : parent->fd;
 	}
       else
 	{
 	  enum dump_status status;
 
-	  if (fd != -1 && sparse_option && ST_IS_SPARSE (st->stat))
+	  if (fd && sparse_option && ST_IS_SPARSE (st->stat))
 	    {
 	      status = sparse_dump_file (fd, st);
 	      if (status == dump_status_not_implemented)
@@ -1619,7 +1744,6 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 	    {
 	    case dump_status_ok:
 	    case dump_status_short:
-	      mv_end ();
 	      file_count_links (st);
 	      break;
 
@@ -1635,21 +1759,26 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 
       if (ok)
 	{
-	  /* If possible, reopen a directory if we are preserving
-	     atimes, so that we can set just the atime on systems with
-	     _FIOSATIME.  */
-	  if (fd < 0 && is_dir
-	      && atime_preserve_option == replace_atime_preserve)
-	    fd = open (p, O_RDONLY | O_BINARY | O_DIRECTORY | O_NONBLOCK);
-
-	  if ((fd < 0
-	       ? deref_stat (dereference_option, p, &final_stat)
-	       : fstat (fd, &final_stat))
-	      != 0)
+	  if (fd < 0)
 	    {
-	      file_removed_diag (p, top_level, stat_diag);
+	      errno = - fd;
 	      ok = false;
 	    }
+	  else if (fd == 0)
+	    {
+	      if (parentfd < 0 && ! top_level)
+		{
+		  errno = - parentfd;
+		  ok = false;
+		}
+	      else
+		ok = fstatat (parentfd, name, &final_stat, fstatat_flags) == 0;
+	    }
+	  else
+	    ok = fstat (fd, &final_stat) == 0;
+
+	  if (! ok)
+	    file_removed_diag (p, top_level, stat_diag);
 	}
 
       if (ok)
@@ -1666,16 +1795,11 @@ dump_file0 (struct tar_stat_info *st, const char *p,
 	      set_exit_status (TAREXIT_DIFFERS);
 	    }
 	  else if (atime_preserve_option == replace_atime_preserve
-		   && set_file_atime (fd, p, restore_times) != 0)
+		   && set_file_atime (fd, parentfd, name, st->atime) != 0)
 	    utime_error (p);
 	}
 
-      if (0 <= fd && close (fd) != 0)
-	{
-	  close_diag (p);
-	  ok = false;
-	}
-
+      ok &= tar_stat_close (st);
       if (ok && remove_files_option)
 	queue_deferred_unlink (p, is_dir);
 
@@ -1690,7 +1814,7 @@ dump_file0 (struct tar_stat_info *st, const char *p,
       if (linklen != st->stat.st_size || linklen + 1 == 0)
 	xalloc_die ();
       buffer = (char *) alloca (linklen + 1);
-      size = readlink (p, buffer, linklen + 1);
+      size = readlinkat (parentfd, name, buffer, linklen + 1);
       if (size < 0)
 	{
 	  file_removed_diag (p, top_level, readlink_diag);
@@ -1769,13 +1893,20 @@ dump_file0 (struct tar_stat_info *st, const char *p,
     queue_deferred_unlink (p, false);
 }
 
+/* Dump a file, recursively.  PARENT describes the file's parent
+   directory, NAME is the file's name relative to PARENT, and FULLNAME
+   its full name, possibly relative to the working directory.  NAME
+   may contain slashes at the top level of invocation.  */
+
 void
-dump_file (const char *p, bool top_level, dev_t parent_device)
+dump_file (struct tar_stat_info *parent, char const *name,
+	   char const *fullname)
 {
   struct tar_stat_info st;
   tar_stat_init (&st);
-  dump_file0 (&st, p, top_level, parent_device);
-  if (listed_incremental_option)
-    update_parent_directory (p);
+  st.parent = parent;
+  dump_file0 (&st, name, fullname);
+  if (parent && listed_incremental_option)
+    update_parent_directory (parent);
   tar_stat_destroy (&st);
 }

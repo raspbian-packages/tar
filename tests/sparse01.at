@@ -31,7 +31,7 @@ echo separator
 tar tfv archive
 echo separator
 mkdir directory
-tar Cxf directory archive
+tar Cxf directory archive --warning=no-timestamp
 genfile --stat=name,size sparsefile
 cmp sparsefile directory/sparsefile
 ],
@@ -49,4 +49,3 @@ sparsefile 10344448
 ])
 
 AT_CLEANUP
-

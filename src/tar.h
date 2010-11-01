@@ -265,7 +265,7 @@ enum archive_format
 struct sp_array
 {
   off_t offset;
-  size_t numbytes;
+  off_t numbytes;
 };
 
 struct xheader
@@ -311,12 +311,32 @@ struct tar_stat_info
 
   /* Extended headers */
   struct xheader xhdr;
-  
+
   /* For dumpdirs */
   bool is_dumpdir;          /* Is the member a dumpdir? */
   bool skipped;             /* The member contents is already read
 			       (for GNUTYPE_DUMPDIR) */
   char *dumpdir;            /* Contents of the dump directory */
+
+  /* Parent directory, if creating an archive.  This is null if the
+     file is at the top level.  */
+  struct tar_stat_info *parent;
+
+  /* Directory stream.  If this is not null, it is in control of FD,
+     and should be closed instead of FD.  */
+  DIR *dirstream;
+
+  /* File descriptor, if creating an archive, and if a directory or a
+     regular file or a contiguous file.
+
+     It is zero if no file descriptor is available, either because it
+     was never needed or because it was open and then closed to
+     conserve on file descriptors.  (Standard input is never used
+     here, so zero cannot be a valid file descriptor.)
+
+     It is negative if it could not be reopened after it was closed.
+     Negate it to find out what errno was when the reopen failed.  */
+  int fd;
 };
 
 union block

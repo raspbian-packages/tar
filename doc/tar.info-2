@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.23, 9 March 2010), which
+This manual is for GNU `tar' (version 1.24, 24 October 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -8,9 +8,9 @@ creates and extracts files from archives.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
-     Version 1.1 or any later version published by the Free Software
+     Version 1.3 or any later version published by the Free Software
      Foundation; with no Invariant Sections, with the Front-Cover Texts
-     being "A GNU Manual," and with the Back-Cover Texts as in (a)
+     being "A GNU Manual", and with the Back-Cover Texts as in (a)
      below.  A copy of the license is included in the section entitled
      "GNU Free Documentation License".
 
@@ -77,7 +77,7 @@ v7
      Makefiles.  This practice will change in the future, in the
      meantime, however this means that projects containing file names
      more than 99 characters long will not be able to use GNU `tar'
-     1.23 and Automake prior to 1.9.
+     1.24 and Automake prior to 1.9.
 
 ustar
      Archive format defined by POSIX.1-1988 specification.  It stores
@@ -180,7 +180,7 @@ program.  For example:
 
      $ tar cfz archive.tar.gz .
 
-   You can also let GNU `tar' select the compression program basing on
+   You can also let GNU `tar' select the compression program based on
 the suffix of the archive file name. This is done using
 `--auto-compress' (`-a') command line option. For example, the
 following invocation will use `bzip2' for compression:
@@ -192,7 +192,7 @@ whereas the following one will use `lzma':
      $ tar cfa archive.tar.lzma .
 
    For a complete list of file name suffixes recognized by GNU `tar',
-*note auto-compress::.
+see *note auto-compress::.
 
    Reading compressed archive is even simpler: you don't need to specify
 any additional options as GNU `tar' recognizes its format
@@ -207,7 +207,7 @@ archive created in previous example:
    The format recognition algorithm is based on "signatures", a special
 byte sequences in the beginning of file, that are specific for certain
 compression formats.  If this approach fails, `tar' falls back to using
-archive name suffix to determine its format (*Note auto-compress::, for
+archive name suffix to determine its format (*note auto-compress::, for
 a list of recognized suffixes).
 
    The only case when you have to specify a decompression option while
@@ -232,7 +232,73 @@ members to them.  Likewise, you cannot append another `tar' archive to
 a compressed archive using `--concatenate' (`-A').  Secondly,
 multi-volume archives cannot be compressed.
 
-   The following table summarizes compression options used by GNU `tar'.
+   The following options allow to select a particular compressor
+program:
+
+`-z'
+`--gzip'
+`--ungzip'
+     Filter the archive through `gzip'.
+
+`-J'
+`--xz'
+     Filter the archive through `xz'.
+
+`-j'
+`--bzip2'
+     Filter the archive through `bzip2'.
+
+`--lzip'
+     Filter the archive through `lzip'.
+
+`--lzma'
+     Filter the archive through `lzma'.
+
+`--lzop'
+     Filter the archive through `lzop'.
+
+`-Z'
+`--compress'
+`--uncompress'
+     Filter the archive through `compress'.
+
+   When any of these options is given, GNU `tar' searches the compressor
+binary in the current path and invokes it.  The name of the compressor
+program is specified at compilation time using a corresponding
+`--with-COMPNAME' option to `configure', e.g.  `--with-bzip2' to select
+a specific `bzip2' binary.  *Note lbzip2::, for a detailed discussion.
+
+   The output produced by `tar --help' shows the actual compressor
+names along with each of these options.
+
+   You can use any of these options on physical devices (tape drives,
+etc.) and remote files as well as on normal files; data to or from such
+devices or remote files is reblocked by another copy of the `tar'
+program to enforce the specified (or default) record size.  The default
+compression parameters are used.  Most compression programs allow to
+override these by setting a program-specific environment variable.  For
+example, when using `gzip' you can use `GZIP' as in the example below:
+
+     $ GZIP=--best tar cfz archive.tar.gz subdir
+
+Another way would be to use the `-I' option instead (see below), e.g.:
+
+     $ tar -cf archive.tar.gz -I 'gzip --best' subdir
+
+Finally, the third, traditional, way to achieve the same result is to
+use pipe:
+
+     $ tar cf - subdir | gzip --best -c - > archive.tar.gz
+
+   About corrupted compressed archives: compressed files have no
+redundancy, for maximum compression.  The adaptive nature of the
+compression scheme means that the compression tables are implicitly
+spread all over the archive.  If you lose a few blocks, the dynamic
+construction of the compression tables becomes unsynchronized, and there
+is little chance that you could recover later in the archive.
+
+   Another compression options provide a better control over creating
+compressed archives.  These are:
 
 `--auto-compress'
 `-a'
@@ -255,62 +321,6 @@ multi-volume archives cannot be compressed.
      `.tlz'               `lzma'
      `.lzo'               `lzop'
      `.xz'                `xz'
-
-`-z'
-`--gzip'
-`--ungzip'
-     Filter the archive through `gzip'.
-
-     You can use `--gzip' and `--gunzip' on physical devices (tape
-     drives, etc.) and remote files as well as on normal files; data to
-     or from such devices or remote files is reblocked by another copy
-     of the `tar' program to enforce the specified (or default) record
-     size.  The default compression parameters are used; if you need to
-     override them, set `GZIP' environment variable, e.g.:
-
-          $ GZIP=--best tar cfz archive.tar.gz subdir
-
-     Another way would be to avoid the `--gzip' (`--gunzip',
-     `--ungzip', `-z') option and run `gzip' explicitly:
-
-          $ tar cf - subdir | gzip --best -c - > archive.tar.gz
-
-     About corrupted compressed archives: `gzip''ed files have no
-     redundancy, for maximum compression.  The adaptive nature of the
-     compression scheme means that the compression tables are implicitly
-     spread all over the archive.  If you lose a few blocks, the dynamic
-     construction of the compression tables becomes unsynchronized, and
-     there is little chance that you could recover later in the archive.
-
-     There are pending suggestions for having a per-volume or per-file
-     compression in GNU `tar'.  This would allow for viewing the
-     contents without decompression, and for resynchronizing
-     decompression at every volume or file, in case of corrupted
-     archives.  Doing so, we might lose some compressibility.  But this
-     would have make recovering easier.  So, there are pros and cons.
-     We'll see!
-
-`-J'
-`--xz'
-     Filter the archive through `xz'.  Otherwise like `--gzip'.
-
-`-j'
-`--bzip2'
-     Filter the archive through `bzip2'.  Otherwise like `--gzip'.
-
-`--lzip'
-     Filter the archive through `lzip'.  Otherwise like `--gzip'.
-
-`--lzma'
-     Filter the archive through `lzma'.  Otherwise like `--gzip'.
-
-`--lzop'
-     Filter the archive through `lzop'.  Otherwise like `--gzip'.
-
-`-Z'
-`--compress'
-`--uncompress'
-     Filter the archive through `compress'.  Otherwise like `--gzip'.
 
 `--use-compress-program=PROG'
 `-I=PROG'
@@ -350,9 +360,42 @@ Likewise, the command below will list its contents:
 
      $ tar -tf foo.tar.gpgz -Igpgz .
 
+* Menu:
+
+* lbzip2::  Using lbzip2 with GNU `tar'.
+
    ---------- Footnotes ----------
 
    (1) It also had patent problems in the past.
+
+
+File: tar.info,  Node: lbzip2,  Up: gzip
+
+8.1.1.1 Using lbzip2 with GNU `tar'.
+....................................
+
+`Lbzip2' is a multithreaded utility for handling `bzip2' compression,
+written by Laszlo Ersek.  It makes use of multiple processors to speed
+up its operation and in general works considerably faster than `bzip2'.
+For a detailed description of `lbzip2' see
+`http://freshmeat.net/projects/lbzip2' and lbzip2: parallel bzip2
+utility
+(http://www.linuxinsight.com/lbzip2-parallel-bzip2-utility.html).
+
+   Recent versions of `lbzip2' are mostly command line compatible with
+`bzip2', which makes it possible to automatically invoke it via the
+`--bzip2' GNU `tar' command line option.  To do so, GNU `tar' must be
+configured with the `--with-bzip2' command line option, like this:
+
+     $ ./configure --with-bzip2=lbzip2 [OTHER-OPTIONS]
+
+   Once configured and compiled this way, `tar --help' will show the
+following:
+
+     $ tar --help | grep -- --bzip2
+       -j, --bzip2                filter the archive through lbzip2
+
+which means that running `tar --bzip2' will invoke `lbzip2'.
 
 
 File: tar.info,  Node: sparse,  Prev: gzip,  Up: Compression
@@ -605,27 +648,22 @@ File: tar.info,  Node: dereference,  Next: hard links,  Prev: Portable Names,  U
 
 Normally, when `tar' archives a symbolic link, it writes a block to the
 archive naming the target of the link.  In that way, the `tar' archive
-is a faithful record of the file system contents.  `--dereference'
-(`-h') is used with `--create' (`-c'), and causes `tar' to archive the
-files symbolic links point to, instead of the links themselves.  When
-this option is used, when `tar' encounters a symbolic link, it will
-archive the linked-to file, instead of simply recording the presence of
-a symbolic link.
+is a faithful record of the file system contents.  When `--dereference'
+(`-h') is used with `--create' (`-c'), `tar' archives the files
+symbolic links point to, instead of the links themselves.
 
-   The name under which the file is stored in the file system is not
-recorded in the archive.  To record both the symbolic link name and the
-file name in the system, archive the file under both names.  If all
-links were recorded automatically by `tar', an extracted file might be
-linked to a file name that no longer exists in the file system.
+   When creating portable archives, use `--dereference' (`-h'): some
+systems do not support symbolic links, and moreover, your distribution
+might be unusable if it contains unresolved symbolic links.
 
-   If a linked-to file is encountered again by `tar' while creating the
-same archive, an entire second copy of it will be stored.  (This
-_might_ be considered a bug.)
+   When reading from an archive, the `--dereference' (`-h') option
+causes `tar' to follow an already-existing symbolic link when `tar'
+writes or reads a file named in the archive.  Ordinarily, `tar' does
+not follow such a link, though it may remove the link before writing a
+new file.  *Note Dealing with Old Files::.
 
-   So, for portable archives, do not archive symbolic links as such,
-and use `--dereference' (`-h'): many systems do not support symbolic
-links, and moreover, your distribution might be unusable if it contains
-unresolved symbolic links.
+   The `--dereference' option is unsafe if an untrusted user can modify
+directories while `tar' is running.  *Note Security::.
 
 
 File: tar.info,  Node: hard links,  Next: old,  Prev: dereference,  Up: Portability
@@ -736,7 +774,7 @@ File: tar.info,  Node: ustar,  Next: gnu,  Prev: old,  Up: Portability
 
 Archive format defined by POSIX.1-1988 specification is called `ustar'.
 Although it is more flexible than the V7 format, it still has many
-restrictions (*Note ustar: Formats, for the detailed description of
+restrictions (*note ustar: Formats, for the detailed description of
 `ustar' format).  Along with V7 format, `ustar' format is a good choice
 for archives intended to be read with other implementations of `tar'.
 
@@ -1270,7 +1308,7 @@ header:
 
    (1) *Note PAX 1::.
 
-   (2) technically speaking, N is a "process ID" of the `tar' process
+   (2) Technically speaking, N is a "process ID" of the `tar' process
 which created the archive (*note PAX keywords::).
 
 
@@ -1378,7 +1416,7 @@ test, because the resulting archive gets smaller, and GNU `cpio' can no
 longer read it).
 
 
-File: tar.info,  Node: Media,  Next: Changes,  Prev: Formats,  Up: Top
+File: tar.info,  Node: Media,  Next: Reliability and security,  Prev: Formats,  Up: Top
 
 9 Tapes and Other Archive Media
 *******************************
@@ -1522,19 +1560,37 @@ could also check for `DEFTAPE' in `<sys/mtio.h>'.
      *Note Multi-Volume Archives::.
 
 `-L NUM'
-`--tape-length=NUM'
-     Change tape after writing NUM x 1024 bytes.
+`--tape-length=SIZE[SUF]'
+     Change tape after writing SIZE units of data.  Unless SUF is
+     given, SIZE is treated as kilobytes, i.e. `SIZE x 1024' bytes.
+     The following suffixes alter this behavior:
 
-     This option might be useful when your tape drivers do not properly
-     detect end of physical tapes.  By being slightly conservative on
-     the maximum tape length, you might avoid the problem entirely.
+     Suffix        Units                Byte Equivalent
+     -------------------------------------------------------- 
+     b             Blocks               SIZE x 512
+     B             Kilobytes            SIZE x 1024
+     c             Bytes                SIZE
+     G             Gigabytes            SIZE x 1024^3
+     K             Kilobytes            SIZE x 1024
+     k             Kilobytes            SIZE x 1024
+     M             Megabytes            SIZE x 1024^2
+     P             Petabytes            SIZE x 1024^5
+     T             Terabytes            SIZE x 1024^4
+     w             Words                SIZE x 2
 
-`-F FILE'
-`--info-script=FILE'
-`--new-volume-script=FILE'
-     Execute `file' at end of each tape.  This implies `--multi-volume'
-     (`-M').  *Note info-script::, for a detailed description of this
-     option.
+     Table 9.1: Size Suffixes
+
+        This option might be useful when your tape drivers do not
+     properly detect end of physical tapes.  By being slightly
+     conservative on the maximum tape length, you might avoid the
+     problem entirely.
+
+  `-F FILE'
+  `--info-script=FILE'
+  `--new-volume-script=FILE'
+        Execute `file' at end of each tape.  This implies
+     `--multi-volume' (`-M').  *Note info-script::, for a detailed
+     description of this option.
 
 
 File: tar.info,  Node: Remote Tape Server,  Next: Common Problems and Solutions,  Prev: Device,  Up: Media
@@ -2256,13 +2312,21 @@ fails on some operating systems or on some devices.  If `tar' cannot
 detect the end of the tape itself, you can use `--tape-length' option
 to inform it about the capacity of the tape:
 
-`--tape-length=SIZE'
-`-L SIZE'
-     Set maximum length of a volume.  The SIZE argument should then be
-     the usable size of the tape in units of 1024 bytes.  This option
-     selects `--multi-volume' automatically.  For example:
+`--tape-length=SIZE[SUF]'
+`-L SIZE[SUF]'
+     Set maximum length of a volume.  The SUF, if given, specifies
+     units in which SIZE is expressed, e.g. `2M' mean 2 megabytes
+     (*note Table 9.1: size-suffixes, for a list of allowed size
+     suffixes).  Without SUF, units of 1024 bytes (kilobyte) are
+     assumed.
+
+     This option selects `--multi-volume' automatically.  For example:
 
           $ tar --create --tape-length=41943040 --file=/dev/tape FILES
+
+     or, which is equivalent:
+
+          $ tar --create --tape-length=4G --file=/dev/tape FILES
 
    When GNU `tar' comes to the end of a storage media, it asks you to
 change the volume.  The built-in prompt for POSIX locale is(1):
@@ -2451,8 +2515,9 @@ listed with `--list'.  If you are creating a multi-volume archive with
 `--multi-volume' (*note Using Multiple Tapes::), then the volume label
 will have `Volume NNN' appended to the name you give, where NNN is the
 number of the volume of the archive.  If you use the
-`--label=VOLUME-LABEL') option when reading an archive, it checks to
-make sure the label on the tape matches the one you give. *Note label::.
+`--label=VOLUME-LABEL' option when reading an archive, it checks to
+make sure the label on the tape matches the one you gave.  *Note
+label::.
 
    When `tar' writes an archive to tape, it creates a single tape file.
 If multiple archives are written to the same tape, one after the other,
@@ -2498,14 +2563,12 @@ File: tar.info,  Node: label,  Next: verify,  Prev: Using Multiple Tapes,  Up: M
 9.7 Including a Label in the Archive
 ====================================
 
-     _(This message will disappear, once this node revised.)_
-
 To avoid problems caused by misplaced paper labels on the archive
-media, you can include a "label" entry--an archive member which
-contains the name of the archive--in the archive itself.  Use the
-`--label=ARCHIVE-LABEL' (`-V ARCHIVE-LABEL') option in conjunction with
-the `--create' operation to include a label entry in the archive as it
-is being created.
+media, you can include a "label" entry -- an archive member which
+contains the name of the archive -- in the archive itself.  Use the
+`--label=ARCHIVE-LABEL' (`-V ARCHIVE-LABEL') option(1) in conjunction
+with the `--create' operation to include a label entry in the archive
+as it is being created.
 
 `--label=ARCHIVE-LABEL'
 `-V ARCHIVE-LABEL'
@@ -2531,7 +2594,7 @@ marked as in the example below:
 
    However, `--list' option will cause listing entire contents of the
 archive, which may be undesirable (for example, if the archive is
-stored on a tape).  You can request checking only the volume by
+stored on a tape).  You can request checking only the volume label by
 specifying `--test-label' option.  This option reads only the first
 block of an archive, so it can be used with slow storage devices.  For
 example:
@@ -2539,14 +2602,25 @@ example:
      $ tar --test-label --file=iamanarchive
      iamalabel
 
-   If `--test-label' is used with a single command line argument, `tar'
-compares the volume label with the argument.  It exits with code 0 if
-the two strings match, and with code 2 otherwise.  In this case no
-output is displayed.  For example:
+   If `--test-label' is used with one or more command line arguments,
+`tar' compares the volume label with each argument.  It exits with code
+0 if a match is found, and with code 1 otherwise(2).  No output is
+displayed, unless you also used the `--verbose' option.  For example:
 
-     $ tar --test-label --file=iamanarchive 'iamalable'
+     $ tar --test-label --file=iamanarchive 'iamalabel'
      => 0
-     $ tar --test-label --file=iamanarchive 'iamalable' alabel
+     $ tar --test-label --file=iamanarchive 'alabel'
+     => 1
+
+   When used with the `--verbose' option, `tar' prints the actual
+volume label (if any), and a verbose diagnostics in case of a mismatch:
+
+     $ tar --test-label --verbose --file=iamanarchive 'iamalabel'
+     iamalabel
+     => 0
+     $ tar --test-label --verbose --file=iamanarchive 'alabel'
+     iamalabel
+     tar: Archive label mismatch
      => 1
 
    If you request any operation, other than `--create', along with
@@ -2566,15 +2640,12 @@ not labeled at all.
 label doesn't match the ARCHIVE-LABEL specified.  In those cases,
 ARCHIVE-LABEL argument is interpreted as a globbing-style pattern which
 must match the actual magnetic volume label.  *Note exclude::, for a
-precise description of how match is attempted(1).  If the switch
+precise description of how match is attempted(3).  If the switch
 `--multi-volume' (`-M') is being used, the volume label matcher will
 also suffix ARCHIVE-LABEL by ` Volume [1-9]*' if the initial match
 fails, before giving up.  Since the volume numbering is automatically
 added in labels at creation time, it sounded logical to equally help
 the user taking care of it when the archive is being read.
-
-   The `--label' was once called `--volume', but is not available under
-that name anymore.
 
    You can also use `--label' to get a common information on all tapes
 of a series.  For having this information different in each series
@@ -2585,17 +2656,27 @@ get some date string as part of the label.  For example:
      $ tar --create --file=/dev/tape --multi-volume \
           --label="Daily backup for `date +%Y-%m-%d`"
 
-   Also note that each label has its own date and time, which
-corresponds to when GNU `tar' initially attempted to write it, often
-soon after the operator launches `tar' or types the carriage return
-telling that the next tape is ready.  Comparing date labels does give
-an idea of tape throughput only if the delays for rewinding tapes and
-the operator switching them were negligible, which is usually not the
-case.
+   Some more notes about volume labels:
+
+   * Each label has its own date and time, which corresponds to the
+     time when GNU `tar' initially attempted to write it, often soon
+     after the operator launches `tar' or types the carriage return
+     telling that the next tape is ready.
+
+   * Comparing date labels to get an idea of tape throughput is
+     unreliable.  It gives correct results only if the delays for
+     rewinding tapes and the operator switching them were negligible,
+     which is usually not the case.
 
    ---------- Footnotes ----------
 
-   (1) Previous versions of `tar' used full regular expression
+   (1) Until version 1.10, that option was called `--volume', but is
+not available under that name anymore.
+
+   (2) Note that GNU `tar' versions up to 1.23 indicated mismatch with
+an exit code 2 and printed a spurious diagnostics on stderr.
+
+   (3) Previous versions of `tar' used full regular expression
 matching, or before that, only exact string matching, instead of
 wildcard matchers.  We decided for the sake of simplicity to use a
 uniform matching device through `tar'.
@@ -2689,13 +2770,290 @@ which can be removed from the center of a tape reel, or some other
 changeable feature.
 
 
-File: tar.info,  Node: Changes,  Next: Configuring Help Summary,  Prev: Media,  Up: Top
+File: tar.info,  Node: Reliability and security,  Next: Changes,  Prev: Media,  Up: Top
+
+10 Reliability and Security
+***************************
+
+The `tar' command reads and writes files as any other application does,
+and is subject to the usual caveats about reliability and security.
+This section contains some commonsense advice on the topic.
+
+* Menu:
+
+* Reliability::
+* Security::
+
+
+File: tar.info,  Node: Reliability,  Next: Security,  Up: Reliability and security
+
+10.1 Reliability
+================
+
+Ideally, when `tar' is creating an archive, it reads from a file system
+that is not being modified, and encounters no errors or inconsistencies
+while reading and writing.  If this is the case, the archive should
+faithfully reflect what was read.  Similarly, when extracting from an
+archive, ideally `tar' ideally encounters no errors and the extracted
+files faithfully reflect what was in the archive.
+
+   However, when reading or writing real-world file systems, several
+things can go wrong; these include permissions problems, corruption of
+data, and race conditions.
+
+* Menu:
+
+* Permissions problems::
+* Data corruption and repair::
+* Race conditions::
+
+
+File: tar.info,  Node: Permissions problems,  Next: Data corruption and repair,  Up: Reliability
+
+10.1.1 Permissions Problems
+---------------------------
+
+If `tar' encounters errors while reading or writing files, it normally
+reports an error and exits with nonzero status.  The work it does may
+therefore be incomplete.  For example, when creating an archive, if
+`tar' cannot read a file then it cannot copy the file into the archive.
+
+
+File: tar.info,  Node: Data corruption and repair,  Next: Race conditions,  Prev: Permissions problems,  Up: Reliability
+
+10.1.2 Data Corruption and Repair
+---------------------------------
+
+If an archive becomes corrupted by an I/O error, this may corrupt the
+data in an extracted file.  Worse, it may corrupt the file's metadata,
+which may cause later parts of the archive to become misinterpreted.
+An tar-format archive contains a checksum that most likely will detect
+errors in the metadata, but it will not detect errors in the data.
+
+   If data corruption is a concern, you can compute and check your own
+checksums of an archive by using other programs, such as `cksum'.
+
+   When attempting to recover from a read error or data corruption in an
+archive, you may need to skip past the questionable data and read the
+rest of the archive.  This requires some expertise in the archive
+format and in other software tools.
+
+
+File: tar.info,  Node: Race conditions,  Prev: Data corruption and repair,  Up: Reliability
+
+10.1.3 Race conditions
+----------------------
+
+If some other process is modifying the file system while `tar' is
+reading or writing files, the result may well be inconsistent due to
+race conditions.  For example, if another process creates some files in
+a directory while `tar' is creating an archive containing the
+directory's files, `tar' may see some of the files but not others, or
+it may see a file that is in the process of being created.  The
+resulting archive may not be a snapshot of the file system at any point
+in time.  If an application such as a database system depends on an
+accurate snapshot, restoring from the `tar' archive of a live file
+system may therefore break that consistency and may break the
+application.  The simplest way to avoid the consistency issues is to
+avoid making other changes to the file system while tar is reading it
+or writing it.
+
+   When creating an archive, several options are available to avoid race
+conditions.  Some hosts have a way of snapshotting a file system, or of
+temporarily suspending all changes to a file system, by (say)
+suspending the only virtual machine that can modify a file system; if
+you use these facilities and have `tar -c' read from a snapshot when
+creating an archive, you can avoid inconsistency problems.  More
+drastically, before starting `tar' you could suspend or shut down all
+processes other than `tar' that have access to the file system, or you
+could unmount the file system and then mount it read-only.
+
+   When extracting from an archive, one approach to avoid race
+conditions is to create a directory that no other process can write to,
+and extract into that.
+
+
+File: tar.info,  Node: Security,  Prev: Reliability,  Up: Reliability and security
+
+10.2 Security
+=============
+
+In some cases `tar' may be used in an adversarial situation, where an
+untrusted user is attempting to gain information about or modify
+otherwise-inaccessible files.  Dealing with untrusted data (that is,
+data generated by an untrusted user) typically requires extra care,
+because even the smallest mistake in the use of `tar' is more likely to
+be exploited by an adversary than by a race condition.
+
+* Menu:
+
+* Privacy::
+* Integrity::
+* Live untrusted data::
+* Security rules of thumb::
+
+
+File: tar.info,  Node: Privacy,  Next: Integrity,  Up: Security
+
+10.2.1 Privacy
+--------------
+
+Standard privacy concerns apply when using `tar'.  For example, suppose
+you are archiving your home directory into a file
+`/archive/myhome.tar'.  Any secret information in your home directory,
+such as your SSH secret keys, are copied faithfully into the archive.
+Therefore, if your home directory contains any file that should not be
+read by some other user, the archive itself should be not be readable
+by that user.  And even if the archive's data are inaccessible to
+untrusted users, its metadata (such as size or last-modified date) may
+reveal some information about your home directory; if the metadata are
+intended to be private, the archive's parent directory should also be
+inaccessible to untrusted users.
+
+   One precaution is to create `/archive' so that it is not accessible
+to any user, unless that user also has permission to access all the
+files in your home directory.
+
+   Similarly, when extracting from an archive, take care that the
+permissions of the extracted files are not more generous than what you
+want.  Even if the archive itself is readable only to you, files
+extracted from it have their own permissions that may differ.
+
+
+File: tar.info,  Node: Integrity,  Next: Live untrusted data,  Prev: Privacy,  Up: Security
+
+10.2.2 Integrity
+----------------
+
+When creating archives, take care that they are not writable by a
+untrusted user; otherwise, that user could modify the archive, and when
+you later extract from the archive you will get incorrect data.
+
+   When `tar' extracts from an archive, by default it writes into files
+relative to the working directory.  If the archive was generated by an
+untrusted user, that user therefore can write into any file under the
+working directory.  If the working directory contains a symbolic link
+to another directory, the untrusted user can also write into any file
+under the referenced directory.  When extracting from an untrusted
+archive, it is therefore good practice to create an empty directory and
+run `tar' in that directory.
+
+   When extracting from two or more untrusted archives, each one should
+be extracted independently, into different empty directories.
+Otherwise, the first archive could create a symbolic link into an area
+outside the working directory, and the second one could follow the link
+and overwrite data that is not under the working directory.  For
+example, when restoring from a series of incremental dumps, the
+archives should have been created by a trusted process, as otherwise
+the incremental restores might alter data outside the working directory.
+
+   If you use the `--absolute-names' (`-P') option when extracting,
+`tar' respects any file names in the archive, even file names that
+begin with `/' or contain `..'.  As this lets the archive overwrite any
+file in your system that you can write, the `--absolute-names' (`-P')
+option should be used only for trusted archives.
+
+   Conversely, with the `--keep-old-files' (`-k') option, `tar' refuses
+to replace existing files when extracting; and with the
+`--no-overwrite-dir' option, `tar' refuses to replace the permissions
+or ownership of already-existing directories.  These options may help
+when extracting from untrusted archives.
+
+
+File: tar.info,  Node: Live untrusted data,  Next: Security rules of thumb,  Prev: Integrity,  Up: Security
+
+10.2.3 Dealing with Live Untrusted Data
+---------------------------------------
+
+Extra care is required when creating from or extracting into a file
+system that is accessible to untrusted users.  For example, superusers
+who invoke `tar' must be wary about its actions being hijacked by an
+adversary who is reading or writing the file system at the same time
+that `tar' is operating.
+
+   When creating an archive from a live file system, `tar' is
+vulnerable to denial-of-service attacks.  For example, an adversarial
+user could create the illusion of an indefinitely-deep directory
+hierarchy `d/e/f/g/...' by creating directories one step ahead of
+`tar', or the illusion of an indefinitely-long file by creating a
+sparse file but arranging for blocks to be allocated just before `tar'
+reads them.  There is no easy way for `tar' to distinguish these
+scenarios from legitimate uses, so you may need to monitor `tar', just
+as you'd need to monitor any other system service, to detect such
+attacks.
+
+   While a superuser is extracting from an archive into a live file
+system, an untrusted user might replace a directory with a symbolic
+link, in hopes that `tar' will follow the symbolic link and extract
+data into files that the untrusted user does not have access to.  Even
+if the archive was generated by the superuser, it may contain a file
+such as `d/etc/passwd' that the untrusted user earlier created in order
+to break in; if the untrusted user replaces the directory `d/etc' with
+a symbolic link to `/etc' while `tar' is running, `tar' will overwrite
+`/etc/passwd'.  This attack can be prevented by extracting into a
+directory that is inaccessible to untrusted users.
+
+   Similar attacks via symbolic links are also possible when creating an
+archive, if the untrusted user can modify an ancestor of a top-level
+argument of `tar'.  For example, an untrusted user that can modify
+`/home/eve' can hijack a running instance of `tar -cf -
+/home/eve/Documents/yesterday' by replacing `/home/eve/Documents' with
+a symbolic link to some other location.  Attacks like these can be
+prevented by making sure that untrusted users cannot modify any files
+that are top-level arguments to `tar', or any ancestor directories of
+these files.
+
+
+File: tar.info,  Node: Security rules of thumb,  Prev: Live untrusted data,  Up: Security
+
+10.2.4 Security Rules of Thumb
+------------------------------
+
+This section briefly summarizes rules of thumb for avoiding security
+pitfalls.
+
+   * Protect archives at least as much as you protect any of the files
+     being archived.
+
+   * Extract from an untrusted archive only into an otherwise-empty
+     directory.  This directory and its parent should be accessible
+     only to trusted users.  For example:
+
+          $ chmod go-rwx .
+          $ mkdir -m go-rwx dir
+          $ cd dir
+          $ tar -xvf /archives/got-it-off-the-net.tar.gz
+
+     As a corollary, do not do an incremental restore from an untrusted
+     archive.
+
+   * Do not let untrusted users access files extracted from untrusted
+     archives without checking first for problems such as setuid
+     programs.
+
+   * Do not let untrusted users modify directories that are ancestors of
+     top-level arguments of `tar'.  For example, while you are
+     executing `tar -cf /archive/u-home.tar /u/home', do not let an
+     untrusted user modify `/', `/archive', or `/u'.
+
+   * Pay attention to the diagnostics and exit status of `tar'.
+
+   * When archiving live file systems, monitor running instances of
+     `tar' to detect denial-of-service attacks.
+
+   * Avoid unusual options such as `--absolute-names' (`-P'),
+     `--dereference' (`-h'), `--overwrite', `--recursive-unlink', and
+     `--remove-files' unless you understand their security implications.
+
+
+
+File: tar.info,  Node: Changes,  Next: Configuring Help Summary,  Prev: Reliability and security,  Up: Top
 
 Appendix A Changes
 ******************
 
 This appendix lists some important user-visible changes between version
-GNU `tar' 1.23 and previous versions. An up-to-date version of this
+GNU `tar' 1.24 and previous versions. An up-to-date version of this
 document is available at the GNU `tar' documentation page
 (http://www.gnu.org/software/tar/manual/changes.html).
 
@@ -3731,12 +4089,12 @@ backups (*note Incremental Dumps::).  It contains the status of the
 file system at the time of the dump and is used to determine which
 files were modified since the last backup.
 
-   GNU `tar' version 1.23 supports three snapshot file formats.  The
+   GNU `tar' version 1.24 supports three snapshot file formats.  The
 first format, called "format 0", is the one used by GNU `tar' versions
 up to 1.15.1. The second format, called "format 1" is an extended
 version of this format, that contains more metadata and allows for
 further extensions. It was used by version 1.15.1. Starting from
-version 1.16 and up to 1.23, the "format 2" is used.
+version 1.16 and up to 1.24, the "format 2" is used.
 
    GNU `tar' is able to read all three formats, but will create
 snapshots only in format 2.
@@ -3792,7 +4150,7 @@ snapshots only in format 2.
   2.   `Format 2' snapshot file begins with a format identifier, as
      described for version 1, e.g.:
 
-          GNU tar-1.23-2
+          GNU tar-1.24-2
 
      This line is followed by newline. Rest of file consists of
      records, separated by null (ASCII 0) characters. Thus, in contrast
@@ -4242,7 +4600,7 @@ Use the following syntax instead:
    Notice, that the use of compatibility mode is deprecated.
 
 
-File: tar.info,  Node: Free Software Needs Free Documentation,  Next: Copying This Manual,  Prev: Genfile,  Up: Top
+File: tar.info,  Node: Free Software Needs Free Documentation,  Next: GNU Free Documentation License,  Prev: Genfile,  Up: Top
 
 Appendix F Free Software Needs Free Documentation
 *************************************************
@@ -4334,25 +4692,15 @@ published by other publishers, at
 `http://www.fsf.org/doc/other-free-books.html'.
 
 
-File: tar.info,  Node: Copying This Manual,  Next: Index of Command Line Options,  Prev: Free Software Needs Free Documentation,  Up: Top
+File: tar.info,  Node: GNU Free Documentation License,  Next: Index of Command Line Options,  Prev: Free Software Needs Free Documentation,  Up: Top
 
-Appendix G Copying This Manual
-******************************
+Appendix G GNU Free Documentation License
+*****************************************
 
-* Menu:
+                     Version 1.3, 3 November 2008
 
-* GNU Free Documentation License::  License for copying this manual
-
-
-File: tar.info,  Node: GNU Free Documentation License,  Up: Copying This Manual
-
-G.1 GNU Free Documentation License
-==================================
-
-                      Version 1.2, November 2002
-
-     Copyright (C) 2000,2001,2002 Free Software Foundation, Inc.
-     51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+     Copyright (C) 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+     `http://fsf.org/'
 
      Everyone is permitted to copy and distribute verbatim copies
      of this license document, but changing it is not allowed.
@@ -4453,6 +4801,9 @@ G.1 GNU Free Documentation License
      works in formats which do not have any title page as such, "Title
      Page" means the text near the most prominent appearance of the
      work's title, preceding the beginning of the body of the text.
+
+     The "publisher" means any person or entity that distributes copies
+     of the Document to the public.
 
      A section "Entitled XYZ" means a named subunit of the Document
      whose title either is precisely XYZ or contains XYZ in parentheses
@@ -4719,12 +5070,29 @@ G.1 GNU Free Documentation License
   9. TERMINATION
 
      You may not copy, modify, sublicense, or distribute the Document
-     except as expressly provided for under this License.  Any other
-     attempt to copy, modify, sublicense or distribute the Document is
-     void, and will automatically terminate your rights under this
-     License.  However, parties who have received copies, or rights,
-     from you under this License will not have their licenses
-     terminated so long as such parties remain in full compliance.
+     except as expressly provided under this License.  Any attempt
+     otherwise to copy, modify, sublicense, or distribute it is void,
+     and will automatically terminate your rights under this License.
+
+     However, if you cease all violation of this License, then your
+     license from a particular copyright holder is reinstated (a)
+     provisionally, unless and until the copyright holder explicitly
+     and finally terminates your license, and (b) permanently, if the
+     copyright holder fails to notify you of the violation by some
+     reasonable means prior to 60 days after the cessation.
+
+     Moreover, your license from a particular copyright holder is
+     reinstated permanently if the copyright holder notifies you of the
+     violation by some reasonable means, this is the first time you have
+     received notice of violation of this License (for any work) from
+     that copyright holder, and you cure the violation prior to 30 days
+     after your receipt of the notice.
+
+     Termination of your rights under this section does not terminate
+     the licenses of parties who have received copies or rights from
+     you under this License.  If your rights have been terminated and
+     not permanently reinstated, receipt of a copy of some or all of
+     the same material does not give you any rights to use it.
 
  10. FUTURE REVISIONS OF THIS LICENSE
 
@@ -4742,10 +5110,44 @@ G.1 GNU Free Documentation License
      published (not as a draft) by the Free Software Foundation.  If
      the Document does not specify a version number of this License,
      you may choose any version ever published (not as a draft) by the
-     Free Software Foundation.
+     Free Software Foundation.  If the Document specifies that a proxy
+     can decide which future versions of this License can be used, that
+     proxy's public statement of acceptance of a version permanently
+     authorizes you to choose that version for the Document.
 
-G.1.1 ADDENDUM: How to use this License for your documents
-----------------------------------------------------------
+ 11. RELICENSING
+
+     "Massive Multiauthor Collaboration Site" (or "MMC Site") means any
+     World Wide Web server that publishes copyrightable works and also
+     provides prominent facilities for anybody to edit those works.  A
+     public wiki that anybody can edit is an example of such a server.
+     A "Massive Multiauthor Collaboration" (or "MMC") contained in the
+     site means any set of copyrightable works thus published on the MMC
+     site.
+
+     "CC-BY-SA" means the Creative Commons Attribution-Share Alike 3.0
+     license published by Creative Commons Corporation, a not-for-profit
+     corporation with a principal place of business in San Francisco,
+     California, as well as future copyleft versions of that license
+     published by that same organization.
+
+     "Incorporate" means to publish or republish a Document, in whole or
+     in part, as part of another Document.
+
+     An MMC is "eligible for relicensing" if it is licensed under this
+     License, and if all works that were first published under this
+     License somewhere other than this MMC, and subsequently
+     incorporated in whole or in part into the MMC, (1) had no cover
+     texts or invariant sections, and (2) were thus incorporated prior
+     to November 1, 2008.
+
+     The operator of an MMC Site may republish an MMC contained in the
+     site under CC-BY-SA on the same site at any time before August 1,
+     2009, provided the MMC is eligible for relicensing.
+
+
+ADDENDUM: How to use this License for your documents
+====================================================
 
 To use this License in a document you have written, include a copy of
 the License in the document and put the following copyright and license
@@ -4753,7 +5155,7 @@ notices just after the title page:
 
        Copyright (C)  YEAR  YOUR NAME.
        Permission is granted to copy, distribute and/or modify this document
-       under the terms of the GNU Free Documentation License, Version 1.2
+       under the terms of the GNU Free Documentation License, Version 1.3
        or any later version published by the Free Software Foundation;
        with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
        Texts.  A copy of the license is included in the section entitled ``GNU
@@ -4776,14 +5178,14 @@ free software license, such as the GNU General Public License, to
 permit their use in free software.
 
 
-File: tar.info,  Node: Index of Command Line Options,  Next: Index,  Prev: Copying This Manual,  Up: Top
+File: tar.info,  Node: Index of Command Line Options,  Next: Index,  Prev: GNU Free Documentation License,  Up: Top
 
 Appendix H Index of Command Line Options
 ****************************************
 
 This appendix contains an index of all GNU `tar' long command line
 options. The options are listed without the preceding double-dash.  For
-a cross-reference of short command line options, *note Short Option
+a cross-reference of short command line options, see *note Short Option
 Summary::.
 
  [index ]
@@ -4791,7 +5193,7 @@ Summary::.
 
 * absolute-names:                        absolute.            (line  10)
 * absolute-names, summary:               Option Summary.      (line   6)
-* add-file:                              files.               (line  85)
+* add-file:                              files.               (line  84)
 * after-date:                            after.               (line  24)
 * after-date, summary:                   Option Summary.      (line  12)
 * anchored:                              controlling pattern-matching.
@@ -4802,7 +5204,7 @@ Summary::.
 * append, summary:                       Operation Summary.   (line   6)
 * atime-preserve:                        Attributes.          (line  10)
 * atime-preserve, summary:               Option Summary.      (line  19)
-* auto-compress:                         gzip.                (line  78)
+* auto-compress:                         gzip.                (line 144)
 * auto-compress, summary:                Option Summary.      (line  65)
 * backup:                                backup.              (line  41)
 * backup, summary:                       Option Summary.      (line  71)
@@ -4810,7 +5212,6 @@ Summary::.
 * block-number, summary:                 Option Summary.      (line  76)
 * blocking-factor:                       Blocking Factor.     (line   8)
 * blocking-factor, summary:              Option Summary.      (line  82)
-* bzip2:                                 gzip.                (line 134)
 * bzip2, summary:                        Option Summary.      (line  87)
 * catenate:                              concatenate.         (line   6)
 * catenate, summary:                     Operation Summary.   (line  10)
@@ -4826,7 +5227,7 @@ Summary::.
 * checkpoint-action, summary:            Option Summary.      (line 105)
 * compare:                               compare.             (line   6)
 * compare, summary:                      Operation Summary.   (line  14)
-* compress:                              gzip.                (line 151)
+* compress:                              gzip.                (line 101)
 * compress, summary:                     Option Summary.      (line 152)
 * concatenate:                           concatenate.         (line   6)
 * concatenate, summary:                  Operation Summary.   (line  20)
@@ -4887,252 +5288,254 @@ Summary::.
 * force-local, short description:        Device.              (line  70)
 * force-local, summary:                  Option Summary.      (line 241)
 * format, summary:                       Option Summary.      (line 246)
+* full-time, summary:                    Option Summary.      (line 271)
 * get, summary:                          Operation Summary.   (line  42)
 * group:                                 override.            (line  75)
-* group, summary:                        Option Summary.      (line 271)
-* gunzip, summary:                       Option Summary.      (line 279)
-* gzip:                                  gzip.                (line 100)
-* gzip, summary:                         Option Summary.      (line 279)
+* group, summary:                        Option Summary.      (line 289)
+* gunzip, summary:                       Option Summary.      (line 297)
+* gzip:                                  gzip.                (line  79)
+* gzip, summary:                         Option Summary.      (line 297)
 * hard-dereference, described:           hard links.          (line  59)
-* hard-dereference, summary:             Option Summary.      (line 287)
+* hard-dereference, summary:             Option Summary.      (line 305)
 * help:                                  help tutorial.       (line   6)
 * help, introduction:                    help.                (line  27)
-* help, summary:                         Option Summary.      (line 293)
+* help, summary:                         Option Summary.      (line 311)
 * ignore-case:                           controlling pattern-matching.
                                                               (line  86)
-* ignore-case, summary:                  Option Summary.      (line 298)
+* ignore-case, summary:                  Option Summary.      (line 316)
 * ignore-command-error:                  Writing to an External Program.
                                                               (line  98)
-* ignore-command-error, summary:         Option Summary.      (line 302)
+* ignore-command-error, summary:         Option Summary.      (line 320)
 * ignore-failed-read:                    Ignore Failed Read.  (line   7)
-* ignore-failed-read, summary:           Option Summary.      (line 306)
+* ignore-failed-read, summary:           Option Summary.      (line 324)
 * ignore-zeros:                          Ignore Zeros.        (line   6)
 * ignore-zeros, short description:       Blocking Factor.     (line 156)
-* ignore-zeros, summary:                 Option Summary.      (line 310)
-* incremental, summary:                  Option Summary.      (line 315)
-* incremental, using with --list:        Incremental Dumps.   (line 157)
-* index-file, summary:                   Option Summary.      (line 322)
+* ignore-zeros, summary:                 Option Summary.      (line 328)
+* incremental, summary:                  Option Summary.      (line 333)
+* incremental, using with --list:        Incremental Dumps.   (line 186)
+* index-file, summary:                   Option Summary.      (line 340)
 * info-script:                           Multi-Volume Archives.
-                                                              (line  80)
-* info-script, short description:        Device.              (line 104)
-* info-script, summary:                  Option Summary.      (line 325)
+                                                              (line  88)
+* info-script, short description:        Device.              (line 122)
+* info-script, summary:                  Option Summary.      (line 343)
 * interactive:                           interactive.         (line  14)
-* interactive, summary:                  Option Summary.      (line 333)
+* interactive, summary:                  Option Summary.      (line 351)
 * keep-newer-files:                      Keep Newer Files.    (line   6)
-* keep-newer-files, summary:             Option Summary.      (line 340)
+* keep-newer-files, summary:             Option Summary.      (line 358)
 * keep-old-files:                        Keep Old Files.      (line   6)
 * keep-old-files, introduced:            Dealing with Old Files.
                                                               (line  16)
-* keep-old-files, summary:               Option Summary.      (line 344)
-* label <1>:                             label.               (line   8)
+* keep-old-files, summary:               Option Summary.      (line 362)
+* label <1>:                             label.               (line   6)
 * label:                                 Tape Files.          (line   6)
-* label, summary:                        Option Summary.      (line 349)
+* label, summary:                        Option Summary.      (line 367)
 * level, described:                      Incremental Dumps.   (line  76)
-* level, summary:                        Option Summary.      (line 356)
+* level, summary:                        Option Summary.      (line 374)
 * list:                                  list.                (line   6)
 * list, summary:                         Operation Summary.   (line  46)
-* list, using with --incremental:        Incremental Dumps.   (line 159)
-* list, using with --listed-incremental: Incremental Dumps.   (line 160)
+* list, using with --incremental:        Incremental Dumps.   (line 186)
+* list, using with --listed-incremental: Incremental Dumps.   (line 186)
 * list, using with --verbose:            list.                (line  30)
 * list, using with file name arguments:  list.                (line  68)
 * listed-incremental, described:         Incremental Dumps.   (line  14)
-* listed-incremental, summary:           Option Summary.      (line 366)
+* listed-incremental, summary:           Option Summary.      (line 384)
 * listed-incremental, using with --extract: Incremental Dumps.
                                                               (line 121)
-* listed-incremental, using with --list: Incremental Dumps.   (line 158)
-* lzip:                                  gzip.                (line 142)
-* lzip, summary:                         Option Summary.      (line 374)
-* lzma:                                  gzip.                (line 145)
-* lzma, summary:                         Option Summary.      (line 378)
-* lzop:                                  gzip.                (line 148)
+* listed-incremental, using with --list: Incremental Dumps.   (line 186)
+* lzip:                                  gzip.                (line  92)
+* lzip, summary:                         Option Summary.      (line 392)
+* lzma:                                  gzip.                (line  95)
+* lzma, summary:                         Option Summary.      (line 396)
+* lzop:                                  gzip.                (line  98)
 * mode:                                  override.            (line  14)
-* mode, summary:                         Option Summary.      (line 386)
+* mode, summary:                         Option Summary.      (line 404)
 * mtime:                                 override.            (line  29)
-* mtime, summary:                        Option Summary.      (line 392)
+* mtime, summary:                        Option Summary.      (line 410)
 * multi-volume:                          Multi-Volume Archives.
                                                               (line   6)
 * multi-volume, short description:       Device.              (line  88)
-* multi-volume, summary:                 Option Summary.      (line 401)
+* multi-volume, summary:                 Option Summary.      (line 419)
 * new-volume-script:                     Multi-Volume Archives.
-                                                              (line  80)
-* new-volume-script, short description:  Device.              (line 104)
-* new-volume-script, summary:            Option Summary.      (line 325)
+                                                              (line  88)
+* new-volume-script, short description:  Device.              (line 122)
+* new-volume-script, summary:            Option Summary.      (line 343)
 * newer:                                 after.               (line  24)
-* newer, summary:                        Option Summary.      (line 409)
+* newer, summary:                        Option Summary.      (line 427)
 * newer-mtime:                           after.               (line  35)
-* newer-mtime, summary:                  Option Summary.      (line 417)
+* newer-mtime, summary:                  Option Summary.      (line 435)
 * no-anchored:                           controlling pattern-matching.
                                                               (line  79)
-* no-anchored, summary:                  Option Summary.      (line 422)
-* no-auto-compress, summary:             Option Summary.      (line 426)
+* no-anchored, summary:                  Option Summary.      (line 440)
+* no-auto-compress, summary:             Option Summary.      (line 444)
 * no-check-device, described:            Incremental Dumps.   (line 104)
-* no-check-device, summary:              Option Summary.      (line 430)
+* no-check-device, summary:              Option Summary.      (line 448)
 * no-delay-directory-restore:            Directory Modification Times and Permissions.
                                                               (line  68)
-* no-delay-directory-restore, summary:   Option Summary.      (line 435)
+* no-delay-directory-restore, summary:   Option Summary.      (line 453)
 * no-ignore-case:                        controlling pattern-matching.
                                                               (line  86)
-* no-ignore-case, summary:               Option Summary.      (line 441)
+* no-ignore-case, summary:               Option Summary.      (line 459)
 * no-ignore-command-error:               Writing to an External Program.
                                                               (line 103)
-* no-ignore-command-error, summary:      Option Summary.      (line 444)
+* no-ignore-command-error, summary:      Option Summary.      (line 462)
 * no-null, described:                    nul.                 (line  15)
-* no-null, summary:                      Option Summary.      (line 448)
-* no-overwrite-dir, summary:             Option Summary.      (line 453)
-* no-quote-chars, summary:               Option Summary.      (line 457)
+* no-null, summary:                      Option Summary.      (line 466)
+* no-overwrite-dir, summary:             Option Summary.      (line 471)
+* no-quote-chars, summary:               Option Summary.      (line 475)
 * no-recursion:                          recurse.             (line  11)
-* no-recursion, summary:                 Option Summary.      (line 462)
+* no-recursion, summary:                 Option Summary.      (line 480)
 * no-same-owner:                         Attributes.          (line  63)
-* no-same-owner, summary:                Option Summary.      (line 466)
-* no-same-permissions, summary:          Option Summary.      (line 472)
-* no-seek, summary:                      Option Summary.      (line 477)
+* no-same-owner, summary:                Option Summary.      (line 484)
+* no-same-permissions, summary:          Option Summary.      (line 490)
+* no-seek, summary:                      Option Summary.      (line 495)
 * no-unquote:                            Selecting Archive Members.
                                                               (line  42)
-* no-unquote, summary:                   Option Summary.      (line 482)
+* no-unquote, summary:                   Option Summary.      (line 500)
 * no-wildcards:                          controlling pattern-matching.
                                                               (line  41)
-* no-wildcards, summary:                 Option Summary.      (line 486)
+* no-wildcards, summary:                 Option Summary.      (line 504)
 * no-wildcards-match-slash:              controlling pattern-matching.
                                                               (line  92)
-* no-wildcards-match-slash, summary:     Option Summary.      (line 489)
+* no-wildcards-match-slash, summary:     Option Summary.      (line 507)
 * null, described:                       nul.                 (line  11)
-* null, summary:                         Option Summary.      (line 492)
+* null, summary:                         Option Summary.      (line 510)
 * numeric-owner:                         Attributes.          (line  69)
-* numeric-owner, summary:                Option Summary.      (line 498)
+* numeric-owner, summary:                Option Summary.      (line 516)
 * occurrence, described:                 append.              (line  34)
-* occurrence, summary:                   Option Summary.      (line 515)
-* old-archive, summary:                  Option Summary.      (line 529)
+* occurrence, summary:                   Option Summary.      (line 533)
+* old-archive, summary:                  Option Summary.      (line 547)
 * one-file-system:                       one.                 (line  14)
-* one-file-system, summary:              Option Summary.      (line 532)
+* one-file-system, summary:              Option Summary.      (line 550)
 * overwrite:                             Overwrite Old Files. (line   6)
 * overwrite, introduced:                 Dealing with Old Files.
                                                               (line  22)
-* overwrite, summary:                    Option Summary.      (line 537)
+* overwrite, summary:                    Option Summary.      (line 555)
 * overwrite-dir:                         Overwrite Old Files. (line  28)
 * overwrite-dir, introduced:             Dealing with Old Files.
                                                               (line   6)
-* overwrite-dir, summary:                Option Summary.      (line 541)
+* overwrite-dir, summary:                Option Summary.      (line 559)
 * owner:                                 override.            (line  57)
-* owner, summary:                        Option Summary.      (line 545)
+* owner, summary:                        Option Summary.      (line 563)
 * pax-option:                            PAX keywords.        (line   6)
-* pax-option, summary:                   Option Summary.      (line 554)
-* portability, summary:                  Option Summary.      (line 560)
-* posix, summary:                        Option Summary.      (line 564)
+* pax-option, summary:                   Option Summary.      (line 572)
+* portability, summary:                  Option Summary.      (line 578)
+* posix, summary:                        Option Summary.      (line 582)
 * preserve:                              Attributes.          (line 122)
-* preserve, summary:                     Option Summary.      (line 567)
+* preserve, summary:                     Option Summary.      (line 585)
 * preserve-order:                        Same Order.          (line   6)
-* preserve-order, summary:               Option Summary.      (line 571)
+* preserve-order, summary:               Option Summary.      (line 589)
 * preserve-permissions:                  Setting Access Permissions.
                                                               (line  10)
 * preserve-permissions, short description: Attributes.        (line 109)
-* preserve-permissions, summary:         Option Summary.      (line 574)
-* quote-chars, summary:                  Option Summary.      (line 584)
+* preserve-permissions, summary:         Option Summary.      (line 592)
+* quote-chars, summary:                  Option Summary.      (line 602)
 * quoting-style:                         quoting styles.      (line  38)
-* quoting-style, summary:                Option Summary.      (line 588)
+* quoting-style, summary:                Option Summary.      (line 606)
 * read-full-records <1>:                 read full records.   (line   6)
 * read-full-records:                     Reading.             (line   6)
 * read-full-records, short description:  Blocking Factor.     (line 172)
-* read-full-records, summary:            Option Summary.      (line 595)
-* record-size, summary:                  Option Summary.      (line 600)
+* read-full-records, summary:            Option Summary.      (line 613)
+* record-size, summary:                  Option Summary.      (line 618)
 * recursion:                             recurse.             (line  22)
-* recursion, summary:                    Option Summary.      (line 604)
+* recursion, summary:                    Option Summary.      (line 625)
 * recursive-unlink:                      Recursive Unlink.    (line   6)
-* recursive-unlink, summary:             Option Summary.      (line 608)
+* recursive-unlink, summary:             Option Summary.      (line 629)
 * remove-files:                          remove files.        (line   6)
-* remove-files, summary:                 Option Summary.      (line 613)
-* restrict, summary:                     Option Summary.      (line 617)
-* rmt-command, summary:                  Option Summary.      (line 622)
+* remove-files, summary:                 Option Summary.      (line 634)
+* restrict, summary:                     Option Summary.      (line 638)
+* rmt-command, summary:                  Option Summary.      (line 643)
 * rsh-command:                           Device.              (line  73)
-* rsh-command, summary:                  Option Summary.      (line 626)
+* rsh-command, summary:                  Option Summary.      (line 647)
 * same-order:                            Same Order.          (line   6)
-* same-order, summary:                   Option Summary.      (line 630)
+* same-order, summary:                   Option Summary.      (line 651)
 * same-owner:                            Attributes.          (line  44)
-* same-owner, summary:                   Option Summary.      (line 638)
+* same-owner, summary:                   Option Summary.      (line 659)
 * same-permissions:                      Setting Access Permissions.
                                                               (line  10)
 * same-permissions, short description:   Attributes.          (line 109)
-* same-permissions, summary:             Option Summary.      (line 574)
-* seek, summary:                         Option Summary.      (line 647)
+* same-permissions, summary:             Option Summary.      (line 592)
+* seek, summary:                         Option Summary.      (line 668)
 * show-defaults:                         defaults.            (line   6)
-* show-defaults, summary:                Option Summary.      (line 656)
+* show-defaults, summary:                Option Summary.      (line 677)
 * show-omitted-dirs:                     verbose.             (line 107)
-* show-omitted-dirs, summary:            Option Summary.      (line 668)
+* show-omitted-dirs, summary:            Option Summary.      (line 689)
 * show-stored-names:                     list.                (line  60)
-* show-stored-names, summary:            Option Summary.      (line 672)
+* show-stored-names, summary:            Option Summary.      (line 693)
 * show-transformed-names:                transform.           (line  45)
-* show-transformed-names, summary:       Option Summary.      (line 672)
+* show-transformed-names, summary:       Option Summary.      (line 693)
 * sparse:                                sparse.              (line  22)
-* sparse, summary:                       Option Summary.      (line 680)
+* sparse, summary:                       Option Summary.      (line 701)
 * sparse-version:                        sparse.              (line  57)
-* sparse-version, summary:               Option Summary.      (line 685)
+* sparse-version, summary:               Option Summary.      (line 706)
 * starting-file:                         Starting File.       (line   6)
-* starting-file, summary:                Option Summary.      (line 690)
+* starting-file, summary:                Option Summary.      (line 711)
 * strip-components:                      transform.           (line  25)
-* strip-components, summary:             Option Summary.      (line 696)
+* strip-components, summary:             Option Summary.      (line 717)
 * suffix:                                backup.              (line  68)
-* suffix, summary:                       Option Summary.      (line 705)
+* suffix, summary:                       Option Summary.      (line 726)
 * tape-length:                           Multi-Volume Archives.
                                                               (line  33)
 * tape-length, short description:        Device.              (line  96)
-* tape-length, summary:                  Option Summary.      (line 709)
-* test-label:                            label.               (line  37)
-* test-label, summary:                   Option Summary.      (line 714)
+* tape-length, summary:                  Option Summary.      (line 730)
+* test-label:                            label.               (line  35)
+* test-label, summary:                   Option Summary.      (line 739)
 * to-command:                            Writing to an External Program.
                                                               (line   9)
-* to-command, summary:                   Option Summary.      (line 718)
+* to-command, summary:                   Option Summary.      (line 743)
 * to-stdout:                             Writing to Standard Output.
                                                               (line  14)
-* to-stdout, summary:                    Option Summary.      (line 722)
+* to-stdout, summary:                    Option Summary.      (line 747)
 * totals:                                verbose.             (line  46)
-* totals, summary:                       Option Summary.      (line 727)
+* totals, summary:                       Option Summary.      (line 752)
 * touch <1>:                             Attributes.          (line  33)
 * touch:                                 Data Modification Times.
                                                               (line  15)
-* touch, summary:                        Option Summary.      (line 732)
+* touch, summary:                        Option Summary.      (line 757)
 * transform:                             transform.           (line  74)
-* transform, summary:                    Option Summary.      (line 738)
-* uncompress:                            gzip.                (line 151)
+* transform, summary:                    Option Summary.      (line 763)
+* uncompress:                            gzip.                (line 101)
 * uncompress, summary:                   Option Summary.      (line 152)
-* ungzip:                                gzip.                (line 100)
-* ungzip, summary:                       Option Summary.      (line 279)
+* ungzip:                                gzip.                (line  79)
+* ungzip, summary:                       Option Summary.      (line 297)
 * unlink-first:                          Unlink First.        (line   6)
 * unlink-first, introduced:              Dealing with Old Files.
                                                               (line  42)
-* unlink-first, summary:                 Option Summary.      (line 758)
+* unlink-first, summary:                 Option Summary.      (line 783)
 * unquote:                               Selecting Archive Members.
                                                               (line  39)
-* unquote, summary:                      Option Summary.      (line 764)
+* unquote, summary:                      Option Summary.      (line 789)
 * update <1>:                            how to update.       (line   6)
 * update:                                update.              (line   6)
 * update, summary:                       Operation Summary.   (line  50)
 * usage:                                 help.                (line  54)
-* use-compress-program:                  gzip.                (line 156)
-* use-compress-program, summary:         Option Summary.      (line 768)
-* utc, summary:                          Option Summary.      (line 773)
+* use-compress-program:                  gzip.                (line 166)
+* use-compress-program, summary:         Option Summary.      (line 793)
+* utc, summary:                          Option Summary.      (line 798)
 * verbose:                               verbose.             (line  18)
 * verbose, introduced:                   verbose tutorial.    (line   6)
-* verbose, summary:                      Option Summary.      (line 777)
+* verbose, summary:                      Option Summary.      (line 802)
 * verbose, using with --create:          create verbose.      (line   6)
 * verbose, using with --list:            list.                (line  30)
 * verify, short description:             verify.              (line   8)
-* verify, summary:                       Option Summary.      (line 784)
+* verify, summary:                       Option Summary.      (line 809)
 * verify, using with --create:           verify.              (line  24)
 * version:                               help.                (line   6)
-* version, summary:                      Option Summary.      (line 789)
+* version, summary:                      Option Summary.      (line 814)
 * volno-file:                            Multi-Volume Archives.
-                                                              (line  71)
-* volno-file, summary:                   Option Summary.      (line 794)
+                                                              (line  79)
+* volno-file, summary:                   Option Summary.      (line 819)
 * warning, explained:                    warnings.            (line  12)
-* warning, summary:                      Option Summary.      (line 799)
+* warning, summary:                      Option Summary.      (line 824)
 * wildcards:                             controlling pattern-matching.
                                                               (line  38)
-* wildcards, summary:                    Option Summary.      (line 804)
+* wildcards, summary:                    Option Summary.      (line 829)
 * wildcards-match-slash:                 controlling pattern-matching.
                                                               (line  92)
-* wildcards-match-slash, summary:        Option Summary.      (line 808)
+* wildcards-match-slash, summary:        Option Summary.      (line 833)
 * xform:                                 transform.           (line  74)
-* xform, summary:                        Option Summary.      (line 738)
-* xz, summary:                           Option Summary.      (line 811)
+* xform, summary:                        Option Summary.      (line 763)
+* xz:                                    gzip.                (line  84)
+* xz, summary:                           Option Summary.      (line 836)
 
 
 File: tar.info,  Node: Index,  Prev: Index of Command Line Options,  Up: Top
@@ -5185,7 +5588,8 @@ Appendix I Index
 * atrributes, files:                     Attributes.          (line   6)
 * Attempting extraction of symbolic links as hard links, warning message: warnings.
                                                               (line  77)
-* authors of get_date:                   Authors of get_date. (line   6)
+* authors of parse_datetime:             Authors of parse_datetime.
+                                                              (line   6)
 * Avoiding recursion in directories:     recurse.             (line   6)
 * backup options:                        backup.              (line   6)
 * backup suffix:                         backup.              (line  68)
@@ -5203,9 +5607,12 @@ Appendix I Index
 * beginning of time, for POSIX:          Seconds since the Epoch.
                                                               (line  13)
 * bell, checkpoint action:               checkpoints.         (line  65)
-* Bellovin, Steven M.:                   Authors of get_date. (line   6)
-* Berets, Jim:                           Authors of get_date. (line   6)
-* Berry, K.:                             Authors of get_date. (line  14)
+* Bellovin, Steven M.:                   Authors of parse_datetime.
+                                                              (line   6)
+* Berets, Jim:                           Authors of parse_datetime.
+                                                              (line   6)
+* Berry, K.:                             Authors of parse_datetime.
+                                                              (line  19)
 * binary equivalent archives, creating:  PAX keywords.        (line 132)
 * block:                                 Blocking.            (line   6)
 * Block number where error occurred:     verbose.             (line 115)
@@ -5232,7 +5639,7 @@ Appendix I Index
 * Concatenating Archives:                concatenate.         (line   6)
 * contains a cache directory tag, warning message: warnings.  (line  43)
 * contiguous-cast:                       warnings.            (line  74)
-* corrupted archives <1>:                gzip.                (line 119)
+* corrupted archives <1>:                gzip.                (line 134)
 * corrupted archives:                    Full Dumps.          (line   8)
 * Creation of the archive:               create.              (line   8)
 * Current %s is newer or same age, warning message: warnings. (line  83)
@@ -5277,10 +5684,11 @@ Appendix I Index
 * dup-args-note:                         Configuring Help Summary.
                                                               (line  68)
 * echo, checkpoint action:               checkpoints.         (line  25)
-* Eggert, Paul:                          Authors of get_date. (line   6)
+* Eggert, Paul:                          Authors of parse_datetime.
+                                                              (line   6)
 * End-of-archive blocks, ignoring:       Ignore Zeros.        (line   6)
 * End-of-archive info script:            Multi-Volume Archives.
-                                                              (line  80)
+                                                              (line  88)
 * entry:                                 Naming tar Archives. (line  11)
 * epoch, for POSIX:                      Seconds since the Epoch.
                                                               (line  13)
@@ -5303,8 +5711,6 @@ Appendix I Index
 * extracting Nth copy of the file:       append.              (line  34)
 * Extraction:                            extract.             (line   6)
 * extraction:                            Definitions.         (line  22)
-* FDL, GNU Free Documentation License:   GNU Free Documentation License.
-                                                              (line   6)
 * file archival:                         Top.                 (line  24)
 * file attributes:                       Attributes.          (line   6)
 * file changed as we read it, warning message: warnings.      (line  64)
@@ -5358,7 +5764,6 @@ Appendix I Index
 * genfile, generate mode:                Generate Mode.       (line   6)
 * genfile, reading a list of file names: Generate Mode.       (line  22)
 * genfile, seeking to a given offset:    Generate Mode.       (line  18)
-* get_date:                              Date input formats.  (line   6)
 * Getting program version number:        help.                (line   6)
 * git, excluding files:                  exclude.             (line  37)
 * GNU archive format:                    gnu.                 (line   6)
@@ -5372,8 +5777,8 @@ Appendix I Index
 * GNU.sparse.offset, extended header variable: PAX 0.         (line  18)
 * GNU.sparse.realsize, extended header variable: PAX 1.       (line  24)
 * GNU.sparse.size, extended header variable: PAX 0.           (line  11)
-* gnupg, using with tar:                 gzip.                (line 171)
-* gpg, using with tar:                   gzip.                (line 171)
+* gnupg, using with tar:                 gzip.                (line 181)
+* gpg, using with tar:                   gzip.                (line 181)
 * gzip:                                  gzip.                (line   6)
 * hard links, dereferencing:             hard links.          (line   6)
 * header-col:                            Configuring Help Summary.
@@ -5388,7 +5793,7 @@ Appendix I Index
                                                               (line  86)
 * implausibly old time stamp %s, warning message: warnings.   (line  72)
 * Info script:                           Multi-Volume Archives.
-                                                              (line  80)
+                                                              (line  88)
 * Interactive operation:                 interactive.         (line   6)
 * ISO 8601 date format:                  Calendar date items. (line  30)
 * items in date strings:                 General date syntax. (line   6)
@@ -5402,9 +5807,11 @@ Appendix I Index
                                                               (line   6)
 * last DAY:                              Day of week items.   (line  15)
 * last in date strings:                  General date syntax. (line  26)
+* Laszlo Ersek:                          lbzip2.              (line   6)
+* lbzip2:                                lbzip2.              (line   6)
 * Listing all tar options:               help.                (line  27)
 * listing member and file names:         list.                (line  41)
-* Listing volume label:                  label.               (line  29)
+* Listing volume label:                  label.               (line  27)
 * Lists of file names:                   files.               (line   6)
 * Local and remote archives:             file.                (line  71)
 * long options:                          Long Options.        (line   6)
@@ -5415,7 +5822,8 @@ Appendix I Index
 * lzip:                                  gzip.                (line   6)
 * lzma:                                  gzip.                (line   6)
 * lzop:                                  gzip.                (line   6)
-* MacKenzie, David:                      Authors of get_date. (line   6)
+* MacKenzie, David:                      Authors of parse_datetime.
+                                                              (line   6)
 * Malformed dumpdir: 'X' never used, warning message: warnings.
                                                               (line 102)
 * member:                                Definitions.         (line  15)
@@ -5423,7 +5831,8 @@ Appendix I Index
 * members, multiple:                     multiple.            (line   6)
 * Members, replacing with other members: append.              (line  47)
 * Mercurial, excluding files:            exclude.             (line  37)
-* Meyering, Jim:                         Authors of get_date. (line   6)
+* Meyering, Jim:                         Authors of parse_datetime.
+                                                              (line   6)
 * Middle of the archive, starting in the: Starting File.      (line  11)
 * midnight in date strings:              Time of day items.   (line  22)
 * minute in date strings:                Relative items in date strings.
@@ -5498,11 +5907,13 @@ Appendix I Index
 * ordinal numbers:                       General date syntax. (line  26)
 * Overwriting old files, prevention:     Dealing with Old Files.
                                                               (line  16)
+* parse_datetime:                        Date input formats.  (line   6)
 * pattern, genfile:                      Generate Mode.       (line  39)
 * PAX archive format:                    posix.               (line   6)
 * Permissions of extracted files:        Setting Access Permissions.
                                                               (line   6)
-* Pinard, F.:                            Authors of get_date. (line  14)
+* Pinard, F.:                            Authors of parse_datetime.
+                                                              (line  19)
 * pm in date strings:                    Time of day items.   (line  22)
 * POSIX archive format:                  posix.               (line   6)
 * Progress information:                  verbose.             (line  83)
@@ -5538,7 +5949,8 @@ Appendix I Index
 * RSH_COMMAND:                           General-Purpose Variables.
                                                               (line  77)
 * Running out of space:                  Scarce.              (line   8)
-* Salz, Rich:                            Authors of get_date. (line   6)
+* Salz, Rich:                            Authors of parse_datetime.
+                                                              (line   6)
 * SCCS, excluding files:                 exclude.             (line  37)
 * short options:                         Short Options.       (line   6)
 * short options with mandatory arguments: Short Options.      (line  13)
@@ -5609,7 +6021,7 @@ Appendix I Index
                                                               (line  15)
 * TAR_ARCHIVE, checkpoint script environment: checkpoints.    (line 108)
 * TAR_ARCHIVE, info script environment variable: Multi-Volume Archives.
-                                                              (line 100)
+                                                              (line 108)
 * TAR_ARCHIVE, to-command environment:   Writing to an External Program.
                                                               (line  76)
 * TAR_ATIME, to-command environment:     Writing to an External Program.
@@ -5617,21 +6029,21 @@ Appendix I Index
 * TAR_BLOCKING_FACTOR, checkpoint script environment: checkpoints.
                                                               (line 111)
 * TAR_BLOCKING_FACTOR, info script environment variable: Multi-Volume Archives.
-                                                              (line 103)
+                                                              (line 111)
 * TAR_BLOCKING_FACTOR, to-command environment: Writing to an External Program.
                                                               (line  79)
 * TAR_CHECKPOINT, checkpoint script environment: checkpoints. (line 114)
 * TAR_CTIME, to-command environment:     Writing to an External Program.
                                                               (line  58)
 * TAR_FD, info script environment variable: Multi-Volume Archives.
-                                                              (line 117)
+                                                              (line 125)
 * TAR_FILENAME, to-command environment:  Writing to an External Program.
                                                               (line  37)
 * TAR_FILETYPE, to-command environment:  Writing to an External Program.
                                                               (line  22)
 * TAR_FORMAT, checkpoint script environment: checkpoints.     (line 121)
 * TAR_FORMAT, info script environment variable: Multi-Volume Archives.
-                                                              (line 113)
+                                                              (line 121)
 * TAR_FORMAT, to-command environment:    Writing to an External Program.
                                                               (line  85)
 * TAR_GID, to-command environment:       Writing to an External Program.
@@ -5649,18 +6061,18 @@ Appendix I Index
                                                               (line  61)
 * TAR_SUBCOMMAND, checkpoint script environment: checkpoints. (line 117)
 * TAR_SUBCOMMAND, info script environment variable: Multi-Volume Archives.
-                                                              (line 109)
+                                                              (line 117)
 * TAR_UID, to-command environment:       Writing to an External Program.
                                                               (line  64)
 * TAR_UNAME, to-command environment:     Writing to an External Program.
                                                               (line  43)
 * TAR_VERSION, checkpoint script environment: checkpoints.    (line 105)
 * TAR_VERSION, info script environment variable: Multi-Volume Archives.
-                                                              (line  97)
+                                                              (line 105)
 * TAR_VERSION, to-command environment:   Writing to an External Program.
                                                               (line  73)
 * TAR_VOLUME, info script environment variable: Multi-Volume Archives.
-                                                              (line 106)
+                                                              (line 114)
 * TAR_VOLUME, to-command environment:    Writing to an External Program.
                                                               (line  82)
 * tarcat:                                Tarcat.              (line   6)
@@ -5690,7 +6102,7 @@ Appendix I Index
 * Updating an archive:                   update.              (line   6)
 * usage-indent:                          Configuring Help Summary.
                                                               (line 154)
-* Using encrypted archives:              gzip.                (line 171)
+* Using encrypted archives:              gzip.                (line 181)
 * ustar archive format:                  ustar.               (line   6)
 * uuencode:                              Applications.        (line   8)
 * v7 archive format:                     old.                 (line   6)
@@ -5703,12 +6115,12 @@ Appendix I Index
 * version-control Emacs variable:        backup.              (line  49)
 * VERSION_CONTROL:                       backup.              (line  41)
 * volno file:                            Multi-Volume Archives.
-                                                              (line  71)
+                                                              (line  79)
 * VOLNO_FILE:                            General-Purpose Variables.
                                                               (line  82)
-* Volume label, listing:                 label.               (line  29)
+* Volume label, listing:                 label.               (line  27)
 * Volume number file:                    Multi-Volume Archives.
-                                                              (line  71)
+                                                              (line  79)
 * week in date strings:                  Relative items in date strings.
                                                               (line  15)
 * Where is the archive?:                 file.                (line   6)

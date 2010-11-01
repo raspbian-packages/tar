@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.23, 9 March 2010), which
+This manual is for GNU `tar' (version 1.24, 24 October 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -8,9 +8,9 @@ creates and extracts files from archives.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
-     Version 1.1 or any later version published by the Free Software
+     Version 1.3 or any later version published by the Free Software
      Foundation; with no Invariant Sections, with the Front-Cover Texts
-     being "A GNU Manual," and with the Back-Cover Texts as in (a)
+     being "A GNU Manual", and with the Back-Cover Texts as in (a)
      below.  A copy of the license is included in the section entitled
      "GNU Free Documentation License".
 
@@ -34,7 +34,7 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.23, 9 March 2010), which
+This manual is for GNU `tar' (version 1.24, 24 October 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -42,9 +42,9 @@ creates and extracts files from archives.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
-     Version 1.1 or any later version published by the Free Software
+     Version 1.3 or any later version published by the Free Software
      Foundation; with no Invariant Sections, with the Front-Cover Texts
-     being "A GNU Manual," and with the Back-Cover Texts as in (a)
+     being "A GNU Manual", and with the Back-Cover Texts as in (a)
      below.  A copy of the license is included in the section entitled
      "GNU Free Documentation License".
 
@@ -66,6 +66,7 @@ document.  The rest of the menu lists all the lower level nodes.
 * Date input formats::
 * Formats::
 * Media::
+* Reliability and security::
 
 Appendices
 
@@ -75,7 +76,7 @@ Appendices
 * Tar Internals::
 * Genfile::
 * Free Software Needs Free Documentation::
-* Copying This Manual::
+* GNU Free Documentation License::
 * Index of Command Line Options::
 * Index::
 
@@ -275,7 +276,7 @@ Date input formats
 * Pure numbers in date strings::   19931219, 1440.
 * Seconds since the Epoch::        @1078100502.
 * Specifying time zone rules::     TZ="America/New_York", TZ="UTC0".
-* Authors of get_date::            Bellovin, Eggert, Salz, Berets, et al.
+* Authors of parse_datetime::      Bellovin, Eggert, Salz, Berets, et al.
 
 Controlling the Archive Format
 
@@ -288,6 +289,10 @@ Using Less Space through Compression
 
 * gzip::                        Creating and Reading Compressed Archives
 * sparse::                      Archiving Sparse Files
+
+Creating and Reading Compressed Archives
+
+* lbzip2::  Using lbzip2 with GNU `tar'.
 
 Making `tar' Archives More Portable
 
@@ -409,7 +414,7 @@ tutorial explains how to use the three most frequently used operations
 (`create', `list', and `extract') as well as two frequently used
 options (`file' and `verbose').  The other chapters do not refer to the
 tutorial frequently; however, if a section discusses something which is
-a complex variant of a basic concept, there may be a cross reference to
+a complex variant of a basic concept, there may be a cross-reference to
 that basic concept.  (The entire book, including the tutorial, assumes
 that the reader understands some basic concepts of using a Unix-type
 operating system; *note Tutorial::.)
@@ -562,7 +567,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.23
+to create version 1.12.  The book for versions from 1.14 up to 1.24
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2302,9 +2307,9 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--dereference'
 `-h'
-     When creating a `tar' archive, `tar' will archive the file that a
-     symbolic link points to, rather than archiving the symlink.  *Note
-     dereference::.
+     When reading or writing a file to be archived, `tar' accesses the
+     file that a symbolic link points to, rather than the symlink
+     itself.  *Note dereference::.
 
 `--directory=DIR'
 `-C DIR'
@@ -2404,6 +2409,24 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
      *Note Formats::, for a detailed discussion of these formats.
 
+`--full-time'
+     This option instructs `tar' to print file times to their full
+     resolution.  Usually this means 1-second resolution, but that
+     depends on the underlying file system.  The `--full-time' option
+     takes effect only when detailed output (verbosity level 2 or
+     higher) has been requested using the `--verbose' option, e.g.,
+     when listing or extracting archives:
+
+          $ tar -t -v --full-time -f archive.tar
+
+     or, when creating an archive:
+
+          $ tar -c -vv --full-time -f archive.tar .
+
+     Notice, thar when creating the archive you need to specify
+     `--verbose' twice to get a detailed output (*note verbose
+     tutorial::).
+
 `--group=GROUP'
      Files added to the `tar' archive will have a group ID of GROUP,
      rather than the group from the source file.  GROUP is first decoded
@@ -2491,7 +2514,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--level=N'
      Force incremental backup of level N.  As of GNU `tar' version
-     1.23, the option `--level=0' truncates the snapshot file, thereby
+     1.24, the option `--level=0' truncates the snapshot file, thereby
      forcing the level 0 dump.  Other values of N are effectively
      ignored.  *Note --level=0::, for details and examples.
 
@@ -2733,9 +2756,12 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      Specifies that `tar' should reblock its input, for reading from
      pipes on systems with buggy implementations.  *Note Reading::.
 
-`--record-size=SIZE'
+`--record-size=SIZE[SUF]'
      Instructs `tar' to use SIZE bytes per record when accessing the
-     archive.  *Note Blocking Factor::.
+     archive.  The argument can be suffixed with a "size suffix", e.g.
+     `--record-size=10K' for 10 Kilobytes.  *Note size-suffixes::, for
+     a list of valid suffixes.   *Note Blocking Factor::, for a detailed
+     description of this option.
 
 `--recursion'
      With this option, `tar' recurses into directories (default).
@@ -2842,10 +2868,14 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      Alters the suffix `tar' uses when backing up files from the default
      `~'.  *Note backup::.
 
-`--tape-length=NUM'
-`-L NUM'
+`--tape-length=NUM[SUF]'
+`-L NUM[SUF]'
      Specifies the length of tapes that `tar' is writing as being
-     NUM x 1024 bytes long.  *Note Using Multiple Tapes::.
+     NUM x 1024 bytes long.  If optional SUF is given, it specifies a
+     multiplicative factor to be used instead of 1024.  For example,
+     `-L2M' means 2 megabytes.  *Note size-suffixes::, for a list of
+     allowed suffixes.  *Note Using Multiple Tapes::, for a detailed
+     discussion of this option.
 
 `--test-label'
      Reads the volume label.  If an argument is specified, test whether
@@ -2886,10 +2916,10 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      `--show-transformed-names' option (*note show-transformed-names::).
 
 `--uncompress'
-     (See `--compress'. *note gzip::)
+     (See `--compress', *note gzip::)
 
 `--ungzip'
-     (See `--gzip'. *note gzip::)
+     (See `--gzip', *note gzip::)
 
 `--unlink-first'
 `-U'
@@ -3028,7 +3058,7 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.23
+     tar (GNU tar) 1.24
      Copyright (C) 2010 Free Software Foundation, Inc.
      Copyright (C) 2010 Free Software Foundation, Inc.
      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
@@ -3880,9 +3910,8 @@ example:
      $ tar --extract -vv --occurrence --file=collection.tar blues
      -rw-r--r-- me user     21 1996-09-23 16:44 blues
 
-   *Note Writing::, for more information on `--extract' and *Note
--occurrence: Option Summary, for the description of `--occurrence'
-option.
+   *Note Writing::, for more information on `--extract' and see *note
+-occurrence: Option Summary, for a description of `--occurrence' option.
 
 
 File: tar.info,  Node: update,  Next: concatenate,  Prev: append,  Up: Advanced tar
@@ -3924,7 +3953,7 @@ tell you that it didn't do anything (which may end up confusing you).
 `classical', in your practice directory, and some extra text to the
 file `blues', using any text editor.  Then invoke `tar' with the
 `update' operation and the `--verbose' (`-v') option specified, using
-the names of all the files in the practice directory as file name
+the names of all the files in the `practice' directory as file name
 arguments:
 
      $ tar --update -v -f collection.tar blues folk rock classical
@@ -4029,8 +4058,9 @@ improperly combined using the `cat' shell utility.
 
    ---------- Footnotes ----------
 
-   (1) This can cause multiple members to have the same name, for
-information on how this affects reading the archive, *note multiple::.
+   (1) This can cause multiple members to have the same name.  For
+information on how this affects reading the archive, see *note
+multiple::.
 
 
 File: tar.info,  Node: delete,  Next: compare,  Prev: concatenate,  Up: Advanced tar
@@ -4109,7 +4139,7 @@ report an error message.)
    The spirit behind the `--compare' (`--diff', `-d') option is to
 check whether the archive represents the current state of files on
 disk, more than validating the integrity of the archive media.  For
-this latter goal, *Note verify::.
+this latter goal, see *note verify::.
 
 
 File: tar.info,  Node: create options,  Next: extract options,  Prev: Advanced tar,  Up: operations
@@ -4163,8 +4193,8 @@ stored in the archive.
      `/' or `.'.  In the latter case, the modification time of that
      file will be used.
 
-     The following example will set the modification date to 00:00:00
-     UTC, January 1, 1970:
+     The following example will set the modification date to 00:00:00,
+     January 1, 1970:
 
           $ tar -c -f archive.tar --mtime='1970-01-01' .
 
@@ -4759,9 +4789,9 @@ space, you can use `--starting-file=NAME' (`-K NAME') to start
 extracting only after member NAME of the archive.  This assumes, of
 course, that there is now free space, or that you are now extracting
 into a different file system.  (You could also choose to suspend `tar',
-remove unnecessary files from the file system, and then restart the
-same `tar' operation.  In this case, `--starting-file' is not necessary.
-*Note Incremental Dumps::, *Note interactive::, and *note exclude::.)
+remove unnecessary files from the file system, and then resume the same
+`tar' operation.  In this case, `--starting-file' is not necessary.)
+See also *note interactive::, and *note exclude::.
 
 
 File: tar.info,  Node: Same Order,  Prev: Starting File,  Up: Scarce
@@ -4895,7 +4925,7 @@ The command also works using long option forms:
 
 or
 
-     $ tar --directory sourcedir --create --file=- . ) \
+     $ tar --directory sourcedir --create --file=- . \
             | tar --directory targetdir --extract --file=-
 
 This is one of the easiest methods to transfer a `tar' archive.
@@ -5147,19 +5177,7 @@ system, one would do(1):
    To list the contents of an incremental archive, use `--list' (*note
 list::), as usual.  To obtain more information about the archive, use
 `--listed-incremental' or `--incremental' combined with two `--verbose'
-optionsTwo
-`--verbose' options were selected to avoid breaking usual
-verbose listing output (`--list --verbose') when using in
-scripts.
-
-
-
-
-
-Versions of GNU `tar' up to 1.15.1 used to dump verbatim binary
-contents of the DUMPDIR header (with terminating nulls) when
-`--incremental' or `--listed-incremental' option was
-given, no matter what the verbosity level(2):
+options(2):
 
      tar --list --incremental --verbose --verbose archive.tar
 
@@ -5953,7 +5971,6 @@ resulting archive `foo.tar' will contain:
      libc.a
 
 
-
    Notice that the option parsing algorithm used with `-T' is stricter
 than the one used by shell.  Namely, when specifying option arguments,
 you should observe the following rules:
@@ -6092,7 +6109,7 @@ difficult to catch using text editors.
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-     As of version 1.23, the following files are excluded:
+     As of version 1.24, the following files are excluded:
 
         * `CVS/', and everything under it
 
@@ -6872,8 +6889,8 @@ transformations.  The result is:
             --show-transformed /lib
      drwxr-xr-x root/root       0 2008-07-08 16:20 /usr/local/lib/
      -rwxr-xr-x root/root 1250840 2008-05-25 07:44 /usr/local/lib/libc-2.3.2.so
-     lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 ->
-     libc-2.3.2.so
+     lrwxrwxrwx root/root       0 2008-06-24 17:12 /usr/local/lib/libc.so.6 \
+      -> libc-2.3.2.so
 
    Unlike `--strip-components', `--transform' can be used in any GNU
 `tar' operation mode.  For example, the following command adds files to
@@ -7232,6 +7249,9 @@ directory first, and then avoid absolute notation.  For example:
 
      $ tar -c -f archive.tar -C / home
 
+   *Note Integrity::, for some of the security-related implications of
+using this option.
+
    ---------- Footnotes ----------
 
    (1) A side effect of this is that when `--create' is used with
@@ -7275,8 +7295,8 @@ First, a quote:
 
    This section describes the textual date representations that GNU
 programs accept.  These are the strings you, as a user, can supply as
-arguments to the various programs.  The C interface (via the `get_date'
-function) is not described here.
+arguments to the various programs.  The C interface (via the
+`parse_datetime' function) is not described here.
 
 * Menu:
 
@@ -7289,7 +7309,7 @@ function) is not described here.
 * Pure numbers in date strings::   19931219, 1440.
 * Seconds since the Epoch::        @1078100502.
 * Specifying time zone rules::     TZ="America/New_York", TZ="UTC0".
-* Authors of get_date::            Bellovin, Eggert, Salz, Berets, et al.
+* Authors of parse_datetime::      Bellovin, Eggert, Salz, Berets, et al.
 
 
 File: tar.info,  Node: General date syntax,  Next: Calendar date items,  Up: Date input formats
@@ -7636,7 +7656,7 @@ UTC, `@915148800' represents 1999-01-01 00:00:00 UTC, and there is no
 way to represent the intervening leap second 1998-12-31 23:59:60 UTC.
 
 
-File: tar.info,  Node: Specifying time zone rules,  Next: Authors of get_date,  Prev: Seconds since the Epoch,  Up: Date input formats
+File: tar.info,  Node: Specifying time zone rules,  Next: Authors of parse_datetime,  Prev: Seconds since the Epoch,  Up: Date input formats
 
 7.9 Specifying time zone rules
 ==============================
@@ -7684,20 +7704,25 @@ saving regimes.  *Note Specifying the Time Zone with `TZ': (libc)TZ
 Variable.
 
 
-File: tar.info,  Node: Authors of get_date,  Prev: Specifying time zone rules,  Up: Date input formats
+File: tar.info,  Node: Authors of parse_datetime,  Prev: Specifying time zone rules,  Up: Date input formats
 
-7.10 Authors of `get_date'
-==========================
+7.10 Authors of `parse_datetime'
+================================
 
-`get_date' was originally implemented by Steven M. Bellovin
-(<smb@research.att.com>) while at the University of North Carolina at
-Chapel Hill.  The code was later tweaked by a couple of people on
-Usenet, then completely overhauled by Rich $alz (<rsalz@bbn.com>) and
-Jim Berets (<jberets@bbn.com>) in August, 1990.  Various revisions for
-the GNU system were made by David MacKenzie, Jim Meyering, Paul Eggert
-and others.
+`parse_datetime' started life as `getdate', as originally implemented
+by Steven M. Bellovin (<smb@research.att.com>) while at the University
+of North Carolina at Chapel Hill.  The code was later tweaked by a
+couple of people on Usenet, then completely overhauled by Rich $alz
+(<rsalz@bbn.com>) and Jim Berets (<jberets@bbn.com>) in August, 1990.
+Various revisions for the GNU system were made by David MacKenzie, Jim
+Meyering, Paul Eggert and others, including renaming it to `get_date' to
+avoid a conflict with the alternative Posix function `getdate', and a
+later rename to `parse_datetime'.  The Posix function `getdate' can
+parse more locale-specific dates using `strptime', but relies on an
+environment variable and external file, and lacks the thread-safety of
+`parse_datetime'.
 
    This chapter was originally produced by Franc,ois Pinard
-(<pinard@iro.umontreal.ca>) from the `getdate.y' source code, and then
-edited by K. Berry (<kb@cs.umb.edu>).
+(<pinard@iro.umontreal.ca>) from the `parse_datetime.y' source code,
+and then edited by K. Berry (<kb@cs.umb.edu>).
 

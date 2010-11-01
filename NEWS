@@ -1,5 +1,97 @@
-GNU tar NEWS - User visible changes. 2010-03-10
+GNU tar NEWS - User visible changes. 2010-10-24
 Please send GNU tar bug reports to <bug-tar@gnu.org>
+
+
+version 1.24 - Sergey Poznyakoff, 2010-10-24
+
+* The --full-time option.
+
+New command line option `--full-time' instructs tar to output file
+time stamps to the full resolution.
+
+* Bugfixes.
+
+** More reliable directory traversal when creating archives
+
+Tar now checks for inconsistencies caused when a file system is
+modified while tar is creating an archive.  In the new approach, tar
+maintains a cache of file descriptors to directories, so it uses more
+file descriptors than before, but it adjusts to system limits on
+the number of file descriptors.  Tar also takes more care when
+a file system is modified while tar is extracting from an archive.
+
+The new checks are implemented via the openat and related calls
+standardized by POSIX.1-2008.  On an older system where these calls do
+not exist or do not return useful results, tar emulates the calls at
+some cost in efficiency and reliability.
+
+** Symbolic link attributes
+
+When extracting symbolic links, tar now restores attributes such as
+last-modified time and link permissions, if the operating system
+supports this.  For example, recent versions of the Linux kernel
+support setting times on symlinks, and some BSD kernels also support
+symlink permissions.
+
+** --dereference consistency
+
+The --dereference (-h) option now applies to files that are copied
+into or out of archives, independently of other options.  For example,
+if F is a symbolic link and archive.tar contains a regular-file member
+also named F, "tar --overwrite -x -f archive.tar F" now overwrites F
+itself, rather than the file that F points to.  (To overwrite the file
+that F points to, add the --dereference (-h) option.)  Formerly,
+--dereference was intended to apply only when using the -c option, but
+the implementation was not consistent.
+
+Also, the --dereference option no longer affects accesses to other
+files, such as archives and time stamp files.  Symbolic links to these
+files are always followed.  Previously, the links were usually but not
+always followed.
+
+** Spurious error diagnostics on broken pipe.
+
+When receiving SIGPIPE, tar would exit with error status and
+"write error" diagnostics. In particular, this occurred if
+invoked as in the example below:
+
+   tar tf archive.tar | head -n 1
+
+** --remove-files
+
+`Tar --remove-files' failed to remove a directory which contained
+symlinks to another files within that directory.
+
+** --test-label behavior
+
+In case of a mismatch, `tar --test-label LABEL' exits with code 1,
+not 2 as it did in previous versions.
+
+The `--verbose' option used with `--test-label' provides additional
+diagnostics.
+
+Several volume labels may be specified in a command line, e.g.:
+
+   tar --test-label -f archive 'My volume' 'New volume' 'Test volume'
+
+In this case, tar exits with code 0 if any one of the arguments
+matches the actual volume label.
+
+** --label used with --update
+
+The `--label' option can be used with `--update' to prevent accidental
+update of an archive:
+
+  tar -rf archive --label 'My volume' .
+
+This did not work in previous versions, in spite of what the docs said.
+
+** --record-size and --tape-length (-L) options
+
+Usual size suffixes are allowed for these options.  For example,
+-L10k stands for a 10 kilobyte tape length.
+
+** Fix dead loop on extracting existing symlinks with the -k option.
 
 
 version 1.23 - Sergey Poznyakoff, 2010-03-10
@@ -80,7 +172,7 @@ the Epoch or a `Time reference' (see below).
 * Time references in --pax-option argument.
 
 Any value from the --pax-option argument that is enclosed in a pair
-of curly braces represents a time reference.  The string between the 
+of curly braces represents a time reference.  The string between the
 braces is understood either as a textual time representation, as described in
 chapter 7, "Date input formats", of the Tar manual, or as a name of
 an existing file, starting with `/' or `.'.  In the latter
@@ -114,14 +206,14 @@ version 1.22 - Sergey Poznyakoff, 2009-03-05
 
 * Support for xz compression
 
-Tar uses xz for compression if one of the following conditions is met: 
+Tar uses xz for compression if one of the following conditions is met:
 
  1. The option --xz or -J (see below) is used.
  2. The xz binary is set as compressor using --use-compress-program option.
  3. The file name of the archive being created ends in `.xz' and
  auto-compress option (-a) is used.
 
-Xz is used for decompression if one of the following conditions is met: 
+Xz is used for decompression if one of the following conditions is met:
 
  1. The option --xz or -J is used.
  2. The xz binary is set as compressor using --use-compress-program option.
@@ -174,7 +266,7 @@ control type of archive members affected by them.  The flags are:
  - s
    Apply transformation to symbolic link targets.
 
- - h  
+ - h
    Apply transformation to hard link targets.
 
 Corresponding upper-case letters negate the meaning, so that
@@ -196,10 +288,10 @@ can be changed using `flags=' statement before the expressions, e.g.:
 
 ** The --null option disabled handling of tar options in list files.  This
 is fixed.
-** Fixed record size autodetection.  If detected record size differs from
-the expected value (either default, or set on the command line), tar
-always prints a warning if verbosity level is set to 1 or greater,
-i.e. if either -t or -v option is given.
+** Fixed record size autodetection.  If the detected record size differs from
+the expected value (either default one, or the one set from the
+command line), tar always prints a warning if verbosity level is set
+to 1 or greater, i.e. if either -t or -v option is given.
 
 
 
@@ -253,7 +345,7 @@ during both creation and extraction.  Tar 1.19 used them only
 during extraction.
 
 For a detailed description, see chapter 6.7 "Modifying File and Member
-Names". 
+Names".
 
 * Info (end-of-volume) scripts
 
@@ -280,8 +372,8 @@ control systems, e.g. "CVS/", ".svn/", etc.
 
 The following options now work with incremental archives as well:
 
-  --exclude-caches       
-  --exclude-caches-all   
+  --exclude-caches
+  --exclude-caches-all
   --exclude-tag
   --exclude-tag-all
   --exclude-tag-under
@@ -292,14 +384,14 @@ Previous versions always stored absolute file names in rename
 records, even if -P was not used. This is fixed: rename records
 contain file names processed in accordance with the command line
 settings.
-  
+
 * Fix --version output.
 
 * Recognition of broken archives.
 
 When supplied an archive smaller than 512 bytes in reading mode (-x,
 -t), the previous version of tar silently ignored it, exiting with
-code 0. It is fixed. Tar now issues the following diagnostic message:
+code 0.  It is fixed.  Tar now issues the following diagnostic message:
 'This does not look like a tar archive', and exits with code 2.
 
 * Fix double-dot recognition in archive member names in case of duplicate '/.'.

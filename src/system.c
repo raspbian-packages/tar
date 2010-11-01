@@ -1,7 +1,7 @@
 /* System-dependent calls for tar.
 
    Copyright (C) 2003, 2004, 2005, 2006, 2007,
-   2008 Free Software Foundation, Inc.
+   2008, 2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -20,6 +20,7 @@
 #include <system.h>
 
 #include "common.h"
+#include <priv-set.h>
 #include <rmt.h>
 #include <signal.h>
 
@@ -192,6 +193,7 @@ sys_spawn_shell (void)
   child = xfork ();
   if (child == 0)
     {
+      priv_set_restore_linkdir ();
       execlp (shell, "-sh", "-i", (char *) 0);
       exec_fatal (shell);
     }
@@ -283,15 +285,15 @@ xdup2 (int from, int into)
     }
 }
 
-void wait_for_grandchild (pid_t pid) __attribute__ ((__noreturn__));
+static void wait_for_grandchild (pid_t pid) __attribute__ ((__noreturn__));
 
 /* Propagate any failure of the grandchild back to the parent.  */
-void
+static void
 wait_for_grandchild (pid_t pid)
 {
   int wait_status;
   int exit_code = 0;
-  
+
   while (waitpid (pid, &wait_status, 0) == -1)
     if (errno != EINTR)
       {
@@ -303,7 +305,7 @@ wait_for_grandchild (pid_t pid)
     raise (WTERMSIG (wait_status));
   else if (WEXITSTATUS (wait_status) != 0)
     exit_code = WEXITSTATUS (wait_status);
-  
+
   exit (exit_code);
 }
 
@@ -332,7 +334,7 @@ sys_child_open_for_compress (void)
 
   set_program_name (_("tar (child)"));
   signal (SIGPIPE, SIG_DFL);
-  
+
   xdup2 (parent_pipe[PREAD], STDIN_FILENO);
   xclose (parent_pipe[PWRITE]);
 
@@ -362,6 +364,7 @@ sys_child_open_for_compress (void)
 	    }
 	  xdup2 (archive, STDOUT_FILENO);
 	}
+      priv_set_restore_linkdir ();
       execlp (use_compress_program_option, use_compress_program_option, NULL);
       exec_fatal (use_compress_program_option);
     }
@@ -379,6 +382,7 @@ sys_child_open_for_compress (void)
 
       xdup2 (child_pipe[PWRITE], STDOUT_FILENO);
       xclose (child_pipe[PREAD]);
+      priv_set_restore_linkdir ();
       execlp (use_compress_program_option, use_compress_program_option,
 	      (char *) 0);
       exec_fatal (use_compress_program_option);
@@ -476,7 +480,7 @@ sys_child_open_for_uncompress (void)
 
   set_program_name (_("tar (child)"));
   signal (SIGPIPE, SIG_DFL);
-  
+
   xdup2 (parent_pipe[PWRITE], STDOUT_FILENO);
   xclose (parent_pipe[PREAD]);
 
@@ -496,6 +500,7 @@ sys_child_open_for_uncompress (void)
       if (archive < 0)
 	open_fatal (archive_name_array[0]);
       xdup2 (archive, STDIN_FILENO);
+      priv_set_restore_linkdir ();
       execlp (use_compress_program_option, use_compress_program_option,
 	      "-d", (char *) 0);
       exec_fatal (use_compress_program_option);
@@ -514,6 +519,7 @@ sys_child_open_for_uncompress (void)
 
       xdup2 (child_pipe[PREAD], STDIN_FILENO);
       xclose (child_pipe[PWRITE]);
+      priv_set_restore_linkdir ();
       execlp (use_compress_program_option, use_compress_program_option,
 	      "-d", (char *) 0);
       exec_fatal (use_compress_program_option);
@@ -575,7 +581,7 @@ sys_child_open_for_uncompress (void)
 
 
 static void
-dec_to_env (char *envar, uintmax_t num)
+dec_to_env (char const *envar, uintmax_t num)
 {
   char buf[UINTMAX_STRSIZE_BOUND];
   char *numstr;
@@ -586,7 +592,7 @@ dec_to_env (char *envar, uintmax_t num)
 }
 
 static void
-time_to_env (char *envar, struct timespec t)
+time_to_env (char const *envar, struct timespec t)
 {
   char buf[TIMESPEC_STRSIZE_BOUND];
   if (setenv (envar, code_timespec (t, buf), 1) != 0)
@@ -594,7 +600,7 @@ time_to_env (char *envar, struct timespec t)
 }
 
 static void
-oct_to_env (char *envar, unsigned long num)
+oct_to_env (char const *envar, unsigned long num)
 {
   char buf[1+1+(sizeof(unsigned long)*CHAR_BIT+2)/3];
 
@@ -604,7 +610,7 @@ oct_to_env (char *envar, unsigned long num)
 }
 
 static void
-str_to_env (char *envar, char const *str)
+str_to_env (char const *envar, char const *str)
 {
   if (str)
     {
@@ -616,7 +622,7 @@ str_to_env (char *envar, char const *str)
 }
 
 static void
-chr_to_env (char *envar, char c)
+chr_to_env (char const *envar, char c)
 {
   char buf[2];
   buf[0] = c;
@@ -702,6 +708,7 @@ sys_exec_command (char *file_name, int typechar, struct tar_stat_info *st)
   argv[2] = to_command_option;
   argv[3] = NULL;
 
+  priv_set_restore_linkdir ();
   execv ("/bin/sh", argv);
 
   exec_fatal (file_name);
@@ -750,7 +757,7 @@ sys_exec_info_script (const char **archive_name, int volume_number)
   char uintbuf[UINTMAX_STRSIZE_BOUND];
   int p[2];
   static RETSIGTYPE (*saved_handler) (int sig);
-  
+
   xpipe (p);
   saved_handler = signal (SIGPIPE, SIG_IGN);
 
@@ -783,7 +790,7 @@ sys_exec_info_script (const char **archive_name, int volume_number)
 	  }
 
       signal (SIGPIPE, saved_handler);
-      
+
       if (WIFEXITED (status))
 	{
 	  if (WEXITSTATUS (status) == 0 && rc > 0)
@@ -813,9 +820,10 @@ sys_exec_info_script (const char **archive_name, int volume_number)
 
   argv[0] = "/bin/sh";
   argv[1] = "-c";
-  argv[2] = (char*) info_script_option;
+  argv[2] = (char *) info_script_option;
   argv[3] = NULL;
 
+  priv_set_restore_linkdir ();
   execv (argv[0], argv);
 
   exec_fatal (info_script_option);
@@ -860,9 +868,10 @@ sys_exec_checkpoint_script (const char *script_name,
 				 archive_format : current_format), 1);
   argv[0] = "/bin/sh";
   argv[1] = "-c";
-  argv[2] = (char*) script_name;
+  argv[2] = (char *) script_name;
   argv[3] = NULL;
 
+  priv_set_restore_linkdir ();
   execv (argv[0], argv);
 
   exec_fatal (script_name);
