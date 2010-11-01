@@ -2,14 +2,16 @@
 # Copyright (C) 1996 Free Software Foundation, Inc.
 # Bang Jun-Young <bangjy@nownuri.net>, 1996-1997.
 #
+#: src/create.c:1550
 msgid ""
 msgstr ""
 "Project-Id-Version: GNU tar 1.12\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-03-10 12:53+0200\n"
+"POT-Creation-Date: 2010-10-24 23:08+0300\n"
 "PO-Revision-Date: 1997-05-30 22:55+0900\n"
 "Last-Translator: Bang Jun-Young <bangjy@nownuri.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-KR\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -87,7 +89,7 @@ msgstr "더 많은 정보를 보려면 `%s --help' 하십시오.\n"
 msgid "Report bugs to %s.\n"
 msgstr ""
 
-#: gnu/argp-help.c:1929 gnu/error.c:155
+#: gnu/argp-help.c:1929 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "알 수 없는 시스템 오류"
 
@@ -99,8 +101,8 @@ msgstr ""
 msgid "give a short usage message"
 msgstr ""
 
-#: gnu/argp-parse.c:85 src/tar.c:488 src/tar.c:490 src/tar.c:559
-#: tests/genfile.c:131
+#: gnu/argp-parse.c:85 src/tar.c:489 src/tar.c:491 src/tar.c:560
+#: tests/genfile.c:130
 msgid "NAME"
 msgstr ""
 
@@ -138,54 +140,59 @@ msgstr ""
 msgid "write error"
 msgstr ""
 
-#: gnu/getopt.c:531 gnu/getopt.c:547
+#: gnu/getopt.c:529 gnu/getopt.c:545
 #, fuzzy, c-format
 msgid "%s: option '%s' is ambiguous\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:580 gnu/getopt.c:584
+#: gnu/getopt.c:578 gnu/getopt.c:582
 #, fuzzy, c-format
 msgid "%s: option '--%s' doesn't allow an argument\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:593 gnu/getopt.c:598
+#: gnu/getopt.c:591 gnu/getopt.c:596
 #, fuzzy, c-format
 msgid "%s: option '%c%s' doesn't allow an argument\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:641 gnu/getopt.c:660 gnu/getopt.c:963 gnu/getopt.c:982
+#: gnu/getopt.c:639 gnu/getopt.c:658
 #, fuzzy, c-format
-msgid "%s: option '%s' requires an argument\n"
+msgid "%s: option '--%s' requires an argument\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:698 gnu/getopt.c:701
+#: gnu/getopt.c:696 gnu/getopt.c:699
 #, c-format
 msgid "%s: unrecognized option '--%s'\n"
 msgstr ""
 
-#: gnu/getopt.c:709 gnu/getopt.c:712
+#: gnu/getopt.c:707 gnu/getopt.c:710
 #, c-format
 msgid "%s: unrecognized option '%c%s'\n"
 msgstr ""
 
-#: gnu/getopt.c:761 gnu/getopt.c:764
+#: gnu/getopt.c:759 gnu/getopt.c:762
 #, fuzzy, c-format
 msgid "%s: invalid option -- '%c'\n"
 msgstr "record_size로 부적절한 값"
 
-#: gnu/getopt.c:814 gnu/getopt.c:831 gnu/getopt.c:1034 gnu/getopt.c:1052
+#: gnu/getopt.c:812 gnu/getopt.c:829 gnu/getopt.c:1037 gnu/getopt.c:1055
 #, fuzzy, c-format
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:884 gnu/getopt.c:900
+#: gnu/getopt.c:885 gnu/getopt.c:901
 #, fuzzy, c-format
 msgid "%s: option '-W %s' is ambiguous\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/getopt.c:924 gnu/getopt.c:942
+#: gnu/getopt.c:925 gnu/getopt.c:943
 #, fuzzy, c-format
 msgid "%s: option '-W %s' doesn't allow an argument\n"
+msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
+
+#: gnu/getopt.c:964 gnu/getopt.c:982
+#, fuzzy, c-format
+msgid "%s: option '-W %s' requires an argument\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
 #: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
@@ -524,204 +531,204 @@ msgstr ""
 msgid "Cannot execute remote shell"
 msgstr "원격 셸을 실행할 수 없습니다"
 
-#: rmt/rmt.c:413
+#: rmt/rmt.c:432
 msgid "Seek direction out of range"
 msgstr ""
 
-#: rmt/rmt.c:419
+#: rmt/rmt.c:438
 #, fuzzy
 msgid "Invalid seek direction"
 msgstr "옵션에 부적절한 모드가 주어짐"
 
-#: rmt/rmt.c:427
+#: rmt/rmt.c:446
 #, fuzzy
 msgid "Invalid seek offset"
 msgstr "부적절한 날짜 형식 `%s'"
 
-#: rmt/rmt.c:433
+#: rmt/rmt.c:452
 msgid "Seek offset out of range"
 msgstr ""
 
-#: rmt/rmt.c:474 rmt/rmt.c:525 rmt/rmt.c:589
+#: rmt/rmt.c:493 rmt/rmt.c:544 rmt/rmt.c:608
 #, fuzzy
 msgid "Invalid byte count"
 msgstr "옵션에 부적절한 소유자가 주어짐"
 
-#: rmt/rmt.c:480 rmt/rmt.c:531 rmt/rmt.c:595 rmt/rmt.c:606
+#: rmt/rmt.c:499 rmt/rmt.c:550 rmt/rmt.c:614 rmt/rmt.c:625
 msgid "Byte count out of range"
 msgstr ""
 
 #
-#: rmt/rmt.c:539
+#: rmt/rmt.c:558
 #, fuzzy
 msgid "Premature eof"
 msgstr "rmtd: 잘못된 eof\n"
 
-#: rmt/rmt.c:582
+#: rmt/rmt.c:601
 #, fuzzy
 msgid "Invalid operation code"
 msgstr "record_size로 부적절한 값"
 
-#: rmt/rmt.c:617 rmt/rmt.c:661
+#: rmt/rmt.c:636 rmt/rmt.c:680
 msgid "Operation not supported"
 msgstr ""
 
 #
-#: rmt/rmt.c:645
+#: rmt/rmt.c:664
 #, fuzzy
 msgid "Unexpected arguments"
 msgstr "아카이브에 예기치 않은 EOF"
 
-#: rmt/rmt.c:670
+#: rmt/rmt.c:689
 msgid "Manipulate a tape drive, accepting commands from a remote process"
 msgstr ""
 
-#: rmt/rmt.c:677 src/tar.c:423 src/tar.c:427 src/tar.c:557 src/tar.c:572
-#: src/tar.c:703 src/tar.c:741 tests/genfile.c:167
+#: rmt/rmt.c:696 src/tar.c:424 src/tar.c:428 src/tar.c:558 src/tar.c:573
+#: src/tar.c:704 src/tar.c:742 tests/genfile.c:166
 msgid "NUMBER"
 msgstr ""
 
-#: rmt/rmt.c:678
+#: rmt/rmt.c:697
 msgid "set debug level"
 msgstr ""
 
-#: rmt/rmt.c:679 src/tar.c:421 src/tar.c:562 src/tar.c:638 src/tar.c:642
-#: src/tar.c:654 src/tar.c:664 src/tar.c:667 src/tar.c:669 src/tar.c:756
-#: tests/genfile.c:133 tests/genfile.c:181 tests/genfile.c:185
-#: tests/genfile.c:188 tests/genfile.c:194
+#: rmt/rmt.c:698 src/tar.c:422 src/tar.c:563 src/tar.c:639 src/tar.c:643
+#: src/tar.c:655 src/tar.c:665 src/tar.c:668 src/tar.c:670 src/tar.c:759
+#: tests/genfile.c:132 tests/genfile.c:180 tests/genfile.c:184
+#: tests/genfile.c:187 tests/genfile.c:193
 msgid "FILE"
 msgstr ""
 
-#: rmt/rmt.c:680
+#: rmt/rmt.c:699
 msgid "set debug output file name"
 msgstr ""
 
 #
-#: rmt/rmt.c:696 rmt/rmt.c:764
+#: rmt/rmt.c:715 rmt/rmt.c:783
 #, fuzzy, c-format
 msgid "cannot open %s"
 msgstr "%s를 열 수 없습니다"
 
-#: rmt/rmt.c:761 tests/genfile.c:885 tests/genfile.c:902
+#: rmt/rmt.c:780 tests/genfile.c:884 tests/genfile.c:901
 #, c-format
 msgid "too many arguments"
 msgstr ""
 
 #
-#: rmt/rmt.c:803
+#: rmt/rmt.c:822
 msgid "Garbage command"
 msgstr "쓸모없는 명령"
 
 #
-#: src/buffer.c:321 src/buffer.c:326 src/buffer.c:572 src/buffer.c:1176
-#: src/buffer.c:1222 src/buffer.c:1251 src/delete.c:211 src/list.c:171
-#: src/update.c:189
+#: src/buffer.c:386 src/buffer.c:391 src/buffer.c:635 src/buffer.c:1250
+#: src/buffer.c:1296 src/buffer.c:1325 src/delete.c:211 src/list.c:184
+#: src/update.c:198
 msgid "This does not look like a tar archive"
 msgstr "이것은 tar 아카이브처럼 보이지 않습니다"
 
 #
-#: src/buffer.c:385 src/buffer.c:394
+#: src/buffer.c:450 src/buffer.c:459
 #, fuzzy
 msgid "Total bytes written"
 msgstr "총 쓰여진 바이트: "
 
 #
-#: src/buffer.c:392 src/buffer.c:406
+#: src/buffer.c:457 src/buffer.c:471
 #, fuzzy
 msgid "Total bytes read"
 msgstr "총 쓰여진 바이트: "
 
 #
-#: src/buffer.c:396
+#: src/buffer.c:461
 #, fuzzy, c-format
 msgid "Total bytes deleted: %s\n"
 msgstr "총 쓰여진 바이트: "
 
-#: src/buffer.c:485
+#: src/buffer.c:550
 msgid "(pipe)"
 msgstr ""
 
-#: src/buffer.c:508
+#: src/buffer.c:573
 msgid "Invalid value for record_size"
 msgstr "record_size로 부적절한 값"
 
 #
-#: src/buffer.c:511
+#: src/buffer.c:576
 msgid "No archive name given"
 msgstr "아카이브 이름이 주어지지 않았습니다"
 
 #
-#: src/buffer.c:555
+#: src/buffer.c:618
 msgid "Cannot verify stdin/stdout archive"
 msgstr "표준입/출력 아카이브를 검증할 수 없습니다"
 
-#: src/buffer.c:569
+#: src/buffer.c:632
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr ""
 
 #
-#: src/buffer.c:626 src/tar.c:2429
+#: src/buffer.c:689 src/tar.c:2448
 msgid "Cannot update compressed archives"
 msgstr "압축된 아카이브를 갱신할 수 없습니다"
 
 #
-#: src/buffer.c:705
+#: src/buffer.c:782
 msgid "At beginning of tape, quitting now"
 msgstr "테이프의 시작 부분에서 지금 종료함"
 
 #
-#: src/buffer.c:711
+#: src/buffer.c:788
 msgid "Too many errors, quitting"
 msgstr "오류가 너무 많아서 종료합니다"
 
-#: src/buffer.c:744
+#: src/buffer.c:821
 #, fuzzy, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "레코드 크기 = %d 블럭"
 msgstr[1] "레코드 크기 = %d 블럭"
 
-#: src/buffer.c:765
+#: src/buffer.c:842
 #, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/buffer.c:842
+#: src/buffer.c:919
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr ""
 
-#: src/buffer.c:874
+#: src/buffer.c:951
 msgid "rmtlseek not stopped at a record boundary"
 msgstr ""
 
-#: src/buffer.c:928
+#: src/buffer.c:1002
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr ""
 
-#: src/buffer.c:963
+#: src/buffer.c:1037
 msgid "Volume number overflow"
 msgstr ""
 
 #
-#: src/buffer.c:978
+#: src/buffer.c:1052
 #, fuzzy, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "볼륨 #%d(%s를 위한)를 준비하고 리턴을 치세요: "
 
-#: src/buffer.c:984
+#: src/buffer.c:1058
 msgid "EOF where user reply was expected"
 msgstr "사용자의 응답이 필요한 곳에 EOF가 있음"
 
 #
-#: src/buffer.c:989 src/buffer.c:1021
+#: src/buffer.c:1063 src/buffer.c:1095
 msgid "WARNING: Archive is incomplete"
 msgstr "경고: 아카이브가 불완전합니다"
 
-#: src/buffer.c:1003
+#: src/buffer.c:1077
 #, fuzzy, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -733,77 +740,77 @@ msgstr ""
 " !          서브셸을 실행합니다\n"
 " ?          이 목록을 인쇄합니다\n"
 
-#: src/buffer.c:1008
+#: src/buffer.c:1082
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr ""
 
-#: src/buffer.c:1009
+#: src/buffer.c:1083
 #, c-format
 msgid " ?             Print this list\n"
 msgstr ""
 
 #
-#: src/buffer.c:1016
+#: src/buffer.c:1090
 msgid "No new volume; exiting.\n"
 msgstr "새 볼륨이 아님; 종료.\n"
 
-#: src/buffer.c:1049
+#: src/buffer.c:1123
 msgid "File name not specified. Try again.\n"
 msgstr ""
 
-#: src/buffer.c:1062
+#: src/buffer.c:1136
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr ""
 
-#: src/buffer.c:1113
+#: src/buffer.c:1187
 #, c-format
 msgid "%s command failed"
 msgstr ""
 
 #
-#: src/buffer.c:1294
+#: src/buffer.c:1368
 #, fuzzy, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr "%s는 이 볼륨에 연속되어 있지 않습니다"
 
 #
-#: src/buffer.c:1298
+#: src/buffer.c:1372
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "%s는 이 볼륨에 연속되어 있지 않습니다"
 
 #
-#: src/buffer.c:1312
+#: src/buffer.c:1386
 #, fuzzy, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s는 잘못된 크기입니다 (%ld != %ld + %ld)"
 
 #
-#: src/buffer.c:1326
+#: src/buffer.c:1401
 #, fuzzy, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "이 볼륨은 순서를 벗어났습니다"
 
-#: src/buffer.c:1404 src/buffer.c:1430
+#: src/buffer.c:1479 src/buffer.c:1505
 #, fuzzy, c-format
 msgid "Archive not labeled to match %s"
 msgstr "`%s'와 일치하도록 라벨이 붙지 않은 아카이브"
 
-#: src/buffer.c:1434
+#: src/buffer.c:1509
 #, fuzzy, c-format
 msgid "Volume %s does not match %s"
 msgstr "볼륨 `%s'가 `%s'와 일치하지 않습니다"
 
-#: src/buffer.c:1530
+#: src/buffer.c:1603
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
 msgstr ""
 
 #
-#: src/buffer.c:1749
+#: src/buffer.c:1794
 #, fuzzy
 msgid "write did not end on a block boundary"
 msgstr "블럭 경계가 아닌 부분에서 아카이브 %s의 EOF 검출"
@@ -816,24 +823,24 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "%d 바이트(%ld 바이트 중)만 읽을 수 있습니다"
 msgstr[1] "%d 바이트(%ld 바이트 중)만 읽을 수 있습니다"
 
-#: src/compare.c:105 src/compare.c:388
+#: src/compare.c:105 src/compare.c:382
 #, fuzzy
 msgid "Contents differ"
 msgstr "모드가 다릅니다"
 
 #
-#: src/compare.c:131 src/extract.c:830 src/incremen.c:1462 src/list.c:386
-#: src/list.c:1376 src/xheader.c:710
+#: src/compare.c:131 src/extract.c:958 src/incremen.c:1462 src/list.c:397
+#: src/list.c:1384 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "아카이브에 예기치 않은 EOF"
 
 #
-#: src/compare.c:179 src/compare.c:195 src/compare.c:313 src/compare.c:412
+#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
 #, fuzzy
 msgid "File type differs"
 msgstr "크기가 다릅니다"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:327
+#: src/compare.c:182 src/compare.c:202 src/compare.c:322
 msgid "Mode differs"
 msgstr "모드가 다릅니다"
 
@@ -853,98 +860,98 @@ msgid "Mod time differs"
 msgstr "변경 시각이 다릅니다"
 
 #
-#: src/compare.c:215 src/compare.c:420
+#: src/compare.c:215 src/compare.c:414
 msgid "Size differs"
 msgstr "크기가 다릅니다"
 
 #
-#: src/compare.c:269
+#: src/compare.c:263
 #, c-format
 msgid "Not linked to %s"
 msgstr "%s에 연결되지 않음"
 
 #
-#: src/compare.c:292
+#: src/compare.c:287
 msgid "Symlink differs"
 msgstr "기호링크가 다릅니다"
 
 #
-#: src/compare.c:321
+#: src/compare.c:316
 #, fuzzy
 msgid "Device number differs"
 msgstr "장치 번호가 바뀌었음"
 
 #
-#: src/compare.c:462
+#: src/compare.c:456
 #, c-format
 msgid "Verify "
 msgstr "검증 "
 
 #
-#: src/compare.c:469
+#: src/compare.c:463
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: 알 수 없는 파일 타입; 파일이 무시됨"
 
-#: src/compare.c:524
+#: src/compare.c:518
 msgid "Archive contains file names with leading prefixes removed."
 msgstr ""
 
-#: src/compare.c:526
+#: src/compare.c:520
 msgid "Verification may fail to locate original files."
 msgstr ""
 
 #
-#: src/compare.c:599
+#: src/compare.c:593
 #, fuzzy, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "검증 실패: %d개의 부적절한 헤더가 검출됨"
 msgstr[1] "검증 실패: %d개의 부적절한 헤더가 검출됨"
 
-#: src/compare.c:617 src/list.c:148
+#: src/compare.c:611 src/list.c:161
 #, c-format
 msgid "A lone zero block at %s"
 msgstr ""
 
-#: src/create.c:68
+#: src/create.c:72
 #, c-format
 msgid "%s: contains a cache directory tag %s; %s"
 msgstr ""
 
-#: src/create.c:273
+#: src/create.c:261
 #, c-format
 msgid "value %s out of %s range %s..%s; substituting %s"
 msgstr ""
 
-#: src/create.c:279
+#: src/create.c:267
 #, c-format
 msgid "value %s out of %s range %s..%s"
 msgstr ""
 
-#: src/create.c:339
+#: src/create.c:327
 msgid "Generating negative octal headers"
 msgstr ""
 
 #
-#: src/create.c:624 src/create.c:687
+#: src/create.c:611 src/create.c:674
 #, fuzzy, c-format
 msgid "%s: file name is too long (max %d); not dumped"
 msgstr "%s: 변경되지 않았습니다; 덤프되지 않음"
 
-#: src/create.c:634
+#: src/create.c:621
 #, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
 msgstr ""
 
 #
-#: src/create.c:661
+#: src/create.c:648
 #, fuzzy, c-format
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: 변경되지 않았습니다; 덤프되지 않음"
 
 #
-#: src/create.c:1078
+#: src/create.c:1062
 #, fuzzy, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
@@ -952,62 +959,62 @@ msgstr[0] "%s: 파일이 %d 바이트 줄어듬, (와우!)"
 msgstr[1] "%s: 파일이 %d 바이트 줄어듬, (와우!)"
 
 #
-#: src/create.c:1175
+#: src/create.c:1158
 #, fuzzy, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: 다른 파일시스템 상에 있음; 덤프되지 않음"
 
 #
-#: src/create.c:1219 src/create.c:1230 src/incremen.c:590 src/incremen.c:596
+#: src/create.c:1201 src/create.c:1212 src/incremen.c:582 src/incremen.c:588
 #, fuzzy
 msgid "contents not dumped"
 msgstr " (코어 출력됨)"
 
 #
-#: src/create.c:1362
+#: src/create.c:1416
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: 알 수 없는 파일 타입; 파일이 무시됨"
 
 #
-#: src/create.c:1472
+#: src/create.c:1527
 #, fuzzy, c-format
 msgid "Missing links to %s."
 msgstr " %s로 링크\n"
 
 #
-#: src/create.c:1543
+#: src/create.c:1688
 #, fuzzy, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "%s: 변경되지 않았습니다; 덤프되지 않음"
 
 #
-#: src/create.c:1552
+#: src/create.c:1697
 #, fuzzy, c-format
 msgid "%s: file is the archive; not dumped"
 msgstr "%s는 아카이브입니다; 덤프되지 않음"
 
-#: src/create.c:1593 src/incremen.c:583
+#: src/create.c:1721 src/incremen.c:575
 msgid "directory not dumped"
 msgstr ""
 
-#: src/create.c:1664
+#: src/create.c:1793
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr ""
 
-#: src/create.c:1731
+#: src/create.c:1855
 #, c-format
 msgid "%s: socket ignored"
 msgstr ""
 
-#: src/create.c:1737
+#: src/create.c:1861
 #, c-format
 msgid "%s: door ignored"
 msgstr ""
 
 #
-#: src/delete.c:217 src/list.c:185 src/update.c:194
+#: src/delete.c:217 src/list.c:198 src/update.c:203
 msgid "Skipping to next header"
 msgstr "다음 헤더로 건너 뜀"
 
@@ -1016,81 +1023,81 @@ msgstr "다음 헤더로 건너 뜀"
 msgid "Deleting non-header from archive"
 msgstr "아카이브에서 비헤더 부분을 제거함"
 
-#: src/extract.c:211
+#: src/extract.c:277
 #, c-format
 msgid "%s: implausibly old time stamp %s"
 msgstr ""
 
-#: src/extract.c:229
+#: src/extract.c:295
 #, c-format
 msgid "%s: time stamp %s is %s s in the future"
 msgstr ""
 
-#: src/extract.c:409
+#: src/extract.c:475
 #, c-format
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr ""
 
-#: src/extract.c:613
+#: src/extract.c:709
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr ""
 
-#: src/extract.c:759
+#: src/extract.c:863
 msgid "Extracting contiguous files as regular files"
 msgstr "연속되어 있는 파일을 일반 파일로 추출함"
 
-#: src/extract.c:1039
+#: src/extract.c:1183
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "기호 링크를 하드 링크로 추출하고 있습니다"
 
-#: src/extract.c:1183
+#: src/extract.c:1339
 #, fuzzy, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "`%s'를 추출할 수 없습니다 -- 이 파일은 다른 볼륨에 연속되어 있습니다"
 
 #
-#: src/extract.c:1190 src/list.c:1109
+#: src/extract.c:1346 src/list.c:1117
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "아카이브 파일에 예기치 않은 EOF"
 
 #
-#: src/extract.c:1197
+#: src/extract.c:1353
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: 알 수 없는 파일 타입; 파일이 무시됨"
 
-#: src/extract.c:1223
+#: src/extract.c:1379
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr ""
 
-#: src/extract.c:1274
+#: src/extract.c:1431
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: 이 파일을 백업할 수 없었습니다"
 
 #
-#: src/extract.c:1402
+#: src/extract.c:1568
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s를 %s로 이름을 바꿀 수 없습니다"
 
 #
-#: src/incremen.c:482 src/incremen.c:526
+#: src/incremen.c:474 src/incremen.c:518
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
 #
-#: src/incremen.c:494
+#: src/incremen.c:486
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
 #
-#: src/incremen.c:539
+#: src/incremen.c:531
 #, fuzzy, c-format
 msgid "%s: Directory is new"
 msgstr "%s는 새 디렉토리입니다"
@@ -1211,188 +1218,187 @@ msgid "%s: Cannot remove"
 msgstr "%s를 지울 수 없습니다"
 
 #
-#: src/list.c:115
+#: src/list.c:130
 #, fuzzy, c-format
 msgid "%s: Omitting"
 msgstr "%s를 생략"
 
-#: src/list.c:133
+#: src/list.c:146
 #, fuzzy, c-format
 msgid "block %s: ** Block of NULs **\n"
 msgstr "블럭 %10ld: ** NUL로 된 블럭 **\n"
 
-#: src/list.c:159
+#: src/list.c:172
 #, fuzzy, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "블럭 %10ld: ** 파일의 끝 **\n"
 
-#: src/list.c:182 src/list.c:1081 src/list.c:1344
+#: src/list.c:195 src/list.c:1089 src/list.c:1352
 #, fuzzy, c-format
 msgid "block %s: "
 msgstr "블럭 %10ld: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:689
+#: src/list.c:704
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr ""
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:744
+#: src/list.c:759
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:755
+#: src/list.c:770
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr ""
 
-#: src/list.c:776
+#: src/list.c:791
 msgid "Archive contains obsolescent base-64 headers"
 msgstr ""
 
-#: src/list.c:790
+#: src/list.c:805
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr ""
 
 #
-#: src/list.c:821
+#: src/list.c:836
 #, fuzzy, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "이 볼륨은 순서를 벗어났습니다"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:850
+#: src/list.c:865
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr ""
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:872
+#: src/list.c:887
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr ""
 
 #
-#: src/list.c:1245
+#: src/list.c:1253
 #, c-format
 msgid " link to %s\n"
 msgstr " %s로 링크\n"
 
 #
-#: src/list.c:1253
+#: src/list.c:1261
 #, fuzzy, c-format
 msgid " unknown file type %s\n"
 msgstr " 알 수 없는 파일 타입 `%c'\n"
 
-#: src/list.c:1271
+#: src/list.c:1279
 #, c-format
 msgid "--Long Link--\n"
 msgstr ""
 
-#: src/list.c:1275
+#: src/list.c:1283
 #, c-format
 msgid "--Long Name--\n"
 msgstr ""
 
 #
-#: src/list.c:1279
+#: src/list.c:1287
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--볼륨 헤더--\n"
 
 #
-#: src/list.c:1287
+#: src/list.c:1295
 #, fuzzy, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--%ld 바이트 째에 계속됨--\n"
 
 #
-#: src/list.c:1349
+#: src/list.c:1357
 msgid "Creating directory:"
 msgstr "디렉토리를 만드는 중:"
 
 #
-#: src/misc.c:502
+#: src/misc.c:298
+#, fuzzy
+msgid "Cannot get working directory"
+msgstr "%s로 디렉토리를 바꿀 수 없습니다"
+
+#
+#: src/misc.c:571
 #, fuzzy, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s를 %s로 이름 바꿈"
 
 #
-#: src/misc.c:511 src/misc.c:529
+#: src/misc.c:580 src/misc.c:599
 #, fuzzy, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s를 %s로 이름을 바꿀 수 없습니다"
 
 #
-#: src/misc.c:534
+#: src/misc.c:604
 #, fuzzy, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s를 %s로 이름 바꿈"
 
-#
-#: src/misc.c:669
-#, fuzzy
-msgid "Cannot save working directory"
-msgstr "%s로 디렉토리를 바꿀 수 없습니다"
-
-#
-#: src/misc.c:675
-#, fuzzy
-msgid "Cannot change working directory"
-msgstr "%s로 디렉토리를 바꿀 수 없습니다"
-
-#: src/misc.c:759
+#: src/misc.c:851
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr ""
 
 #
-#: src/misc.c:774
+#: src/misc.c:866
 #, fuzzy, c-format
 msgid "%s: Directory removed before we read it"
 msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
-#: src/misc.c:795
+#: src/misc.c:887
 msgid "child process"
 msgstr ""
 
-#: src/misc.c:804
+#: src/misc.c:896
 msgid "interprocess channel"
 msgstr ""
 
-#: src/names.c:601
+#: src/names.c:594
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:603
+#: src/names.c:596
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
 #
-#: src/names.c:619 src/names.c:637
+#: src/names.c:614 src/names.c:630
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: 아카이브에 없음"
 
 #
-#: src/names.c:622
+#: src/names.c:615
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: 아카이브에 없음"
 
-#: src/names.c:894
+#: src/names.c:649
+#, fuzzy, c-format
+msgid "Archive label mismatch"
+msgstr "`%s'와 일치하도록 라벨이 붙지 않은 아카이브"
+
+#: src/names.c:953
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:900
+#: src/names.c:959
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -1416,7 +1422,7 @@ msgid ""
 "Unknown quoting style `%s'. Try `%s --quoting-style=help' to get a list."
 msgstr ""
 
-#: src/tar.c:347
+#: src/tar.c:348
 msgid ""
 "GNU `tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1427,7 +1433,7 @@ msgid ""
 "  tar -xf archive.tar          # Extract all files from archive.tar.\n"
 msgstr ""
 
-#: src/tar.c:356
+#: src/tar.c:357
 msgid ""
 "The backup suffix is `~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1439,81 +1445,81 @@ msgid ""
 "  never, simple   always make simple backups\n"
 msgstr ""
 
-#: src/tar.c:386
+#: src/tar.c:387
 msgid "Main operation mode:"
 msgstr ""
 
-#: src/tar.c:389
+#: src/tar.c:390
 msgid "list the contents of an archive"
 msgstr ""
 
-#: src/tar.c:391
+#: src/tar.c:392
 msgid "extract files from an archive"
 msgstr ""
 
 #
-#: src/tar.c:394
+#: src/tar.c:395
 #, fuzzy
 msgid "create a new archive"
 msgstr "아카이브에 예기치 않은 EOF"
 
-#: src/tar.c:396
+#: src/tar.c:397
 msgid "find differences between archive and file system"
 msgstr ""
 
-#: src/tar.c:399
+#: src/tar.c:400
 msgid "append files to the end of an archive"
 msgstr ""
 
-#: src/tar.c:401
+#: src/tar.c:402
 msgid "only append files newer than copy in archive"
 msgstr ""
 
-#: src/tar.c:403
+#: src/tar.c:404
 msgid "append tar files to an archive"
 msgstr ""
 
-#: src/tar.c:406
+#: src/tar.c:407
 msgid "delete from the archive (not on mag tapes!)"
 msgstr ""
 
-#: src/tar.c:408
+#: src/tar.c:409
 msgid "test the archive volume label and exit"
 msgstr ""
 
-#: src/tar.c:413
+#: src/tar.c:414
 msgid "Operation modifiers:"
 msgstr ""
 
-#: src/tar.c:416
+#: src/tar.c:417
 msgid "handle sparse files efficiently"
 msgstr ""
 
-#: src/tar.c:417
+#: src/tar.c:418
 msgid "MAJOR[.MINOR]"
 msgstr ""
 
-#: src/tar.c:418
+#: src/tar.c:419
 msgid "set version of the sparse format to use (implies --sparse)"
 msgstr ""
 
-#: src/tar.c:420
+#: src/tar.c:421
 msgid "handle old GNU-format incremental backup"
 msgstr ""
 
-#: src/tar.c:422
+#: src/tar.c:423
 msgid "handle new GNU-format incremental backup"
 msgstr ""
 
-#: src/tar.c:424
+#: src/tar.c:425
 msgid "dump level for created listed-incremental archive"
 msgstr ""
 
-#: src/tar.c:426
+#: src/tar.c:427
 msgid "do not exit with nonzero on unreadable files"
 msgstr ""
 
-#: src/tar.c:428
+#: src/tar.c:429
 msgid ""
 "process only the NUMBERth occurrence of each file in the archive; this "
 "option is valid only in conjunction with one of the subcommands --delete, --"
@@ -1521,572 +1527,572 @@ msgid ""
 "command line or via the -T option; NUMBER defaults to 1"
 msgstr ""
 
-#: src/tar.c:434
+#: src/tar.c:435
 msgid "archive is seekable"
 msgstr ""
 
-#: src/tar.c:436
+#: src/tar.c:437
 msgid "archive is not seekable"
 msgstr ""
 
-#: src/tar.c:438
+#: src/tar.c:439
 msgid "do not check device numbers when creating incremental archives"
 msgstr ""
 
-#: src/tar.c:441
+#: src/tar.c:442
 msgid "check device numbers when creating incremental archives (default)"
 msgstr ""
 
-#: src/tar.c:447
+#: src/tar.c:448
 msgid "Overwrite control:"
 msgstr ""
 
-#: src/tar.c:450
+#: src/tar.c:451
 msgid "attempt to verify the archive after writing it"
 msgstr ""
 
 #
-#: src/tar.c:452
+#: src/tar.c:453
 #, fuzzy
 msgid "remove files after adding them to the archive"
 msgstr "아카이브에 있는 이름들에서 드라이브 지정문을 제거함"
 
-#: src/tar.c:454
+#: src/tar.c:455
 msgid "don't replace existing files when extracting"
 msgstr ""
 
-#: src/tar.c:456
+#: src/tar.c:457
 msgid "don't replace existing files that are newer than their archive copies"
 msgstr ""
 
-#: src/tar.c:458
+#: src/tar.c:459
 msgid "overwrite existing files when extracting"
 msgstr ""
 
-#: src/tar.c:460
+#: src/tar.c:461
 msgid "remove each file prior to extracting over it"
 msgstr ""
 
-#: src/tar.c:462
+#: src/tar.c:463
 msgid "empty hierarchies prior to extracting directory"
 msgstr ""
 
-#: src/tar.c:464
+#: src/tar.c:465
 msgid "preserve metadata of existing directories"
 msgstr ""
 
-#: src/tar.c:466
+#: src/tar.c:467
 msgid "overwrite metadata of existing directories when extracting (default)"
 msgstr ""
 
-#: src/tar.c:472
+#: src/tar.c:473
 msgid "Select output stream:"
 msgstr ""
 
-#: src/tar.c:475
+#: src/tar.c:476
 msgid "extract files to standard output"
 msgstr ""
 
-#: src/tar.c:476 src/tar.c:535 src/tar.c:537 tests/genfile.c:191
+#: src/tar.c:477 src/tar.c:536 src/tar.c:538 tests/genfile.c:190
 msgid "COMMAND"
 msgstr ""
 
-#: src/tar.c:477
+#: src/tar.c:478
 msgid "pipe extracted files to another program"
 msgstr ""
 
-#: src/tar.c:479
+#: src/tar.c:480
 msgid "ignore exit codes of children"
 msgstr ""
 
-#: src/tar.c:481
+#: src/tar.c:482
 msgid "treat non-zero exit codes of children as error"
 msgstr ""
 
-#: src/tar.c:486
+#: src/tar.c:487
 msgid "Handling of file attributes:"
 msgstr ""
 
-#: src/tar.c:489
+#: src/tar.c:490
 msgid "force NAME as owner for added files"
 msgstr ""
 
-#: src/tar.c:491
+#: src/tar.c:492
 msgid "force NAME as group for added files"
 msgstr ""
 
-#: src/tar.c:492 src/tar.c:689
+#: src/tar.c:493 src/tar.c:690
 msgid "DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:493
+#: src/tar.c:494
 msgid "set mtime for added files from DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:494
+#: src/tar.c:495
 msgid "CHANGES"
 msgstr ""
 
-#: src/tar.c:495
+#: src/tar.c:496
 msgid "force (symbolic) mode CHANGES for added files"
 msgstr ""
 
-#: src/tar.c:497
+#: src/tar.c:498
 msgid "METHOD"
 msgstr ""
 
-#: src/tar.c:498
+#: src/tar.c:499
 msgid ""
 "preserve access times on dumped files, either by restoring the times after "
 "reading (METHOD='replace'; default) or by not setting the times in the first "
 "place (METHOD='system')"
 msgstr ""
 
-#: src/tar.c:502
+#: src/tar.c:503
 msgid "don't extract file modified time"
 msgstr ""
 
-#: src/tar.c:504
+#: src/tar.c:505
 msgid ""
 "try extracting files with the same ownership as exists in the archive "
 "(default for superuser)"
 msgstr ""
 
-#: src/tar.c:506
+#: src/tar.c:507
 msgid "extract files as yourself (default for ordinary users)"
 msgstr ""
 
-#: src/tar.c:508
+#: src/tar.c:509
 msgid "always use numbers for user/group names"
 msgstr ""
 
-#: src/tar.c:510
+#: src/tar.c:511
 msgid "extract information about file permissions (default for superuser)"
 msgstr ""
 
-#: src/tar.c:514
+#: src/tar.c:515
 msgid ""
 "apply the user's umask when extracting permissions from the archive (default "
 "for ordinary users)"
 msgstr ""
 
-#: src/tar.c:516
+#: src/tar.c:517
 msgid "sort names to extract to match archive"
 msgstr ""
 
-#: src/tar.c:519
+#: src/tar.c:520
 msgid "same as both -p and -s"
 msgstr ""
 
-#: src/tar.c:521
+#: src/tar.c:522
 msgid ""
 "delay setting modification times and permissions of extracted directories "
 "until the end of extraction"
 msgstr ""
 
-#: src/tar.c:524
+#: src/tar.c:525
 msgid "cancel the effect of --delay-directory-restore option"
 msgstr ""
 
-#: src/tar.c:529
+#: src/tar.c:530
 msgid "Device selection and switching:"
 msgstr ""
 
-#: src/tar.c:531
+#: src/tar.c:532
 msgid "ARCHIVE"
 msgstr ""
 
-#: src/tar.c:532
+#: src/tar.c:533
 msgid "use archive file or device ARCHIVE"
 msgstr ""
 
-#: src/tar.c:534
+#: src/tar.c:535
 msgid "archive file is local even if it has a colon"
 msgstr ""
 
-#: src/tar.c:536
+#: src/tar.c:537
 msgid "use given rmt COMMAND instead of rmt"
 msgstr ""
 
-#: src/tar.c:538
+#: src/tar.c:539
 msgid "use remote COMMAND instead of rsh"
 msgstr ""
 
-#: src/tar.c:542
+#: src/tar.c:543
 msgid "specify drive and density"
 msgstr ""
 
 #
-#: src/tar.c:556
+#: src/tar.c:557
 #, fuzzy
 msgid "create/list/extract multi-volume archive"
 msgstr "다중-볼륨 아카이브를 검증할 수 없습니다"
 
-#: src/tar.c:558
+#: src/tar.c:559
 msgid "change tape after writing NUMBER x 1024 bytes"
 msgstr ""
 
-#: src/tar.c:560
+#: src/tar.c:561
 msgid "run script at end of each tape (implies -M)"
 msgstr ""
 
-#: src/tar.c:563
+#: src/tar.c:564
 msgid "use/update the volume number in FILE"
 msgstr ""
 
-#: src/tar.c:568
+#: src/tar.c:569
 msgid "Device blocking:"
 msgstr ""
 
-#: src/tar.c:570
+#: src/tar.c:571
 msgid "BLOCKS"
 msgstr ""
 
-#: src/tar.c:571
+#: src/tar.c:572
 msgid "BLOCKS x 512 bytes per record"
 msgstr ""
 
-#: src/tar.c:573
+#: src/tar.c:574
 msgid "NUMBER of bytes per record, multiple of 512"
 msgstr ""
 
-#: src/tar.c:575
+#: src/tar.c:576
 msgid "ignore zeroed blocks in archive (means EOF)"
 msgstr ""
 
-#: src/tar.c:577
+#: src/tar.c:578
 msgid "reblock as we read (for 4.2BSD pipes)"
 msgstr ""
 
 #
-#: src/tar.c:582
+#: src/tar.c:583
 #, fuzzy
 msgid "Archive format selection:"
 msgstr "표준입력에 대한 아카이브"
 
-#: src/tar.c:584 tests/genfile.c:154
+#: src/tar.c:585 tests/genfile.c:153
 msgid "FORMAT"
 msgstr ""
 
-#: src/tar.c:585
+#: src/tar.c:586
 msgid "create archive of the given format"
 msgstr ""
 
-#: src/tar.c:587
+#: src/tar.c:588
 msgid "FORMAT is one of the following:"
 msgstr ""
 
-#: src/tar.c:588
+#: src/tar.c:589
 msgid "old V7 tar format"
 msgstr ""
 
-#: src/tar.c:591
+#: src/tar.c:592
 msgid "GNU format as per tar <= 1.12"
 msgstr ""
 
-#: src/tar.c:593
+#: src/tar.c:594
 msgid "GNU tar 1.13.x format"
 msgstr ""
 
-#: src/tar.c:595
+#: src/tar.c:596
 msgid "POSIX 1003.1-1988 (ustar) format"
 msgstr ""
 
-#: src/tar.c:597
+#: src/tar.c:598
 msgid "POSIX 1003.1-2001 (pax) format"
 msgstr ""
 
-#: src/tar.c:598
+#: src/tar.c:599
 msgid "same as pax"
 msgstr ""
 
-#: src/tar.c:601
+#: src/tar.c:602
 msgid "same as --format=v7"
 msgstr ""
 
-#: src/tar.c:604
+#: src/tar.c:605
 msgid "same as --format=posix"
 msgstr ""
 
-#: src/tar.c:605
+#: src/tar.c:606
 msgid "keyword[[:]=value][,keyword[[:]=value]]..."
 msgstr ""
 
-#: src/tar.c:606
+#: src/tar.c:607
 msgid "control pax keywords"
 msgstr ""
 
-#: src/tar.c:607
+#: src/tar.c:608
 msgid "TEXT"
 msgstr ""
 
-#: src/tar.c:608
+#: src/tar.c:609
 msgid ""
 "create archive with volume name TEXT; at list/extract time, use TEXT as a "
 "globbing pattern for volume name"
 msgstr ""
 
-#: src/tar.c:613
+#: src/tar.c:614
 #, fuzzy
 msgid "Compression options:"
 msgstr "헷갈리는 압축 옵션"
 
-#: src/tar.c:615
+#: src/tar.c:616
 #, fuzzy
 msgid "use archive suffix to determine the compression program"
 msgstr "압축 프로그램에 쓸 수 없습니다"
 
-#: src/tar.c:617
+#: src/tar.c:618
 #, fuzzy
 msgid "do not use archive suffix to determine the compression program"
 msgstr "압축 프로그램에 쓸 수 없습니다"
 
-#: src/tar.c:619
+#: src/tar.c:620
 msgid "PROG"
 msgstr ""
 
-#: src/tar.c:620
+#: src/tar.c:621
 msgid "filter through PROG (must accept -d)"
 msgstr ""
 
-#: src/tar.c:636
+#: src/tar.c:637
 msgid "Local file selection:"
 msgstr ""
 
-#: src/tar.c:639
+#: src/tar.c:640
 msgid "add given FILE to the archive (useful if its name starts with a dash)"
 msgstr ""
 
-#: src/tar.c:640
+#: src/tar.c:641
 msgid "DIR"
 msgstr ""
 
 #
-#: src/tar.c:641
+#: src/tar.c:642
 #, fuzzy
 msgid "change to directory DIR"
 msgstr "%s로 디렉토리를 바꿀 수 없습니다"
 
-#: src/tar.c:643
+#: src/tar.c:644
 msgid "get names to extract or create from FILE"
 msgstr ""
 
-#: src/tar.c:645
+#: src/tar.c:646
 msgid "-T reads null-terminated names, disable -C"
 msgstr ""
 
-#: src/tar.c:647
+#: src/tar.c:648
 msgid "disable the effect of the previous --null option"
 msgstr ""
 
-#: src/tar.c:649
+#: src/tar.c:650
 msgid "unquote filenames read with -T (default)"
 msgstr ""
 
-#: src/tar.c:651
+#: src/tar.c:652
 msgid "do not unquote filenames read with -T"
 msgstr ""
 
-#: src/tar.c:652 tests/genfile.c:137
+#: src/tar.c:653 tests/genfile.c:136
 msgid "PATTERN"
 msgstr ""
 
-#: src/tar.c:653
+#: src/tar.c:654
 msgid "exclude files, given as a PATTERN"
 msgstr ""
 
-#: src/tar.c:655
+#: src/tar.c:656
 msgid "exclude patterns listed in FILE"
 msgstr ""
 
-#: src/tar.c:657
+#: src/tar.c:658
 msgid ""
 "exclude contents of directories containing CACHEDIR.TAG, except for the tag "
 "file itself"
 msgstr ""
 
-#: src/tar.c:660
+#: src/tar.c:661
 msgid "exclude everything under directories containing CACHEDIR.TAG"
 msgstr ""
 
-#: src/tar.c:663
+#: src/tar.c:664
 msgid "exclude directories containing CACHEDIR.TAG"
 msgstr ""
 
-#: src/tar.c:665
+#: src/tar.c:666
 msgid "exclude contents of directories containing FILE, except for FILE itself"
 msgstr ""
 
-#: src/tar.c:668
+#: src/tar.c:669
 msgid "exclude everything under directories containing FILE"
 msgstr ""
 
-#: src/tar.c:670
+#: src/tar.c:671
 msgid "exclude directories containing FILE"
 msgstr ""
 
-#: src/tar.c:672
+#: src/tar.c:673
 msgid "exclude version control system directories"
 msgstr ""
 
-#: src/tar.c:674
+#: src/tar.c:675
 msgid "exclude backup and lock files"
 msgstr ""
 
-#: src/tar.c:676
+#: src/tar.c:677
 msgid "avoid descending automatically in directories"
 msgstr ""
 
-#: src/tar.c:678
+#: src/tar.c:679
 msgid "stay in local file system when creating archive"
 msgstr ""
 
-#: src/tar.c:680
+#: src/tar.c:681
 msgid "recurse into directories (default)"
 msgstr ""
 
 #
-#: src/tar.c:682
+#: src/tar.c:683
 #, fuzzy
 msgid "don't strip leading `/'s from file names"
 msgstr "절대 링크들에서 앞에 붙은 `/'를 제거함"
 
-#: src/tar.c:684
+#: src/tar.c:685
 msgid "follow symlinks; archive and dump the files they point to"
 msgstr ""
 
-#: src/tar.c:686
+#: src/tar.c:687
 msgid "follow hard links; archive and dump the files they refer to"
 msgstr ""
 
-#: src/tar.c:687
+#: src/tar.c:688
 msgid "MEMBER-NAME"
 msgstr ""
 
-#: src/tar.c:688
+#: src/tar.c:689
 msgid "begin at member MEMBER-NAME in the archive"
 msgstr ""
 
-#: src/tar.c:690
+#: src/tar.c:691
 msgid "only store files newer than DATE-OR-FILE"
 msgstr ""
 
-#: src/tar.c:692
+#: src/tar.c:693
 msgid "DATE"
 msgstr ""
 
-#: src/tar.c:693
+#: src/tar.c:694
 msgid "compare date and time when data changed only"
 msgstr ""
 
-#: src/tar.c:694
+#: src/tar.c:695
 msgid "CONTROL"
 msgstr ""
 
-#: src/tar.c:695
+#: src/tar.c:696
 msgid "backup before removal, choose version CONTROL"
 msgstr ""
 
-#: src/tar.c:696 src/tar.c:773 src/tar.c:775 tests/genfile.c:170
+#: src/tar.c:697 src/tar.c:776 src/tar.c:778 tests/genfile.c:169
 msgid "STRING"
 msgstr ""
 
-#: src/tar.c:697
+#: src/tar.c:698
 msgid ""
 "backup before removal, override usual suffix ('~' unless overridden by "
 "environment variable SIMPLE_BACKUP_SUFFIX)"
 msgstr ""
 
-#: src/tar.c:702
+#: src/tar.c:703
 msgid "File name transformations:"
 msgstr ""
 
-#: src/tar.c:704
+#: src/tar.c:705
 msgid "strip NUMBER leading components from file names on extraction"
 msgstr ""
 
-#: src/tar.c:706
+#: src/tar.c:707
 msgid "EXPRESSION"
 msgstr ""
 
-#: src/tar.c:707
+#: src/tar.c:708
 msgid "use sed replace EXPRESSION to transform file names"
 msgstr ""
 
-#: src/tar.c:713
+#: src/tar.c:714
 msgid "File name matching options (affect both exclude and include patterns):"
 msgstr ""
 
-#: src/tar.c:716
+#: src/tar.c:717
 msgid "ignore case"
 msgstr ""
 
-#: src/tar.c:718
+#: src/tar.c:719
 msgid "patterns match file name start"
 msgstr ""
 
-#: src/tar.c:720
+#: src/tar.c:721
 msgid "patterns match after any `/' (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:722
+#: src/tar.c:723
 msgid "case sensitive matching (default)"
 msgstr ""
 
-#: src/tar.c:724
+#: src/tar.c:725
 msgid "use wildcards (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:726
+#: src/tar.c:727
 msgid "verbatim string matching"
 msgstr ""
 
-#: src/tar.c:728
+#: src/tar.c:729
 #, fuzzy
 msgid "wildcards do not match `/'"
 msgstr "볼륨 `%s'가 `%s'와 일치하지 않습니다"
 
-#: src/tar.c:730
+#: src/tar.c:731
 msgid "wildcards match `/' (default for exclusion)"
 msgstr ""
 
-#: src/tar.c:735
+#: src/tar.c:736
 msgid "Informative output:"
 msgstr ""
 
-#: src/tar.c:738
+#: src/tar.c:739
 msgid "verbosely list files processed"
 msgstr ""
 
-#: src/tar.c:739
+#: src/tar.c:740
 msgid "KEYWORD"
 msgstr ""
 
-#: src/tar.c:740
+#: src/tar.c:741
 msgid "warning control"
 msgstr ""
 
-#: src/tar.c:742
+#: src/tar.c:743
 msgid "display progress messages every NUMBERth record (default 10)"
 msgstr ""
 
-#: src/tar.c:744
+#: src/tar.c:745
 msgid "ACTION"
 msgstr ""
 
-#: src/tar.c:745
+#: src/tar.c:746
 msgid "execute ACTION on each checkpoint"
 msgstr ""
 
-#: src/tar.c:748
+#: src/tar.c:749
 msgid "print a message if not all links are dumped"
 msgstr ""
 
-#: src/tar.c:749
+#: src/tar.c:750
 msgid "SIGNAL"
 msgstr ""
 
-#: src/tar.c:750
+#: src/tar.c:751
 msgid ""
 "print total bytes after processing the archive; with an argument - print "
 "total bytes when this SIGNAL is delivered; Allowed signals are: SIGHUP, "
@@ -2094,242 +2100,247 @@ msgid ""
 "accepted"
 msgstr ""
 
-#: src/tar.c:755
-msgid "print file modification dates in UTC"
+#: src/tar.c:756
+#, fuzzy
+msgid "print file modification times in UTC"
+msgstr "옵션에 부적절한 모드가 주어짐"
+
+#: src/tar.c:758
+msgid "print file time to its full resolution"
 msgstr ""
 
-#: src/tar.c:757
+#: src/tar.c:760
 msgid "send verbose output to FILE"
 msgstr ""
 
-#: src/tar.c:759
+#: src/tar.c:762
 msgid "show block number within archive with each message"
 msgstr ""
 
 #
-#: src/tar.c:761
+#: src/tar.c:764
 #, fuzzy
 msgid "ask for confirmation for every action"
 msgstr "사용자의 확인을 읽을 수 없습니다"
 
-#: src/tar.c:764
+#: src/tar.c:767
 msgid "show tar defaults"
 msgstr ""
 
-#: src/tar.c:766
+#: src/tar.c:769
 msgid ""
 "when listing or extracting, list each directory that does not match search "
 "criteria"
 msgstr ""
 
-#: src/tar.c:768
+#: src/tar.c:771
 msgid "show file or archive names after transformation"
 msgstr ""
 
-#: src/tar.c:771
+#: src/tar.c:774
 msgid "STYLE"
 msgstr ""
 
-#: src/tar.c:772
+#: src/tar.c:775
 msgid "set name quoting style; see below for valid STYLE values"
 msgstr ""
 
-#: src/tar.c:774
+#: src/tar.c:777
 msgid "additionally quote characters from STRING"
 msgstr ""
 
-#: src/tar.c:776
+#: src/tar.c:779
 msgid "disable quoting for characters from STRING"
 msgstr ""
 
-#: src/tar.c:781
+#: src/tar.c:784
 msgid "Compatibility options:"
 msgstr ""
 
-#: src/tar.c:784
+#: src/tar.c:787
 msgid ""
 "when creating, same as --old-archive; when extracting, same as --no-same-"
 "owner"
 msgstr ""
 
-#: src/tar.c:789
+#: src/tar.c:792
 msgid "Other options:"
 msgstr ""
 
-#: src/tar.c:792
+#: src/tar.c:795
 msgid "disable use of some potentially harmful options"
 msgstr ""
 
-#: src/tar.c:927
+#: src/tar.c:930
 #, fuzzy
 msgid "You may not specify more than one `-Acdtrux' or `--test-label' option"
 msgstr "`-Acdtrux' 옵션 중 하나 이상을 지정하면 안 됩니다"
 
-#: src/tar.c:937
+#: src/tar.c:940
 msgid "Conflicting compression options"
 msgstr "헷갈리는 압축 옵션"
 
-#: src/tar.c:993
+#: src/tar.c:996
 #, fuzzy, c-format
 msgid "Unknown signal name: %s"
 msgstr "알 수 없는 패턴 `%s'"
 
-#: src/tar.c:1017
+#: src/tar.c:1020
 msgid "Date sample file not found"
 msgstr ""
 
-#: src/tar.c:1025
+#: src/tar.c:1028
 #, c-format
 msgid "Substituting %s for unknown date format %s"
 msgstr ""
 
-#: src/tar.c:1054
+#: src/tar.c:1057
 #, c-format
 msgid "Option %s: Treating date `%s' as %s"
 msgstr ""
 
-#: src/tar.c:1132
+#: src/tar.c:1135
 #, c-format
 msgid "%s: file list already read"
 msgstr ""
 
-#: src/tar.c:1198
+#: src/tar.c:1201
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr ""
 
-#: src/tar.c:1265 src/tar.c:1269 src/tar.c:1273 src/tar.c:1277 src/tar.c:1281
-#: src/tar.c:1285
+#: src/tar.c:1268 src/tar.c:1272 src/tar.c:1276 src/tar.c:1280 src/tar.c:1284
+#: src/tar.c:1288
 #, c-format
 msgid "filter the archive through %s"
 msgstr ""
 
-#: src/tar.c:1290
+#: src/tar.c:1296
 msgid "Valid arguments for the --quoting-style option are:"
 msgstr ""
 
-#: src/tar.c:1294
+#: src/tar.c:1300
 msgid ""
 "\n"
 "*This* tar defaults to:\n"
 msgstr ""
 
-#: src/tar.c:1393
+#: src/tar.c:1402
 msgid "Invalid blocking factor"
 msgstr ""
 
-#: src/tar.c:1500
+#: src/tar.c:1515
 msgid "Invalid tape length"
 msgstr ""
 
-#: src/tar.c:1511
+#: src/tar.c:1529
 msgid "Invalid incremental level value"
 msgstr ""
 
-#: src/tar.c:1557
+#: src/tar.c:1575
 msgid "More than one threshold date"
 msgstr ""
 
-#: src/tar.c:1612 src/tar.c:1615
+#: src/tar.c:1630 src/tar.c:1633
 msgid "Invalid sparse version value"
 msgstr ""
 
-#: src/tar.c:1700
+#: src/tar.c:1718
 msgid "--atime-preserve='system' is not supported on this platform"
 msgstr ""
 
-#: src/tar.c:1725
+#: src/tar.c:1743
 msgid "--checkpoint value is not an integer"
 msgstr ""
 
-#: src/tar.c:1830
+#: src/tar.c:1848
 #, fuzzy
 msgid "Invalid group"
 msgstr "옵션에 부적절한 소유자가 주어짐"
 
-#: src/tar.c:1837
+#: src/tar.c:1855
 msgid "Invalid mode given on option"
 msgstr "옵션에 부적절한 모드가 주어짐"
 
-#: src/tar.c:1894
+#: src/tar.c:1912
 msgid "Invalid number"
 msgstr ""
 
-#: src/tar.c:1916
+#: src/tar.c:1934
 #, fuzzy
 msgid "Invalid owner"
 msgstr "옵션에 부적절한 소유자가 주어짐"
 
-#: src/tar.c:1946
+#: src/tar.c:1964
 msgid ""
 "The --preserve option is deprecated, use --preserve-permissions --preserve-"
 "order instead"
 msgstr ""
 
-#: src/tar.c:1956
+#: src/tar.c:1975
 #, fuzzy
 msgid "Invalid record size"
 msgstr "record_size로 부적절한 값"
 
-#: src/tar.c:1959
+#: src/tar.c:1978
 #, c-format
 msgid "Record size must be a multiple of %d."
 msgstr "레코드 크기는 %d의 배수가 되어야 합니다."
 
-#: src/tar.c:2000
+#: src/tar.c:2019
 msgid "Invalid number of elements"
 msgstr ""
 
-#: src/tar.c:2020
+#: src/tar.c:2039
 msgid "Only one --to-command option allowed"
 msgstr ""
 
-#: src/tar.c:2100
+#: src/tar.c:2119
 #, c-format
 msgid "Malformed density argument: %s"
 msgstr ""
 
-#: src/tar.c:2126
+#: src/tar.c:2145
 #, fuzzy, c-format
 msgid "Unknown density: `%c'"
 msgstr "알 수 없는 패턴 `%s'"
 
-#: src/tar.c:2143
+#: src/tar.c:2162
 #, c-format
 msgid "Options `-[0-7][lmh]' not supported by *this* tar"
 msgstr "`-[0-7][lmh]' 옵션은 이 tar에선 지원되지 않습니다"
 
-#: src/tar.c:2156
+#: src/tar.c:2175
 msgid "[FILE]..."
 msgstr ""
 
-#: src/tar.c:2274
+#: src/tar.c:2293
 #, c-format
 msgid "Old option `%c' requires an argument."
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: src/tar.c:2355
+#: src/tar.c:2374
 msgid "--occurrence is meaningless without a file list"
 msgstr ""
 
-#: src/tar.c:2361
+#: src/tar.c:2380
 msgid "--occurrence cannot be used in the requested operation mode"
 msgstr ""
 
-#: src/tar.c:2379
+#: src/tar.c:2398
 #, fuzzy
 msgid "Multiple archive files require `-M' option"
 msgstr "다중 아카이브 파일은 `-M' 옵션이 필요합니다"
 
-#: src/tar.c:2384
+#: src/tar.c:2403
 msgid "Cannot combine --listed-incremental with --newer"
 msgstr ""
 
-#: src/tar.c:2387
+#: src/tar.c:2406
 msgid "--level is meaningless without --listed-incremental"
 msgstr ""
 
-#: src/tar.c:2404
+#: src/tar.c:2423
 #, c-format
 msgid "%s: Volume label is too long (limit is %lu byte)"
 msgid_plural "%s: Volume label is too long (limit is %lu bytes)"
@@ -2337,52 +2348,52 @@ msgstr[0] ""
 msgstr[1] ""
 
 #
-#: src/tar.c:2417
+#: src/tar.c:2436
 msgid "Cannot verify multi-volume archives"
 msgstr "다중-볼륨 아카이브를 검증할 수 없습니다"
 
 #
-#: src/tar.c:2419
+#: src/tar.c:2438
 msgid "Cannot verify compressed archives"
 msgstr "압축된 아카이브를 검증할 수 없습니다"
 
 #
-#: src/tar.c:2425
+#: src/tar.c:2444
 msgid "Cannot use multi-volume compressed archives"
 msgstr "압축된 다중-볼륨 아카이브를 사용할 수 없습니다"
 
 #
-#: src/tar.c:2431
+#: src/tar.c:2450
 #, fuzzy
 msgid "Cannot concatenate compressed archives"
 msgstr "압축된 아카이브를 갱신할 수 없습니다"
 
-#: src/tar.c:2443
+#: src/tar.c:2462
 msgid "--pax-option can be used only on POSIX archives"
 msgstr ""
 
-#: src/tar.c:2461
+#: src/tar.c:2492
 msgid "Volume length cannot be less than record size"
 msgstr ""
 
-#: src/tar.c:2464
+#: src/tar.c:2495
 msgid "--preserve-order is not compatible with --listed-incremental"
 msgstr ""
 
-#: src/tar.c:2475
+#: src/tar.c:2506
 msgid "Cowardly refusing to create an empty archive"
 msgstr ""
 
-#: src/tar.c:2501
+#: src/tar.c:2532
 msgid "Options `-Aru' are incompatible with `-f -'"
 msgstr "`-Aru' 옵션은 `-f -'과 동시에 쓸 수 없습니다"
 
-#: src/tar.c:2592
+#: src/tar.c:2621
 #, fuzzy
 msgid "You must specify one of the `-Acdtrux' or `--test-label'  options"
 msgstr "`-Acdtrux' 옵션들 중 하나를 지정해야 합니다"
 
-#: src/tar.c:2646
+#: src/tar.c:2675
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr ""
@@ -2395,83 +2406,83 @@ msgid_plural "%s: File shrank by %s bytes"
 msgstr[0] "%s: 파일이 %d 바이트 줄어듬, (와우!)"
 msgstr[1] "%s: 파일이 %d 바이트 줄어듬, (와우!)"
 
-#: src/xheader.c:163
+#: src/xheader.c:164
 #, c-format
 msgid "Keyword %s is unknown or not yet implemented"
 msgstr ""
 
-#: src/xheader.c:173
+#: src/xheader.c:174
 msgid "Time stamp is out of allowed range"
 msgstr ""
 
-#: src/xheader.c:204
+#: src/xheader.c:205
 #, c-format
 msgid "Pattern %s cannot be used"
 msgstr ""
 
-#: src/xheader.c:218
+#: src/xheader.c:219
 #, c-format
 msgid "Keyword %s cannot be overridden"
 msgstr ""
 
-#: src/xheader.c:541
+#: src/xheader.c:542
 msgid "Malformed extended header: missing length"
 msgstr ""
 
-#: src/xheader.c:549
+#: src/xheader.c:550
 msgid "Extended header length is out of allowed range"
 msgstr ""
 
-#: src/xheader.c:556
+#: src/xheader.c:557
 #, c-format
 msgid "Extended header length %*s is out of range"
 msgstr ""
 
-#: src/xheader.c:568
+#: src/xheader.c:569
 msgid "Malformed extended header: missing blank after length"
 msgstr ""
 
-#: src/xheader.c:576
+#: src/xheader.c:577
 msgid "Malformed extended header: missing equal sign"
 msgstr ""
 
-#: src/xheader.c:582
+#: src/xheader.c:583
 msgid "Malformed extended header: missing newline"
 msgstr ""
 
-#: src/xheader.c:620
+#: src/xheader.c:621
 #, c-format
 msgid "Ignoring unknown extended header keyword `%s'"
 msgstr ""
 
-#: src/xheader.c:830
+#: src/xheader.c:831
 #, c-format
 msgid "Generated keyword/value pair is too long (keyword=%s, length=%s)"
 msgstr ""
 
 #. TRANSLATORS: The first %s is the pax extended header keyword
 #. (atime, gid, etc.).
-#: src/xheader.c:862
+#: src/xheader.c:863
 #, c-format
 msgid "Extended header %s=%s is out of range %s..%s"
 msgstr ""
 
-#: src/xheader.c:993 src/xheader.c:1023 src/xheader.c:1337
+#: src/xheader.c:994 src/xheader.c:1024 src/xheader.c:1338
 #, c-format
 msgid "Malformed extended header: invalid %s=%s"
 msgstr ""
 
-#: src/xheader.c:1290 src/xheader.c:1315 src/xheader.c:1365
+#: src/xheader.c:1291 src/xheader.c:1316 src/xheader.c:1366
 #, c-format
 msgid "Malformed extended header: excess %s=%s"
 msgstr ""
 
-#: src/xheader.c:1378
+#: src/xheader.c:1379
 #, c-format
 msgid "Malformed extended header: invalid %s: unexpected delimiter %c"
 msgstr ""
 
-#: src/xheader.c:1388
+#: src/xheader.c:1389
 #, c-format
 msgid "Malformed extended header: invalid %s: odd number of values"
 msgstr ""
@@ -2514,71 +2525,71 @@ msgstr "검사지점 %d를 씀"
 msgid "Read checkpoint %u"
 msgstr "검사지점 %d를 읽음"
 
-#: tests/genfile.c:112
+#: tests/genfile.c:111
 #, fuzzy
 msgid ""
 "genfile manipulates data files for GNU paxutils test suite.\n"
 "OPTIONS are:\n"
 msgstr "GNU tar 시험 도구용 데이터 파일을 생성합니다.\n"
 
-#: tests/genfile.c:128
+#: tests/genfile.c:127
 #, fuzzy
 msgid "File creation options:"
 msgstr "헷갈리는 압축 옵션"
 
-#: tests/genfile.c:129 tests/genfile.c:140
+#: tests/genfile.c:128 tests/genfile.c:139
 msgid "SIZE"
 msgstr ""
 
-#: tests/genfile.c:130
+#: tests/genfile.c:129
 msgid "Create file of the given SIZE"
 msgstr ""
 
-#: tests/genfile.c:132
+#: tests/genfile.c:131
 msgid "Write to file NAME, instead of standard output"
 msgstr ""
 
-#: tests/genfile.c:134
+#: tests/genfile.c:133
 msgid "Read file names from FILE"
 msgstr ""
 
-#: tests/genfile.c:136
+#: tests/genfile.c:135
 msgid "-T reads null-terminated names"
 msgstr ""
 
-#: tests/genfile.c:138
+#: tests/genfile.c:137
 msgid "Fill the file with the given PATTERN. PATTERN is 'default' or 'zeros'"
 msgstr ""
 
-#: tests/genfile.c:141
+#: tests/genfile.c:140
 msgid "Size of a block for sparse file"
 msgstr ""
 
-#: tests/genfile.c:143
+#: tests/genfile.c:142
 msgid "Generate sparse file. Rest of the command line gives the file map."
 msgstr ""
 
-#: tests/genfile.c:145
+#: tests/genfile.c:144
 msgid "OFFSET"
 msgstr ""
 
-#: tests/genfile.c:146
+#: tests/genfile.c:145
 msgid "Seek to the given offset before writing data"
 msgstr ""
 
-#: tests/genfile.c:152
+#: tests/genfile.c:151
 msgid "File statistics options:"
 msgstr ""
 
-#: tests/genfile.c:155
+#: tests/genfile.c:154
 msgid "Print contents of struct stat for each given file. Default FORMAT is: "
 msgstr ""
 
-#: tests/genfile.c:162
+#: tests/genfile.c:161
 msgid "Synchronous execution options:"
 msgstr ""
 
-#: tests/genfile.c:164
+#: tests/genfile.c:163
 #, fuzzy
 msgid "OPTION"
 msgstr ""
@@ -2586,176 +2597,186 @@ msgstr ""
 "사용법: %s [옵션]...\n"
 "\n"
 
-#: tests/genfile.c:165
+#: tests/genfile.c:164
 msgid ""
 "Execute ARGS. Useful with --checkpoint and one of --cut, --append, --touch, "
 "--unlink"
 msgstr ""
 
-#: tests/genfile.c:168
+#: tests/genfile.c:167
 msgid "Perform given action (see below) upon reaching checkpoint NUMBER"
 msgstr ""
 
-#: tests/genfile.c:171
+#: tests/genfile.c:170
 msgid "Set date for next --touch option"
 msgstr ""
 
-#: tests/genfile.c:174
+#: tests/genfile.c:173
 msgid "Display executed checkpoints and exit status of COMMAND"
 msgstr ""
 
-#: tests/genfile.c:179
+#: tests/genfile.c:178
 msgid ""
 "Synchronous execution actions. These are executed when checkpoint number "
 "given by --checkpoint option is reached."
 msgstr ""
 
-#: tests/genfile.c:182
+#: tests/genfile.c:181
 msgid ""
 "Truncate FILE to the size specified by previous --length option (or 0, if it "
 "is not given)"
 msgstr ""
 
-#: tests/genfile.c:186
+#: tests/genfile.c:185
 msgid "Append SIZE bytes to FILE. SIZE is given by previous --length option."
 msgstr ""
 
-#: tests/genfile.c:189
+#: tests/genfile.c:188
 #, fuzzy
 msgid "Update the access and modification times of FILE"
 msgstr "%s: 접근 시각과 수정 시각을 바꿀 수 없습니다"
 
-#: tests/genfile.c:192
+#: tests/genfile.c:191
 msgid "Execute COMMAND"
 msgstr ""
 
-#: tests/genfile.c:195
+#: tests/genfile.c:194
 msgid "Unlink FILE"
 msgstr ""
 
-#: tests/genfile.c:245
+#: tests/genfile.c:244
 #, fuzzy, c-format
 msgid "Invalid size: %s"
 msgstr "부적절한 날짜 형식 `%s'"
 
-#: tests/genfile.c:250
+#: tests/genfile.c:249
 #, c-format
 msgid "Number out of allowed range: %s"
 msgstr ""
 
-#: tests/genfile.c:253
+#: tests/genfile.c:252
 #, c-format
 msgid "Negative size: %s"
 msgstr ""
 
-#: tests/genfile.c:266 tests/genfile.c:568
+#: tests/genfile.c:265 tests/genfile.c:567
 #, c-format
 msgid "stat(%s) failed"
 msgstr ""
 
-#: tests/genfile.c:269
+#: tests/genfile.c:268
 #, c-format
 msgid "requested file length %lu, actual %lu"
 msgstr ""
 
-#: tests/genfile.c:273
+#: tests/genfile.c:272
 #, c-format
 msgid "created file is not sparse"
 msgstr ""
 
-#: tests/genfile.c:362
+#: tests/genfile.c:361
 #, c-format
 msgid "Error parsing number near `%s'"
 msgstr ""
 
-#: tests/genfile.c:368
+#: tests/genfile.c:367
 #, fuzzy, c-format
 msgid "Unknown date format"
 msgstr "알 수 없는 시스템 오류"
 
-#: tests/genfile.c:392
+#: tests/genfile.c:391
 msgid "[ARGS...]"
 msgstr ""
 
 #
-#: tests/genfile.c:429 tests/genfile.c:469 tests/genfile.c:522
-#: tests/genfile.c:672 tests/genfile.c:686
+#: tests/genfile.c:428 tests/genfile.c:468 tests/genfile.c:521
+#: tests/genfile.c:671 tests/genfile.c:685
 #, fuzzy, c-format
 msgid "cannot open `%s'"
 msgstr "%s를 열 수 없습니다"
 
 #
-#: tests/genfile.c:435
+#: tests/genfile.c:434
 #, fuzzy
 msgid "cannot seek"
 msgstr "%s를 실행할 수 없습니다"
 
-#: tests/genfile.c:452
+#: tests/genfile.c:451
 #, c-format
 msgid "file name contains null character"
 msgstr ""
 
-#: tests/genfile.c:517
+#: tests/genfile.c:516
 #, c-format
 msgid "cannot generate sparse files on standard output, use --file option"
 msgstr ""
 
-#: tests/genfile.c:595
+#: tests/genfile.c:594
 #, c-format
 msgid "incorrect mask (near `%s')"
 msgstr ""
 
-#: tests/genfile.c:601 tests/genfile.c:634
+#: tests/genfile.c:600 tests/genfile.c:633
 #, fuzzy, c-format
 msgid "Unknown field `%s'"
 msgstr "알 수 없는 패턴 `%s'"
 
 #
-#: tests/genfile.c:661
+#: tests/genfile.c:660
 #, fuzzy, c-format
 msgid "cannot set time on `%s'"
 msgstr "%s를 stat할 수 없습니다"
 
 #
-#: tests/genfile.c:700
+#: tests/genfile.c:699
 #, fuzzy, c-format
 msgid "cannot unlink `%s'"
 msgstr "%s를 열 수 없습니다"
 
-#: tests/genfile.c:826
+#: tests/genfile.c:825
 #, c-format
 msgid "Command exited successfully\n"
 msgstr ""
 
-#: tests/genfile.c:828
+#: tests/genfile.c:827
 #, c-format
 msgid "Command failed with status %d\n"
 msgstr ""
 
-#: tests/genfile.c:832
+#: tests/genfile.c:831
 #, c-format
 msgid "Command terminated on signal %d\n"
 msgstr ""
 
-#: tests/genfile.c:834
+#: tests/genfile.c:833
 #, c-format
 msgid "Command stopped on signal %d\n"
 msgstr ""
 
-#: tests/genfile.c:837
+#: tests/genfile.c:836
 #, c-format
 msgid "Command dumped core\n"
 msgstr ""
 
-#: tests/genfile.c:840
+#: tests/genfile.c:839
 #, c-format
 msgid "Command terminated\n"
 msgstr ""
 
-#: tests/genfile.c:872
+#: tests/genfile.c:871
 #, c-format
 msgid "--stat requires file names"
 msgstr ""
+
+#
+#, fuzzy
+#~ msgid "Cannot restore working directory"
+#~ msgstr "%s로 디렉토리를 바꿀 수 없습니다"
+
+#
+#, fuzzy
+#~ msgid "Cannot resolve hostname %s"
+#~ msgstr "%s를 %s로 이름을 바꿀 수 없습니다"
 
 #
 #~ msgid "Reading %s\n"

@@ -47,7 +47,7 @@ char *output_start;
 static void
 append_file (char *file_name)
 {
-  int handle = open (file_name, O_RDONLY | O_BINARY);
+  int handle = openat (chdir_fd, file_name, O_RDONLY | O_BINARY);
   struct stat stat_data;
 
   if (handle < 0)
@@ -114,8 +114,8 @@ update_archive (void)
 
   while (!found_end)
     {
-      enum read_header status = read_header (&current_header, 
-                                             &current_stat_info, 
+      enum read_header status = read_header (&current_header,
+                                             &current_stat_info,
                                              read_header_auto);
 
       switch (status)
@@ -138,28 +138,37 @@ update_archive (void)
 		struct stat s;
 
 		chdir_do (name->change_dir);
-		if (deref_stat (dereference_option,
-				current_stat_info.file_name, &s) == 0)
+		if (deref_stat (current_stat_info.file_name, &s) == 0)
 		  {
 		    if (S_ISDIR (s.st_mode))
 		      {
 			char *p, *dirp;
-			dirp = savedir (name->name);
-			if (!dirp)
+			DIR *stream;
+			int fd = openat (chdir_fd, name->name,
+					 open_read_flags | O_DIRECTORY);
+			if (fd < 0)
+			  open_error (name->name);
+			else if (! ((stream = fdopendir (fd))
+				    && (dirp = streamsavedir (stream))))
 			  savedir_error (name->name);
 			else
 			  {
 			    namebuf_t nbuf = namebuf_create (name->name);
-			    
+
 			    for (p = dirp; *p; p += strlen (p) + 1)
 			      addname (namebuf_name (nbuf, p),
 				       0, false, NULL);
-			    
+
 			    namebuf_free (nbuf);
 			    free (dirp);
-			    
+
 			    remname (name);
 			  }
+
+			if (stream
+			    ? closedir (stream) != 0
+			    : 0 <= fd && close (fd) != 0)
+			  savedir_error (name->name);
 		      }
 		    else if (tar_timespec_cmp (get_stat_mtime (&s),
 					       current_stat_info.mtime)
@@ -167,7 +176,7 @@ update_archive (void)
 		      remname (name);
 		  }
 	      }
-	    
+
 	    skip_member ();
 	    break;
 	  }
@@ -224,11 +233,12 @@ update_archive (void)
 	if (subcommand_option == CAT_SUBCOMMAND)
 	  append_file (file_name);
 	else
-	  dump_file (file_name, 1, (dev_t) 0);
+	  dump_file (0, file_name, file_name);
       }
   }
 
   write_eot ();
   close_archive ();
+  finish_deferred_unlinks ();
   names_notfound ();
 }

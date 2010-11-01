@@ -1,4 +1,4 @@
-/* This file is part of GNU tar. 
+/* This file is part of GNU tar.
    Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -42,7 +42,7 @@ static struct deferred_unlink *dunlink_avail;
 size_t deferred_unlink_delay = 0;
 
 static struct deferred_unlink *
-dunlink_alloc ()
+dunlink_alloc (void)
 {
   struct deferred_unlink *p;
   if (dunlink_avail)
@@ -77,7 +77,7 @@ flush_deferred_unlinks (bool force)
 	{
 	  if (p->is_dir)
 	    {
-	      if (rmdir (p->file_name) != 0)
+	      if (unlinkat (chdir_fd, p->file_name, AT_REMOVEDIR) != 0)
 		{
 		  switch (errno)
 		    {
@@ -101,7 +101,7 @@ flush_deferred_unlinks (bool force)
 	    }
 	  else
 	    {
-	      if (unlink (p->file_name) != 0 && errno != ENOENT)
+	      if (unlinkat (chdir_fd, p->file_name, 0) != 0 && errno != ENOENT)
 		unlink_error (p->file_name);
 	    }
 	  dunlink_reclaim (p);
@@ -116,7 +116,7 @@ flush_deferred_unlinks (bool force)
 	{
 	  prev = p;
 	  p = next;
-	}	  
+	}
     }
   if (!dunlink_head)
     dunlink_tail = NULL;
@@ -142,13 +142,13 @@ queue_deferred_unlink (const char *name, bool is_dir)
   if (dunlink_head
       && records_written > dunlink_head->records_written + deferred_unlink_delay)
     flush_deferred_unlinks (false);
-  
+
   p = dunlink_alloc ();
   p->next = NULL;
   p->file_name = normalize_filename (name);
   p->is_dir = is_dir;
   p->records_written = records_written;
-  
+
   if (dunlink_tail)
     dunlink_tail->next = p;
   else

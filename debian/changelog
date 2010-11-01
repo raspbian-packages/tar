@@ -1,3 +1,9 @@
+tar (1.24-1) unstable; urgency=low
+
+  * new upstream version
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 01 Nov 2010 17:26:56 -0600
+
 tar (1.23-4) unstable; urgency=low
 
   * revert patch to src/create.c introduced in 2004 to fix a dpkg bug long

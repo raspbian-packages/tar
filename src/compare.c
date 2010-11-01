@@ -122,7 +122,7 @@ read_and_process (struct tar_stat_info *st, int (*processor) (size_t, char *))
   size_t data_size;
   off_t size = st->stat.st_size;
 
-  mv_begin (st);
+  mv_begin_read (st);
   while (size)
     {
       data_block = find_next_block ();
@@ -151,7 +151,7 @@ read_and_process (struct tar_stat_info *st, int (*processor) (size_t, char *))
 static int
 get_stat_data (char const *file_name, struct stat *stat_data)
 {
-  int status = deref_stat (dereference_option, file_name, stat_data);
+  int status = deref_stat (file_name, stat_data);
 
   if (status != 0)
     {
@@ -217,12 +217,7 @@ diff_file (void)
 	}
       else
 	{
-	  int atime_flag =
-	    (atime_preserve_option == system_atime_preserve
-	     ? O_NOATIME
-	     : 0);
-
-	  diff_handle = open (file_name, O_RDONLY | O_BINARY | atime_flag);
+	  diff_handle = openat (chdir_fd, file_name, open_read_flags);
 
 	  if (diff_handle < 0)
 	    {
@@ -241,10 +236,9 @@ diff_file (void)
 
 	      if (atime_preserve_option == replace_atime_preserve)
 		{
-		  struct timespec ts[2];
-		  ts[0] = get_stat_atime (&stat_data);
-		  ts[1] = get_stat_mtime (&stat_data);
-		  if (set_file_atime (diff_handle, file_name, ts) != 0)
+		  struct timespec atime = get_stat_atime (&stat_data);
+		  if (set_file_atime (diff_handle, chdir_fd, file_name, atime)
+		      != 0)
 		    utime_error (file_name);
 		}
 
@@ -277,7 +271,8 @@ diff_symlink (void)
   size_t len = strlen (current_stat_info.link_name);
   char *linkbuf = alloca (len + 1);
 
-  int status = readlink (current_stat_info.file_name, linkbuf, len + 1);
+  int status = readlinkat (chdir_fd, current_stat_info.file_name,
+			   linkbuf, len + 1);
 
   if (status < 0)
     {
@@ -331,7 +326,7 @@ static int
 dumpdir_cmp (const char *a, const char *b)
 {
   size_t len;
-  
+
   while (*a)
     switch (*a)
       {
@@ -345,7 +340,7 @@ dumpdir_cmp (const char *a, const char *b)
 	a += len;
 	b += len;
 	break;
-	
+
       case 'D':
 	if (strcmp(a, b))
 	  return 1;
@@ -353,7 +348,7 @@ dumpdir_cmp (const char *a, const char *b)
 	a += len;
 	b += len;
 	break;
-	
+
       case 'R':
       case 'T':
       case 'X':
@@ -369,7 +364,7 @@ diff_dumpdir (void)
   dev_t dev = 0;
   struct stat stat_data;
 
-  if (deref_stat (true, current_stat_info.file_name, &stat_data))
+  if (deref_stat (current_stat_info.file_name, &stat_data) != 0)
     {
       if (errno == ENOENT)
 	stat_warn (current_stat_info.file_name);
@@ -379,8 +374,7 @@ diff_dumpdir (void)
   else
     dev = stat_data.st_dev;
 
-  dumpdir_buffer = directory_contents
-                    (scan_directory (current_stat_info.file_name, dev, false));
+  dumpdir_buffer = directory_contents (scan_directory (&current_stat_info));
 
   if (dumpdir_buffer)
     {
@@ -422,7 +416,8 @@ diff_multivol (void)
       return;
     }
 
-  fd = open (current_stat_info.file_name, O_RDONLY | O_BINARY);
+
+  fd = openat (chdir_fd, current_stat_info.file_name, open_read_flags);
 
   if (fd < 0)
     {
@@ -452,7 +447,6 @@ diff_archive (void)
 {
 
   set_next_block_after (current_header);
-  decode_header (current_header, &current_stat_info, &current_format, 1);
 
   /* Print the block from current_header and current_stat_info.  */
 
@@ -578,8 +572,8 @@ verify_volume (void)
   flush_read ();
   while (1)
     {
-      enum read_header status = read_header (&current_header, 
-                                             &current_stat_info, 
+      enum read_header status = read_header (&current_header,
+                                             &current_stat_info,
                                              read_header_auto);
 
       if (status == HEADER_FAILURE)
@@ -609,7 +603,7 @@ verify_volume (void)
             {
 	      char buf[UINTMAX_STRSIZE_BOUND];
 
-	      status = read_header (&current_header, &current_stat_info, 
+	      status = read_header (&current_header, &current_stat_info,
 	                            read_header_auto);
 	      if (status == HEADER_ZERO_BLOCK)
 	        break;
@@ -618,7 +612,7 @@ verify_volume (void)
 			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
             }
 	}
-      
+
       diff_archive ();
       tar_stat_destroy (&current_stat_info);
     }

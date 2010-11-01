@@ -33,6 +33,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
@@ -60,18 +61,23 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-/* Define wint_t.  (Also done in wchar.in.h.)  */
+/* Define wint_t and WEOF.  (Also done in wchar.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
 # ifndef WEOF
 #  define WEOF -1
+# endif
+#else
+# ifndef WEOF
+#  define WEOF ((wint_t) -1)
 # endif
 #endif
 
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
-   Assume all 12 functions are implemented the same way, or not at all.  */
+   Assume all 11 functions (all isw* except iswblank) are implemented the
+   same way, or not at all.  */
 #if ! @HAVE_ISWCNTRL@ || @REPLACE_ISWCNTRL@
 
 /* IRIX 5.3 has macros but no functions, its isw* macros refer to an
@@ -273,7 +279,27 @@ towupper
   return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
 
-#endif /* ! HAVE_ISWCNTRL || REPLACE_ISWCNTRL */
+#elif ! @HAVE_ISWBLANK@ || @REPLACE_ISWBLANK@
+/* Only the iswblank function is missing.  */
+
+# if @REPLACE_ISWBLANK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define iswblank rpl_iswblank
+#  endif
+# endif
+
+static inline int
+# if @REPLACE_ISWBLANK@
+rpl_iswblank
+# else
+iswblank
+# endif
+         (wint_t wc)
+{
+  return wc == ' ' || wc == '\t';
+}
+
+#endif
 
 #if defined __MINGW32__
 
@@ -326,7 +352,11 @@ _GL_CXXALIAS_RPL (iswxdigit, int, (wint_t wc));
 #else
 _GL_CXXALIAS_SYS (iswalnum, int, (wint_t wc));
 _GL_CXXALIAS_SYS (iswalpha, int, (wint_t wc));
+# if @REPLACE_ISWBLANK@
+_GL_CXXALIAS_RPL (iswblank, int, (wint_t wc));
+# else
 _GL_CXXALIAS_SYS (iswblank, int, (wint_t wc));
+# endif
 _GL_CXXALIAS_SYS (iswcntrl, int, (wint_t wc));
 _GL_CXXALIAS_SYS (iswdigit, int, (wint_t wc));
 _GL_CXXALIAS_SYS (iswgraph, int, (wint_t wc));

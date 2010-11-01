@@ -21,6 +21,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Don't get in the way of glibc when it includes time.h merely to
    declare a few standard symbols, rather than to declare all the
@@ -40,7 +41,7 @@
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
 /* NetBSD 5.0 mis-defines NULL.  */
-#include <stddef.h>
+# include <stddef.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -48,17 +49,28 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-# ifdef __cplusplus
-extern "C" {
-# endif
-
 /* Some systems don't define struct timespec (e.g., AIX 4.1, Ultrix 4.3).
    Or they define it with the wrong member names or define it in <sys/time.h>
-   (e.g., FreeBSD circa 1997).  */
+   (e.g., FreeBSD circa 1997).  Stock Mingw does not define it, but the
+   pthreads-win32 library defines it in <pthread.h>.  */
 # if ! @TIME_H_DEFINES_STRUCT_TIMESPEC@
 #  if @SYS_TIME_H_DEFINES_STRUCT_TIMESPEC@
 #   include <sys/time.h>
+#  elif @PTHREAD_H_DEFINES_STRUCT_TIMESPEC@
+#   include <pthread.h>
+/* The pthreads-win32 <pthread.h> also defines a couple of broken macros.  */
+#   undef asctime_r
+#   undef ctime_r
+#   undef gmtime_r
+#   undef localtime_r
+#   undef rand_r
+#   undef strtok_r
 #  else
+
+#   ifdef __cplusplus
+extern "C" {
+#   endif
+
 #   undef timespec
 #   define timespec rpl_timespec
 struct timespec
@@ -66,12 +78,22 @@ struct timespec
   time_t tv_sec;
   long int tv_nsec;
 };
+
+#   ifdef __cplusplus
+}
+#   endif
+
 #  endif
 # endif
 
-# ifdef __cplusplus
-}
-# endif
+/* Per http://austingroupbugs.net/view.php?id=327, POSIX requires
+   time_t to be an integer type, even though C99 permits floating
+   point.  We don't know of any implementation that uses floating
+   point, and it is much easier to write code that doesn't have to
+   worry about that corner case, so we force the issue.  */
+struct __time_t_must_be_integral {
+  unsigned int __floating_time_t_unsupported : (time_t) 1;
+};
 
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
    return -1 and store the remaining time into RMTP.  See
@@ -87,6 +109,11 @@ _GL_FUNCDECL_RPL (nanosleep, int,
 _GL_CXXALIAS_RPL (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp));
 #  else
+#   if ! @HAVE_NANOSLEEP@
+_GL_FUNCDECL_SYS (nanosleep, int,
+                  (struct timespec const *__rqtp, struct timespec *__rmtp)
+                  _GL_ARG_NONNULL ((1)));
+#   endif
 _GL_CXXALIAS_SYS (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp));
 #  endif
@@ -110,58 +137,62 @@ _GL_CXXALIASWARN (mktime);
 /* Convert TIMER to RESULT, assuming local time and UTC respectively.  See
    <http://www.opengroup.org/susv3xsh/localtime_r.html> and
    <http://www.opengroup.org/susv3xsh/gmtime_r.html>.  */
-# if @REPLACE_LOCALTIME_R@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef localtime_r
-#   define localtime_r rpl_localtime_r
-#  endif
+# if @GNULIB_TIME_R@
+#  if @REPLACE_LOCALTIME_R@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef localtime_r
+#    define localtime_r rpl_localtime_r
+#   endif
 _GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result)
                                             _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
-# else
+#  else
+#   if ! @HAVE_LOCALTIME_R@
+_GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
+                                             struct tm *restrict __result)
+                                            _GL_ARG_NONNULL ((1, 2)));
+#   endif
 _GL_CXXALIAS_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
-# endif
-_GL_CXXALIASWARN (localtime_r);
-# if @REPLACE_LOCALTIME_R@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef gmtime_r
-#   define gmtime_r rpl_gmtime_r
 #  endif
+_GL_CXXALIASWARN (localtime_r);
+#  if @REPLACE_LOCALTIME_R@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef gmtime_r
+#    define gmtime_r rpl_gmtime_r
+#   endif
 _GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result)
                                          _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
-# else
+#  else
+#   if ! @HAVE_LOCALTIME_R@
+_GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
+                                          struct tm *restrict __result)
+                                         _GL_ARG_NONNULL ((1, 2)));
+#   endif
 _GL_CXXALIAS_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
-# endif
+#  endif
 _GL_CXXALIASWARN (gmtime_r);
+# endif
 
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store
    the resulting broken-down time into TM.  See
    <http://www.opengroup.org/susv3xsh/strptime.html>.  */
 # if @GNULIB_STRPTIME@
-#  if @REPLACE_STRPTIME@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    undef strptime
-#    define strptime rpl_strptime
-#   endif
-_GL_FUNCDECL_RPL (strptime, char *, (char const *restrict __buf,
+#  if ! @HAVE_STRPTIME@
+_GL_FUNCDECL_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm)
                                     _GL_ARG_NONNULL ((1, 2, 3)));
-_GL_CXXALIAS_RPL (strptime, char *, (char const *restrict __buf,
-                                     char const *restrict __format,
-                                     struct tm *restrict __tm));
-#  else
+#  endif
 _GL_CXXALIAS_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm));
-#  endif
 _GL_CXXALIASWARN (strptime);
 # endif
 
@@ -175,6 +206,9 @@ _GL_CXXALIASWARN (strptime);
 _GL_FUNCDECL_RPL (timegm, time_t, (struct tm *__tm) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (timegm, time_t, (struct tm *__tm));
 #  else
+#   if ! @HAVE_TIMEGM@
+_GL_FUNCDECL_SYS (timegm, time_t, (struct tm *__tm) _GL_ARG_NONNULL ((1)));
+#   endif
 _GL_CXXALIAS_SYS (timegm, time_t, (struct tm *__tm));
 #  endif
 _GL_CXXALIASWARN (timegm);
@@ -183,15 +217,25 @@ _GL_CXXALIASWARN (timegm);
 /* Encourage applications to avoid unsafe functions that can overrun
    buffers when given outlandish struct tm values.  Portable
    applications should use strftime (or even sprintf) instead.  */
-# if GNULIB_PORTCHECK
+# if defined GNULIB_POSIXCHECK
 #  undef asctime
-#  define asctime eschew_asctime
+_GL_WARN_ON_USE (asctime, "asctime can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef asctime_r
-#  define asctime_r eschew_asctime_r
+_GL_WARN_ON_USE (asctime, "asctime_r can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef ctime
-#  define ctime eschew_ctime
+_GL_WARN_ON_USE (asctime, "ctime can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef ctime_r
-#  define ctime_r eschew_ctime_r
+_GL_WARN_ON_USE (asctime, "ctime_r can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
 # endif
 
 #endif

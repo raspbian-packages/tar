@@ -1,6 +1,6 @@
 # Makefile for GNU tar regression tests.
 
-# Copyright (C) 1996, 1997, 1999, 2000, 2001, 2003, 2004, 2005, 
+# Copyright (C) 1996, 1997, 1999, 2000, 2001, 2003, 2004, 2005,
 # 2006, 2007, 2009 Free Software Foundation, Inc.
 
 # François Pinard <pinard@iro.umontreal.ca>, 1988.
@@ -66,6 +66,7 @@ TESTSUITE_AT = \
  exclude03.at\
  exclude04.at\
  exclude05.at\
+ exclude06.at\
  extrac01.at\
  extrac02.at\
  extrac03.at\
@@ -74,6 +75,13 @@ TESTSUITE_AT = \
  extrac06.at\
  extrac07.at\
  extrac08.at\
+ extrac09.at\
+ extrac10.at\
+ extrac11.at\
+ extrac12.at\
+ extrac13.at\
+ extrac14.at\
+ extrac15.at\
  filerem01.at\
  filerem02.at\
  gzip.at\
@@ -89,11 +97,16 @@ TESTSUITE_AT = \
  ignfail.at\
  label01.at\
  label02.at\
+ label03.at\
+ label04.at\
+ label05.at\
  link01.at\
  link02.at\
  link03.at\
+ link04.at\
  listed01.at\
  listed02.at\
+ listed03.at\
  long01.at\
  longv7.at\
  lustar01.at\
@@ -106,6 +119,7 @@ TESTSUITE_AT = \
  multiv05.at\
  multiv06.at\
  multiv07.at\
+ multiv08.at\
  old.at\
  options.at\
  options02.at\
@@ -118,11 +132,13 @@ TESTSUITE_AT = \
  rename05.at\
  remfiles01.at\
  remfiles02.at\
+ remfiles03.at\
  same-order01.at\
  same-order02.at\
  shortfile.at\
  shortupd.at\
  shortrec.at\
+ sigpipe.at\
  sparse01.at\
  sparse02.at\
  sparse03.at\
@@ -140,6 +156,7 @@ TESTSUITE_AT = \
  verbose.at\
  version.at\
  xform-h.at\
+ xform01.at\
  star/gtarfail.at\
  star/gtarfail2.at\
  star/multi-fail.at\
@@ -184,4 +201,4 @@ genfile_SOURCES = genfile.c argcv.c argcv.h
 localedir = $(datadir)/locale
 INCLUDES = -I$(top_srcdir)/gnu -I../gnu -I$(top_srcdir)/gnu -I$(top_srcdir)/lib
 AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
-LDADD = ../gnu/libgnu.a $(LIBINTL) $(LIB_CLOCK_GETTIME)
+LDADD = ../gnu/libgnu.a $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIB_EACCESS)

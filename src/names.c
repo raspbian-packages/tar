@@ -27,15 +27,6 @@
 
 /* User and group names.  */
 
-struct group *getgrnam ();
-struct passwd *getpwnam ();
-#if ! HAVE_DECL_GETPWUID
-struct passwd *getpwuid ();
-#endif
-#if ! HAVE_DECL_GETGRGID
-struct group *getgrgid ();
-#endif
-
 /* Make sure you link with the proper libraries if you are running the
    Yellow Peril (thanks for the good laugh, Ian J.!), or, euh... NIS.
    This code should also be modified for non-UNIX systems to do something
@@ -179,7 +170,7 @@ gname_to_gid (char const *gname, gid_t *gidp)
 }
 
 
-struct name *
+static struct name *
 make_name (const char *file_name)
 {
   struct name *p = xzalloc (sizeof (*p));
@@ -190,7 +181,7 @@ make_name (const char *file_name)
   return p;
 }
 
-void
+static void
 free_name (struct name *p)
 {
   if (p)
@@ -207,7 +198,7 @@ free_name (struct name *p)
 static struct name *namelist;	/* first name in list, if any */
 static struct name *nametail;	/* end of name list */
 
-/* File name arguments are processed in two stages: first a 
+/* File name arguments are processed in two stages: first a
    name_array (see below) is filled, then the names from it
    are moved into the namelist.
 
@@ -215,7 +206,7 @@ static struct name *nametail;	/* end of name list */
    which is meant to help process large archives on machines with
    limited memory.  With this option on, namelist contains at most one
    entry, which diminishes the memory consumption.
-   
+
    However, I very much doubt if we still need this -- Sergey */
 
 /* A name_array element contains entries of three types: */
@@ -230,24 +221,25 @@ struct name_elt        /* A name_array element. */
   union
   {
     const char *name;  /* File or directory name */
-    int matching_flags;/* fnmatch options if type == NELT_FMASK */ 
+    int matching_flags;/* fnmatch options if type == NELT_FMASK */
   } v;
 };
 
 static struct name_elt *name_array;  /* store an array of names */
-static size_t allocated_names;	 /* how big is the array? */
-static size_t names;		 /* how many entries does it have? */
-static size_t name_index;	 /* how many of the entries have we scanned? */
+static size_t allocated_entries; /* how big is the array? */
+static size_t entries;		 /* how many entries does it have? */
+static size_t scanned;		 /* how many of the entries have we scanned? */
+size_t name_count;		 /* how many of the entries are names? */
 
 /* Check the size of name_array, reallocating it as necessary.  */
 static void
-check_name_alloc ()
+check_name_alloc (void)
 {
-  if (names == allocated_names)
+  if (entries == allocated_entries)
     {
-      if (allocated_names == 0)
-	allocated_names = 10; /* Set initial allocation */
-      name_array = x2nrealloc (name_array, &allocated_names,
+      if (allocated_entries == 0)
+	allocated_entries = 10; /* Set initial allocation */
+      name_array = x2nrealloc (name_array, &allocated_entries,
 			       sizeof (name_array[0]));
     }
 }
@@ -260,17 +252,18 @@ name_add_name (const char *name, int matching_flags)
   struct name_elt *ep;
 
   check_name_alloc ();
-  ep = &name_array[names++];
+  ep = &name_array[entries++];
   if (prev_flags != matching_flags)
     {
       ep->type = NELT_FMASK;
       ep->v.matching_flags = matching_flags;
       prev_flags = matching_flags;
       check_name_alloc ();
-      ep = &name_array[names++];
+      ep = &name_array[entries++];
     }
   ep->type = NELT_NAME;
   ep->v.name = name;
+  name_count++;
 }
 
 /* Add to name_array a chdir request for the directory NAME */
@@ -279,10 +272,10 @@ name_add_dir (const char *name)
 {
   struct name_elt *ep;
   check_name_alloc ();
-  ep = &name_array[names++];
+  ep = &name_array[entries++];
   ep->type = NELT_CHDIR;
   ep->v.name = name;
-}  
+}
 
 
 /* Names from external name file.  */
@@ -313,28 +306,28 @@ static int matching_flags; /* exclude_fnmatch options */
 
    If CHANGE_DIRS is true, treat any entries of type NELT_CHDIR as
    the request to change to the given directory.
-   
+
    Entries of type NELT_FMASK cause updates of the matching_flags
    value. */
-struct name_elt *
+static struct name_elt *
 name_next_elt (int change_dirs)
 {
   static struct name_elt entry;
   const char *source;
   char *cursor;
 
-  while (name_index != names)
+  while (scanned != entries)
     {
       struct name_elt *ep;
       size_t source_len;
-      
-      ep = &name_array[name_index++];
+
+      ep = &name_array[scanned++];
       if (ep->type == NELT_FMASK)
 	{
 	  matching_flags = ep->v.matching_flags;
 	  continue;
 	}
-      
+
       source = ep->v.name;
       source_len = strlen (source);
       if (name_buffer_length < source_len)
@@ -421,7 +414,7 @@ name_gather (void)
 	  buffer->directory = NULL;
 	  buffer->parent = NULL;
 	  buffer->cmdline = true;
-	  
+
 	  namelist = nametail = buffer;
 	}
       else if (change_dir)
@@ -519,7 +512,7 @@ name_match (const char *file_name)
 
       if (!cursor)
 	return true;
-      
+
       if (cursor->name[0] == 0)
 	{
 	  chdir_do (cursor->change_dir);
@@ -589,7 +582,7 @@ all_names_found (struct tar_stat_info *p)
   return true;
 }
 
-static void
+static int
 regex_usage_warning (const char *name)
 {
   static int warned_once = 0;
@@ -603,6 +596,7 @@ regex_usage_warning (const char *name)
 	     _("Use --wildcards to enable pattern matching,"
 	       " or --no-wildcards to suppress this warning")));
     }
+  return warned_once;
 }
 
 /* Print the names of things in the namelist that were not matched.  */
@@ -615,12 +609,11 @@ names_notfound (void)
     if (!WASFOUND (cursor) && cursor->name[0])
       {
 	regex_usage_warning (cursor->name);
-	if (cursor->found_count == 0)
-	  ERROR ((0, 0, _("%s: Not found in archive"),
-		  quotearg_colon (cursor->name)));
-	else
-	  ERROR ((0, 0, _("%s: Required occurrence not found in archive"),
-		  quotearg_colon (cursor->name)));  
+	ERROR ((0, 0,
+		(cursor->found_count == 0) ?
+		     _("%s: Not found in archive") :
+		     _("%s: Required occurrence not found in archive"),
+		quotearg_colon (cursor->name)));
       }
 
   /* Don't bother freeing the name list; we're about to exit.  */
@@ -639,13 +632,49 @@ names_notfound (void)
 	}
     }
 }
+
+void
+label_notfound (void)
+{
+  struct name const *cursor;
+
+  if (!namelist)
+    return;
+
+  for (cursor = namelist; cursor; cursor = cursor->next)
+    if (WASFOUND (cursor))
+      return;
+
+  if (verbose_option)
+    error (0, 0, _("Archive label mismatch"));
+  set_exit_status (TAREXIT_DIFFERS);
+
+  for (cursor = namelist; cursor; cursor = cursor->next)
+    {
+      if (regex_usage_warning (cursor->name))
+	break;
+    }
+
+  /* Don't bother freeing the name list; we're about to exit.  */
+  namelist = NULL;
+  nametail = NULL;
+
+  if (same_order_option)
+    {
+      const char *name;
+
+      while ((name = name_next (1)) != NULL
+	     && regex_usage_warning (name) == 0)
+	;
+    }
+}
 
 /* Sorting name lists.  */
 
 /* Sort *singly* linked LIST of names, of given LENGTH, using COMPARE
    to order names.  Return the sorted list.  Note that after calling
    this function, the `prev' links in list elements are messed up.
-   
+
    Apart from the type `struct name' and the definition of SUCCESSOR,
    this is a generic list-sorting function, but it's too painful to
    make it both generic and portable
@@ -752,17 +781,15 @@ compare_names (struct name const *n1, struct name const *n2)
 }
 
 
-/* Add all the dirs under NAME, which names a directory, to the namelist.
-   If any of the files is a directory, recurse on the subdirectory.
-   DEVICE is the device not to leave, if the -l option is specified.
-   CMDLINE is true, if the NAME appeared on the command line. */
+/* Add all the dirs under ST to the namelist NAME, descending the
+   directory hierarchy recursively.  */
 
 static void
-add_hierarchy_to_namelist (struct name *name, dev_t device, bool cmdline)
+add_hierarchy_to_namelist (struct tar_stat_info *st, struct name *name)
 {
   const char *buffer;
-  
-  name_fill_directory (name, device, cmdline);
+
+  name->directory = scan_directory (st);
   buffer = directory_contents (name->directory);
   if (buffer)
     {
@@ -790,6 +817,8 @@ add_hierarchy_to_namelist (struct name *name, dev_t device, bool cmdline)
 	  if (*string == 'D')
 	    {
 	      struct name *np;
+	      struct tar_stat_info subdir;
+	      int subfd;
 
 	      if (allocated_length <= name_length + string_length)
 		{
@@ -810,7 +839,38 @@ add_hierarchy_to_namelist (struct name *name, dev_t device, bool cmdline)
 	      else
 		child_tail->sibling = np;
 	      child_tail = np;
-	      add_hierarchy_to_namelist (np, device, false);
+
+	      tar_stat_init (&subdir);
+	      subdir.parent = st;
+	      if (st->fd < 0)
+		{
+		  subfd = -1;
+		  errno = - st->fd;
+		}
+	      else
+		subfd = subfile_open (st, string + 1,
+				      open_read_flags | O_DIRECTORY);
+	      if (subfd < 0)
+		open_diag (namebuf);
+	      else
+		{
+		  subdir.fd = subfd;
+		  if (fstat (subfd, &subdir.stat) != 0)
+		    stat_diag (namebuf);
+		  else if (! (O_DIRECTORY || S_ISDIR (subdir.stat.st_mode)))
+		    {
+		      errno = ENOTDIR;
+		      open_diag (namebuf);
+		    }
+		  else
+		    {
+		      subdir.orig_file_name = xstrdup (namebuf);
+		      add_hierarchy_to_namelist (&subdir, np);
+		      restore_parent_fd (&subdir);
+		    }
+		}
+
+	      tar_stat_destroy (&subdir);
 	    }
 	}
 
@@ -846,7 +906,7 @@ rebase_child_list (struct name *child, struct name *parent)
   size_t old_prefix_len = child->parent->length;
   size_t new_prefix_len = parent->length;
   char *new_prefix = parent->name;
-  
+
   for (; child; child = child->sibling)
     {
       size_t size = child->length - old_prefix_len + new_prefix_len;
@@ -858,7 +918,7 @@ rebase_child_list (struct name *child, struct name *parent)
       child->length = size;
 
       rebase_directory (child->directory,
-			child->parent->name, old_prefix_len, 
+			child->parent->name, old_prefix_len,
 			new_prefix, new_prefix_len);
     }
 }
@@ -871,11 +931,10 @@ void
 collect_and_sort_names (void)
 {
   struct name *name;
-  struct name *next_name, *prev_name;
+  struct name *next_name, *prev_name = NULL;
   int num_names;
-  struct stat statbuf;
   Hash_table *nametab;
-  
+
   name_gather ();
 
   if (!namelist)
@@ -903,10 +962,12 @@ collect_and_sort_names (void)
 
       read_directory_file ();
     }
-  
+
   num_names = 0;
   for (name = namelist; name; name = name->next, num_names++)
     {
+      struct tar_stat_info st;
+
       if (name->found_count || name->directory)
 	continue;
       if (name->matching_flags & EXCLUDE_WILDCARDS)
@@ -918,16 +979,34 @@ collect_and_sort_names (void)
       if (name->name[0] == 0)
 	continue;
 
-      if (deref_stat (dereference_option, name->name, &statbuf) != 0)
+      tar_stat_init (&st);
+
+      if (deref_stat (name->name, &st.stat) != 0)
 	{
 	  stat_diag (name->name);
 	  continue;
 	}
-      if (S_ISDIR (statbuf.st_mode))
+      if (S_ISDIR (st.stat.st_mode))
 	{
-	  name->found_count++;
-	  add_hierarchy_to_namelist (name, statbuf.st_dev, true);
+	  int dir_fd = openat (chdir_fd, name->name,
+			       open_read_flags | O_DIRECTORY);
+	  if (dir_fd < 0)
+	    open_diag (name->name);
+	  else
+	    {
+	      st.fd = dir_fd;
+	      if (fstat (dir_fd, &st.stat) != 0)
+		stat_diag (name->name);
+	      else if (O_DIRECTORY || S_ISDIR (st.stat.st_mode))
+		{
+		  st.orig_file_name = xstrdup (name->name);
+		  name->found_count++;
+		  add_hierarchy_to_namelist (&st, name);
+		}
+	    }
 	}
+
+      tar_stat_destroy (&st);
     }
 
   namelist = merge_sort (namelist, num_names, compare_names);
@@ -950,6 +1029,7 @@ collect_and_sort_names (void)
 		{
 		  if (p->child)
 		    rebase_child_list (p->child, name);
+		  hash_delete (nametab, name);
 		  /* FIXME: remove_directory (p->caname); ? */
 		  remname (p);
 		  free_name (p);
@@ -1078,12 +1158,12 @@ static void
 register_individual_file (char const *name)
 {
   struct stat st;
-  
-  if (deref_stat (dereference_option, name, &st) != 0)
+
+  if (deref_stat (name, &st) != 0)
     return; /* Will be complained about later */
   if (S_ISDIR (st.st_mode))
     return;
-  
+
   hash_string_insert (&individual_file_table, name);
 }
 

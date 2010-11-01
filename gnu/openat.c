@@ -246,7 +246,7 @@ bool
 openat_needs_fchdir (void)
 {
   bool needs_fchdir = true;
-  int fd = open ("/", O_RDONLY);
+  int fd = open ("/", O_SEARCH);
 
   if (0 <= fd)
     {

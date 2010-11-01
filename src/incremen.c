@@ -43,7 +43,7 @@ enum children
 #define DIR_IS_INITED(d) ((d)->flags & DIRF_INIT)
 #define DIR_IS_NFS(d) ((d)->flags & DIRF_NFS)
 #define DIR_IS_FOUND(d) ((d)->flags & DIRF_FOUND)
-#define DIR_IS_NEW(d) ((d)->flags & DIRF_NEW)
+/* #define DIR_IS_NEW(d) ((d)->flags & DIRF_NEW) FIXME: not used */
 #define DIR_IS_RENAMED(d) ((d)->flags & DIRF_RENAMED)
 
 #define DIR_SET_FLAG(d,f) (d)->flags |= (f)
@@ -77,14 +77,14 @@ struct directory
     char *name;	     	        /* file name of directory */
   };
 
-struct dumpdir *
+static struct dumpdir *
 dumpdir_create0 (const char *contents, const char *cmask)
 {
   struct dumpdir *dump;
   size_t i, total, ctsize, len;
   char *p;
   const char *q;
-  
+
   for (i = 0, total = 0, ctsize = 1, q = contents; *q; total++, q += len)
     {
       len = strlen (q) + 1;
@@ -108,13 +108,13 @@ dumpdir_create0 (const char *contents, const char *cmask)
   return dump;
 }
 
-struct dumpdir *
+static struct dumpdir *
 dumpdir_create (const char *contents)
 {
   return dumpdir_create0 (contents, "YND");
 }
 
-void
+static void
 dumpdir_free (struct dumpdir *dump)
 {
   free (dump->elv);
@@ -131,7 +131,7 @@ compare_dirnames (const void *first, const void *second)
 
 /* Locate NAME in the dumpdir array DUMP.
    Return pointer to the slot in DUMP->contents, or NULL if not found */
-char *
+static char *
 dumpdir_locate (struct dumpdir *dump, const char *name)
 {
   char **ptr;
@@ -146,16 +146,16 @@ dumpdir_locate (struct dumpdir *dump, const char *name)
 struct dumpdir_iter
 {
   struct dumpdir *dump; /* Dumpdir being iterated */
-  int all;              /* Iterate over all entries, not only D/N/Y */ 
+  int all;              /* Iterate over all entries, not only D/N/Y */
   size_t next;          /* Index of the next element */
 };
 
-char *
+static char *
 dumpdir_next (struct dumpdir_iter *itr)
 {
   size_t cur = itr->next;
   char *ret = NULL;
-  
+
   if (itr->all)
     {
       ret = itr->dump->contents + cur;
@@ -172,7 +172,7 @@ dumpdir_next (struct dumpdir_iter *itr)
   return ret;
 }
 
-char *
+static char *
 dumpdir_first (struct dumpdir *dump, int all, struct dumpdir_iter **pitr)
 {
   struct dumpdir_iter *itr = xmalloc (sizeof (*itr));
@@ -258,7 +258,7 @@ make_directory (const char *name, char *caname)
   directory->dump = directory->idump = NULL;
   directory->orig = NULL;
   directory->flags = false;
-  if (namelen && ISSLASH (name[namelen - 1]))
+  if (namelen > 1 && ISSLASH (name[namelen - 1]))
     namelen--;
   directory->name = xmalloc (namelen + 1);
   memcpy (directory->name, name, namelen);
@@ -288,9 +288,9 @@ attach_directory (const char *name)
   dirtail = dir;
   return dir;
 }
-		 
+
 
-void
+static void
 dirlist_replace_prefix (const char *pref, const char *repl)
 {
   struct directory *dp;
@@ -402,26 +402,17 @@ find_directory_meta (dev_t dev, ino_t ino)
 }
 
 void
-update_parent_directory (const char *name)
+update_parent_directory (struct tar_stat_info *parent)
 {
-  struct directory *directory;
-  char *p;
-
-  p = dir_name (name);
-  directory = find_directory (p);
+  struct directory *directory = find_directory (parent->orig_file_name);
   if (directory)
     {
       struct stat st;
-      if (deref_stat (dereference_option, p, &st) != 0)
-	{
-	  if (errno != ENOENT) 
-	    stat_diag (directory->name);
-	  /* else: should have been already reported */
-	}
+      if (fstat (parent->fd, &st) != 0)
+	stat_diag (directory->name);
       else
 	directory->mtime = get_stat_mtime (&st);
     }
-  free (p);
 }
 
 #define PD_FORCE_CHILDREN 0x10
@@ -429,12 +420,13 @@ update_parent_directory (const char *name)
 #define PD_CHILDREN(f) ((f) & 3)
 
 static struct directory *
-procdir (const char *name_buffer, struct stat *stat_data,
-	 dev_t device,
+procdir (const char *name_buffer, struct tar_stat_info *st,
 	 int flag,
 	 char *entry)
 {
   struct directory *directory;
+  struct stat *stat_data = &st->stat;
+  dev_t device = st->parent ? st->parent->stat.st_dev : 0;
   bool nfs = NFS_FILE_STAT (*stat_data);
 
   if ((directory = find_directory (name_buffer)) != NULL)
@@ -457,14 +449,14 @@ procdir (const char *name_buffer, struct stat *stat_data,
 	  *entry = 'N';
 	  return directory;
 	}
-      
+
       /* With NFS, the same file can have two different devices
 	 if an NFS directory is mounted in multiple locations,
 	 which is relatively common when automounting.
 	 To avoid spurious incremental redumping of
 	 directories, consider all NFS devices as equal,
 	 relying on the i-node to establish differences.  */
-      
+
       if (! ((!check_device_option
 	      || (DIR_IS_NFS (directory) && nfs)
 	      || directory->device_number == stat_data->st_dev)
@@ -502,14 +494,14 @@ procdir (const char *name_buffer, struct stat *stat_data,
 	}
       else
 	directory->children = CHANGED_CHILDREN;
-      
+
       DIR_SET_FLAG (directory, DIRF_FOUND);
     }
   else
     {
       struct directory *d = find_directory_meta (stat_data->st_dev,
 						 stat_data->st_ino);
-      
+
       directory = note_directory (name_buffer,
 				  get_stat_mtime(stat_data),
 				  stat_data->st_dev,
@@ -553,7 +545,7 @@ procdir (const char *name_buffer, struct stat *stat_data,
   if (one_file_system_option && device != stat_data->st_dev
       /* ... except if it was explicitely given in the command line */
       && !is_individual_file (name_buffer))
-    /* FIXME: 
+    /* FIXME:
 	WARNOPT (WARN_XDEV,
 		 (0, 0,
 		  _("%s: directory is on a different filesystem; not dumped"),
@@ -566,14 +558,14 @@ procdir (const char *name_buffer, struct stat *stat_data,
       if (directory->children == NO_CHILDREN)
 	*entry = 'N';
     }
-	  
+
   DIR_SET_FLAG (directory, DIRF_INIT);
 
   if (directory->children != NO_CHILDREN)
     {
       const char *tag_file_name;
 
-      switch (check_exclusion_tags (name_buffer, &tag_file_name))
+      switch (check_exclusion_tags (st, &tag_file_name))
 	{
 	case exclusion_tag_all:
 	  /* This warning can be duplicated by code in dump_file0, but only
@@ -590,13 +582,13 @@ procdir (const char *name_buffer, struct stat *stat_data,
 				 _("contents not dumped"));
 	  directory->children = NO_CHILDREN;
 	  break;
-	  
+
 	case exclusion_tag_under:
 	  exclusion_tag_warning (name_buffer, tag_file_name,
 				 _("contents not dumped"));
 	  directory->tagfile = tag_file_name;
 	  break;
-	  
+
 	case exclusion_tag_none:
 	  break;
 	}
@@ -616,7 +608,7 @@ procdir (const char *name_buffer, struct stat *stat_data,
    DIRECTORY->dump is replaced with the created template. Each entry is
    prefixed with ' ' if it was present in DUMP and with 'Y' otherwise. */
 
-void
+static void
 makedumpdir (struct directory *directory, const char *dir)
 {
   size_t i,
@@ -682,40 +674,29 @@ makedumpdir (struct directory *directory, const char *dir)
   free (array);
 }
 
-/* Recursively scan the given directory DIR.
-   DEVICE is the device number where DIR resides (for --one-file-system).
-   If CMDLINE is true, the directory name was explicitly listed in the
-   command line.
-   Unless *PDIR is NULL, store there a pointer to the struct directory
-   describing DIR. */
+/* Recursively scan the directory identified by ST.  */
 struct directory *
-scan_directory (char *dir, dev_t device, bool cmdline)
+scan_directory (struct tar_stat_info *st)
 {
-  char *dirp = savedir (dir);	/* for scanning directory */
+  char const *dir = st->orig_file_name;
+  char *dirp = get_directory_entries (st);
+  dev_t device = st->stat.st_dev;
+  bool cmdline = ! st->parent;
   namebuf_t nbuf;
   char *tmp;
-  struct stat stat_data;
   struct directory *directory;
   char ch;
-  
+
   if (! dirp)
     savedir_error (dir);
 
   tmp = xstrdup (dir);
   zap_slashes (tmp);
-  
-  if (deref_stat (dereference_option, tmp, &stat_data))
-    {
-      dir_removed_diag (tmp, cmdline, stat_diag);
-      free (tmp);
-      free (dirp);
-      return NULL;
-    }
 
-  directory = procdir (tmp, &stat_data, device,
+  directory = procdir (tmp, st,
 		       (cmdline ? PD_FORCE_INIT : 0),
 		       &ch);
-  
+
   free (tmp);
 
   nbuf = namebuf_create (dir);
@@ -723,7 +704,7 @@ scan_directory (char *dir, dev_t device, bool cmdline)
   if (dirp && directory->children != NO_CHILDREN)
     {
       char *entry;	/* directory entry being scanned */
-      dumpdir_iter_t itr;
+      struct dumpdir_iter *itr;
 
       makedumpdir (directory, dirp);
 
@@ -739,14 +720,37 @@ scan_directory (char *dir, dev_t device, bool cmdline)
 	    *entry = 'N';
 	  else
 	    {
-	      if (deref_stat (dereference_option, full_name, &stat_data))
+	      int fd = st->fd;
+	      void (*diag) (char const *) = 0;
+	      struct tar_stat_info stsub;
+	      tar_stat_init (&stsub);
+
+	      if (fd < 0)
 		{
-		  file_removed_diag (full_name, false, stat_diag);
-		  *entry = 'N';
-		  continue;
+		  errno = - fd;
+		  diag = open_diag;
+		}
+	      else if (fstatat (fd, entry + 1, &stsub.stat, fstatat_flags) != 0)
+		diag = stat_diag;
+	      else if (S_ISDIR (stsub.stat.st_mode))
+		{
+		  int subfd = subfile_open (st, entry + 1, open_read_flags);
+		  if (subfd < 0)
+		    diag = open_diag;
+		  else
+		    {
+		      stsub.fd = subfd;
+		      if (fstat (subfd, &stsub.stat) != 0)
+			diag = stat_diag;
+		    }
 		}
 
-	      if (S_ISDIR (stat_data.st_mode))
+	      if (diag)
+		{
+		  file_removed_diag (full_name, false, diag);
+		  *entry = 'N';
+		}
+	      else if (S_ISDIR (stsub.stat.st_mode))
 		{
 		  int pd_flag = 0;
 		  if (!recursion_option)
@@ -754,23 +758,24 @@ scan_directory (char *dir, dev_t device, bool cmdline)
 		  else if (directory->children == ALL_CHILDREN)
 		    pd_flag |= PD_FORCE_CHILDREN | ALL_CHILDREN;
 		  *entry = 'D';
-		  procdir (full_name, &stat_data, device, pd_flag, entry);
+
+		  stsub.parent = st;
+		  procdir (full_name, &stsub, pd_flag, entry);
+		  restore_parent_fd (&stsub);
 		}
-
-	      else if (one_file_system_option && device != stat_data.st_dev)
+	      else if (one_file_system_option && device != stsub.stat.st_dev)
 		*entry = 'N';
-
 	      else if (*entry == 'Y')
 		/* New entry, skip further checks */;
-
 	      /* FIXME: if (S_ISHIDDEN (stat_data.st_mode))?? */
-
-	      else if (OLDER_STAT_TIME (stat_data, m)
+	      else if (OLDER_STAT_TIME (stsub.stat, m)
 		       && (!after_date_option
-			   || OLDER_STAT_TIME (stat_data, c)))
+			   || OLDER_STAT_TIME (stsub.stat, c)))
 		*entry = 'N';
 	      else
 		*entry = 'Y';
+
+	      tar_stat_destroy (&stsub);
 	    }
 	}
       free (itr);
@@ -801,17 +806,11 @@ safe_directory_contents (struct directory *dir)
   return ret ? ret : "\0\0\0\0";
 }
 
-void
-name_fill_directory (struct name *name, dev_t device, bool cmdline)
-{
-  name->directory = scan_directory (name->name, device, cmdline);
-}
-
 
 static void
-obstack_code_rename (struct obstack *stk, char *from, char *to)
+obstack_code_rename (struct obstack *stk, char const *from, char const *to)
 {
-  char *s;
+  char const *s;
 
   s = from[0] == 0 ? from :
                      safer_name_suffix (from, false, absolute_names_option);
@@ -874,7 +873,7 @@ append_incremental_renames (struct directory *dir)
   size_t size;
   struct directory *dp;
   const char *dump;
-  
+
   if (dirhead == NULL)
     return;
 
@@ -891,7 +890,8 @@ append_incremental_renames (struct directory *dir)
   for (dp = dirhead; dp; dp = dp->next)
     store_rename (dp, &stk);
 
-  if (obstack_object_size (&stk) != size)
+  /* FIXME: Is this the right thing to do when DIR is null?  */
+  if (dir && obstack_object_size (&stk) != size)
     {
       obstack_1grow (&stk, 0);
       dumpdir_free (dir->dump);
@@ -1217,7 +1217,7 @@ read_timespec (FILE *fp, struct timespec *pval)
 
 /* Read incremental snapshot format 2 */
 static void
-read_incr_db_2 ()
+read_incr_db_2 (void)
 {
   uintmax_t u;
   struct obstack stk;
@@ -1312,7 +1312,7 @@ read_directory_file (void)
      which is necessary to recreate absolute file names. */
   name_from_list ();
   blank_name_list ();
-  
+
   if (0 < getline (&buf, &bufsize, listed_incremental_stream))
     {
       char *ebuf;
@@ -1367,7 +1367,7 @@ write_directory_file_entry (void *entry, void *data)
   if (DIR_IS_FOUND (directory))
     {
       char buf[UINTMAX_STRSIZE_BOUND];
-      char *s;
+      char const *s;
 
       s = DIR_IS_NFS (directory) ? "1" : "0";
       fwrite (s, 2, 1, fp);
@@ -1386,7 +1386,7 @@ write_directory_file_entry (void *entry, void *data)
       if (directory->dump)
 	{
 	  const char *p;
-	  dumpdir_iter_t itr;
+	  struct dumpdir_iter *itr;
 
 	  for (p = dumpdir_first (directory->dump, 0, &itr);
 	       p;
@@ -1452,7 +1452,7 @@ get_gnu_dumpdir (struct tar_stat_info *stat_info)
   to = archive_dir;
 
   set_next_block_after (current_header);
-  mv_begin (stat_info);
+  mv_begin_read (stat_info);
 
   for (; size > 0; size -= copied)
     {
@@ -1668,7 +1668,7 @@ try_purge_directory (char const *directory_name)
 	free (p);
       p = new_name (directory_name, cur);
 
-      if (deref_stat (false, p, &st))
+      if (deref_stat (p, &st) != 0)
 	{
 	  if (errno != ENOENT) /* FIXME: Maybe keep a list of renamed
 				  dirs and check it here? */
@@ -1707,7 +1707,7 @@ try_purge_directory (char const *directory_name)
     }
   free (p);
   dumpdir_free (dump);
-  
+
   free (current_dir);
   return true;
 }

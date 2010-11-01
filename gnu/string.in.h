@@ -23,6 +23,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_STRING_H@
@@ -43,12 +44,20 @@
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5)
 #  define __attribute__(Spec) /* empty */
 # endif
+#endif
 /* The attribute __pure__ was added in gcc 2.96.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 96)
-#  define __pure__ /* empty */
-# endif
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
 #endif
 
+/* NetBSD 5.0 declares strsignal in <unistd.h>, not in <string.h>.  */
+/* But in any case avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_STRSIGNAL@ || defined GNULIB_POSIXCHECK) && defined __NetBSD__ \
+    && ! defined __GLIBC__
+# include <unistd.h>
+#endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -64,25 +73,30 @@
 #   define memchr rpl_memchr
 #  endif
 _GL_FUNCDECL_RPL (memchr, void *, (void const *__s, int __c, size_t __n)
-                                  __attribute__ ((__pure__))
+                                  _GL_ATTRIBUTE_PURE
                                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (memchr, void *, (void const *__s, int __c, size_t __n));
 # else
-#  if defined __SUNPRO_CC
-  /* This compiler defines an overloaded function
+#  if ! @HAVE_MEMCHR@
+_GL_FUNCDECL_SYS (memchr, void *, (void const *__s, int __c, size_t __n)
+                                  _GL_ATTRIBUTE_PURE
+                                  _GL_ARG_NONNULL ((1)));
+#  endif
+  /* On some systems, this function is defined as an overloaded function:
        extern "C" { const void * std::memchr (const void *, int, size_t); }
-       extern "C++" { inline void * std::memchr (void *, int, size_t); }
-     and diagnoses an error
-     "Error: Could not find a match for std::memchr(const void*, int, unsigned)"
-   */
+       extern "C++" { void * std::memchr (void *, int, size_t); }  */
 _GL_CXXALIAS_SYS_CAST2 (memchr,
                         void *, (void const *__s, int __c, size_t __n),
                         void const *, (void const *__s, int __c, size_t __n));
-#  else
-_GL_CXXALIAS_SYS (memchr, void *, (void const *__s, int __c, size_t __n));
-#  endif
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (memchr, void *, (void *__s, int __c, size_t __n));
+_GL_CXXALIASWARN1 (memchr, void const *,
+                   (void const *__s, int __c, size_t __n));
+# else
 _GL_CXXALIASWARN (memchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef memchr
 /* Assume memchr is always declared.  */
@@ -99,7 +113,8 @@ _GL_WARN_ON_USE (memchr, "memchr has platform-specific bugs - "
 _GL_FUNCDECL_RPL (memmem, void *,
                   (void const *__haystack, size_t __haystack_len,
                    void const *__needle, size_t __needle_len)
-                  __attribute__ ((__pure__)) _GL_ARG_NONNULL ((1, 3)));
+                  _GL_ATTRIBUTE_PURE
+                  _GL_ARG_NONNULL ((1, 3)));
 _GL_CXXALIAS_RPL (memmem, void *,
                   (void const *__haystack, size_t __haystack_len,
                    void const *__needle, size_t __needle_len));
@@ -108,7 +123,8 @@ _GL_CXXALIAS_RPL (memmem, void *,
 _GL_FUNCDECL_SYS (memmem, void *,
                   (void const *__haystack, size_t __haystack_len,
                    void const *__needle, size_t __needle_len)
-                  __attribute__ ((__pure__)) _GL_ARG_NONNULL ((1, 3)));
+                  _GL_ATTRIBUTE_PURE
+                  _GL_ARG_NONNULL ((1, 3)));
 #  endif
 _GL_CXXALIAS_SYS (memmem, void *,
                   (void const *__haystack, size_t __haystack_len,
@@ -149,11 +165,22 @@ _GL_WARN_ON_USE (mempcpy, "mempcpy is unportable - "
 #if @GNULIB_MEMRCHR@
 # if ! @HAVE_DECL_MEMRCHR@
 _GL_FUNCDECL_SYS (memrchr, void *, (void const *, int, size_t)
-                                   __attribute__ ((__pure__))
+                                   _GL_ATTRIBUTE_PURE
                                    _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (memrchr, void *, (void const *, int, size_t));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const void * std::memrchr (const void *, int, size_t); }
+       extern "C++" { void * std::memrchr (void *, int, size_t); }  */
+_GL_CXXALIAS_SYS_CAST2 (memrchr,
+                        void *, (void const *, int, size_t),
+                        void const *, (void const *, int, size_t));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (memrchr, void *, (void *, int, size_t));
+_GL_CXXALIASWARN1 (memrchr, void const *, (void const *, int, size_t));
+# else
 _GL_CXXALIASWARN (memrchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
 # if HAVE_RAW_DECL_MEMRCHR
@@ -168,11 +195,22 @@ _GL_WARN_ON_USE (memrchr, "memrchr is unportable - "
 #if @GNULIB_RAWMEMCHR@
 # if ! @HAVE_RAWMEMCHR@
 _GL_FUNCDECL_SYS (rawmemchr, void *, (void const *__s, int __c_in)
-                                     __attribute__ ((__pure__))
+                                     _GL_ATTRIBUTE_PURE
                                      _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (rawmemchr, void *, (void const *__s, int __c_in));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const void * std::rawmemchr (const void *, int); }
+       extern "C++" { void * std::rawmemchr (void *, int); }  */
+_GL_CXXALIAS_SYS_CAST2 (rawmemchr,
+                        void *, (void const *__s, int __c_in),
+                        void const *, (void const *__s, int __c_in));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (rawmemchr, void *, (void *__s, int __c_in));
+_GL_CXXALIASWARN1 (rawmemchr, void const *, (void const *__s, int __c_in));
+# else
 _GL_CXXALIASWARN (rawmemchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef rawmemchr
 # if HAVE_RAW_DECL_RAWMEMCHR
@@ -202,8 +240,9 @@ _GL_WARN_ON_USE (stpcpy, "stpcpy is unportable - "
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
    last non-NUL byte written into DST.  */
 #if @GNULIB_STPNCPY@
-# if ! @HAVE_STPNCPY@
+# if @REPLACE_STPNCPY@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef stpncpy
 #   define stpncpy rpl_stpncpy
 #  endif
 _GL_FUNCDECL_RPL (stpncpy, char *,
@@ -214,6 +253,12 @@ _GL_CXXALIAS_RPL (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
 # else
+#  if ! @HAVE_STPNCPY@
+_GL_FUNCDECL_SYS (stpncpy, char *,
+                  (char *restrict __dst, char const *restrict __src,
+                   size_t __n)
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
 _GL_CXXALIAS_SYS (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
@@ -241,11 +286,22 @@ _GL_WARN_ON_USE (strchr, "strchr cannot work correctly on character strings "
 #if @GNULIB_STRCHRNUL@
 # if ! @HAVE_STRCHRNUL@
 _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
-                                     __attribute__ ((__pure__))
+                                     _GL_ATTRIBUTE_PURE
                                      _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (strchrnul, char *, (char const *__s, int __c_in));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * std::strchrnul (const char *, int); }
+       extern "C++" { char * std::strchrnul (char *, int); }  */
+_GL_CXXALIAS_SYS_CAST2 (strchrnul,
+                        char *, (char const *__s, int __c_in),
+                        char const *, (char const *__s, int __c_in));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in));
+_GL_CXXALIASWARN1 (strchrnul, char const *, (char const *__s, int __c_in));
+# else
 _GL_CXXALIASWARN (strchrnul);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
 # if HAVE_RAW_DECL_STRCHRNUL
@@ -264,6 +320,10 @@ _GL_WARN_ON_USE (strchrnul, "strchrnul is unportable - "
 _GL_FUNCDECL_RPL (strdup, char *, (char const *__s) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strdup, char *, (char const *__s));
 # else
+#  if defined __cplusplus && defined GNULIB_NAMESPACE && defined strdup
+    /* strdup exists as a function and as a macro.  Get rid of the macro.  */
+#   undef strdup
+#  endif
 #  if !(@HAVE_DECL_STRDUP@ || defined strdup)
 _GL_FUNCDECL_SYS (strdup, char *, (char const *__s) _GL_ARG_NONNULL ((1)));
 #  endif
@@ -275,6 +335,28 @@ _GL_CXXALIASWARN (strdup);
 # if HAVE_RAW_DECL_STRDUP
 _GL_WARN_ON_USE (strdup, "strdup is unportable - "
                  "use gnulib module strdup for portability");
+# endif
+#endif
+
+/* Append no more than N characters from SRC onto DEST.  */
+#if @GNULIB_STRNCAT@
+# if @REPLACE_STRNCAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strncat
+#   define strncat rpl_strncat
+#  endif
+_GL_FUNCDECL_RPL (strncat, char *, (char *dest, const char *src, size_t n)
+                                   _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (strncat, char *, (char *dest, const char *src, size_t n));
+# else
+_GL_CXXALIAS_SYS (strncat, char *, (char *dest, const char *src, size_t n));
+# endif
+_GL_CXXALIASWARN (strncat);
+#elif defined GNULIB_POSIXCHECK
+# undef strncat
+# if HAVE_RAW_DECL_STRNCAT
+_GL_WARN_ON_USE (strncat, "strncat is unportable - "
+                 "use gnulib module strncat for portability");
 # endif
 #endif
 
@@ -308,12 +390,23 @@ _GL_WARN_ON_USE (strndup, "strndup is unportable - "
    MAXLEN bytes.  If no '\0' terminator is found in that many bytes,
    return MAXLEN.  */
 #if @GNULIB_STRNLEN@
-# if ! @HAVE_DECL_STRNLEN@
-_GL_FUNCDECL_SYS (strnlen, size_t, (char const *__string, size_t __maxlen)
-                                   __attribute__ ((__pure__))
+# if @REPLACE_STRNLEN@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strnlen
+#   define strnlen rpl_strnlen
+#  endif
+_GL_FUNCDECL_RPL (strnlen, size_t, (char const *__string, size_t __maxlen)
+                                   _GL_ATTRIBUTE_PURE
                                    _GL_ARG_NONNULL ((1)));
-# endif
+_GL_CXXALIAS_RPL (strnlen, size_t, (char const *__string, size_t __maxlen));
+# else
+#  if ! @HAVE_DECL_STRNLEN@
+_GL_FUNCDECL_SYS (strnlen, size_t, (char const *__string, size_t __maxlen)
+                                   _GL_ATTRIBUTE_PURE
+                                   _GL_ARG_NONNULL ((1)));
+#  endif
 _GL_CXXALIAS_SYS (strnlen, size_t, (char const *__string, size_t __maxlen));
+# endif
 _GL_CXXALIASWARN (strnlen);
 #elif defined GNULIB_POSIXCHECK
 # undef strnlen
@@ -339,23 +432,23 @@ _GL_WARN_ON_USE (strcspn, "strcspn cannot work correctly on character strings "
 #if @GNULIB_STRPBRK@
 # if ! @HAVE_STRPBRK@
 _GL_FUNCDECL_SYS (strpbrk, char *, (char const *__s, char const *__accept)
-                                   __attribute__ ((__pure__))
+                                   _GL_ATTRIBUTE_PURE
                                    _GL_ARG_NONNULL ((1, 2)));
 # endif
-# if defined __SUNPRO_CC
-  /* This compiler defines an overloaded function
+  /* On some systems, this function is defined as an overloaded function:
        extern "C" { const char * strpbrk (const char *, const char *); }
-       extern "C++" { inline char * strpbrk (char *, const char *); }
-     and diagnoses an error
-     "Error: Could not find a match for std::strpbrk(const char*, const char*)"
-   */
+       extern "C++" { char * strpbrk (char *, const char *); }  */
 _GL_CXXALIAS_SYS_CAST2 (strpbrk,
                         char *, (char const *__s, char const *__accept),
                         const char *, (char const *__s, char const *__accept));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strpbrk, char *, (char *__s, char const *__accept));
+_GL_CXXALIASWARN1 (strpbrk, char const *,
+                   (char const *__s, char const *__accept));
 # else
-_GL_CXXALIAS_SYS (strpbrk, char *, (char const *__s, char const *__accept));
-# endif
 _GL_CXXALIASWARN (strpbrk);
+# endif
 # if defined GNULIB_POSIXCHECK
 /* strpbrk() assumes the second argument is a list of single-byte characters.
    Even in this simple case, it does not work with multibyte strings if the
@@ -439,13 +532,25 @@ _GL_WARN_ON_USE (strsep, "strsep is unportable - "
 #   define strstr rpl_strstr
 #  endif
 _GL_FUNCDECL_RPL (strstr, char *, (const char *haystack, const char *needle)
-                                  __attribute__ ((__pure__))
+                                  _GL_ATTRIBUTE_PURE
                                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (strstr, char *, (const char *haystack, const char *needle));
 # else
-_GL_CXXALIAS_SYS (strstr, char *, (const char *haystack, const char *needle));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * strstr (const char *, const char *); }
+       extern "C++" { char * strstr (char *, const char *); }  */
+_GL_CXXALIAS_SYS_CAST2 (strstr,
+                        char *, (const char *haystack, const char *needle),
+                        const char *, (const char *haystack, const char *needle));
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strstr, char *, (char *haystack, const char *needle));
+_GL_CXXALIASWARN1 (strstr, const char *,
+                   (const char *haystack, const char *needle));
+# else
 _GL_CXXALIASWARN (strstr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 /* strstr() does not work with multibyte strings if the locale encoding is
    different from UTF-8:
@@ -469,19 +574,32 @@ _GL_WARN_ON_USE (strstr, "strstr is quadratic on many systems, and cannot "
 #  endif
 _GL_FUNCDECL_RPL (strcasestr, char *,
                   (const char *haystack, const char *needle)
-                  __attribute__ ((__pure__)) _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_PURE
+                  _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (strcasestr, char *,
                   (const char *haystack, const char *needle));
 # else
 #  if ! @HAVE_STRCASESTR@
 _GL_FUNCDECL_SYS (strcasestr, char *,
                   (const char *haystack, const char *needle)
-                  __attribute__ ((__pure__)) _GL_ARG_NONNULL ((1, 2)));
+                  _GL_ATTRIBUTE_PURE
+                  _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (strcasestr, char *,
-                  (const char *haystack, const char *needle));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * strcasestr (const char *, const char *); }
+       extern "C++" { char * strcasestr (char *, const char *); }  */
+_GL_CXXALIAS_SYS_CAST2 (strcasestr,
+                        char *, (const char *haystack, const char *needle),
+                        const char *, (const char *haystack, const char *needle));
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strcasestr, char *, (char *haystack, const char *needle));
+_GL_CXXALIASWARN1 (strcasestr, const char *,
+                   (const char *haystack, const char *needle));
+# else
 _GL_CXXALIASWARN (strcasestr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 /* strcasestr() does not work with multibyte strings:
    It is a glibc extension, and glibc implements it only for unibyte
@@ -666,11 +784,10 @@ _GL_EXTERN_C int mbsncasecmp (const char *s1, const char *s2, size_t n)
 #if @GNULIB_MBSPCASECMP@
 /* Compare the initial segment of the character string STRING consisting of
    at most mbslen (PREFIX) characters with the character string PREFIX,
-   ignoring case, returning less than, equal to or greater than zero if this
-   initial segment is lexicographically less than, equal to or greater than
-   PREFIX.
-   Note: This function may, in multibyte locales, return 0 if STRING is of
-   smaller length than PREFIX!
+   ignoring case.  If the two match, return a pointer to the first byte
+   after this prefix in STRING.  Otherwise, return NULL.
+   Note: This function may, in multibyte locales, return non-NULL if STRING
+   is of smaller length than PREFIX!
    Unlike strncasecmp(), this function works correctly in multibyte
    locales.  */
 _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)

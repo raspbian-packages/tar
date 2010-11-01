@@ -26,6 +26,7 @@
 
 #include "common.h"
 
+static void xheader_init (struct xheader *xhdr);
 static bool xheader_protected_pattern_p (char const *pattern);
 static bool xheader_protected_keyword_p (char const *keyword);
 static void xheader_set_single_keyword (char *) __attribute__ ((noreturn));
@@ -452,7 +453,7 @@ xheader_write_global (struct xheader *xhdr)
   if (xhdr->stk)
     {
       char *name;
-      
+
       xheader_finish (xhdr);
       xheader_write (XGLTYPE, name = xheader_ghdr_name (), time (NULL), xhdr);
       free (name);
@@ -661,7 +662,7 @@ xheader_decode_global (struct xheader *xhdr)
     }
 }
 
-void
+static void
 xheader_init (struct xheader *xhdr)
 {
   if (!xhdr->stk)
@@ -708,7 +709,7 @@ xheader_read (struct xheader *xhdr, union block *p, size_t size)
 
       if (!p)
 	FATAL_ERROR ((0, 0, _("Unexpected EOF in archive")));
-      
+
       memcpy (&xhdr->buffer[j], p->buffer, len);
       set_next_block_after (p);
 
@@ -1307,7 +1308,7 @@ sparse_numbytes_decoder (struct tar_stat_info *st,
 			 size_t size __attribute__((unused)))
 {
   uintmax_t u;
-  if (decode_num (&u, arg, SIZE_MAX, keyword))
+  if (decode_num (&u, arg, TYPE_MAXIMUM (off_t), keyword))
     {
       if (st->sparse_map_avail < st->sparse_map_size)
 	st->sparse_map[st->sparse_map_avail++].numbytes = u;
@@ -1355,7 +1356,7 @@ sparse_map_decoder (struct tar_stat_info *st,
 	  e.numbytes = u;
 	  if (!(u == e.numbytes && errno != ERANGE))
 	    {
-	      out_of_range_header (keyword, arg, 0, TYPE_MAXIMUM (size_t));
+	      out_of_range_header (keyword, arg, 0, TYPE_MAXIMUM (off_t));
 	      return;
 	    }
 	  if (st->sparse_map_avail < st->sparse_map_size)
