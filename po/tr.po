@@ -2,12 +2,12 @@
 # Copyright (C) 2007 Free Software Foundation, Inc.
 #
 # Nilgün Belma Bugüner <nilgun@buguner.name.tr>, 2001,..., 2007.
-#: src/create.c:1550
+#: src/create.c:1552
 msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.18\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-10-24 23:08+0300\n"
+"POT-Creation-Date: 2010-11-07 17:07+0200\n"
 "PO-Revision-Date: 2007-07-09 11:30+0300\n"
 "Last-Translator: Nilgün Belma Bugüner <nilgun@buguner.name.tr>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
@@ -609,103 +609,103 @@ msgstr "argüman sayısı çok fazla"
 msgid "Garbage command"
 msgstr "Bozuk komut"
 
-#: src/buffer.c:386 src/buffer.c:391 src/buffer.c:635 src/buffer.c:1250
-#: src/buffer.c:1296 src/buffer.c:1325 src/delete.c:211 src/list.c:184
-#: src/update.c:198
+#: src/buffer.c:457 src/buffer.c:462 src/buffer.c:706 src/buffer.c:1321
+#: src/buffer.c:1367 src/buffer.c:1396 src/delete.c:211 src/list.c:245
+#: src/update.c:200
 msgid "This does not look like a tar archive"
 msgstr "Bu bir tar arşivi gibi görünmüyor"
 
-#: src/buffer.c:450 src/buffer.c:459
+#: src/buffer.c:521 src/buffer.c:530
 msgid "Total bytes written"
 msgstr "Yazılan toplam bayt"
 
-#: src/buffer.c:457 src/buffer.c:471
+#: src/buffer.c:528 src/buffer.c:542
 msgid "Total bytes read"
 msgstr "Okunan toplam bayt"
 
-#: src/buffer.c:461
+#: src/buffer.c:532
 #, c-format
 msgid "Total bytes deleted: %s\n"
 msgstr "Silinen toplam bayt: %s\n"
 
-#: src/buffer.c:550
+#: src/buffer.c:621
 msgid "(pipe)"
 msgstr "(boru)"
 
-#: src/buffer.c:573
+#: src/buffer.c:644
 msgid "Invalid value for record_size"
 msgstr "record_size için geçersiz değer"
 
-#: src/buffer.c:576
+#: src/buffer.c:647
 msgid "No archive name given"
 msgstr "Arşiv ismi verilmemiş"
 
-#: src/buffer.c:618
+#: src/buffer.c:689
 msgid "Cannot verify stdin/stdout archive"
 msgstr "stdG/stdÇ arşivi doğrulanamaz"
 
-#: src/buffer.c:632
+#: src/buffer.c:703
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr "Aeşiv sıkıştırılmış. %s seçeneğini kullanın"
 
-#: src/buffer.c:689 src/tar.c:2448
+#: src/buffer.c:760 src/tar.c:2448
 msgid "Cannot update compressed archives"
 msgstr "Sıkıştırılmış arşivler güncellenemez"
 
-#: src/buffer.c:782
+#: src/buffer.c:853
 msgid "At beginning of tape, quitting now"
 msgstr "Bandın başlangıcında, şimdilik çıkıyor"
 
-#: src/buffer.c:788
+#: src/buffer.c:859
 msgid "Too many errors, quitting"
 msgstr "Çok hata var, çıkıyor"
 
-#: src/buffer.c:821
+#: src/buffer.c:892
 #, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "Kayıt uzunluğu = %lu blok"
 msgstr[1] "Kayıt uzunluğu = %lu blok"
 
-#: src/buffer.c:842
+#: src/buffer.c:913
 #, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
 msgstr[0] "Arşivde hizalanmamış blok (%lu bayt)"
 msgstr[1] "Arşivde hizalanmamış blok (%lu bayt)"
 
-#: src/buffer.c:919
+#: src/buffer.c:990
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr "Arşiv dosyası geri alınamaz; -i olmaksızın okunamayabilir"
 
-#: src/buffer.c:951
+#: src/buffer.c:1022
 msgid "rmtlseek not stopped at a record boundary"
 msgstr "rmtlseek bir kaydın sınırında durmadı"
 
-#: src/buffer.c:1002
+#: src/buffer.c:1073
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: geçersiz bölüm numarası içeriyor"
 
-#: src/buffer.c:1037
+#: src/buffer.c:1108
 msgid "Volume number overflow"
 msgstr "Bölüm numarası kapsamdışı"
 
-#: src/buffer.c:1052
+#: src/buffer.c:1123
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "#%d. bölümü %s için hazırlamak istiyorsanız return tuşuna basınız: "
 
-#: src/buffer.c:1058
+#: src/buffer.c:1129
 msgid "EOF where user reply was expected"
 msgstr "Kullanıcı cevabı beklenirken dosya sonuna gelindi"
 
-#: src/buffer.c:1063 src/buffer.c:1095
+#: src/buffer.c:1134 src/buffer.c:1166
 msgid "WARNING: Archive is incomplete"
 msgstr "UYARI: Arşiv eksik"
 
-#: src/buffer.c:1077
+#: src/buffer.c:1148
 #, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -716,72 +716,72 @@ msgstr ""
 " q                   Uygulama sonlandırılır\n"
 " y veya <enter>      İşlem sürdürülür\n"
 
-#: src/buffer.c:1082
+#: src/buffer.c:1153
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr " !                   bir alt kabuk açılır\n"
 
-#: src/buffer.c:1083
+#: src/buffer.c:1154
 #, c-format
 msgid " ?             Print this list\n"
 msgstr " ?                    Bu listeyi basar\n"
 
-#: src/buffer.c:1090
+#: src/buffer.c:1161
 msgid "No new volume; exiting.\n"
 msgstr "Yeni bölüm yok; çıkıyor.\n"
 
-#: src/buffer.c:1123
+#: src/buffer.c:1194
 msgid "File name not specified. Try again.\n"
 msgstr "Dosya ismi belirtilmemiş. Tekrar deneyin.\n"
 
-#: src/buffer.c:1136
+#: src/buffer.c:1207
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr "Girdi geçersiz, Yardım için ? yazın.\n"
 
-#: src/buffer.c:1187
+#: src/buffer.c:1258
 #, c-format
 msgid "%s command failed"
 msgstr "%s komutu başarısız"
 
-#: src/buffer.c:1368
+#: src/buffer.c:1439
 #, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr "%s belki de bu bölümde devam ediyor: başlıktaki isim kırpılmış"
 
-#: src/buffer.c:1372
+#: src/buffer.c:1443
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "%s bu bölümde devam etmiyor"
 
-#: src/buffer.c:1386
+#: src/buffer.c:1457
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s yanlış uzunluk (%s != %s + %s)"
 
-#: src/buffer.c:1401
+#: src/buffer.c:1472
 #, fuzzy, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Bu bölüm sıralama dışı"
 
-#: src/buffer.c:1479 src/buffer.c:1505
+#: src/buffer.c:1550 src/buffer.c:1576
 #, c-format
 msgid "Archive not labeled to match %s"
 msgstr "Arşiv etiketi %s ile eşleşmiyor"
 
-#: src/buffer.c:1509
+#: src/buffer.c:1580
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "%s bölümü %s ile eşleşmiyor"
 
-#: src/buffer.c:1603
+#: src/buffer.c:1674
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
 msgstr ""
 "%s: dosya ismi GNU çoklu bölüm başlığında saklanamayacak kadar uzun, kırpıldı"
 
-#: src/buffer.c:1794
+#: src/buffer.c:1865
 #, fuzzy
 msgid "write did not end on a block boundary"
 msgstr "rmtlseek bir kaydın sınırında durmadı"
@@ -797,8 +797,8 @@ msgstr[1] "Sadece %2$lu baytın %1$lu baytı okunabildi"
 msgid "Contents differ"
 msgstr "İçerikler farklı"
 
-#: src/compare.c:131 src/extract.c:958 src/incremen.c:1462 src/list.c:397
-#: src/list.c:1384 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
+#: src/list.c:1392 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Arşivde beklenmeyen dosya sonu"
 
@@ -864,7 +864,7 @@ msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "DOĞRULAMA BAŞARISIZ: %d geçersiz başlık saptandı"
 msgstr[1] "DOĞRULAMA BAŞARISIZ: %d geçersiz başlık saptandı"
 
-#: src/compare.c:611 src/list.c:161
+#: src/compare.c:611 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "%s de tek başına sıfır bloğu"
@@ -889,77 +889,77 @@ msgstr "%1$s değeri, %3$s..%4$s aralığının %2$s dışında"
 msgid "Generating negative octal headers"
 msgstr "Negatif sekizlik başlık üretiliyor"
 
-#: src/create.c:611 src/create.c:674
+#: src/create.c:612 src/create.c:675
 #, c-format
 msgid "%s: file name is too long (max %d); not dumped"
 msgstr "%s: dosya ismi çok uzun (en çok %d olabilir); dökümlenmedi"
 
-#: src/create.c:621
+#: src/create.c:622
 #, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
 msgstr "%s: dosya ismi çok uzun (parçalanamıyor); dökümlenmedi"
 
-#: src/create.c:648
+#: src/create.c:649
 #, c-format
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: bağ ismi çok uzun; dökümlenmedi"
 
-#: src/create.c:1062
+#: src/create.c:1064
 #, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
 msgstr[0] "%s: Dosya %s baytta kaldı; sıfırlarla dolduruluyor"
 msgstr[1] "%s: Dosya %s baytta kaldı; sıfırlarla dolduruluyor"
 
-#: src/create.c:1158
+#: src/create.c:1160
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: dosya farklı bir dosya sisteminde; dökümlenmedi"
 
-#: src/create.c:1201 src/create.c:1212 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
 msgid "contents not dumped"
 msgstr "içerik dökümlenmedi"
 
-#: src/create.c:1416
+#: src/create.c:1418
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Bilinmeyen dosya türü; dosya yoksayıldı"
 
-#: src/create.c:1527
+#: src/create.c:1529
 #, fuzzy, c-format
 msgid "Missing links to %s."
 msgstr "%s için bağlar kayıp.\n"
 
-#: src/create.c:1688
+#: src/create.c:1690
 #, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "%s: dosya değişmedi; dökümlenmedi"
 
-#: src/create.c:1697
+#: src/create.c:1699
 #, c-format
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: dosya arşivdir; dökümlenmedi"
 
-#: src/create.c:1721 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:575
 msgid "directory not dumped"
 msgstr "dizin dökümlenmedi"
 
-#: src/create.c:1793
+#: src/create.c:1795
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr "%s: dosya okundu olarak imlendi"
 
-#: src/create.c:1855
+#: src/create.c:1857
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: soket yoksayıldı"
 
-#: src/create.c:1861
+#: src/create.c:1863
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: kapı yoksayıldı"
 
-#: src/delete.c:217 src/list.c:198 src/update.c:203
+#: src/delete.c:217 src/list.c:259 src/update.c:205
 msgid "Skipping to next header"
 msgstr "Sonraki başlığa atlanıyor"
 
@@ -991,35 +991,35 @@ msgstr "%s: durumu çıkarılamadan dizin ismi değiştirildi"
 msgid "Extracting contiguous files as regular files"
 msgstr "Bitişik dosyaları normal dosyalar olarak çıkarıyor"
 
-#: src/extract.c:1183
+#: src/extract.c:1197
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Sembolik bağlar, sabit bağlar olarak çıkarılmaya çalışılıyor"
 
-#: src/extract.c:1339
+#: src/extract.c:1353
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Dosya çıkarılamaz -- dosyanın başı diğer bölümde"
 
-#: src/extract.c:1346 src/list.c:1117
+#: src/extract.c:1360 src/list.c:1125
 msgid "Unexpected long name header"
 msgstr "Umulmadık uzun isim başlığı"
 
-#: src/extract.c:1353
+#: src/extract.c:1367
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Bilinmeyen dosya türü '%c', normal dosya olarak çıkartılıyor"
 
-#: src/extract.c:1379
+#: src/extract.c:1393
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Mevcut %s daha yeni ya da yaşıt"
 
-#: src/extract.c:1431
+#: src/extract.c:1445
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Bu dosyayı yedeklemek mümkün olmadı"
 
-#: src/extract.c:1568
+#: src/extract.c:1582
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s ismi %s olarak değiştirilemez"
@@ -1144,35 +1144,35 @@ msgstr "%s: %s siliniyor\n"
 msgid "%s: Cannot remove"
 msgstr "%s: Kaldırılamaz"
 
-#: src/list.c:130
+#: src/list.c:190
 #, c-format
 msgid "%s: Omitting"
 msgstr "%s: Geçiliyor"
 
-#: src/list.c:146
+#: src/list.c:207
 #, c-format
 msgid "block %s: ** Block of NULs **\n"
 msgstr "blok %s: ** NUL bloku **\n"
 
-#: src/list.c:172
+#: src/list.c:233
 #, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Dosya Sonu **\n"
 
-#: src/list.c:195 src/list.c:1089 src/list.c:1352
+#: src/list.c:256 src/list.c:1097 src/list.c:1360
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:704
+#: src/list.c:712
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Sayısal %s değeri beklenirken başlıkta boşluklar bulundu"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:759
+#: src/list.c:767
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1180,68 +1180,68 @@ msgstr ""
 "ediliyor"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:770
+#: src/list.c:778
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Arşiv sekizlik değeri %.*s aralığın %s dışında"
 
-#: src/list.c:791
+#: src/list.c:799
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arşiv atıl base-64 başlıklar içeriyor"
 
-#: src/list.c:805
+#: src/list.c:813
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arşiv imzalı base-64 dizge %s, %s aralığının dışında"
 
-#: src/list.c:836
+#: src/list.c:844
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Arşiv base-256 değeri %s aralığının dışında"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:865
+#: src/list.c:873
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arşiv %.*s içeriyor, halbuki orada sayısal %s değeri bekleniyor"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:887
+#: src/list.c:895
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Arşiv değeri %s %s türünün %s..%s aralığının dışında"
 
-#: src/list.c:1253
+#: src/list.c:1261
 #, c-format
 msgid " link to %s\n"
 msgstr " bağı -> %s \n"
 
-#: src/list.c:1261
+#: src/list.c:1269
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " bilinmeyen dosya türü %s\n"
 
-#: src/list.c:1279
+#: src/list.c:1287
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Uzun  Bağ--\n"
 
-#: src/list.c:1283
+#: src/list.c:1291
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Uzun İsim--\n"
 
-#: src/list.c:1287
+#: src/list.c:1295
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Bölüm Başlığı--\n"
 
-#: src/list.c:1295
+#: src/list.c:1303
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Devamı bayt %s de--\n"
 
-#: src/list.c:1357
+#: src/list.c:1365
 msgid "Creating directory:"
 msgstr "Oluşturulan dizin:"
 

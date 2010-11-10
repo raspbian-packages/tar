@@ -4,12 +4,12 @@
 # Jan Djärv <jan.h.d@swipnet.se>, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010
 # Revision: 1.102
 #
-#: src/create.c:1550
+#: src/create.c:1552
 msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.23.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-10-24 23:08+0300\n"
+"POT-Creation-Date: 2010-11-07 17:07+0200\n"
 "PO-Revision-Date: 2010-07-15 17:04+0200\n"
 "Last-Translator: Jan Djärv <jan.h.d@swipnet.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -627,103 +627,103 @@ msgstr "för många argument"
 msgid "Garbage command"
 msgstr "Okänt kommando"
 
-#: src/buffer.c:386 src/buffer.c:391 src/buffer.c:635 src/buffer.c:1250
-#: src/buffer.c:1296 src/buffer.c:1325 src/delete.c:211 src/list.c:184
-#: src/update.c:198
+#: src/buffer.c:457 src/buffer.c:462 src/buffer.c:706 src/buffer.c:1321
+#: src/buffer.c:1367 src/buffer.c:1396 src/delete.c:211 src/list.c:245
+#: src/update.c:200
 msgid "This does not look like a tar archive"
 msgstr "Det här ser inte ut som ett tar-arkiv"
 
-#: src/buffer.c:450 src/buffer.c:459
+#: src/buffer.c:521 src/buffer.c:530
 msgid "Total bytes written"
 msgstr "Summa skrivna byte"
 
-#: src/buffer.c:457 src/buffer.c:471
+#: src/buffer.c:528 src/buffer.c:542
 msgid "Total bytes read"
 msgstr "Summa lästa byte"
 
-#: src/buffer.c:461
+#: src/buffer.c:532
 #, c-format
 msgid "Total bytes deleted: %s\n"
 msgstr "Summa borttagna byte: %s\n"
 
-#: src/buffer.c:550
+#: src/buffer.c:621
 msgid "(pipe)"
 msgstr "(rör)"
 
-#: src/buffer.c:573
+#: src/buffer.c:644
 msgid "Invalid value for record_size"
 msgstr "Ogiltigt värde på record_size"
 
-#: src/buffer.c:576
+#: src/buffer.c:647
 msgid "No archive name given"
 msgstr "Arkivnamn saknas"
 
-#: src/buffer.c:618
+#: src/buffer.c:689
 msgid "Cannot verify stdin/stdout archive"
 msgstr "Kan inte verifiera standard in/ut-arkiv"
 
-#: src/buffer.c:632
+#: src/buffer.c:703
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr "Arkivet är komprimerat. Använd flaggan %s"
 
-#: src/buffer.c:689 src/tar.c:2448
+#: src/buffer.c:760 src/tar.c:2448
 msgid "Cannot update compressed archives"
 msgstr "Komprimerade arkiv kan inte uppdateras"
 
-#: src/buffer.c:782
+#: src/buffer.c:853
 msgid "At beginning of tape, quitting now"
 msgstr "Vid bandets början, avslutar nu"
 
-#: src/buffer.c:788
+#: src/buffer.c:859
 msgid "Too many errors, quitting"
 msgstr "För många fel, avslutar"
 
-#: src/buffer.c:821
+#: src/buffer.c:892
 #, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "Poststorlek = %lu block"
 msgstr[1] "Poststorlek = %lu block"
 
-#: src/buffer.c:842
+#: src/buffer.c:913
 #, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
 msgstr[0] "Block ej vid blockgräns (%lu byte) i arkivet"
 msgstr[1] "Block ej vid blockgräns (%lu byte) i arkivet"
 
-#: src/buffer.c:919
+#: src/buffer.c:990
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr "Kunde inte söka bakåt i arkivfilen, den kan vara oläsbar utan -i"
 
-#: src/buffer.c:951
+#: src/buffer.c:1022
 msgid "rmtlseek not stopped at a record boundary"
 msgstr "rmtlseek stannade inte på en postgräns"
 
-#: src/buffer.c:1002
+#: src/buffer.c:1073
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: innehåller ogiltigt volymnummer"
 
-#: src/buffer.c:1037
+#: src/buffer.c:1108
 msgid "Volume number overflow"
 msgstr "Volymnummer flödade över"
 
-#: src/buffer.c:1052
+#: src/buffer.c:1123
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "Gör iordning volym nummer %d för %s och tryck vagnretur:"
 
-#: src/buffer.c:1058
+#: src/buffer.c:1129
 msgid "EOF where user reply was expected"
 msgstr "Filslut vid förväntat användarsvar"
 
-#: src/buffer.c:1063 src/buffer.c:1095
+#: src/buffer.c:1134 src/buffer.c:1166
 msgid "WARNING: Archive is incomplete"
 msgstr "VARNING: Arkivet är ofullständigt"
 
-#: src/buffer.c:1077
+#: src/buffer.c:1148
 #, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -734,66 +734,66 @@ msgstr ""
 " q              Avsluta programmet\n"
 " y eller nyrad  Fortsätt\n"
 
-#: src/buffer.c:1082
+#: src/buffer.c:1153
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr " !              Starta ett underskal\n"
 
-#: src/buffer.c:1083
+#: src/buffer.c:1154
 #, c-format
 msgid " ?             Print this list\n"
 msgstr " ?              Skriv denna lista\n"
 
-#: src/buffer.c:1090
+#: src/buffer.c:1161
 msgid "No new volume; exiting.\n"
 msgstr "Ingen ny volym; avslutar.\n"
 
-#: src/buffer.c:1123
+#: src/buffer.c:1194
 msgid "File name not specified. Try again.\n"
 msgstr "Filnamn inte angivet, försök igen.\n"
 
-#: src/buffer.c:1136
+#: src/buffer.c:1207
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr "Ogiltig indata. Skriv ? för hjälp.\n"
 
-#: src/buffer.c:1187
+#: src/buffer.c:1258
 #, c-format
 msgid "%s command failed"
 msgstr "kommandot \"%s\" misslyckades"
 
-#: src/buffer.c:1368
+#: src/buffer.c:1439
 #, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr ""
 "%s fortsätter möjligen i denna volym: huvudet innehåller ett trunkerat namn"
 
-#: src/buffer.c:1372
+#: src/buffer.c:1443
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "%s fortsätter inte i denna volym"
 
-#: src/buffer.c:1386
+#: src/buffer.c:1457
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s har fel storlek (%s != %s + %s)"
 
-#: src/buffer.c:1401
+#: src/buffer.c:1472
 #, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Denna volym kommer inte i rätt ordning (%s - %s != %s)"
 
-#: src/buffer.c:1479 src/buffer.c:1505
+#: src/buffer.c:1550 src/buffer.c:1576
 #, c-format
 msgid "Archive not labeled to match %s"
 msgstr "Arkivet är inte märkt för att stämma med %s"
 
-#: src/buffer.c:1509
+#: src/buffer.c:1580
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "Volym %s överensstämmer inte med %s"
 
-#: src/buffer.c:1603
+#: src/buffer.c:1674
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
@@ -801,7 +801,7 @@ msgstr ""
 "%s: filnamnet är för långt för att lagras i huvudet för ett GNU "
 "multivolymsarkiv, trunkerat"
 
-#: src/buffer.c:1794
+#: src/buffer.c:1865
 msgid "write did not end on a block boundary"
 msgstr "skrivning stannade inte på en blockgräns"
 
@@ -816,8 +816,8 @@ msgstr[1] "Kunde bara läsa %lu av %lu byte"
 msgid "Contents differ"
 msgstr "Innehållet är olika"
 
-#: src/compare.c:131 src/extract.c:958 src/incremen.c:1462 src/list.c:397
-#: src/list.c:1384 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
+#: src/list.c:1392 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Oväntat filslut i arkivet"
 
@@ -883,7 +883,7 @@ msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "VERIFIKATIONSFEL: %d felaktigt arkivhuvud upptäckt"
 msgstr[1] "VERIFIKATIONSFEL: %d felaktiga arkivhuvuden upptäckta"
 
-#: src/compare.c:611 src/list.c:161
+#: src/compare.c:611 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Ett ensamt nollblock vid %s"
@@ -907,77 +907,77 @@ msgstr "%s är utanför intervallet för %s: %s..%s"
 msgid "Generating negative octal headers"
 msgstr "Genererar negativa oktala värden i arkivhuvudet"
 
-#: src/create.c:611 src/create.c:674
+#: src/create.c:612 src/create.c:675
 #, c-format
 msgid "%s: file name is too long (max %d); not dumped"
 msgstr "%s: filnamnet är för långt (max %d); inte arkiverad"
 
-#: src/create.c:621
+#: src/create.c:622
 #, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
 msgstr "%s: filnamnet är för långt (kan ej delas); inte arkiverad"
 
-#: src/create.c:648
+#: src/create.c:649
 #, c-format
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: länknamn är för långt; inte arkiverad"
 
-#: src/create.c:1062
+#: src/create.c:1064
 #, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
 msgstr[0] "%s: Fil krympte med %s byte, fyller ut med nolltecken"
 msgstr[1] "%s: Fil krympte med %s byte, fyller ut med nolltecken"
 
-#: src/create.c:1158
+#: src/create.c:1160
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: filen finns på ett annat filsystem; inte arkiverad"
 
-#: src/create.c:1201 src/create.c:1212 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
 msgid "contents not dumped"
 msgstr "innehållet inte arkiverat"
 
-#: src/create.c:1416
+#: src/create.c:1418
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Okänd filtyp; filen ignorerad"
 
-#: src/create.c:1527
+#: src/create.c:1529
 #, c-format
 msgid "Missing links to %s."
 msgstr "Det fattas länkar till %s."
 
-#: src/create.c:1688
+#: src/create.c:1690
 #, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "%s: filen är oförändrad; inte arkiverad"
 
-#: src/create.c:1697
+#: src/create.c:1699
 #, c-format
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: filen är själva arkivet; inte arkiverad"
 
-#: src/create.c:1721 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:575
 msgid "directory not dumped"
 msgstr "katalog inte arkiverad"
 
-#: src/create.c:1793
+#: src/create.c:1795
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr "%s: fil ändrades under tiden vi läste den"
 
-#: src/create.c:1855
+#: src/create.c:1857
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: socketfil ignorerad"
 
-#: src/create.c:1861
+#: src/create.c:1863
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: door-fil ignorerad"
 
-#: src/delete.c:217 src/list.c:198 src/update.c:203
+#: src/delete.c:217 src/list.c:259 src/update.c:205
 msgid "Skipping to next header"
 msgstr "Hoppar till nästa filhuvud"
 
@@ -1009,35 +1009,35 @@ msgstr "%s: Katalog bytte namn innan dess status kunde extraheras"
 msgid "Extracting contiguous files as regular files"
 msgstr "Extraherar sammanhängande filer som vanliga filer"
 
-#: src/extract.c:1183
+#: src/extract.c:1197
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Försöker extrahera symboliska länkar som hårda länkar"
 
-#: src/extract.c:1339
+#: src/extract.c:1353
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Kan inte extrahera -- filen fortsätter från en annan volym"
 
-#: src/extract.c:1346 src/list.c:1117
+#: src/extract.c:1360 src/list.c:1125
 msgid "Unexpected long name header"
 msgstr "Oväntat huvud för långt filnamn"
 
-#: src/extract.c:1353
+#: src/extract.c:1367
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Okänd filtyp \"%c\", extraherad som en normal fil"
 
-#: src/extract.c:1379
+#: src/extract.c:1393
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Nuvarade \"%s\" är nyare eller lika gammal"
 
-#: src/extract.c:1431
+#: src/extract.c:1445
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Kunde inte säkerhetskopiera denna fil"
 
-#: src/extract.c:1568
+#: src/extract.c:1582
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Kan inte byta namn på %s till %s"
@@ -1163,35 +1163,35 @@ msgstr "%s: Tar bort %s\n"
 msgid "%s: Cannot remove"
 msgstr "%s: Kan inte ta bort"
 
-#: src/list.c:130
+#: src/list.c:190
 #, c-format
 msgid "%s: Omitting"
 msgstr "%s: Utelämnad"
 
-#: src/list.c:146
+#: src/list.c:207
 #, c-format
 msgid "block %s: ** Block of NULs **\n"
 msgstr "block %s: ** Block av nolltecken **\n"
 
-#: src/list.c:172
+#: src/list.c:233
 #, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "block %s: ** Filslut **\n"
 
-#: src/list.c:195 src/list.c:1089 src/list.c:1352
+#: src/list.c:256 src/list.c:1097 src/list.c:1360
 #, c-format
 msgid "block %s: "
 msgstr "block %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:704
+#: src/list.c:712
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Blanka i huvud där numeriskt värde av typ %s förväntades"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:759
+#: src/list.c:767
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1199,68 +1199,68 @@ msgstr ""
 "komplement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:770
+#: src/list.c:778
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Arkivets oktala värde %.*s är utanför intervallet för %s"
 
-#: src/list.c:791
+#: src/list.c:799
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arkivet innehåller föråldrade \"base-64\"-huvuden"
 
-#: src/list.c:805
+#: src/list.c:813
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arkivets \"base-64\"-sträng \"%s\" är utanför intervallet för %s"
 
-#: src/list.c:836
+#: src/list.c:844
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Arkivets \"base-256\"-värde är utanför intervallet för %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:865
+#: src/list.c:873
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arkivet innehåller %.*s där ett numeriskt värde av typ %s förväntades"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:887
+#: src/list.c:895
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Arkivets värde %s är utanför intervallet för %s: %s..%s"
 
-#: src/list.c:1253
+#: src/list.c:1261
 #, c-format
 msgid " link to %s\n"
 msgstr " länk till %s\n"
 
-#: src/list.c:1261
+#: src/list.c:1269
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " okänd filtyp \"%s\"\n"
 
-#: src/list.c:1279
+#: src/list.c:1287
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Lång länk--\n"
 
-#: src/list.c:1283
+#: src/list.c:1291
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Långt namn--\n"
 
-#: src/list.c:1287
+#: src/list.c:1295
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Volymhuvud--\n"
 
-#: src/list.c:1295
+#: src/list.c:1303
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Fortsätter vid byte %s--\n"
 
-#: src/list.c:1357
+#: src/list.c:1365
 msgid "Creating directory:"
 msgstr "Skapar katalog:"
 

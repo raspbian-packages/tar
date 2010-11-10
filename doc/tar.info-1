@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.24, 24 October 2010), which
+This manual is for GNU `tar' (version 1.25, 5 November 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -34,7 +34,7 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.24, 24 October 2010), which
+This manual is for GNU `tar' (version 1.25, 5 November 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -567,7 +567,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.24
+to create version 1.12.  The book for versions from 1.14 up to 1.25
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2514,7 +2514,7 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--level=N'
      Force incremental backup of level N.  As of GNU `tar' version
-     1.24, the option `--level=0' truncates the snapshot file, thereby
+     1.25, the option `--level=0' truncates the snapshot file, thereby
      forcing the level 0 dump.  Other values of N are effectively
      ignored.  *Note --level=0::, for details and examples.
 
@@ -3058,7 +3058,7 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.24
+     tar (GNU tar) 1.25
      Copyright (C) 2010 Free Software Foundation, Inc.
      Copyright (C) 2010 Free Software Foundation, Inc.
      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
@@ -3523,7 +3523,21 @@ ignore-newer
      `Current %s is newer or same age' 
 
 unknown-keyword
-     `Ignoring unknown extended header keyword `%s''
+     `Ignoring unknown extended header keyword `%s'' 
+
+decompress-program
+     Controls verbose messages describing execution failures when trying
+     alternative decompressor programs (*note alternative decompression
+     programs::).  This warning is disabled by default (unless
+     `--verbose' is used).  A common example of what you can get when
+     using this warning is:
+
+          $ tar --warning=decompress-program -x -f archive.Z
+          tar (child): cannot run compress: No such file or directory
+          tar (child): trying gzip
+
+     This means that `tar' first tried to decompress `archive.Z' using
+     `compress', and, when that failed, switched to `gzip'.
 
 Keywords controlling incremental extraction:
 --------------------------------------------
@@ -6109,7 +6123,7 @@ difficult to catch using text editors.
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-     As of version 1.24, the following files are excluded:
+     As of version 1.25, the following files are excluded:
 
         * `CVS/', and everything under it
 

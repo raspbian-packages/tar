@@ -52,6 +52,7 @@ TESTSUITE_AT = \
  append.at\
  append01.at\
  append02.at\
+ append03.at\
  backup01.at\
  chtype.at\
  comprec.at\
@@ -82,6 +83,8 @@ TESTSUITE_AT = \
  extrac13.at\
  extrac14.at\
  extrac15.at\
+ extrac16.at\
+ extrac17.at\
  filerem01.at\
  filerem02.at\
  gzip.at\

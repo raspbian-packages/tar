@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.24, 24 October 2010), which
+This manual is for GNU `tar' (version 1.25, 5 November 2010), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994, 1995, 1996, 1997, 1999, 2000, 2001, 2003,
@@ -77,7 +77,7 @@ v7
      Makefiles.  This practice will change in the future, in the
      meantime, however this means that projects containing file names
      more than 99 characters long will not be able to use GNU `tar'
-     1.24 and Automake prior to 1.9.
+     1.25 and Automake prior to 1.9.
 
 ustar
      Archive format defined by POSIX.1-1988 specification.  It stores
@@ -209,6 +209,18 @@ byte sequences in the beginning of file, that are specific for certain
 compression formats.  If this approach fails, `tar' falls back to using
 archive name suffix to determine its format (*note auto-compress::, for
 a list of recognized suffixes).
+
+   Some compression programs are able to handle different compression
+formats.  GNU `tar' uses this, if the principal decompressor for the
+given format is not available.  For example, if `compress' is not
+installed, `tar' will try to use `gzip'.  As of version 1.25 the
+following alternatives are tried(2):
+
+Format                 Main decompressor      Alternatives
+--------------------------------------------------------------------- 
+compress               compress               gzip
+lzma                   lzma                   xz
+bzip2                  bzip2                  lbzip2
 
    The only case when you have to specify a decompression option while
 reading the archive is when reading from a pipe or from a tape drive
@@ -367,6 +379,10 @@ Likewise, the command below will list its contents:
    ---------- Footnotes ----------
 
    (1) It also had patent problems in the past.
+
+   (2) To verbosely trace the decompressor selection, use the
+`--warning=decompress-program' option (*note decompress-program:
+warnings.).
 
 
 File: tar.info,  Node: lbzip2,  Up: gzip
@@ -3053,7 +3069,7 @@ Appendix A Changes
 ******************
 
 This appendix lists some important user-visible changes between version
-GNU `tar' 1.24 and previous versions. An up-to-date version of this
+GNU `tar' 1.25 and previous versions. An up-to-date version of this
 document is available at the GNU `tar' documentation page
 (http://www.gnu.org/software/tar/manual/changes.html).
 
@@ -4089,12 +4105,12 @@ backups (*note Incremental Dumps::).  It contains the status of the
 file system at the time of the dump and is used to determine which
 files were modified since the last backup.
 
-   GNU `tar' version 1.24 supports three snapshot file formats.  The
+   GNU `tar' version 1.25 supports three snapshot file formats.  The
 first format, called "format 0", is the one used by GNU `tar' versions
 up to 1.15.1. The second format, called "format 1" is an extended
 version of this format, that contains more metadata and allows for
 further extensions. It was used by version 1.15.1. Starting from
-version 1.16 and up to 1.24, the "format 2" is used.
+version 1.16 and up to 1.25, the "format 2" is used.
 
    GNU `tar' is able to read all three formats, but will create
 snapshots only in format 2.
@@ -4150,7 +4166,7 @@ snapshots only in format 2.
   2.   `Format 2' snapshot file begins with a format identifier, as
      described for version 1, e.g.:
 
-          GNU tar-1.24-2
+          GNU tar-1.25-2
 
      This line is followed by newline. Rest of file consists of
      records, separated by null (ASCII 0) characters. Thus, in contrast
@@ -5204,7 +5220,7 @@ Summary::.
 * append, summary:                       Operation Summary.   (line   6)
 * atime-preserve:                        Attributes.          (line  10)
 * atime-preserve, summary:               Option Summary.      (line  19)
-* auto-compress:                         gzip.                (line 144)
+* auto-compress:                         gzip.                (line 156)
 * auto-compress, summary:                Option Summary.      (line  65)
 * backup:                                backup.              (line  41)
 * backup, summary:                       Option Summary.      (line  71)
@@ -5227,7 +5243,7 @@ Summary::.
 * checkpoint-action, summary:            Option Summary.      (line 105)
 * compare:                               compare.             (line   6)
 * compare, summary:                      Operation Summary.   (line  14)
-* compress:                              gzip.                (line 101)
+* compress:                              gzip.                (line 113)
 * compress, summary:                     Option Summary.      (line 152)
 * concatenate:                           concatenate.         (line   6)
 * concatenate, summary:                  Operation Summary.   (line  20)
@@ -5293,7 +5309,7 @@ Summary::.
 * group:                                 override.            (line  75)
 * group, summary:                        Option Summary.      (line 289)
 * gunzip, summary:                       Option Summary.      (line 297)
-* gzip:                                  gzip.                (line  79)
+* gzip:                                  gzip.                (line  91)
 * gzip, summary:                         Option Summary.      (line 297)
 * hard-dereference, described:           hard links.          (line  59)
 * hard-dereference, summary:             Option Summary.      (line 305)
@@ -5342,11 +5358,11 @@ Summary::.
 * listed-incremental, using with --extract: Incremental Dumps.
                                                               (line 121)
 * listed-incremental, using with --list: Incremental Dumps.   (line 186)
-* lzip:                                  gzip.                (line  92)
+* lzip:                                  gzip.                (line 104)
 * lzip, summary:                         Option Summary.      (line 392)
-* lzma:                                  gzip.                (line  95)
+* lzma:                                  gzip.                (line 107)
 * lzma, summary:                         Option Summary.      (line 396)
-* lzop:                                  gzip.                (line  98)
+* lzop:                                  gzip.                (line 110)
 * mode:                                  override.            (line  14)
 * mode, summary:                         Option Summary.      (line 404)
 * mtime:                                 override.            (line  29)
@@ -5493,9 +5509,9 @@ Summary::.
 * touch, summary:                        Option Summary.      (line 757)
 * transform:                             transform.           (line  74)
 * transform, summary:                    Option Summary.      (line 763)
-* uncompress:                            gzip.                (line 101)
+* uncompress:                            gzip.                (line 113)
 * uncompress, summary:                   Option Summary.      (line 152)
-* ungzip:                                gzip.                (line  79)
+* ungzip:                                gzip.                (line  91)
 * ungzip, summary:                       Option Summary.      (line 297)
 * unlink-first:                          Unlink First.        (line   6)
 * unlink-first, introduced:              Dealing with Old Files.
@@ -5508,7 +5524,7 @@ Summary::.
 * update:                                update.              (line   6)
 * update, summary:                       Operation Summary.   (line  50)
 * usage:                                 help.                (line  54)
-* use-compress-program:                  gzip.                (line 166)
+* use-compress-program:                  gzip.                (line 178)
 * use-compress-program, summary:         Option Summary.      (line 793)
 * utc, summary:                          Option Summary.      (line 798)
 * verbose:                               verbose.             (line  18)
@@ -5534,7 +5550,7 @@ Summary::.
 * wildcards-match-slash, summary:        Option Summary.      (line 833)
 * xform:                                 transform.           (line  74)
 * xform, summary:                        Option Summary.      (line 763)
-* xz:                                    gzip.                (line  84)
+* xz:                                    gzip.                (line  96)
 * xz, summary:                           Option Summary.      (line 836)
 
 
@@ -5547,11 +5563,11 @@ Appendix I Index
 * Menu:
 
 * %s: Directory has been renamed from %s, warning message: warnings.
-                                                              (line  94)
-* %s: Directory has been renamed, warning message: warnings.  (line  94)
-* %s: Directory is new, warning message: warnings.            (line  96)
+                                                              (line 108)
+* %s: Directory has been renamed, warning message: warnings.  (line 108)
+* %s: Directory is new, warning message: warnings.            (line 110)
 * %s: directory is on a different device: not purging, warning message: warnings.
-                                                              (line  99)
+                                                              (line 113)
 * -after-date and -update compared:      after.               (line  19)
 * -newer-mtime and -update compared:     after.               (line  19)
 * A lone zero block at, warning message: warnings.            (line  35)
@@ -5567,6 +5583,7 @@ Appendix I Index
                                                               (line  23)
 * all:                                   warnings.            (line  28)
 * alone-zero-block:                      warnings.            (line  35)
+* alternative decompression programs:    gzip.                (line  54)
 * am in date strings:                    Time of day items.   (line  22)
 * Appending files to an Archive:         appending files.     (line   6)
 * appending files to existing archive:   append.              (line   6)
@@ -5601,7 +5618,7 @@ Appendix I Index
                                                               (line  11)
 * backups <1>:                           Backups.             (line   6)
 * backups:                               backup.              (line  41)
-* bad-dumpdir:                           warnings.            (line 102)
+* bad-dumpdir:                           warnings.            (line 116)
 * basic operations:                      Operations.          (line   6)
 * Bazaar, excluding files:               exclude.             (line  37)
 * beginning of time, for POSIX:          Seconds since the Epoch.
@@ -5639,7 +5656,7 @@ Appendix I Index
 * Concatenating Archives:                concatenate.         (line   6)
 * contains a cache directory tag, warning message: warnings.  (line  43)
 * contiguous-cast:                       warnings.            (line  74)
-* corrupted archives <1>:                gzip.                (line 134)
+* corrupted archives <1>:                gzip.                (line 146)
 * corrupted archives:                    Full Dumps.          (line   8)
 * Creation of the archive:               create.              (line   8)
 * Current %s is newer or same age, warning message: warnings. (line  83)
@@ -5654,6 +5671,7 @@ Appendix I Index
 * day in date strings:                   Relative items in date strings.
                                                               (line  15)
 * day of week item:                      Day of week items.   (line   6)
+* decompress-program:                    warnings.            (line  89)
 * Deleting files from an archive:        delete.              (line   6)
 * Deleting from tape archives:           delete.              (line  17)
 * dereferencing hard links:              hard links.          (line   6)
@@ -5777,8 +5795,8 @@ Appendix I Index
 * GNU.sparse.offset, extended header variable: PAX 0.         (line  18)
 * GNU.sparse.realsize, extended header variable: PAX 1.       (line  24)
 * GNU.sparse.size, extended header variable: PAX 0.           (line  11)
-* gnupg, using with tar:                 gzip.                (line 181)
-* gpg, using with tar:                   gzip.                (line 181)
+* gnupg, using with tar:                 gzip.                (line 193)
+* gpg, using with tar:                   gzip.                (line 193)
 * gzip:                                  gzip.                (line   6)
 * hard links, dereferencing:             hard links.          (line   6)
 * header-col:                            Configuring Help Summary.
@@ -5825,7 +5843,7 @@ Appendix I Index
 * MacKenzie, David:                      Authors of parse_datetime.
                                                               (line   6)
 * Malformed dumpdir: 'X' never used, warning message: warnings.
-                                                              (line 102)
+                                                              (line 116)
 * member:                                Definitions.         (line  15)
 * member name:                           Definitions.         (line  15)
 * members, multiple:                     multiple.            (line   6)
@@ -5867,7 +5885,7 @@ Appendix I Index
 * Naming an archive:                     file.                (line   6)
 * negative time stamps:                  Large or Negative Values.
                                                               (line   6)
-* new-directory:                         warnings.            (line  96)
+* new-directory:                         warnings.            (line 110)
 * next DAY:                              Day of week items.   (line  15)
 * next in date strings:                  General date syntax. (line  26)
 * none:                                  warnings.            (line  29)
@@ -5933,7 +5951,7 @@ Appendix I Index
 * Remote devices:                        file.                (line  60)
 * remote tape drive:                     Remote Tape Server.  (line   6)
 * Removing files from an archive:        delete.              (line   6)
-* rename-directory:                      warnings.            (line  94)
+* rename-directory:                      warnings.            (line 108)
 * Replacing members with other members:  append.              (line  47)
 * reporting bugs:                        Reports.             (line   6)
 * RESTORE_BEGIN:                         User Hooks.          (line  39)
@@ -6102,7 +6120,7 @@ Appendix I Index
 * Updating an archive:                   update.              (line   6)
 * usage-indent:                          Configuring Help Summary.
                                                               (line 154)
-* Using encrypted archives:              gzip.                (line 181)
+* Using encrypted archives:              gzip.                (line 193)
 * ustar archive format:                  ustar.               (line   6)
 * uuencode:                              Applications.        (line   8)
 * v7 archive format:                     old.                 (line   6)

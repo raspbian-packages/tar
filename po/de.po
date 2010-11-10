@@ -6,12 +6,12 @@
 # Christian Kirsch <ck@held.mind.de>, 1996, 2001
 # Michael Piefel <piefel@informatik.hu-berlin.de>, 2003, 2006, 2007, 2008, 2009, 2010
 #
-#: src/create.c:1550
+#: src/create.c:1552
 msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.23.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-10-24 23:08+0300\n"
+"POT-Creation-Date: 2010-11-07 17:07+0200\n"
 "PO-Revision-Date: 2010-08-17 21:45+0200\n"
 "Last-Translator: Michael Piefel <piefel@informatik.hu-berlin.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -622,103 +622,103 @@ msgstr "zu viele Argumente"
 msgid "Garbage command"
 msgstr "Ungültiger Befehl"
 
-#: src/buffer.c:386 src/buffer.c:391 src/buffer.c:635 src/buffer.c:1250
-#: src/buffer.c:1296 src/buffer.c:1325 src/delete.c:211 src/list.c:184
-#: src/update.c:198
+#: src/buffer.c:457 src/buffer.c:462 src/buffer.c:706 src/buffer.c:1321
+#: src/buffer.c:1367 src/buffer.c:1396 src/delete.c:211 src/list.c:245
+#: src/update.c:200
 msgid "This does not look like a tar archive"
 msgstr "Das sieht nicht wie ein „tar“-Archiv aus."
 
-#: src/buffer.c:450 src/buffer.c:459
+#: src/buffer.c:521 src/buffer.c:530
 msgid "Total bytes written"
 msgstr "Gesamtzahl geschriebener Bytes"
 
-#: src/buffer.c:457 src/buffer.c:471
+#: src/buffer.c:528 src/buffer.c:542
 msgid "Total bytes read"
 msgstr "Gesamtzahl gelesener Bytes"
 
-#: src/buffer.c:461
+#: src/buffer.c:532
 #, c-format
 msgid "Total bytes deleted: %s\n"
 msgstr "Gesamtzahl gelöschter Bytes: %s\n"
 
-#: src/buffer.c:550
+#: src/buffer.c:621
 msgid "(pipe)"
 msgstr "(pipe)"
 
-#: src/buffer.c:573
+#: src/buffer.c:644
 msgid "Invalid value for record_size"
 msgstr "Ungültiger Wert für „record_size“."
 
-#: src/buffer.c:576
+#: src/buffer.c:647
 msgid "No archive name given"
 msgstr "Kein Archivname angegeben"
 
-#: src/buffer.c:618
+#: src/buffer.c:689
 msgid "Cannot verify stdin/stdout archive"
 msgstr "Kann Archive auf Standard-Ein-/Ausgabe nicht prüfen."
 
-#: src/buffer.c:632
+#: src/buffer.c:703
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr "Archiv ist komprimiert. Benutzen Sie die Option %s."
 
-#: src/buffer.c:689 src/tar.c:2448
+#: src/buffer.c:760 src/tar.c:2448
 msgid "Cannot update compressed archives"
 msgstr "Kann komprimierte Archive nicht aktualisieren"
 
-#: src/buffer.c:782
+#: src/buffer.c:853
 msgid "At beginning of tape, quitting now"
 msgstr "Am Anfang des Mediums, beende jetzt."
 
-#: src/buffer.c:788
+#: src/buffer.c:859
 msgid "Too many errors, quitting"
 msgstr "Zu viele Fehler, beende."
 
-#: src/buffer.c:821
+#: src/buffer.c:892
 #, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
 msgstr[0] "Recordgröße = %lu Block"
 msgstr[1] "Recordgröße = %lu Blöcke"
 
-#: src/buffer.c:842
+#: src/buffer.c:913
 #, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
 msgstr[0] "Falsch ausgerichteter Block (ein Byte) im Archiv."
 msgstr[1] "Falsch ausgerichteter Block (%lu Bytes) im Archiv."
 
-#: src/buffer.c:919
+#: src/buffer.c:990
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr "Kann Archiv-Datei nicht zurücksetzen; könnte ohne „-i“ unlesbar sein."
 
-#: src/buffer.c:951
+#: src/buffer.c:1022
 msgid "rmtlseek not stopped at a record boundary"
 msgstr "„rmtlseek“ nicht an Recordgrenze angehalten"
 
-#: src/buffer.c:1002
+#: src/buffer.c:1073
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: enthält ungültige Teil-Nummer."
 
-#: src/buffer.c:1037
+#: src/buffer.c:1108
 msgid "Volume number overflow"
 msgstr "Teil-Nummer zu groß."
 
-#: src/buffer.c:1052
+#: src/buffer.c:1123
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "Medium #%d für %s einlegen und Eingabetaste drücken: "
 
-#: src/buffer.c:1058
+#: src/buffer.c:1129
 msgid "EOF where user reply was expected"
 msgstr "Dateiende gefunden, Benutzereingabe erwartet"
 
-#: src/buffer.c:1063 src/buffer.c:1095
+#: src/buffer.c:1134 src/buffer.c:1166
 msgid "WARNING: Archive is incomplete"
 msgstr "WARNUNG: Archiv unvollständig"
 
-#: src/buffer.c:1077
+#: src/buffer.c:1148
 #, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -730,67 +730,67 @@ msgstr ""
 " q             „tar“ abbrechen\n"
 " j oder Enter  fortfahren\n"
 
-#: src/buffer.c:1082
+#: src/buffer.c:1153
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr " !             Shell in einem Unterprozess starten\n"
 
-#: src/buffer.c:1083
+#: src/buffer.c:1154
 #, c-format
 msgid " ?             Print this list\n"
 msgstr " ?             diese Liste ausgeben\n"
 
-#: src/buffer.c:1090
+#: src/buffer.c:1161
 msgid "No new volume; exiting.\n"
 msgstr "Kein neues Medium; halte an.\n"
 
-#: src/buffer.c:1123
+#: src/buffer.c:1194
 msgid "File name not specified. Try again.\n"
 msgstr "Dateiname nicht angegeben. Versuchen Sie es noch einmal.\n"
 
-#: src/buffer.c:1136
+#: src/buffer.c:1207
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr "Ungültige Eingabe. Geben Sie „?“ für Hilfe ein.\n"
 
-#: src/buffer.c:1187
+#: src/buffer.c:1258
 #, c-format
 msgid "%s command failed"
 msgstr "„%s“-Befehl gescheitert."
 
-#: src/buffer.c:1368
+#: src/buffer.c:1439
 #, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr ""
 "%s wird möglicherweise auf diesem Teil fortgesetzt: Kopf enthält "
 "abgeschnittenen Namen."
 
-#: src/buffer.c:1372
+#: src/buffer.c:1443
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "Dieser Teil ist keine Fortsetzung von %s."
 
-#: src/buffer.c:1386
+#: src/buffer.c:1457
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s hat die falsche Größe (%s != %s + %s)."
 
-#: src/buffer.c:1401
+#: src/buffer.c:1472
 #, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Dieser Teil ist nicht an der Reihe (%s - %s != %s)."
 
-#: src/buffer.c:1479 src/buffer.c:1505
+#: src/buffer.c:1550 src/buffer.c:1576
 #, c-format
 msgid "Archive not labeled to match %s"
 msgstr "Kennzeichnung des Archivs passt nicht zu „%s“."
 
-#: src/buffer.c:1509
+#: src/buffer.c:1580
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "Teil „%s“ passt nicht zu „%s“."
 
-#: src/buffer.c:1603
+#: src/buffer.c:1674
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
@@ -798,7 +798,7 @@ msgstr ""
 "%s: Dateiname zu lang, um in einem GNU-Mehrteil-Kopf abgelegt werden zu "
 "können, abgeschnitten"
 
-#: src/buffer.c:1794
+#: src/buffer.c:1865
 msgid "write did not end on a block boundary"
 msgstr "Schreiben endete nicht an Blockgrenze"
 
@@ -813,8 +813,8 @@ msgstr[1] "Konnte nur %lu von %lu Bytes lesen"
 msgid "Contents differ"
 msgstr "Unterschiedliche Inhalte"
 
-#: src/compare.c:131 src/extract.c:958 src/incremen.c:1462 src/list.c:397
-#: src/list.c:1384 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
+#: src/list.c:1392 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Unerwartetes Dateiende im Archiv."
 
@@ -880,7 +880,7 @@ msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "FEHLER BEI PRÜFUNG: %d ungültiger Kopfteil erkannt."
 msgstr[1] "FEHLER BEI PRÜFUNG: %d ungültige Kopfteile erkannt."
 
-#: src/compare.c:611 src/list.c:161
+#: src/compare.c:611 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Ein einzelner Nullblock bei %s"
@@ -904,78 +904,78 @@ msgstr "Wert %s außerhalb des %s-Bereichs %s..%s"
 msgid "Generating negative octal headers"
 msgstr "Erzeuge negative oktale Kopfteile"
 
-#: src/create.c:611 src/create.c:674
+#: src/create.c:612 src/create.c:675
 #, c-format
 msgid "%s: file name is too long (max %d); not dumped"
 msgstr "%s: Dateiname ist zu lang (max. %d); nicht gesichert."
 
-#: src/create.c:621
+#: src/create.c:622
 #, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
 msgstr ""
 "%s: Dateiname ist zu lang (kann nicht aufgeteilt werden); nicht gesichert."
 
-#: src/create.c:648
+#: src/create.c:649
 #, c-format
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: Verknüpfungsname ist zu lang; nicht gesichert."
 
-#: src/create.c:1062
+#: src/create.c:1064
 #, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
 msgstr[0] "Datei %s ist um ein Byte geschrumpft, fülle mit Null auf."
 msgstr[1] "Datei %s ist um %s Bytes geschrumpft, fülle mit Nullen auf."
 
-#: src/create.c:1158
+#: src/create.c:1160
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "Datei %s liegt auf einem anderen Dateisystem; nicht gesichert."
 
-#: src/create.c:1201 src/create.c:1212 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
 msgid "contents not dumped"
 msgstr "Inhalt nicht gesichert"
 
-#: src/create.c:1416
+#: src/create.c:1418
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Unbekannter Dateityp; Datei ignoriert."
 
-#: src/create.c:1527
+#: src/create.c:1529
 #, c-format
 msgid "Missing links to %s."
 msgstr "Fehlende Verknüpfungen zu %s."
 
-#: src/create.c:1688
+#: src/create.c:1690
 #, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "Datei %s ist unverändert; nicht gesichert."
 
-#: src/create.c:1697
+#: src/create.c:1699
 #, c-format
 msgid "%s: file is the archive; not dumped"
 msgstr "%s ist das Archiv; nicht gesichert."
 
-#: src/create.c:1721 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:575
 msgid "directory not dumped"
 msgstr "Verzeichnis nicht gesichert"
 
-#: src/create.c:1793
+#: src/create.c:1795
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr "%s: Datei hat sich beim Lesen geändert."
 
-#: src/create.c:1855
+#: src/create.c:1857
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: Socket ignoriert"
 
-#: src/create.c:1861
+#: src/create.c:1863
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: Klappe ignoriert"
 
-#: src/delete.c:217 src/list.c:198 src/update.c:203
+#: src/delete.c:217 src/list.c:259 src/update.c:205
 msgid "Skipping to next header"
 msgstr "Springe zum nächsten Kopfteil."
 
@@ -1007,37 +1007,37 @@ msgstr "%s: Verzeichnis umbenannt bevor sein Status ermittelt werden konnte"
 msgid "Extracting contiguous files as regular files"
 msgstr "Extrahiere zusammenhängende Dateien („contiguous files“) als reguläre."
 
-#: src/extract.c:1183
+#: src/extract.c:1197
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr ""
 "Versuche symbolische Verknüpfungen als harte Verknüpfungen herauszuholen."
 
-#: src/extract.c:1339
+#: src/extract.c:1353
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr ""
 "Kann „%s“ nicht herausholen – Datei ist Fortsetzung eines anderen Teils."
 
-#: src/extract.c:1346 src/list.c:1117
+#: src/extract.c:1360 src/list.c:1125
 msgid "Unexpected long name header"
 msgstr "Unerwarteter Kopfteil mit langem Namen"
 
-#: src/extract.c:1353
+#: src/extract.c:1367
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Unbekannter Dateityp „%c“, wie normale Datei extrahiert."
 
-#: src/extract.c:1379
+#: src/extract.c:1393
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Aktuelles %s ist neuer oder hat dasselbe Alter."
 
-#: src/extract.c:1431
+#: src/extract.c:1445
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Konnte keine Sicherheitskopie von dieser Datei erstellen"
 
-#: src/extract.c:1568
+#: src/extract.c:1582
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Kann %s nicht in %s umbenennen."
@@ -1164,87 +1164,87 @@ msgstr "%s: Lösche %s.\n"
 msgid "%s: Cannot remove"
 msgstr "%s: Kann nicht entfernen."
 
-#: src/list.c:130
+#: src/list.c:190
 #, c-format
 msgid "%s: Omitting"
 msgstr "%s: Ausgelassen"
 
-#: src/list.c:146
+#: src/list.c:207
 #, c-format
 msgid "block %s: ** Block of NULs **\n"
 msgstr "Block %s: ** Block aus NULlen **\n"
 
-#: src/list.c:172
+#: src/list.c:233
 #, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "Block %s: ** Ende der Datei **\n"
 
-#: src/list.c:195 src/list.c:1089 src/list.c:1352
+#: src/list.c:256 src/list.c:1097 src/list.c:1360
 #, c-format
 msgid "block %s: "
 msgstr "Block %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:704
+#: src/list.c:712
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Leerzeichen im Kopfteil, wo numerische %s-Werte stehen sollten."
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:759
+#: src/list.c:767
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr "Oktalzahl %.*s außerhalb des %s-Bereichs, nehme Zweierkomplement an?"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:770
+#: src/list.c:778
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Oktalzahl %.*s außerhalb des %s-Bereichs"
 
-#: src/list.c:791
+#: src/list.c:799
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Archiv enthält veraltete Base64-Kopfteile"
 
-#: src/list.c:805
+#: src/list.c:813
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Base64-Text %s außerhalb des %s-Bereichs."
 
-#: src/list.c:836
+#: src/list.c:844
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Base-256-Wert ist außerhalb des %s-Bereichs."
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:865
+#: src/list.c:873
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Archiv enthält „%.*s“ wo numerische %s-Werte stehen sollten."
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:887
+#: src/list.c:895
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Wert %s außerhalb des %s-Bereichs %s..%s."
 
-#: src/list.c:1253
+#: src/list.c:1261
 #, c-format
 msgid " link to %s\n"
 msgstr " Verknüpfung zu %s\n"
 
-#: src/list.c:1261
+#: src/list.c:1269
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " unbekannter Dateityp %s\n"
 
-#: src/list.c:1279
+#: src/list.c:1287
 #, c-format
 msgid "--Long Link--\n"
 msgstr "––Lange Verknüpfung––\n"
 
-#: src/list.c:1283
+#: src/list.c:1291
 #, c-format
 msgid "--Long Name--\n"
 msgstr "––Langer Name––\n"
@@ -1252,17 +1252,17 @@ msgstr "––Langer Name––\n"
 # Alte Üs: Band Kopfteil.  Kann diese Meldung auch bei Disketten
 # ausgegeben werden?  Dann kann man ja nicht "Band" sagen; am besten
 # einfach "Volume" lassen. ke.
-#: src/list.c:1287
+#: src/list.c:1295
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "––Vorspann des Teils––\n"
 
-#: src/list.c:1295
+#: src/list.c:1303
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "––Fortgesetzt bei Byte %s––\n"
 
-#: src/list.c:1357
+#: src/list.c:1365
 msgid "Creating directory:"
 msgstr "Erzeuge Verzeichnis:"
 
