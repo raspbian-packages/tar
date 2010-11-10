@@ -777,7 +777,7 @@ extract_dir (char *file_name, int typeflag)
 
   for (;;)
     {
-      status = mkdir (file_name, mode);
+      status = mkdirat (chdir_fd, file_name, mode);
       if (status == 0)
 	{
 	  current_mode = mode & ~ current_umask;
@@ -861,6 +861,20 @@ open_output_file (char const *file_name, int typeflag, mode_t mode,
 	  conttype_diagnosed = 1;
 	  WARNOPT (WARN_CONTIGUOUS_CAST,
 		   (0, 0, _("Extracting contiguous files as regular files")));
+	}
+    }
+
+  /* If O_NOFOLLOW is needed but does not work, check for a symlink
+     separately.  There's a race condition, but that cannot be avoided
+     on hosts lacking O_NOFOLLOW.  */
+  if (! O_NOFOLLOW && overwriting_old_files && ! dereference_option)
+    {
+      struct stat st;
+      if (fstatat (chdir_fd, file_name, &st, AT_SYMLINK_NOFOLLOW) == 0
+	  && S_ISLNK (st.st_mode))
+	{
+	  errno = ELOOP;
+	  return -1;
 	}
     }
 
@@ -1191,7 +1205,7 @@ static int
 extract_node (char *file_name, int typeflag)
 {
   bool interdir_made = false;
-  mode_t mode = (current_stat_info.stat.st_mode & MODE_RWX
+  mode_t mode = (current_stat_info.stat.st_mode & (MODE_RWX | S_IFBLK | S_IFCHR)
 		 & ~ (0 < same_owner_option ? S_IRWXG | S_IRWXO : 0));
 
   while (mknodat (chdir_fd, file_name, mode, current_stat_info.stat.st_rdev)

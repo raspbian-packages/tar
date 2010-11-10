@@ -440,6 +440,9 @@ void mv_size_left (off_t size);
 
 void buffer_write_global_xheader (void);
 
+const char *first_decompress_program (int *pstate);
+const char *next_decompress_program (int *pstate);
+
 /* Module create.c.  */
 
 enum dump_status
@@ -550,6 +553,7 @@ extern size_t recent_long_link_blocks;
 
 void decode_header (union block *header, struct tar_stat_info *stat_info,
 		    enum archive_format *format_pointer, int do_user_group);
+void transform_stat_info (int typeflag, struct tar_stat_info *stat_info);
 char const *tartime (struct timespec t, bool full_time);
 
 #define OFF_FROM_HEADER(where) off_from_header (where, sizeof (where))
@@ -804,10 +808,12 @@ void checkpoint_run (bool do_write);
 #define WARN_UNKNOWN_CAST        0x00010000
 #define WARN_UNKNOWN_KEYWORD     0x00020000
 #define WARN_XDEV                0x00040000
+#define WARN_DECOMPRESS_PROGRAM  0x00080000
 
 /* The warnings composing WARN_VERBOSE_WARNINGS are enabled by default
    in verbose mode */
-#define WARN_VERBOSE_WARNINGS    (WARN_RENAME_DIRECTORY|WARN_NEW_DIRECTORY)
+#define WARN_VERBOSE_WARNINGS    (WARN_RENAME_DIRECTORY|WARN_NEW_DIRECTORY|\
+				  WARN_DECOMPRESS_PROGRAM)
 #define WARN_ALL                 (~WARN_VERBOSE_WARNINGS)
 
 void set_warning_option (const char *arg);

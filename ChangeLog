@@ -1,3 +1,162 @@
+2010-11-07  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.25
+	* configure.ac: Version 1.25
+	* NEWS: Describe the changes.
+
+2010-11-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Run alternative decompression programs if the principal one is
+	not available.
+	Some compression programs are able to handle various compression
+	formats
+	(e.g. `gzip' can decompress files created by `compress', `xz'
+	is able
+	to handle lzma, etc.)  Tar tries to use such programs for
+	decompression
+	if the principal decompressor cannot be started.
+
+	* src/buffer.c (compress_type): Swap ct_none and ct_tar.
+	(archive_compression_type): New static variable.
+	(zip_magic): Remove program and option fields.
+	(zip_program): New structure and static.
+	(compress_program): Remove macro.
+	(find_zip_program): New static function.
+	(first_decompress_program,next_decompress_program): New functions.
+	(open_compressed_archive): Set archive_compression_type instead of
+	use_compress_program_option.
+	* src/common.h (first_decompress_program)
+	(next_decompress_program): New functions.
+	(WARN_DECOMPRESS_PROGRAM): New flag.
+	(WARN_VERBOSE_WARNINGS): Include WARN_DECOMPRESS_PROGRAM.
+	* src/warning.c (warning_args): Add "decompress-program".
+	(warning_types): Add WARN_DECOMPRESS_PROGRAM.
+	* src/system.c (run_decompress_program): New function.
+	(sys_child_open_for_uncompress): Use run_decompress_program
+	instead of calling execlp directly.
+
+2010-11-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: fix some issues with signals, timestamps, "test" typo
+	* tests/extrac17.at: Add --warning=no-timestamp, to avoid
+	bogus warning due to NFS clock skew.
+	* tests/remfiles01.at: Discard diagnostics that some shells
+	generate about broken pipes.
+	* tests/sigpipe.at: Likewise.
+	* tests/remfiles01.at: Fix typo: "test $EC" was written where
+	"test $EC -ne 0" was intended.
+
+2010-11-01  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix extraction of device nodes.
+	* src/extract.c (extract_node): Do not mask out node type.
+	The bug was introduced in commit ea964cce.
+
+2010-10-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: don't cross struct member boundaries with OLDGNU_MAGIC
+	* src/create.c (write_gnu_long_link, start_header): Access
+	header->buffer + offsetof (struct posix_header, magic), instead of
+	header->header.magic, when reading or writing the OLDGNU_MAGIC
+	pattern.  The code violates the C standard without this change,
+	and GCC warns about this if fortify checking is enabled.  It's not
+	a bug on traditional (i.e., non-debugging) platforms, but it does
+	violate the C standard so it should be fixed.  Problem originally
+	reported by John Emil Karlson in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-04/msg00023.html>.
+	* src/list.c (decode_header): Likewise.
+
+	tests: port to sh variants that squirrel away file descriptors
+	OpenBSD /bin/sh, and some other sh variants, squirrel away file
+	descriptors before closing them.  For example, for "cat 3<&-" they
+	first dup file descriptor 3 to a fd that is 10 or greater, then
+	close 3 (because if "cat" had been a builtin command like ":" then
+	they would have wanted to avoid the fork and restore the fd after
+	":" finished); and they treat ordinary (forking) commands the same
+	as builtin commands.  This approach fails after "ulimit -n 10".
+	Work around this deficiency by closing the file descriptors before
+	invoking ulimit.  Problem reported by Christian Weisgerber in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-10/msg00041.html>;
+	solution suggested by Jilles Tjoelker in
+	<http://article.gmane.org/gmane.comp.shells.dash/415>.
+
+	* tests/extrac11.at (scarce file descriptors): Close file
+	descriptors before invoking ulimit -n.
+
+2010-10-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Transform file names when updating and appendig to archives.
+	This complements 28e91b48.
+
+	* src/common.h (transform_stat_info): New prototype.
+	* src/list.c (transform_stat_info): Remove static qualifier.
+	* src/update.c (update_archive): Call transform_stat_info.
+	* tests/Makefile.am (TESTSUITE_AT): Add append03.at
+	* tests/testsuite.at: Include append03.at
+
+2010-10-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: port to Solaris diff
+	* tests/extrac13.at: Don't assume that "diff -c" outputs nothing
+	when there are no differences.	This is not true on Solaris,
+	where it outputs "No differences encounted".
+
+	tar: fix -x --overwrite bug (no --dereference, ! O_NOFOLLOW)
+	This bug was discovered on Solaris 8.  On older hosts lacking
+	O_NOFOLLOW, tar -x --overwrite (without --dereference) follows
+	symbolic links, causing the "extract over symlinks" test to fail.
+
+	* src/extract.c (open_output_file): If O_NOFOLLOW is needed but
+	does not work, check for a symlink separately.
+
+	tar: don't use "((" in shell scripts
+	* tests/extrac11.at: Replace "((" with "( (" in shell scripts, as
+	"((" is not portable to the Korn shell, and POSIX 1003.1-2008 says
+	that "((" is not portable.
+
+2010-10-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Make sure name matching occurs before name transformation.
+	The commit 9c194c99 altered that order.
+
+	* src/list.c (transform_stat_info): New function.  Split off from
+	decode_header.
+	(read_and): Call transform_stat_info right before do_something,
+	and after deciding if we should proceed with this member name,
+	so that name matching occurs before name transformation.
+
+	* tests/extrac17.at: New file.
+	* tests/Makefile.am (TESTSUITE_AT): Add extrac17.at
+	* tests/testsuite.at: Include extrac17.at.
+
+2010-10-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: don't assume stdin is open when testing fd limits
+	* tests/extrac11.at: Redirect stdin from /dev/null, in case
+	the parent 'make' is running with stdin closed.
+
+2010-10-26  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Further fixes in bootstrap.
+	* bootstrap: Restore the default for gnulib_path
+	(symlink_to_dir): Re-apply 67cad07.
+
+2010-10-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: fix bug with -C and extracting directories
+	Problem reported by Denis Excoffier in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-10/msg00034.html>.
+
+	* src/extract.c (extract_dir): Use mkdirat, not mkdir.
+	* tests/extrac16.at: New file, to test for this bug.
+	* tests/Makefile.am (TESTSUITE_AT): Add it.
+	* tests/testsuite.at: Include it.
+
+	This file is a placeholder. It will be replaced with the actual
+	ChangeLog
+	by make dist.  Run make ChangeLog if you wish to create it
+	earlier.
+
 2010-10-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Version 1.24
