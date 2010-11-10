@@ -16,25 +16,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AT_SETUP([sigpipe handling])
-AT_KEYWORDS([sigpipe])
+# written by Paul Eggert from a bug report by Denis Excoffier
+# <http://lists.gnu.org/archive/html/bug-tar/2010-10/msg00034.html>
 
-# Description: Tar 1.23 ignored sigpipe which lead to spurious "write
-# error" diagnostics when piping output to another programs.
-# Reported-by: "Dmitry V. Levin" <ldv@altlinux.org>
-# References: http://lists.gnu.org/archive/html/bug-tar/2010-03/msg00039.html
-#             <20100319184141.GC30047@wo.int.altlinux.org>
+# Check extraction of empty directory with -C.
 
-AT_CHECK([
-genfile --length 2048 --file first
-genfile --length 2048 --file second
-genfile --length 2049 --file third
+AT_SETUP([extract empty directory with -C])
+AT_KEYWORDS([extract extrac16])
 
-tar cf archive first second third
+AT_TAR_CHECK([
+mkdir src src/a src/a/b dest
+touch src/a/c
 
-# Discard diagnostics that some shells generate about broken pipes.
-(tar tf archive 2>&3 | :) 3>&2 2>/dev/null
+tar -cf archive.tar -C src a &&
+tar -xf archive.tar -C dest
 ],
-[0])
+[0],[],[],[],[],[gnu])
 
 AT_CLEANUP
