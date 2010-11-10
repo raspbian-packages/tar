@@ -2,7 +2,7 @@ tar (1.25-1) unstable; urgency=low
 
   * new upstream version, closes: #602184, #602209, #602413
   * Add Vcs-Git, Vcs-Browser fields to debian/control using patch from
-    Simon McVittie's 1.24-1.1 NMU, closes: #602639
+    Simon McVittie's 1.24-1.1 NMU, closes: #602639, #602709
 
  -- Bdale Garbee <bdale@gag.com>  Wed, 10 Nov 2010 15:45:09 -0700
 
