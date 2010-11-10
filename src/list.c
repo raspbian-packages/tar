@@ -218,17 +218,9 @@ read_and (void (*do_something) (void))
 	                            read_header_auto);
 	      if (status == HEADER_ZERO_BLOCK)
 		break;
-	      /* 
-	       * According to POSIX tar specs, this is wrong, but on the web
-	       * there are some tar specs that can trigger this, and some tar
-	       * implementations create tars according to that spec.  For now,
-	       * let's not be pedantic about issuing the warning.
-	       */
-#if 0	       
 	      WARNOPT (WARN_ALONE_ZERO_BLOCK,
 		       (0, 0, _("A lone zero block at %s"),
 			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
-#endif
 	      break;
 	    }
 	  status = prev_status;
