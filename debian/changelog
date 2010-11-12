@@ -7,7 +7,7 @@ tar (1.25-2) unstable; urgency=low
     which pristine-tar knows about and will use when necessary but which 
     should never be used by anyone else!  closes: #603231
 
- -- Bdale Garbee <bdale@gag.com>  Wed, 10 Nov 2010 15:45:09 -0700
+ -- Bdale Garbee <bdale@gag.com>  Fri, 12 Nov 2010 02:31:25 -0700
 
 tar (1.25-1) unstable; urgency=low
 
