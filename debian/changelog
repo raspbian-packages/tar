@@ -3,6 +3,7 @@ tar (1.25-3) unstable; urgency=low
   * cherry-pick some upstream commits that appear to address open bugs
   * fix for --one-file-system and --listed-incremental together,
     closes: #603371, #604394, #604698
+  * fix for FreeBSD symlink incompatibility with POSIX, closes: #602241
 
  -- Bdale Garbee <bdale@gag.com>  Mon, 06 Dec 2010 20:35:55 -0700
 
