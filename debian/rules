@@ -25,6 +25,12 @@ build-stamp: configure-stamp
 
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+	@runas=`whoami` ; \
+	if test $$runas = "root" ; \
+	then \
+	  echo "Sorry, but the test suite is not designed to be run as root."; \
+	  exit 1 ;\
+	fi
 	(cd tests ; $(MAKE) clean)
 	$(MAKE) check
 endif

@@ -8,6 +8,10 @@ was built from the sources found at:
 
 	ftp://ftp.gnu.org/gnu/tar/
 
+More recently, I'm directly using the upstream source repository at 
+
+	http://git.savannah.gnu.org/cgit/tar.git
+
 GNU tar is 
 
    Copyright (C) 1988, 1992, 1993, 1994, 1995, 1996, 1997, 1999, 2000,

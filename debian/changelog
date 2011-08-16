@@ -1,3 +1,10 @@
+tar (1.25-4) UNRELEASED; urgency=low
+
+  * add a check to the rules file to ensure test suite is no attempted while
+    building as root, closes: #596268
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 16 Aug 2011 16:46:49 -0700
+
 tar (1.25-3) unstable; urgency=low
 
   * cherry-pick some upstream commits that appear to address open bugs
