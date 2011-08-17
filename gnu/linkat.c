@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Create a hard link relative to open directories.
-   Copyright (C) 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -168,6 +168,36 @@ link_follow (char const *file1, char const *file2)
 }
 # endif /* 0 < LINK_FOLLOWS_SYMLINKS */
 
+/* On Solaris, link() doesn't follow symlinks by default, but does so as soon
+   as a library or executable takes part in the program that has been compiled
+   with "c99" or "cc -xc99=all" or "cc ... /usr/lib/values-xpg4.o ...".  */
+# if LINK_FOLLOWS_SYMLINKS == -1
+
+/* Reduce the penalty of link_immediate and link_follow by incorporating the
+   knowledge that link()'s behaviour depends on the __xpg4 variable.  */
+extern int __xpg4;
+
+static int
+solaris_optimized_link_immediate (char const *file1, char const *file2)
+{
+  if (__xpg4 == 0)
+    return link (file1, file2);
+  return link_immediate (file1, file2);
+}
+
+static int
+solaris_optimized_link_follow (char const *file1, char const *file2)
+{
+  if (__xpg4 != 0)
+    return link (file1, file2);
+  return link_follow (file1, file2);
+}
+
+#  define link_immediate solaris_optimized_link_immediate
+#  define link_follow solaris_optimized_link_follow
+
+# endif
+
 /* Create a link to FILE1, in the directory open on descriptor FD1, to FILE2,
    in the directory open on descriptor FD2.  If FILE1 is a symlink, FLAG
    controls whether to dereference FILE1 first.  If possible, do it without
@@ -270,7 +300,7 @@ rpl_linkat (int fd1, char const *file1, int fd2, char const *file2, int flag)
       return -1;
     }
 
-#if LINKAT_TRAILING_SLASH_BUG
+# if LINKAT_TRAILING_SLASH_BUG
   /* Reject trailing slashes on non-directories.  */
   {
     size_t len1 = strlen (file1);
@@ -291,7 +321,7 @@ rpl_linkat (int fd1, char const *file1, int fd2, char const *file2, int flag)
           }
       }
   }
-#endif
+# endif
 
   if (!flag)
     return linkat (fd1, file1, fd2, file2, flag);

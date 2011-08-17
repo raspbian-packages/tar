@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* anytostr.c -- convert integers to printable strings
 
-   Copyright (C) 2001, 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2006, 2008-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,10 +19,14 @@
 
 /* Written by Paul Eggert */
 
+/* Tell gcc not to warn about the (i < 0) test, below.  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wtype-limits"
+#endif
+
 #include <config.h>
 
 #include "inttostr.h"
-#include "verify.h"
 
 /* Convert I to a printable string in BUF, which must be at least
    INT_BUFSIZE_BOUND (INTTYPE) bytes long.  Return the address of the
@@ -31,11 +35,9 @@
 char * __attribute_warn_unused_result__
 anytostr (inttype i, char *buf)
 {
-  verify (TYPE_SIGNED (inttype) == inttype_is_signed);
   char *p = buf + INT_STRLEN_BOUND (inttype);
   *p = 0;
 
-#if inttype_is_signed
   if (i < 0)
     {
       do
@@ -45,7 +47,6 @@ anytostr (inttype i, char *buf)
       *--p = '-';
     }
   else
-#endif
     {
       do
         *--p = '0' + i % 10;

@@ -1,9 +1,5 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define if the compiler is building for multiple architectures of Apple
-   platforms at once. */
-#undef AA_APPLE_UNIVERSAL_BUILD
-
 /* Define to the number of bits in type 'ptrdiff_t'. */
 #undef BITSIZEOF_PTRDIFF_T
 
@@ -88,6 +84,10 @@
    language is requested. */
 #undef ENABLE_NLS
 
+/* Define to 1 if your platform has fchownat, but it does not reject an empty
+   file name. */
+#undef FCHOWNAT_EMPTY_FILENAME_BUG
+
 /* Define to 1 if your platform has fchownat, but it cannot perform lchown
    tasks. */
 #undef FCHOWNAT_NOFOLLOW_BUG
@@ -95,22 +95,12 @@
 /* Define this to 1 if F_DUPFD behavior does not match POSIX */
 #undef FCNTL_DUPFD_BUGGY
 
-/* Define on systems for which file names may have a so-called `drive letter'
-   prefix, define this to compute the length of that prefix, including the
-   colon. */
-#undef FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX
-
-/* Define if the backslash character may also serve as a file name component
-   separator. */
-#undef FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR
-
-/* Define if a drive letter prefix denotes a relative path if it is not
-   followed by a file name component separator. */
-#undef FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE
-
 /* Define to 1 if mkdir mistakenly creates a directory given with a trailing
    dot component. */
 #undef FUNC_MKDIR_DOT_BUG
+
+/* Define to 1 if nl_langinfo (YESEXPR) returns a non-empty string. */
+#undef FUNC_NL_LANGINFO_YESEXPR_WORKS
 
 /* Define to 1 if realpath() can malloc memory, always gives an absolute path,
    and handles trailing slash correctly. */
@@ -168,6 +158,10 @@
 /* Define to 1 to add extern declaration of program_invocation_short_name to
    argp.h */
 #undef GNULIB_PROGRAM_INVOCATION_SHORT_NAME
+
+/* Define to a C preprocessor expression that evaluates to 1 or 0, depending
+   whether the gnulib module snprintf shall be considered present. */
+#undef GNULIB_SNPRINTF
 
 /* Define to 1 when the gnulib module btowc should be tested. */
 #undef GNULIB_TEST_BTOWC
@@ -233,6 +227,9 @@
 /* Define to 1 when the gnulib module gettimeofday should be tested. */
 #undef GNULIB_TEST_GETTIMEOFDAY
 
+/* Define to 1 when the gnulib module iswblank should be tested. */
+#undef GNULIB_TEST_ISWBLANK
+
 /* Define to 1 when the gnulib module lchown should be tested. */
 #undef GNULIB_TEST_LCHOWN
 
@@ -262,6 +259,9 @@
 
 /* Define to 1 when the gnulib module mbsrtowcs should be tested. */
 #undef GNULIB_TEST_MBSRTOWCS
+
+/* Define to 1 when the gnulib module mbtowc should be tested. */
+#undef GNULIB_TEST_MBTOWC
 
 /* Define to 1 when the gnulib module memchr should be tested. */
 #undef GNULIB_TEST_MEMCHR
@@ -447,6 +447,10 @@
    */
 #undef HAVE_DECL_DIRFD
 
+/* Define to 1 if you have the declaration of `fchdir', and to 0 if you don't.
+   */
+#undef HAVE_DECL_FCHDIR
+
 /* Define to 1 if you have the declaration of `fdopendir', and to 0 if you
    don't. */
 #undef HAVE_DECL_FDOPENDIR
@@ -478,6 +482,10 @@
 /* Define to 1 if you have the declaration of `fread_unlocked', and to 0 if
    you don't. */
 #undef HAVE_DECL_FREAD_UNLOCKED
+
+/* Define to 1 if you have the declaration of `fseeko', and to 0 if you don't.
+   */
+#undef HAVE_DECL_FSEEKO
 
 /* Define to 1 if you have the declaration of `fwrite_unlocked', and to 0 if
    you don't. */
@@ -511,10 +519,6 @@
    don't. */
 #undef HAVE_DECL_GETLINE
 
-/* Define to 1 if you have the declaration of `getopt_clip', and to 0 if you
-   don't. */
-#undef HAVE_DECL_GETOPT_CLIP
-
 /* Define to 1 if you have the declaration of `getpwuid', and to 0 if you
    don't. */
 #undef HAVE_DECL_GETPWUID
@@ -535,13 +539,13 @@
    don't. */
 #undef HAVE_DECL_ISWBLANK
 
+/* Define to 1 if you have the declaration of `localtime_r', and to 0 if you
+   don't. */
+#undef HAVE_DECL_LOCALTIME_R
+
 /* Define to 1 if you have the declaration of `memrchr', and to 0 if you
    don't. */
 #undef HAVE_DECL_MEMRCHR
-
-/* Define to 1 if you have the declaration of `optreset', and to 0 if you
-   don't. */
-#undef HAVE_DECL_OPTRESET
 
 /* Define to 1 if you have the declaration of `program_invocation_name', and
    to 0 if you don't. */
@@ -558,6 +562,10 @@
 /* Define to 1 if you have the declaration of `putc_unlocked', and to 0 if you
    don't. */
 #undef HAVE_DECL_PUTC_UNLOCKED
+
+/* Define to 1 if you have the declaration of `setenv', and to 0 if you don't.
+   */
+#undef HAVE_DECL_SETENV
 
 /* Define to 1 if you have the declaration of `sleep', and to 0 if you don't.
    */
@@ -615,6 +623,10 @@
    */
 #undef HAVE_DECL_TZNAME
 
+/* Define to 1 if you have the declaration of `unsetenv', and to 0 if you
+   don't. */
+#undef HAVE_DECL_UNSETENV
+
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #undef HAVE_DECL_VSNPRINTF
@@ -643,9 +655,6 @@
 /* Define if you have the declaration of environ. */
 #undef HAVE_ENVIRON_DECL
 
-/* Define to 1 if you have the <errno.h> header file. */
-#undef HAVE_ERRNO_H
-
 /* Define to 1 if you have the `fchdir' function. */
 #undef HAVE_FCHDIR
 
@@ -669,9 +678,6 @@
 
 /* Define to 1 if you have the <features.h> header file. */
 #undef HAVE_FEATURES_H
-
-/* Define to 1 if you have the <float.h> header file. */
-#undef HAVE_FLOAT_H
 
 /* Define to 1 if you have the `flockfile' function. */
 #undef HAVE_FLOCKFILE
@@ -910,9 +916,6 @@
 /* Define to 1 if you have the <pwd.h> header file. */
 #undef HAVE_PWD_H
 
-/* Define to 1 if you have the <random.h> header file. */
-#undef HAVE_RANDOM_H
-
 /* Define to 1 if you have the `rawmemchr' function. */
 #undef HAVE_RAWMEMCHR
 
@@ -1046,6 +1049,9 @@
 /* Define to 1 if initstat_r is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_INITSTAT_R
 
+/* Define to 1 if iswctype is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_ISWCTYPE
+
 /* Define to 1 if lchmod is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_LCHMOD
 
@@ -1123,6 +1129,9 @@
 
 /* Define to 1 if openat is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_OPENAT
+
+/* Define to 1 if pipe is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_PIPE
 
 /* Define to 1 if pipe2 is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_PIPE2
@@ -1205,6 +1214,9 @@
 /* Define to 1 if strdup is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_STRDUP
 
+/* Define to 1 if strerror_r is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_STRERROR_R
+
 /* Define to 1 if strncasecmp is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_STRNCASECMP
 
@@ -1256,6 +1268,9 @@
 /* Define to 1 if tmpfile is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_TMPFILE
 
+/* Define to 1 if towctrans is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_TOWCTRANS
+
 /* Define to 1 if ttyname_r is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_TTYNAME_R
 
@@ -1283,20 +1298,110 @@
 /* Define to 1 if vsnprintf is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_VSNPRINTF
 
+/* Define to 1 if wcpcpy is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCPCPY
+
+/* Define to 1 if wcpncpy is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCPNCPY
+
 /* Define to 1 if wcrtomb is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_WCRTOMB
+
+/* Define to 1 if wcscasecmp is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCASECMP
+
+/* Define to 1 if wcscat is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCAT
+
+/* Define to 1 if wcschr is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCHR
+
+/* Define to 1 if wcscmp is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCMP
+
+/* Define to 1 if wcscoll is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCOLL
+
+/* Define to 1 if wcscpy is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCPY
+
+/* Define to 1 if wcscspn is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSCSPN
+
+/* Define to 1 if wcsdup is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSDUP
+
+/* Define to 1 if wcslen is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSLEN
+
+/* Define to 1 if wcsncasecmp is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSNCASECMP
+
+/* Define to 1 if wcsncat is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSNCAT
+
+/* Define to 1 if wcsncmp is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSNCMP
+
+/* Define to 1 if wcsncpy is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSNCPY
+
+/* Define to 1 if wcsnlen is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSNLEN
 
 /* Define to 1 if wcsnrtombs is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_WCSNRTOMBS
 
+/* Define to 1 if wcspbrk is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSPBRK
+
+/* Define to 1 if wcsrchr is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSRCHR
+
 /* Define to 1 if wcsrtombs is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_WCSRTOMBS
+
+/* Define to 1 if wcsspn is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSSPN
+
+/* Define to 1 if wcsstr is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSSTR
+
+/* Define to 1 if wcstok is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSTOK
+
+/* Define to 1 if wcswidth is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSWIDTH
+
+/* Define to 1 if wcsxfrm is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCSXFRM
 
 /* Define to 1 if wctob is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_WCTOB
 
+/* Define to 1 if wctrans is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCTRANS
+
+/* Define to 1 if wctype is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WCTYPE
+
 /* Define to 1 if wcwidth is declared even after undefining macros. */
 #undef HAVE_RAW_DECL_WCWIDTH
+
+/* Define to 1 if wmemchr is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WMEMCHR
+
+/* Define to 1 if wmemcmp is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WMEMCMP
+
+/* Define to 1 if wmemcpy is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WMEMCPY
+
+/* Define to 1 if wmemmove is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WMEMMOVE
+
+/* Define to 1 if wmemset is declared even after undefining macros. */
+#undef HAVE_RAW_DECL_WMEMSET
 
 /* Define to 1 if _Exit is declared even after undefining macros. */
 #undef HAVE_RAW_DECL__EXIT
@@ -1351,15 +1456,6 @@
    buffer had been large enough. */
 #undef HAVE_SNPRINTF_RETVAL_C99
 
-/* Define to 1 if you have the <stdarg.h> header file. */
-#undef HAVE_STDARG_H
-
-/* Define to 1 if stdbool.h conforms to C99. */
-#undef HAVE_STDBOOL_H
-
-/* Define to 1 if you have the <stddef.h> header file. */
-#undef HAVE_STDDEF_H
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
 
@@ -1369,9 +1465,6 @@
 
 /* Define to 1 if you have the <stdio_ext.h> header file. */
 #undef HAVE_STDIO_EXT_H
-
-/* Define to 1 if you have the <stdio.h> header file. */
-#undef HAVE_STDIO_H
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
@@ -1423,9 +1516,6 @@
 
 /* Define to 1 if you have the `strtoumax' function. */
 #undef HAVE_STRTOUMAX
-
-/* Define to 1 if the system has the type `struct random_data'. */
-#undef HAVE_STRUCT_RANDOM_DATA
 
 /* Define to 1 if `st_atimensec' is member of `struct stat'. */
 #undef HAVE_STRUCT_STAT_ST_ATIMENSEC
@@ -1543,9 +1633,6 @@
 /* Define to 1 if you have the <sys/wait.h> header file. */
 #undef HAVE_SYS_WAIT_H
 
-/* Define to 1 if you have the <time.h> header file. */
-#undef HAVE_TIME_H
-
 /* Define if struct tm has the tm_gmtoff member. */
 #undef HAVE_TM_GMTOFF
 
@@ -1650,17 +1737,12 @@
 /* Define as const if the declaration of iconv() needs const. */
 #undef ICONV_CONST
 
-#if FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR
-# define ISSLASH(C) ((C) == '/' || (C) == '\\')
-#else
-# define ISSLASH(C) ((C) == '/')
-#endif
-
 /* Define to 1 if linkat fails to recognize a trailing slash. */
 #undef LINKAT_TRAILING_SLASH_BUG
 
 /* Define to 1 if `link(2)' dereferences symbolic links, 0 if it creates hard
-   links to symlinks, and -1 if unknown. */
+   links to symlinks, -1 if it depends on the variable __xpg4, and -2 if
+   unknown. */
 #undef LINK_FOLLOWS_SYMLINKS
 
 /* Define to 1 if lseek does not detect pipes. */
@@ -1693,8 +1775,11 @@
 /* Define to a substitute value for mmap()'s MAP_ANONYMOUS flag. */
 #undef MAP_ANONYMOUS
 
+/* Define if the mbrtowc function has the NULL pwc argument bug. */
+#undef MBRTOWC_NULL_ARG1_BUG
+
 /* Define if the mbrtowc function has the NULL string argument bug. */
-#undef MBRTOWC_NULL_ARG_BUG
+#undef MBRTOWC_NULL_ARG2_BUG
 
 /* Define if the mbrtowc function does not return 0 for a NUL character. */
 #undef MBRTOWC_NUL_RETVAL_BUG
@@ -1856,10 +1941,6 @@
 
 /* Define to 1 if unlink() on a parent directory may succeed */
 #undef UNLINK_PARENT_BUG
-
-/* Define to the prefix of C symbols at the assembler and linker level, either
-   an underscore or empty. */
-#undef USER_LABEL_PREFIX
 
 /* Define to 1 if you want getc etc. to use unlocked I/O if available.
    Unlocked I/O can improve performance in unithreaded apps, but it is not

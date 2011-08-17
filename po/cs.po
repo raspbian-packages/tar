@@ -15,10 +15,10 @@
 #: src/create.c:1552
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.23.90\n"
+"Project-Id-Version: tar 1.24\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
-"PO-Revision-Date: 2010-07-12 20:02+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
+"PO-Revision-Date: 2010-10-25 10:05+0200\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -67,7 +67,7 @@ msgstr "%.*s: Neznámý parametr ARGP_HELP_FMT"
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr "Nepořádek v ARGP_HELP_FMT: %s"
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
@@ -75,31 +75,31 @@ msgstr ""
 "Povinné nebo volitelné argumenty dlouhých přepínačů jsou rovněž povinné\n"
 "nebo volitelné u odpovídajících krátkých přepínačů."
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr "Použití:"
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr "nebo: "
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 msgid " [OPTION...]"
 msgstr " [PŘEPÍNAČ…]"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "Více informací získáte pomocí „%s --help“ nebo „%s --usage“.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr ""
 "Chyby v programu oznamujte na adrese %s (anglicky), připomínky k překladu na "
 "adrese <translation-team-cs@lists.sourceforge.net> (česky).\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Neznámá systémová chyba"
 
@@ -206,16 +206,16 @@ msgstr "%s: přepínač „-W %s“ musí být zadán bez argumentu\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: přepínač „-W %s“ vyžaduje argument\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "paměť vyčerpána"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, c-format
 msgid "unable to record current working directory"
 msgstr "pracovní adresář nelze si nelze zapamatovat"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, c-format
 msgid "failed to return to initial working directory"
 msgstr "do původního pracovního adresáře se nelze vrátit"
@@ -239,11 +239,11 @@ msgstr "do původního pracovního adresáře se nelze vrátit"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "„"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "“"
 
@@ -520,22 +520,22 @@ msgstr[1] "%s: Zapsáno pouze %lu z %lu bajtů"
 msgstr[2] "%s: Zapsáno pouze %lu z %lu bajtů"
 
 # member name je část cesty názvy souboru 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Odstraňuje se úvodní „%s„ z názvů prvků"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Odstraňuje se úvodní „%s„ z cílů pevného odkazu"
 
 # member name je část cesty názvy souboru 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr "Prázdný prvek názvu se nahradí „.“"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr "Prázdný cíl pevného odkazu se nahradí „.“"
 
@@ -829,20 +829,20 @@ msgstr[0] "Bylo možné načíst pouze %'lu z %'lu bajtu"
 msgstr[1] "Bylo možné načíst pouze %'lu z %'lu bajtů"
 msgstr[2] "Bylo možné načíst pouze %'lu z %'lu bajtů"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "Obsahy se liší"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Neočekávaný konec archivu"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "Typ souboru se liší"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "Práva se liší"
 
@@ -858,42 +858,47 @@ msgstr "GID se liší"
 msgid "Mod time differs"
 msgstr "Čas poslední modifikace se liší"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "Velikost se liší"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "Není odkazem na %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "Symbolický odkaz se liší"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "Číslo zařízení se liší"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Ověřuji "
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: Neznámý typ souboru „%c“, porovnáván jako normální soubor"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr "Archiv obsahuje názvy souborů, kterým byly odstraněny předpony."
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "Archiv obsahuje zastaralé base-64 hlavičky"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr "Při kontrole může selhat nalezení původních souborů."
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
@@ -901,7 +906,7 @@ msgstr[0] "SELHÁNÍ KONTROLY: zjištěna %d chybná hlavička"
 msgstr[1] "SELHÁNÍ KONTROLY: zjištěny %d chybné hlavičky"
 msgstr[2] "SELHÁNÍ KONTROLY: zjištěno %d chybných hlaviček"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Osiřelý nulový blok na pozici %s"
@@ -953,7 +958,7 @@ msgstr[2] "%s: Soubor je kratší o %s bajtů; Doplňuji nulami."
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: soubor je na jiném souborovém systému; nearchivován"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr "obsah nezpracován"
 
@@ -977,7 +982,7 @@ msgstr "%s: soubor není změněn; neaktualizován"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: soubor je archiv; nearchivován"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr "adresář nezpracován"
 
@@ -986,12 +991,12 @@ msgstr "adresář nezpracován"
 msgid "%s: file changed as we read it"
 msgstr "%s: soubor byl během čtení změněn"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: soket ignorován"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: dveře ignorovány"
@@ -1019,164 +1024,164 @@ msgstr "%s: časová značka %s je %s s v budoucnosti"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Neočekávaná inkonzistence, při vytváření adresáře"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Adresář byl přejmenován dříve, než bylo možné získat jeho stav"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Souvisle uložené soubory rozbaluji jako obyčejné soubory"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Zkouším rozbalit symbolické odkazy jako pevné odkazy"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Nelze rozbalit – soubor je pokračováním jiného svazku"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 msgid "Unexpected long name header"
 msgstr "Neočekávaná hlavička dlouhého názvu"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Neznámý typ souboru „%c“, rozbalen jako normální soubor"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Současný soubor %s je novější nebo stejně starý"
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Tento soubor nebylo možné zálohovat"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s nelze přejmenovat na %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Adresář byl přejmenován z %s"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Adresář byl přejmenován"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Adresář je nový"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Neplatný čas souboru"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 msgid "Invalid modification time (seconds)"
 msgstr "Neplatný čas změny obsahu souboru (sekundy)"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr "Neplatný čas změny obsahu souboru (nanosekundy)"
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Neplatné číslo zařízení"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Neplatné číslo i-uzlu"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr "Při čtení souboru snímku: položka je příliš dlouhá"
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr "Chyba čtení uvnitř souboru snímku"
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 msgid "Unexpected EOF in snapshot file"
 msgstr "Neočekávaný konec souboru snímku"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr "Neočekávaná hodnota položky v souboru snímku"
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr "Chybí uzávěr záznamu"
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr "Chybný formát přírůstkového souboru"
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr "Nepodporovaná verze přírůstkového formátu: %<PRIuMAX>"
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr "Poškozený dumpdir: očekáváno „%c“, ale nalezeno %#3o"
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr "Poškozený dumpdir: „X“ duplikováno"
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr "Poškozený dumpdir: prázdný název v „R“"
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr "Poškozený dumpdir: „R“ není před „T“"
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr "Poškozený dumpdir: prázdný název v „T“"
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr "Poškozený dumpdir: očekáváno „%c“, ale zjištěn konec dat"
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr "Poškozený dumpdir: „X“ nebylo nikdy použito"
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "Podle šablony %s nelze vytvořit dočasný adresář"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr "%s: Adresář nebude vyčištěn: nelze provést stat()"
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: adresář je na jiném zařízení: nebude vyčištěn"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Mažu %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Nelze smazat"
@@ -1196,134 +1201,128 @@ msgstr "blok %s: ** Blok NUL **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Konec souboru **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Mezery v hlavičce na místě, kde je očekávána číselná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
 "Osmičková hodnota %.*s typu %s je mimo rozsah; přiřazuji dvojkový complement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Osmičková hodnota %.*s typu %s je mimo rozsah"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Archiv obsahuje zastaralé base-64 hlavičky"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Base-64 řetězec %s je mimo rozsah typu %s"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Hodnota base-256 je mimo rozsah typu %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Archiv obsahuje %.*s tam, kde je očekávána číselná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Hodnota %s typu %s je mimo rozsah %s..%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " odkaz na %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " neznámý souborový typ %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Dlouhý odkaz--\n"
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Dlouhý název--\n"
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Hlavička svazku--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Pokračováno od %s bajtu--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Vytvářím adresář:"
 
-#: src/misc.c:298
-#, fuzzy
+#: src/misc.c:297
 msgid "Cannot get working directory"
-msgstr "Pracovní adresář nelze změnit"
+msgstr "Nelze zjistit pracovní adresář"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Přejmenovávám %s na %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: nelze přejmenovat na %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Přejmenovávám %s zpět na %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Soubor smazán dříve než mohl být přečten"
 
-#: src/misc.c:866
-#, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: Adresář smazán dříve než mohl být přečten"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "potomek"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "meziprocesový kanál"
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr "V názvech souborů se nachází žolíkové znaky"
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1331,29 +1330,29 @@ msgstr ""
 "Porovnávání proti žolíkových znaků zapněte pomocí --wildcards, nebo varování "
 "potlačte prostřednictvím --no-wildcards"
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: V archivu nenalezen"
 
-#: src/names.c:615
+#: src/names.c:611
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Požadovaný výskyt nebyl v archivu nalezen"
 
-#: src/names.c:649
+#: src/names.c:645
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Název archivu se neodpovídá"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Použití přepínače -C uvnitř seznamu souborů není spolu s --listed-"
 "incremental dovoleno"
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "S --listed-incremental je dovolen pouze jediný přepínač -C"
 
@@ -2755,6 +2754,9 @@ msgstr "Příkaz ukončen\n"
 #, c-format
 msgid "--stat requires file names"
 msgstr "--stat potřebuje název souboru"
+
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: Adresář smazán dříve než mohl být přečten"
 
 #~ msgid "Cannot save working directory"
 #~ msgstr "Pracovní adresář nelze uchovat"

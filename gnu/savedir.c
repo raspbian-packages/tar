@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* savedir.c -- save the list of files in a directory in a string
 
-   Copyright (C) 1990, 1997-2001, 2003-2006, 2009-2010 Free Software
+   Copyright (C) 1990, 1997-2001, 2003-2006, 2009-2011 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

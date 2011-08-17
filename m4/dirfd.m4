@@ -1,8 +1,8 @@
-# serial 18   -*- Autoconf -*-
+# serial 19   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
-# Copyright (C) 2001-2006, 2008-2010 Free Software Foundation, Inc.
+# Copyright (C) 2001-2006, 2008-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -16,10 +16,6 @@ AC_DEFUN([gl_FUNC_DIRFD],
 
   dnl Persuade glibc <dirent.h> to declare dirfd().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
-
-  dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
-  AC_REQUIRE([AC_PROG_CPP])
-  AC_REQUIRE([AC_PROG_EGREP])
 
   AC_CHECK_FUNCS([dirfd])
   AC_CHECK_DECLS([dirfd], , ,

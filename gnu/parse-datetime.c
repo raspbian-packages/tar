@@ -118,8 +118,7 @@
 
 /* Parse a string into an internal time stamp.
 
-   Copyright (C) 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-   2010 Free Software Foundation, Inc.
+   Copyright (C) 1999-2000, 2002-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -417,7 +416,7 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 293 "parse-datetime.y"
+#line 292 "parse-datetime.y"
 {
   long int intval;
   textint textintval;
@@ -425,7 +424,7 @@ typedef union YYSTYPE
   relative_time rel;
 }
 /* Line 187 of yacc.c.  */
-#line 429 "parse-datetime.c"
+#line 428 "parse-datetime.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -438,7 +437,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 442 "parse-datetime.c"
+#line 441 "parse-datetime.c"
 
 #ifdef short
 # undef short
@@ -752,15 +751,15 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   319,   319,   320,   324,   331,   333,   337,   339,   341,
-     343,   345,   347,   348,   349,   353,   358,   363,   370,   375,
-     385,   390,   398,   400,   403,   405,   407,   412,   417,   422,
-     427,   435,   440,   460,   467,   475,   483,   488,   494,   499,
-     508,   510,   512,   517,   519,   521,   523,   525,   527,   529,
-     531,   533,   535,   537,   539,   541,   543,   545,   547,   549,
-     551,   553,   555,   557,   561,   563,   565,   567,   569,   571,
-     576,   580,   580,   583,   584,   589,   590,   595,   600,   611,
-     612,   618,   619
+       0,   318,   318,   319,   323,   330,   332,   336,   338,   340,
+     342,   344,   346,   347,   348,   352,   357,   362,   369,   374,
+     384,   389,   397,   399,   402,   404,   406,   411,   416,   421,
+     426,   434,   439,   459,   466,   474,   482,   487,   493,   498,
+     507,   509,   511,   516,   518,   520,   522,   524,   526,   528,
+     530,   532,   534,   536,   538,   540,   542,   544,   546,   548,
+     550,   552,   554,   556,   560,   562,   564,   566,   568,   570,
+     575,   579,   579,   582,   583,   588,   589,   594,   599,   610,
+     611,   617,   618
 };
 #endif
 
@@ -1737,7 +1736,7 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 325 "parse-datetime.y"
+#line 324 "parse-datetime.y"
     {
         pc->seconds = (yyvsp[(2) - (2)].timespec);
         pc->timespec_seen = true;
@@ -1745,32 +1744,32 @@ yyreduce:
     break;
 
   case 7:
-#line 338 "parse-datetime.y"
+#line 337 "parse-datetime.y"
     { pc->times_seen++; }
     break;
 
   case 8:
-#line 340 "parse-datetime.y"
+#line 339 "parse-datetime.y"
     { pc->local_zones_seen++; }
     break;
 
   case 9:
-#line 342 "parse-datetime.y"
+#line 341 "parse-datetime.y"
     { pc->zones_seen++; }
     break;
 
   case 10:
-#line 344 "parse-datetime.y"
+#line 343 "parse-datetime.y"
     { pc->dates_seen++; }
     break;
 
   case 11:
-#line 346 "parse-datetime.y"
+#line 345 "parse-datetime.y"
     { pc->days_seen++; }
     break;
 
   case 15:
-#line 354 "parse-datetime.y"
+#line 353 "parse-datetime.y"
     {
         set_hhmmss (pc, (yyvsp[(1) - (2)].textintval).value, 0, 0, 0);
         pc->meridian = (yyvsp[(2) - (2)].intval);
@@ -1778,7 +1777,7 @@ yyreduce:
     break;
 
   case 16:
-#line 359 "parse-datetime.y"
+#line 358 "parse-datetime.y"
     {
         set_hhmmss (pc, (yyvsp[(1) - (4)].textintval).value, (yyvsp[(3) - (4)].textintval).value, 0, 0);
         pc->meridian = (yyvsp[(4) - (4)].intval);
@@ -1786,7 +1785,7 @@ yyreduce:
     break;
 
   case 17:
-#line 364 "parse-datetime.y"
+#line 363 "parse-datetime.y"
     {
         set_hhmmss (pc, (yyvsp[(1) - (5)].textintval).value, (yyvsp[(3) - (5)].textintval).value, 0, 0);
         pc->meridian = MER24;
@@ -1796,7 +1795,7 @@ yyreduce:
     break;
 
   case 18:
-#line 371 "parse-datetime.y"
+#line 370 "parse-datetime.y"
     {
         set_hhmmss (pc, (yyvsp[(1) - (6)].textintval).value, (yyvsp[(3) - (6)].textintval).value, (yyvsp[(5) - (6)].timespec).tv_sec, (yyvsp[(5) - (6)].timespec).tv_nsec);
         pc->meridian = (yyvsp[(6) - (6)].intval);
@@ -1804,7 +1803,7 @@ yyreduce:
     break;
 
   case 19:
-#line 376 "parse-datetime.y"
+#line 375 "parse-datetime.y"
     {
         set_hhmmss (pc, (yyvsp[(1) - (7)].textintval).value, (yyvsp[(3) - (7)].textintval).value, (yyvsp[(5) - (7)].timespec).tv_sec, (yyvsp[(5) - (7)].timespec).tv_nsec);
         pc->meridian = MER24;
@@ -1814,7 +1813,7 @@ yyreduce:
     break;
 
   case 20:
-#line 386 "parse-datetime.y"
+#line 385 "parse-datetime.y"
     {
         pc->local_isdst = (yyvsp[(1) - (1)].intval);
         pc->dsts_seen += (0 < (yyvsp[(1) - (1)].intval));
@@ -1822,7 +1821,7 @@ yyreduce:
     break;
 
   case 21:
-#line 391 "parse-datetime.y"
+#line 390 "parse-datetime.y"
     {
         pc->local_isdst = 1;
         pc->dsts_seen += (0 < (yyvsp[(1) - (2)].intval)) + 1;
@@ -1830,33 +1829,33 @@ yyreduce:
     break;
 
   case 22:
-#line 399 "parse-datetime.y"
+#line 398 "parse-datetime.y"
     { pc->time_zone = (yyvsp[(1) - (1)].intval); }
     break;
 
   case 23:
-#line 401 "parse-datetime.y"
+#line 400 "parse-datetime.y"
     { pc->time_zone = (yyvsp[(1) - (2)].intval);
         apply_relative_time (pc, (yyvsp[(2) - (2)].rel), 1); }
     break;
 
   case 24:
-#line 404 "parse-datetime.y"
+#line 403 "parse-datetime.y"
     { pc->time_zone = (yyvsp[(1) - (3)].intval) + time_zone_hhmm (pc, (yyvsp[(2) - (3)].textintval), (yyvsp[(3) - (3)].intval)); }
     break;
 
   case 25:
-#line 406 "parse-datetime.y"
+#line 405 "parse-datetime.y"
     { pc->time_zone = (yyvsp[(1) - (1)].intval) + 60; }
     break;
 
   case 26:
-#line 408 "parse-datetime.y"
+#line 407 "parse-datetime.y"
     { pc->time_zone = (yyvsp[(1) - (2)].intval) + 60; }
     break;
 
   case 27:
-#line 413 "parse-datetime.y"
+#line 412 "parse-datetime.y"
     {
         pc->day_ordinal = 0;
         pc->day_number = (yyvsp[(1) - (1)].intval);
@@ -1864,7 +1863,7 @@ yyreduce:
     break;
 
   case 28:
-#line 418 "parse-datetime.y"
+#line 417 "parse-datetime.y"
     {
         pc->day_ordinal = 0;
         pc->day_number = (yyvsp[(1) - (2)].intval);
@@ -1872,7 +1871,7 @@ yyreduce:
     break;
 
   case 29:
-#line 423 "parse-datetime.y"
+#line 422 "parse-datetime.y"
     {
         pc->day_ordinal = (yyvsp[(1) - (2)].intval);
         pc->day_number = (yyvsp[(2) - (2)].intval);
@@ -1880,7 +1879,7 @@ yyreduce:
     break;
 
   case 30:
-#line 428 "parse-datetime.y"
+#line 427 "parse-datetime.y"
     {
         pc->day_ordinal = (yyvsp[(1) - (2)].textintval).value;
         pc->day_number = (yyvsp[(2) - (2)].intval);
@@ -1888,7 +1887,7 @@ yyreduce:
     break;
 
   case 31:
-#line 436 "parse-datetime.y"
+#line 435 "parse-datetime.y"
     {
         pc->month = (yyvsp[(1) - (3)].textintval).value;
         pc->day = (yyvsp[(3) - (3)].textintval).value;
@@ -1896,7 +1895,7 @@ yyreduce:
     break;
 
   case 32:
-#line 441 "parse-datetime.y"
+#line 440 "parse-datetime.y"
     {
         /* Interpret as YYYY/MM/DD if the first value has 4 or more digits,
            otherwise as MM/DD/YY.
@@ -1919,7 +1918,7 @@ yyreduce:
     break;
 
   case 33:
-#line 461 "parse-datetime.y"
+#line 460 "parse-datetime.y"
     {
         /* ISO 8601 format.  YYYY-MM-DD.  */
         pc->year = (yyvsp[(1) - (3)].textintval);
@@ -1929,7 +1928,7 @@ yyreduce:
     break;
 
   case 34:
-#line 468 "parse-datetime.y"
+#line 467 "parse-datetime.y"
     {
         /* e.g. 17-JUN-1992.  */
         pc->day = (yyvsp[(1) - (3)].textintval).value;
@@ -1940,7 +1939,7 @@ yyreduce:
     break;
 
   case 35:
-#line 476 "parse-datetime.y"
+#line 475 "parse-datetime.y"
     {
         /* e.g. JUN-17-1992.  */
         pc->month = (yyvsp[(1) - (3)].intval);
@@ -1951,7 +1950,7 @@ yyreduce:
     break;
 
   case 36:
-#line 484 "parse-datetime.y"
+#line 483 "parse-datetime.y"
     {
         pc->month = (yyvsp[(1) - (2)].intval);
         pc->day = (yyvsp[(2) - (2)].textintval).value;
@@ -1959,7 +1958,7 @@ yyreduce:
     break;
 
   case 37:
-#line 489 "parse-datetime.y"
+#line 488 "parse-datetime.y"
     {
         pc->month = (yyvsp[(1) - (4)].intval);
         pc->day = (yyvsp[(2) - (4)].textintval).value;
@@ -1968,7 +1967,7 @@ yyreduce:
     break;
 
   case 38:
-#line 495 "parse-datetime.y"
+#line 494 "parse-datetime.y"
     {
         pc->day = (yyvsp[(1) - (2)].textintval).value;
         pc->month = (yyvsp[(2) - (2)].intval);
@@ -1976,7 +1975,7 @@ yyreduce:
     break;
 
   case 39:
-#line 500 "parse-datetime.y"
+#line 499 "parse-datetime.y"
     {
         pc->day = (yyvsp[(1) - (3)].textintval).value;
         pc->month = (yyvsp[(2) - (3)].intval);
@@ -1985,172 +1984,172 @@ yyreduce:
     break;
 
   case 40:
-#line 509 "parse-datetime.y"
+#line 508 "parse-datetime.y"
     { apply_relative_time (pc, (yyvsp[(1) - (2)].rel), -1); }
     break;
 
   case 41:
-#line 511 "parse-datetime.y"
+#line 510 "parse-datetime.y"
     { apply_relative_time (pc, (yyvsp[(1) - (1)].rel), 1); }
     break;
 
   case 42:
-#line 513 "parse-datetime.y"
+#line 512 "parse-datetime.y"
     { apply_relative_time (pc, (yyvsp[(1) - (1)].rel), 1); }
     break;
 
   case 43:
-#line 518 "parse-datetime.y"
+#line 517 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).year = (yyvsp[(1) - (2)].intval); }
     break;
 
   case 44:
-#line 520 "parse-datetime.y"
+#line 519 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).year = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 45:
-#line 522 "parse-datetime.y"
+#line 521 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).year = 1; }
     break;
 
   case 46:
-#line 524 "parse-datetime.y"
+#line 523 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).month = (yyvsp[(1) - (2)].intval); }
     break;
 
   case 47:
-#line 526 "parse-datetime.y"
+#line 525 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).month = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 48:
-#line 528 "parse-datetime.y"
+#line 527 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).month = 1; }
     break;
 
   case 49:
-#line 530 "parse-datetime.y"
+#line 529 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).day = (yyvsp[(1) - (2)].intval) * (yyvsp[(2) - (2)].intval); }
     break;
 
   case 50:
-#line 532 "parse-datetime.y"
+#line 531 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).day = (yyvsp[(1) - (2)].textintval).value * (yyvsp[(2) - (2)].intval); }
     break;
 
   case 51:
-#line 534 "parse-datetime.y"
+#line 533 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).day = (yyvsp[(1) - (1)].intval); }
     break;
 
   case 52:
-#line 536 "parse-datetime.y"
+#line 535 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).hour = (yyvsp[(1) - (2)].intval); }
     break;
 
   case 53:
-#line 538 "parse-datetime.y"
+#line 537 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).hour = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 54:
-#line 540 "parse-datetime.y"
+#line 539 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).hour = 1; }
     break;
 
   case 55:
-#line 542 "parse-datetime.y"
+#line 541 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).minutes = (yyvsp[(1) - (2)].intval); }
     break;
 
   case 56:
-#line 544 "parse-datetime.y"
+#line 543 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).minutes = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 57:
-#line 546 "parse-datetime.y"
+#line 545 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).minutes = 1; }
     break;
 
   case 58:
-#line 548 "parse-datetime.y"
+#line 547 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = (yyvsp[(1) - (2)].intval); }
     break;
 
   case 59:
-#line 550 "parse-datetime.y"
+#line 549 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 60:
-#line 552 "parse-datetime.y"
+#line 551 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = (yyvsp[(1) - (2)].timespec).tv_sec; (yyval.rel).ns = (yyvsp[(1) - (2)].timespec).tv_nsec; }
     break;
 
   case 61:
-#line 554 "parse-datetime.y"
+#line 553 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = (yyvsp[(1) - (2)].timespec).tv_sec; (yyval.rel).ns = (yyvsp[(1) - (2)].timespec).tv_nsec; }
     break;
 
   case 62:
-#line 556 "parse-datetime.y"
+#line 555 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = 1; }
     break;
 
   case 64:
-#line 562 "parse-datetime.y"
+#line 561 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).year = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 65:
-#line 564 "parse-datetime.y"
+#line 563 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).month = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 66:
-#line 566 "parse-datetime.y"
+#line 565 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).day = (yyvsp[(1) - (2)].textintval).value * (yyvsp[(2) - (2)].intval); }
     break;
 
   case 67:
-#line 568 "parse-datetime.y"
+#line 567 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).hour = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 68:
-#line 570 "parse-datetime.y"
+#line 569 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).minutes = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 69:
-#line 572 "parse-datetime.y"
+#line 571 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).seconds = (yyvsp[(1) - (2)].textintval).value; }
     break;
 
   case 70:
-#line 577 "parse-datetime.y"
+#line 576 "parse-datetime.y"
     { (yyval.rel) = RELATIVE_TIME_0; (yyval.rel).day = (yyvsp[(1) - (1)].intval); }
     break;
 
   case 74:
-#line 585 "parse-datetime.y"
+#line 584 "parse-datetime.y"
     { (yyval.timespec).tv_sec = (yyvsp[(1) - (1)].textintval).value; (yyval.timespec).tv_nsec = 0; }
     break;
 
   case 76:
-#line 591 "parse-datetime.y"
+#line 590 "parse-datetime.y"
     { (yyval.timespec).tv_sec = (yyvsp[(1) - (1)].textintval).value; (yyval.timespec).tv_nsec = 0; }
     break;
 
   case 77:
-#line 596 "parse-datetime.y"
+#line 595 "parse-datetime.y"
     { digits_to_date_time (pc, (yyvsp[(1) - (1)].textintval)); }
     break;
 
   case 78:
-#line 601 "parse-datetime.y"
+#line 600 "parse-datetime.y"
     {
         /* Hybrid all-digit and relative offset, so that we accept e.g.,
            "YYYYMMDD +N days" as well as "YYYYMMDD N days".  */
@@ -2160,28 +2159,28 @@ yyreduce:
     break;
 
   case 79:
-#line 611 "parse-datetime.y"
+#line 610 "parse-datetime.y"
     { (yyval.intval) = -1; }
     break;
 
   case 80:
-#line 613 "parse-datetime.y"
+#line 612 "parse-datetime.y"
     { (yyval.intval) = (yyvsp[(2) - (2)].textintval).value; }
     break;
 
   case 81:
-#line 618 "parse-datetime.y"
+#line 617 "parse-datetime.y"
     { (yyval.intval) = MER24; }
     break;
 
   case 82:
-#line 620 "parse-datetime.y"
+#line 619 "parse-datetime.y"
     { (yyval.intval) = (yyvsp[(1) - (1)].intval); }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2185 "parse-datetime.c"
+#line 2184 "parse-datetime.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2395,7 +2394,7 @@ yyreturn:
 }
 
 
-#line 623 "parse-datetime.y"
+#line 622 "parse-datetime.y"
 
 
 static table const meridian_table[] =

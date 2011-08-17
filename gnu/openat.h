@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* provide a replacement openat function
-   Copyright (C) 2004-2006, 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2004-2006, 2008-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,14 +29,10 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#  define __attribute__(x) /* empty */
-# endif
-#endif
-
-#ifndef ATTRIBUTE_NORETURN
-# define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+# define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#else
+# define _GL_ATTRIBUTE_NORETURN /* empty */
 #endif
 
 #if !HAVE_OPENAT
@@ -53,8 +49,8 @@ bool openat_needs_fchdir (void);
 
 #endif
 
-void openat_restore_fail (int) ATTRIBUTE_NORETURN;
-void openat_save_fail (int) ATTRIBUTE_NORETURN;
+void openat_restore_fail (int) _GL_ATTRIBUTE_NORETURN;
+void openat_save_fail (int) _GL_ATTRIBUTE_NORETURN;
 
 /* Using these function names makes application code
    slightly more readable than it would be with
