@@ -1678,9 +1678,9 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
      put in the archive.
 
      This check is omitted if incremental_option is set *and* the
-     requested file is not explicitely listed in the command line. */
+     requested file is not explicitly listed in the command line.  */
 
-  if (!(incremental_option && !is_individual_file (p))
+  if (! (incremental_option && ! top_level)
       && !S_ISDIR (st->stat.st_mode)
       && OLDER_TAR_STAT_TIME (*st, m)
       && (!after_date_option || OLDER_TAR_STAT_TIME (*st, c)))
@@ -1797,6 +1797,7 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
 	      set_exit_status (TAREXIT_DIFFERS);
 	    }
 	  else if (atime_preserve_option == replace_atime_preserve
+		   && fd && (is_dir || original_size != 0)
 		   && set_file_atime (fd, parentfd, name, st->atime) != 0)
 	    utime_error (p);
 	}

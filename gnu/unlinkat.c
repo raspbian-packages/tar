@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Work around unlinkat bugs on Solaris 9.
 
-   Copyright (C) 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "dosname.h"
 #include "openat.h"
 
 #if HAVE_UNLINKAT

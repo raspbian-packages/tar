@@ -632,8 +632,6 @@ void seek_diag_details (char const *name, off_t offset);
 void stat_diag (char const *name);
 void file_removed_diag (const char *name, bool top_level,
 			void (*diagfn) (char const *name));
-void dir_removed_diag (char const *name, bool top_level,
-		       void (*diagfn) (char const *name));
 void write_error_details (char const *name, size_t status, size_t size);
 void write_fatal (char const *name) __attribute__ ((noreturn));
 void write_fatal_details (char const *name, ssize_t status, size_t size)
@@ -680,7 +678,6 @@ bool excluded_name (char const *name);
 
 void add_avoided_name (char const *name);
 bool is_avoided_name (char const *name);
-bool is_individual_file (char const *name);
 
 bool contains_dot_dot (char const *name);
 
@@ -779,6 +776,7 @@ void set_transform_expr (const char *expr);
 bool transform_name (char **pinput, int type);
 bool transform_name_fp (char **pinput, int type,
 			char *(*fun)(char *, void *), void *);
+bool transform_program_p (void);
 
 /* Module suffix.c */
 void set_compression_program_by_suffix (const char *name, const char *defprog);

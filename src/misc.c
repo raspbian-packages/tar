@@ -37,8 +37,7 @@
 void
 assign_string (char **string, const char *value)
 {
-  if (*string)
-    free (*string);
+  free (*string);
   *string = value ? xstrdup (value) : 0;
 }
 
@@ -849,21 +848,6 @@ file_removed_diag (const char *name, bool top_level,
     {
       WARNOPT (WARN_FILE_REMOVED,
 	       (0, 0, _("%s: File removed before we read it"),
-		quotearg_colon (name)));
-      set_exit_status (TAREXIT_DIFFERS);
-    }
-  else
-    diagfn (name);
-}
-
-void
-dir_removed_diag (const char *name, bool top_level,
-		   void (*diagfn) (char const *name))
-{
-  if (!top_level && errno == ENOENT)
-    {
-      WARNOPT (WARN_FILE_REMOVED,
-	       (0, 0, _("%s: Directory removed before we read it"),
 		quotearg_colon (name)));
       set_exit_status (TAREXIT_DIFFERS);
     }

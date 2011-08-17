@@ -8,10 +8,10 @@
 #: src/create.c:1552
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.23.90\n"
+"Project-Id-Version: tar 1.25\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
-"PO-Revision-Date: 2010-07-13 11:49+0800\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
+"PO-Revision-Date: 2010-11-12 09:33+0800\n"
 "Last-Translator: Ji ZhengYu <zhengyuji@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -60,35 +60,35 @@ msgstr "%.*s: 未知的 ARGP_HELP_FMT 参数"
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr "ARGP_HELP_FMT 中的参数错误: %s"
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr "长选项和相应短选项具有相同的强制参数或可选参数。"
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr "用法:"
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr " 或: "
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 msgid " [OPTION...]"
 msgstr " [选项...]"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "请用“%s --help”或“%s --usage”获得更多信息。\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr "将错误报告发送到 %s。\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "未知的系统错误"
 
@@ -194,16 +194,16 @@ msgstr "%s: 选项\"-W %s\"不要参数\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: 选项\"%s\"需要带参数\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "内存耗尽"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, c-format
 msgid "unable to record current working directory"
 msgstr "无法记录当前工作目录"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, c-format
 msgid "failed to return to initial working directory"
 msgstr "无法回到起始的工作目录"
@@ -227,11 +227,11 @@ msgstr "无法回到起始的工作目录"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "“"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "”"
 
@@ -494,21 +494,21 @@ msgid "%s: Wrote only %lu of %lu byte"
 msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%1$s：只写入了 %3$lu 个中的 %2$lu 个字节"
 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "从成员名中删除开头的“%s”"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "从硬连接目标中删除开头的“%s”"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr "为空成员名替换“.”"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr "为空的硬连接替换“.”"
 
@@ -794,20 +794,20 @@ msgid "Could only read %lu of %lu byte"
 msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "仅能读入 %2$lu 中的 %1$lu 个字节"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "内容不同"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "归档文件中异常的 EOF"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "文件类型不同"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "访问模式不同"
 
@@ -823,48 +823,53 @@ msgstr "Gid 不同"
 msgid "Mod time differs"
 msgstr "修改时间不同"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "大小不同"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "没有连接到 %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "符号连接不同"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "设备号不同"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "校验"
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s：未知的文件类型“%c”，与普通文件不同"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr "归档包含带有被移除前导字符的文件名。"
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "归档包含过时的 base-64 头"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr "位于原始文件中的验证可能失败。"
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "校验失败：检测到 %d 个无效的头"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "在 %s 处一个单独的零块"
@@ -914,7 +919,7 @@ msgstr[0] "%s：文件缩小 %s 字节；用零填充"
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s：文件在不同的文件系统上；未输出"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr "未输出内容"
 
@@ -938,7 +943,7 @@ msgstr "%s: 文件未改变；未输出"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: 文件是归档文件；未输出"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr "未输出目录"
 
@@ -947,12 +952,12 @@ msgstr "未输出目录"
 msgid "%s: file changed as we read it"
 msgstr "%s: 在我们读入文件时文件发生了变化"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: 忽略套接字(socket)"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: 忽略权限"
@@ -980,164 +985,164 @@ msgstr "%s：时间戳 %s 是未来的 %s 秒之后"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s：创建目录时出现意外的不一致"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s：目录名在状态信息被获取之前改变了"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "展开紧邻的文件为普通文件"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "正试图将符号连接展开为硬连接"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s：无法展开 -- 文件一直延伸至另一卷中"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 msgid "Unexpected long name header"
 msgstr "异常的长名字头部"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s：未知的文件类型“%c”，作为普通文件展开"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "当前的“%s”更新或一样新"
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s：无法备份该文件"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "无法将 %s 重命名为 %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s：目录已改名，不再是 %s"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s：目录已被改名"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s：目录是新的"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "无效的时间戳"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 msgid "Invalid modification time (seconds)"
 msgstr "无效的修改时间(秒)"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr "无效的修改时间(纳秒)"
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "无效的设备号"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "无效的 inode 号"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr "读取目录文件时字段太长"
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr "目录文件读取错误"
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 msgid "Unexpected EOF in snapshot file"
 msgstr "目录文件中异常的文件结尾(EOF)"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr "目录文件中异常的字段值"
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr "缺少记录终止符"
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr "文件格式错误增量"
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr "不支持增量格式版本: %<PRIuMAX>"
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr "错误的 dumpdir: 需要“%c”但实际为 %#3o"
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr "错误的 dumpdir: 重复的“X”"
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr "错误的 dumpdir: “R”中有空名字"
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr "错误的 dumpdir: “R”后未紧接着用“T”"
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr "错误的 dumpdir: “T”中有空名字"
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr "错误的 dumpdir: 需要“%c”但实际为数据结尾"
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr "错误的 dumpdir: 从未用过“X”"
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "无法通过模板 %s 创建临时目录"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr "%s：未清除目录：无法 stat"
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: 目录在不同的设备上: 未清除"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s：正在删除 %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s：无法删除"
@@ -1157,159 +1162,153 @@ msgstr "块 %s：** 空块 **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "块 %s：** 文件结束 **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "块 %s："
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "头中需要数值 %s 处为空白符"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr "归档的八进制值 %.*s 超出范围 %s；假定为其二进制补码"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "归档八进制值 %.*s 超出 %s 的范围"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "归档包含过时的 base-64 头"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "归档签署的 base-64 字符串 %s 超出范围 %s"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "归档的 base-256 值超出范围 %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "归档包含 %.*s 而需要数字值 %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "归档值 %s 超出 %s 的范围 %s..%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " 连接到 %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " 未知的文件类型 %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--长连接--\n"
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--长名--\n"
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--卷头--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--从 %s 字节继续--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "正在创建目录："
 
-#: src/misc.c:298
-#, fuzzy
+#: src/misc.c:297
 msgid "Cannot get working directory"
-msgstr "无法改变工作目录"
+msgstr "无法获取工作目录"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "将 %s 改名为 %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s：无法重命名为 %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "将 %s 的名字改回 %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s：文件在我们读入之前被删除了"
 
-#: src/misc.c:866
-#, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: 文件在读入之前被删除了"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "子进程"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "进程内通道"
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr "文件名中所使用的字符匹配模式"
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr "使用 --wildcards 打开模式匹配，或是 --no-wildcards 来关闭之"
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s：归档中找不到"
 
-#: src/names.c:615
+#: src/names.c:611
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s：没有在归档中找到需要的"
 
-#: src/names.c:649
+#: src/names.c:645
 #, c-format
 msgid "Archive label mismatch"
 msgstr "归档卷标不匹配"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr "在文件列表中 -C 选项与 --listed-incremental 选项不许合用"
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "仅一个 -C 选项允许与  --listed-incremental 合用"
 
@@ -2668,6 +2667,9 @@ msgstr "命令终止\n"
 #, c-format
 msgid "--stat requires file names"
 msgstr "--stat 选项需要文件名"
+
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: 文件在读入之前被删除了"
 
 #~ msgid "Cannot save working directory"
 #~ msgstr "无法保存工作目录"

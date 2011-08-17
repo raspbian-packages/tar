@@ -2,7 +2,7 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## DO NOT EDIT! GENERATED AUTOMATICALLY!
 ## Process this file with automake to produce Makefile.in.
-# Copyright (C) 2002-2010 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -258,21 +258,8 @@ EXTRA_libgnu_a_SOURCES += closeout.c
 
 ## begin gnulib module configmake
 
-# Retrieve values of the variables through 'configure' followed by
-# 'make', not directly through 'configure', so that a user who
-# sets some of these variables consistently on the 'make' command
-# line gets correct results.
-#
-# One advantage of this approach, compared to the classical
-# approach of adding -DLIBDIR=\"$(libdir)\" etc. to AM_CPPFLAGS,
-# is that it protects against the use of undefined variables.
-# If, say, $(libdir) is not set in the Makefile, LIBDIR is not
-# defined by this module, and code using LIBDIR gives a
-# compilation error.
-#
-# Another advantage is that 'make' output is shorter.
-#
-# Listed in the same order as the GNU makefile conventions.
+# Listed in the same order as the GNU makefile conventions, and
+# provided by autoconf 2.59c+.
 # The Automake-defined pkg* macros are appended, in the order
 # listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
@@ -390,6 +377,13 @@ EXTRA_DIST += basename-lgpl.c dirname-lgpl.c dirname.h stripslash.c
 EXTRA_libgnu_a_SOURCES += basename-lgpl.c dirname-lgpl.c stripslash.c
 
 ## end   gnulib module dirname-lgpl
+
+## begin gnulib module dosname
+
+
+EXTRA_DIST += dosname.h
+
+## end   gnulib module dosname
 
 ## begin gnulib module dup2
 
@@ -832,6 +826,15 @@ EXTRA_DIST += inttypes.in.h
 
 ## end   gnulib module inttypes
 
+## begin gnulib module iswblank
+
+
+EXTRA_DIST += iswblank.c
+
+EXTRA_libgnu_a_SOURCES += iswblank.c
+
+## end   gnulib module iswblank
+
 ## begin gnulib module langinfo
 
 BUILT_SOURCES += langinfo.h
@@ -1044,11 +1047,20 @@ EXTRA_libgnu_a_SOURCES += mbsinit.c
 ## begin gnulib module mbsrtowcs
 
 
-EXTRA_DIST += mbsrtowcs-state.c mbsrtowcs.c
+EXTRA_DIST += mbsrtowcs-impl.h mbsrtowcs-state.c mbsrtowcs.c
 
 EXTRA_libgnu_a_SOURCES += mbsrtowcs-state.c mbsrtowcs.c
 
 ## end   gnulib module mbsrtowcs
+
+## begin gnulib module mbtowc
+
+
+EXTRA_DIST += mbtowc-impl.h mbtowc.c
+
+EXTRA_libgnu_a_SOURCES += mbtowc.c
+
+## end   gnulib module mbtowc
 
 ## begin gnulib module mbuiter
 
@@ -1512,6 +1524,7 @@ stdint.h: stdint.in.h
 	      -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
 	      -e 's/@''HAVE_SYS_INTTYPES_H''@/$(HAVE_SYS_INTTYPES_H)/g' \
 	      -e 's/@''HAVE_SYS_BITYPES_H''@/$(HAVE_SYS_BITYPES_H)/g' \
+	      -e 's/@''HAVE_WCHAR_H''@/$(HAVE_WCHAR_H)/g' \
 	      -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
 	      -e 's/@''HAVE_UNSIGNED_LONG_LONG_INT''@/$(HAVE_UNSIGNED_LONG_LONG_INT)/g' \
 	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
@@ -1593,6 +1606,8 @@ stdio.h: stdio.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_VSPRINTF_POSIX''@|$(GNULIB_VSPRINTF_POSIX)|g' \
 	      < $(srcdir)/stdio.in.h | \
 	  sed -e 's|@''HAVE_DECL_FPURGE''@|$(HAVE_DECL_FPURGE)|g' \
+	      -e 's|@''HAVE_DECL_FSEEKO''@|$(HAVE_DECL_FSEEKO)|g' \
+	      -e 's|@''HAVE_DECL_FTELLO''@|$(HAVE_DECL_FTELLO)|g' \
 	      -e 's|@''HAVE_DECL_GETDELIM''@|$(HAVE_DECL_GETDELIM)|g' \
 	      -e 's|@''HAVE_DECL_GETLINE''@|$(HAVE_DECL_GETLINE)|g' \
 	      -e 's|@''HAVE_DECL_OBSTACK_PRINTF''@|$(HAVE_DECL_OBSTACK_PRINTF)|g' \
@@ -1642,9 +1657,7 @@ stdio.h: stdio.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	mv $@-t $@
 MOSTLYCLEANFILES += stdio.h stdio.h-t
 
-EXTRA_DIST += stdio-write.c stdio.in.h
-
-EXTRA_libgnu_a_SOURCES += stdio-write.c
+EXTRA_DIST += stdio.in.h
 
 ## end   gnulib module stdio
 
@@ -1669,6 +1682,7 @@ stdlib.h: stdlib.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_GETSUBOPT''@|$(GNULIB_GETSUBOPT)|g' \
 	      -e 's|@''GNULIB_GRANTPT''@|$(GNULIB_GRANTPT)|g' \
 	      -e 's|@''GNULIB_MALLOC_POSIX''@|$(GNULIB_MALLOC_POSIX)|g' \
+	      -e 's|@''GNULIB_MBTOWC''@|$(GNULIB_MBTOWC)|g' \
 	      -e 's|@''GNULIB_MKDTEMP''@|$(GNULIB_MKDTEMP)|g' \
 	      -e 's|@''GNULIB_MKOSTEMP''@|$(GNULIB_MKOSTEMP)|g' \
 	      -e 's|@''GNULIB_MKOSTEMPS''@|$(GNULIB_MKOSTEMPS)|g' \
@@ -1687,7 +1701,9 @@ stdlib.h: stdlib.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_SYSTEM_POSIX''@|$(GNULIB_SYSTEM_POSIX)|g' \
 	      -e 's|@''GNULIB_UNLOCKPT''@|$(GNULIB_UNLOCKPT)|g' \
 	      -e 's|@''GNULIB_UNSETENV''@|$(GNULIB_UNSETENV)|g' \
-	      -e 's|@''HAVE__EXIT''@|$(HAVE__EXIT)|g' \
+	      -e 's|@''GNULIB_WCTOMB''@|$(GNULIB_WCTOMB)|g' \
+	      < $(srcdir)/stdlib.in.h | \
+	  sed -e 's|@''HAVE__EXIT''@|$(HAVE__EXIT)|g' \
 	      -e 's|@''HAVE_ATOLL''@|$(HAVE_ATOLL)|g' \
 	      -e 's|@''HAVE_CANONICALIZE_FILE_NAME''@|$(HAVE_CANONICALIZE_FILE_NAME)|g' \
 	      -e 's|@''HAVE_DECL_GETLOADAVG''@|$(HAVE_DECL_GETLOADAVG)|g' \
@@ -1703,17 +1719,18 @@ stdlib.h: stdlib.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_RANDOM_R''@|$(HAVE_RANDOM_R)|g' \
 	      -e 's|@''HAVE_REALPATH''@|$(HAVE_REALPATH)|g' \
 	      -e 's|@''HAVE_RPMATCH''@|$(HAVE_RPMATCH)|g' \
-	      -e 's|@''HAVE_SETENV''@|$(HAVE_SETENV)|g' \
+	      -e 's|@''HAVE_DECL_SETENV''@|$(HAVE_DECL_SETENV)|g' \
 	      -e 's|@''HAVE_STRTOD''@|$(HAVE_STRTOD)|g' \
 	      -e 's|@''HAVE_STRTOLL''@|$(HAVE_STRTOLL)|g' \
 	      -e 's|@''HAVE_STRTOULL''@|$(HAVE_STRTOULL)|g' \
 	      -e 's|@''HAVE_STRUCT_RANDOM_DATA''@|$(HAVE_STRUCT_RANDOM_DATA)|g' \
 	      -e 's|@''HAVE_SYS_LOADAVG_H''@|$(HAVE_SYS_LOADAVG_H)|g' \
 	      -e 's|@''HAVE_UNLOCKPT''@|$(HAVE_UNLOCKPT)|g' \
-	      -e 's|@''HAVE_UNSETENV''@|$(HAVE_UNSETENV)|g' \
+	      -e 's|@''HAVE_DECL_UNSETENV''@|$(HAVE_DECL_UNSETENV)|g' \
 	      -e 's|@''REPLACE_CALLOC''@|$(REPLACE_CALLOC)|g' \
 	      -e 's|@''REPLACE_CANONICALIZE_FILE_NAME''@|$(REPLACE_CANONICALIZE_FILE_NAME)|g' \
 	      -e 's|@''REPLACE_MALLOC''@|$(REPLACE_MALLOC)|g' \
+	      -e 's|@''REPLACE_MBTOWC''@|$(REPLACE_MBTOWC)|g' \
 	      -e 's|@''REPLACE_MKSTEMP''@|$(REPLACE_MKSTEMP)|g' \
 	      -e 's|@''REPLACE_PUTENV''@|$(REPLACE_PUTENV)|g' \
 	      -e 's|@''REPLACE_REALLOC''@|$(REPLACE_REALLOC)|g' \
@@ -1721,10 +1738,10 @@ stdlib.h: stdlib.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''REPLACE_SETENV''@|$(REPLACE_SETENV)|g' \
 	      -e 's|@''REPLACE_STRTOD''@|$(REPLACE_STRTOD)|g' \
 	      -e 's|@''REPLACE_UNSETENV''@|$(REPLACE_UNSETENV)|g' \
+	      -e 's|@''REPLACE_WCTOMB''@|$(REPLACE_WCTOMB)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	      < $(srcdir)/stdlib.in.h; \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)'; \
 	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += stdlib.h stdlib.h-t
@@ -1830,6 +1847,7 @@ string.h: string.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_STRCASESTR''@|$(GNULIB_STRCASESTR)|g' \
 	      -e 's|@''GNULIB_STRTOK_R''@|$(GNULIB_STRTOK_R)|g' \
 	      -e 's|@''GNULIB_STRERROR''@|$(GNULIB_STRERROR)|g' \
+	      -e 's|@''GNULIB_STRERROR_R''@|$(GNULIB_STRERROR_R)|g' \
 	      -e 's|@''GNULIB_STRSIGNAL''@|$(GNULIB_STRSIGNAL)|g' \
 	      -e 's|@''GNULIB_STRVERSCMP''@|$(GNULIB_STRVERSCMP)|g' \
 	      < $(srcdir)/string.in.h | \
@@ -1849,6 +1867,7 @@ string.h: string.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_STRSEP''@|$(HAVE_STRSEP)|g' \
 	      -e 's|@''HAVE_STRCASESTR''@|$(HAVE_STRCASESTR)|g' \
 	      -e 's|@''HAVE_DECL_STRTOK_R''@|$(HAVE_DECL_STRTOK_R)|g' \
+	      -e 's|@''HAVE_DECL_STRERROR_R''@|$(HAVE_DECL_STRERROR_R)|g' \
 	      -e 's|@''HAVE_DECL_STRSIGNAL''@|$(HAVE_DECL_STRSIGNAL)|g' \
 	      -e 's|@''HAVE_STRVERSCMP''@|$(HAVE_STRVERSCMP)|g' \
 	      -e 's|@''REPLACE_STPNCPY''@|$(REPLACE_STPNCPY)|g' \
@@ -1858,6 +1877,7 @@ string.h: string.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''REPLACE_STRDUP''@|$(REPLACE_STRDUP)|g' \
 	      -e 's|@''REPLACE_STRSTR''@|$(REPLACE_STRSTR)|g' \
 	      -e 's|@''REPLACE_STRERROR''@|$(REPLACE_STRERROR)|g' \
+	      -e 's|@''REPLACE_STRERROR_R''@|$(REPLACE_STRERROR_R)|g' \
 	      -e 's|@''REPLACE_STRNCAT''@|$(REPLACE_STRNCAT)|g' \
 	      -e 's|@''REPLACE_STRNDUP''@|$(REPLACE_STRNDUP)|g' \
 	      -e 's|@''REPLACE_STRNLEN''@|$(REPLACE_STRNLEN)|g' \
@@ -2138,7 +2158,7 @@ time.h: time.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_STRPTIME''@|$(GNULIB_STRPTIME)|g' \
 	      -e 's|@''GNULIB_TIMEGM''@|$(GNULIB_TIMEGM)|g' \
 	      -e 's|@''GNULIB_TIME_R''@|$(GNULIB_TIME_R)|g' \
-	      -e 's|@''HAVE_LOCALTIME_R''@|$(HAVE_LOCALTIME_R)|g' \
+	      -e 's|@''HAVE_DECL_LOCALTIME_R''@|$(HAVE_DECL_LOCALTIME_R)|g' \
 	      -e 's|@''HAVE_NANOSLEEP''@|$(HAVE_NANOSLEEP)|g' \
 	      -e 's|@''HAVE_STRPTIME''@|$(HAVE_STRPTIME)|g' \
 	      -e 's|@''HAVE_TIMEGM''@|$(HAVE_TIMEGM)|g' \
@@ -2215,6 +2235,7 @@ unistd.h: unistd.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_LINK''@|$(GNULIB_LINK)|g' \
 	      -e 's|@''GNULIB_LINKAT''@|$(GNULIB_LINKAT)|g' \
 	      -e 's|@''GNULIB_LSEEK''@|$(GNULIB_LSEEK)|g' \
+	      -e 's|@''GNULIB_PIPE''@|$(GNULIB_PIPE)|g' \
 	      -e 's|@''GNULIB_PIPE2''@|$(GNULIB_PIPE2)|g' \
 	      -e 's|@''GNULIB_PREAD''@|$(GNULIB_PREAD)|g' \
 	      -e 's|@''GNULIB_PWRITE''@|$(GNULIB_PWRITE)|g' \
@@ -2241,7 +2262,6 @@ unistd.h: unistd.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_FCHOWNAT''@|$(HAVE_FCHOWNAT)|g' \
 	      -e 's|@''HAVE_FSYNC''@|$(HAVE_FSYNC)|g' \
 	      -e 's|@''HAVE_FTRUNCATE''@|$(HAVE_FTRUNCATE)|g' \
-	      -e 's|@''HAVE_GETDOMAINNAME''@|$(HAVE_GETDOMAINNAME)|g' \
 	      -e 's|@''HAVE_GETDTABLESIZE''@|$(HAVE_GETDTABLESIZE)|g' \
 	      -e 's|@''HAVE_GETGROUPS''@|$(HAVE_GETGROUPS)|g' \
 	      -e 's|@''HAVE_GETHOSTNAME''@|$(HAVE_GETHOSTNAME)|g' \
@@ -2250,6 +2270,7 @@ unistd.h: unistd.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_LCHOWN''@|$(HAVE_LCHOWN)|g' \
 	      -e 's|@''HAVE_LINK''@|$(HAVE_LINK)|g' \
 	      -e 's|@''HAVE_LINKAT''@|$(HAVE_LINKAT)|g' \
+	      -e 's|@''HAVE_PIPE''@|$(HAVE_PIPE)|g' \
 	      -e 's|@''HAVE_PIPE2''@|$(HAVE_PIPE2)|g' \
 	      -e 's|@''HAVE_PREAD''@|$(HAVE_PREAD)|g' \
 	      -e 's|@''HAVE_PWRITE''@|$(HAVE_PWRITE)|g' \
@@ -2258,21 +2279,26 @@ unistd.h: unistd.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_SLEEP''@|$(HAVE_SLEEP)|g' \
 	      -e 's|@''HAVE_SYMLINK''@|$(HAVE_SYMLINK)|g' \
 	      -e 's|@''HAVE_SYMLINKAT''@|$(HAVE_SYMLINKAT)|g' \
-	      -e 's|@''HAVE_TTYNAME_R''@|$(HAVE_TTYNAME_R)|g' \
 	      -e 's|@''HAVE_UNLINKAT''@|$(HAVE_UNLINKAT)|g' \
 	      -e 's|@''HAVE_USLEEP''@|$(HAVE_USLEEP)|g' \
 	      -e 's|@''HAVE_DECL_ENVIRON''@|$(HAVE_DECL_ENVIRON)|g' \
+	      -e 's|@''HAVE_DECL_FCHDIR''@|$(HAVE_DECL_FCHDIR)|g' \
+	      -e 's|@''HAVE_DECL_GETDOMAINNAME''@|$(HAVE_DECL_GETDOMAINNAME)|g' \
 	      -e 's|@''HAVE_DECL_GETLOGIN_R''@|$(HAVE_DECL_GETLOGIN_R)|g' \
 	      -e 's|@''HAVE_DECL_GETPAGESIZE''@|$(HAVE_DECL_GETPAGESIZE)|g' \
 	      -e 's|@''HAVE_DECL_GETUSERSHELL''@|$(HAVE_DECL_GETUSERSHELL)|g' \
+	      -e 's|@''HAVE_DECL_TTYNAME_R''@|$(HAVE_DECL_TTYNAME_R)|g' \
 	      -e 's|@''HAVE_OS_H''@|$(HAVE_OS_H)|g' \
 	      -e 's|@''HAVE_SYS_PARAM_H''@|$(HAVE_SYS_PARAM_H)|g' \
-	      -e 's|@''REPLACE_CHOWN''@|$(REPLACE_CHOWN)|g' \
+	  | \
+	  sed -e 's|@''REPLACE_CHOWN''@|$(REPLACE_CHOWN)|g' \
 	      -e 's|@''REPLACE_CLOSE''@|$(REPLACE_CLOSE)|g' \
 	      -e 's|@''REPLACE_DUP''@|$(REPLACE_DUP)|g' \
 	      -e 's|@''REPLACE_DUP2''@|$(REPLACE_DUP2)|g' \
 	      -e 's|@''REPLACE_FCHOWNAT''@|$(REPLACE_FCHOWNAT)|g' \
 	      -e 's|@''REPLACE_GETCWD''@|$(REPLACE_GETCWD)|g' \
+	      -e 's|@''REPLACE_GETDOMAINNAME''@|$(REPLACE_GETDOMAINNAME)|g' \
+	      -e 's|@''REPLACE_GETLOGIN_R''@|$(REPLACE_GETLOGIN_R)|g' \
 	      -e 's|@''REPLACE_GETGROUPS''@|$(REPLACE_GETGROUPS)|g' \
 	      -e 's|@''REPLACE_GETPAGESIZE''@|$(REPLACE_GETPAGESIZE)|g' \
 	      -e 's|@''REPLACE_LCHOWN''@|$(REPLACE_LCHOWN)|g' \
@@ -2482,6 +2508,7 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''HAVE_FEATURES_H''@|$(HAVE_FEATURES_H)|g' \
 	      -e 's|@''NEXT_WCHAR_H''@|$(NEXT_WCHAR_H)|g' \
 	      -e 's|@''HAVE_WCHAR_H''@|$(HAVE_WCHAR_H)|g' \
 	      -e 's|@''GNULIB_BTOWC''@|$(GNULIB_BTOWC)|g' \
@@ -2495,7 +2522,36 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_WCSRTOMBS''@|$(GNULIB_WCSRTOMBS)|g' \
 	      -e 's|@''GNULIB_WCSNRTOMBS''@|$(GNULIB_WCSNRTOMBS)|g' \
 	      -e 's|@''GNULIB_WCWIDTH''@|$(GNULIB_WCWIDTH)|g' \
-	      -e 's|@''HAVE_WINT_T''@|$(HAVE_WINT_T)|g' \
+	      -e 's|@''GNULIB_WMEMCHR''@|$(GNULIB_WMEMCHR)|g' \
+	      -e 's|@''GNULIB_WMEMCMP''@|$(GNULIB_WMEMCMP)|g' \
+	      -e 's|@''GNULIB_WMEMCPY''@|$(GNULIB_WMEMCPY)|g' \
+	      -e 's|@''GNULIB_WMEMMOVE''@|$(GNULIB_WMEMMOVE)|g' \
+	      -e 's|@''GNULIB_WMEMSET''@|$(GNULIB_WMEMSET)|g' \
+	      -e 's|@''GNULIB_WCSLEN''@|$(GNULIB_WCSLEN)|g' \
+	      -e 's|@''GNULIB_WCSNLEN''@|$(GNULIB_WCSNLEN)|g' \
+	      -e 's|@''GNULIB_WCSCPY''@|$(GNULIB_WCSCPY)|g' \
+	      -e 's|@''GNULIB_WCPCPY''@|$(GNULIB_WCPCPY)|g' \
+	      -e 's|@''GNULIB_WCSNCPY''@|$(GNULIB_WCSNCPY)|g' \
+	      -e 's|@''GNULIB_WCPNCPY''@|$(GNULIB_WCPNCPY)|g' \
+	      -e 's|@''GNULIB_WCSCAT''@|$(GNULIB_WCSCAT)|g' \
+	      -e 's|@''GNULIB_WCSNCAT''@|$(GNULIB_WCSNCAT)|g' \
+	      -e 's|@''GNULIB_WCSCMP''@|$(GNULIB_WCSCMP)|g' \
+	      -e 's|@''GNULIB_WCSNCMP''@|$(GNULIB_WCSNCMP)|g' \
+	      -e 's|@''GNULIB_WCSCASECMP''@|$(GNULIB_WCSCASECMP)|g' \
+	      -e 's|@''GNULIB_WCSNCASECMP''@|$(GNULIB_WCSNCASECMP)|g' \
+	      -e 's|@''GNULIB_WCSCOLL''@|$(GNULIB_WCSCOLL)|g' \
+	      -e 's|@''GNULIB_WCSXFRM''@|$(GNULIB_WCSXFRM)|g' \
+	      -e 's|@''GNULIB_WCSDUP''@|$(GNULIB_WCSDUP)|g' \
+	      -e 's|@''GNULIB_WCSCHR''@|$(GNULIB_WCSCHR)|g' \
+	      -e 's|@''GNULIB_WCSRCHR''@|$(GNULIB_WCSRCHR)|g' \
+	      -e 's|@''GNULIB_WCSCSPN''@|$(GNULIB_WCSCSPN)|g' \
+	      -e 's|@''GNULIB_WCSSPN''@|$(GNULIB_WCSSPN)|g' \
+	      -e 's|@''GNULIB_WCSPBRK''@|$(GNULIB_WCSPBRK)|g' \
+	      -e 's|@''GNULIB_WCSSTR''@|$(GNULIB_WCSSTR)|g' \
+	      -e 's|@''GNULIB_WCSTOK''@|$(GNULIB_WCSTOK)|g' \
+	      -e 's|@''GNULIB_WCSWIDTH''@|$(GNULIB_WCSWIDTH)|g' \
+	      < $(srcdir)/wchar.in.h | \
+	  sed -e 's|@''HAVE_WINT_T''@|$(HAVE_WINT_T)|g' \
 	      -e 's|@''HAVE_BTOWC''@|$(HAVE_BTOWC)|g' \
 	      -e 's|@''HAVE_MBSINIT''@|$(HAVE_MBSINIT)|g' \
 	      -e 's|@''HAVE_MBRTOWC''@|$(HAVE_MBRTOWC)|g' \
@@ -2505,9 +2561,38 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_WCRTOMB''@|$(HAVE_WCRTOMB)|g' \
 	      -e 's|@''HAVE_WCSRTOMBS''@|$(HAVE_WCSRTOMBS)|g' \
 	      -e 's|@''HAVE_WCSNRTOMBS''@|$(HAVE_WCSNRTOMBS)|g' \
+	      -e 's|@''HAVE_WMEMCHR''@|$(HAVE_WMEMCHR)|g' \
+	      -e 's|@''HAVE_WMEMCMP''@|$(HAVE_WMEMCMP)|g' \
+	      -e 's|@''HAVE_WMEMCPY''@|$(HAVE_WMEMCPY)|g' \
+	      -e 's|@''HAVE_WMEMMOVE''@|$(HAVE_WMEMMOVE)|g' \
+	      -e 's|@''HAVE_WMEMSET''@|$(HAVE_WMEMSET)|g' \
+	      -e 's|@''HAVE_WCSLEN''@|$(HAVE_WCSLEN)|g' \
+	      -e 's|@''HAVE_WCSNLEN''@|$(HAVE_WCSNLEN)|g' \
+	      -e 's|@''HAVE_WCSCPY''@|$(HAVE_WCSCPY)|g' \
+	      -e 's|@''HAVE_WCPCPY''@|$(HAVE_WCPCPY)|g' \
+	      -e 's|@''HAVE_WCSNCPY''@|$(HAVE_WCSNCPY)|g' \
+	      -e 's|@''HAVE_WCPNCPY''@|$(HAVE_WCPNCPY)|g' \
+	      -e 's|@''HAVE_WCSCAT''@|$(HAVE_WCSCAT)|g' \
+	      -e 's|@''HAVE_WCSNCAT''@|$(HAVE_WCSNCAT)|g' \
+	      -e 's|@''HAVE_WCSCMP''@|$(HAVE_WCSCMP)|g' \
+	      -e 's|@''HAVE_WCSNCMP''@|$(HAVE_WCSNCMP)|g' \
+	      -e 's|@''HAVE_WCSCASECMP''@|$(HAVE_WCSCASECMP)|g' \
+	      -e 's|@''HAVE_WCSNCASECMP''@|$(HAVE_WCSNCASECMP)|g' \
+	      -e 's|@''HAVE_WCSCOLL''@|$(HAVE_WCSCOLL)|g' \
+	      -e 's|@''HAVE_WCSXFRM''@|$(HAVE_WCSXFRM)|g' \
+	      -e 's|@''HAVE_WCSDUP''@|$(HAVE_WCSDUP)|g' \
+	      -e 's|@''HAVE_WCSCHR''@|$(HAVE_WCSCHR)|g' \
+	      -e 's|@''HAVE_WCSRCHR''@|$(HAVE_WCSRCHR)|g' \
+	      -e 's|@''HAVE_WCSCSPN''@|$(HAVE_WCSCSPN)|g' \
+	      -e 's|@''HAVE_WCSSPN''@|$(HAVE_WCSSPN)|g' \
+	      -e 's|@''HAVE_WCSPBRK''@|$(HAVE_WCSPBRK)|g' \
+	      -e 's|@''HAVE_WCSSTR''@|$(HAVE_WCSSTR)|g' \
+	      -e 's|@''HAVE_WCSTOK''@|$(HAVE_WCSTOK)|g' \
+	      -e 's|@''HAVE_WCSWIDTH''@|$(HAVE_WCSWIDTH)|g' \
 	      -e 's|@''HAVE_DECL_WCTOB''@|$(HAVE_DECL_WCTOB)|g' \
 	      -e 's|@''HAVE_DECL_WCWIDTH''@|$(HAVE_DECL_WCWIDTH)|g' \
-	      -e 's|@''REPLACE_MBSTATE_T''@|$(REPLACE_MBSTATE_T)|g' \
+	  | \
+	  sed -e 's|@''REPLACE_MBSTATE_T''@|$(REPLACE_MBSTATE_T)|g' \
 	      -e 's|@''REPLACE_BTOWC''@|$(REPLACE_BTOWC)|g' \
 	      -e 's|@''REPLACE_WCTOB''@|$(REPLACE_WCTOB)|g' \
 	      -e 's|@''REPLACE_MBSINIT''@|$(REPLACE_MBSINIT)|g' \
@@ -2519,10 +2604,10 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''REPLACE_WCSRTOMBS''@|$(REPLACE_WCSRTOMBS)|g' \
 	      -e 's|@''REPLACE_WCSNRTOMBS''@|$(REPLACE_WCSNRTOMBS)|g' \
 	      -e 's|@''REPLACE_WCWIDTH''@|$(REPLACE_WCWIDTH)|g' \
+	      -e 's|@''REPLACE_WCSWIDTH''@|$(REPLACE_WCSWIDTH)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
-	    < $(srcdir)/wchar.in.h; \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)'; \
 	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += wchar.h wchar.h-t
@@ -2540,7 +2625,7 @@ EXTRA_libgnu_a_SOURCES += wcrtomb.c
 
 ## end   gnulib module wcrtomb
 
-## begin gnulib module wctype
+## begin gnulib module wctype-h
 
 BUILT_SOURCES += wctype.h
 
@@ -2554,8 +2639,15 @@ wctype.h: wctype.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_WCTYPE_H''@|$(NEXT_WCTYPE_H)|g' \
+	      -e 's/@''GNULIB_ISWBLANK''@/$(GNULIB_ISWBLANK)/g' \
+	      -e 's/@''GNULIB_WCTYPE''@/$(GNULIB_WCTYPE)/g' \
+	      -e 's/@''GNULIB_ISWCTYPE''@/$(GNULIB_ISWCTYPE)/g' \
+	      -e 's/@''GNULIB_WCTRANS''@/$(GNULIB_WCTRANS)/g' \
+	      -e 's/@''GNULIB_TOWCTRANS''@/$(GNULIB_TOWCTRANS)/g' \
 	      -e 's/@''HAVE_ISWBLANK''@/$(HAVE_ISWBLANK)/g' \
 	      -e 's/@''HAVE_ISWCNTRL''@/$(HAVE_ISWCNTRL)/g' \
+	      -e 's/@''HAVE_WCTYPE_T''@/$(HAVE_WCTYPE_T)/g' \
+	      -e 's/@''HAVE_WCTRANS_T''@/$(HAVE_WCTRANS_T)/g' \
 	      -e 's/@''HAVE_WINT_T''@/$(HAVE_WINT_T)/g' \
 	      -e 's/@''REPLACE_ISWBLANK''@/$(REPLACE_ISWBLANK)/g' \
 	      -e 's/@''REPLACE_ISWCNTRL''@/$(REPLACE_ISWCNTRL)/g' \
@@ -2568,7 +2660,7 @@ MOSTLYCLEANFILES += wctype.h wctype.h-t
 
 EXTRA_DIST += wctype.in.h
 
-## end   gnulib module wctype
+## end   gnulib module wctype-h
 
 ## begin gnulib module wcwidth
 

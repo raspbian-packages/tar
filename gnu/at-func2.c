@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Define an at-style functions like linkat or renameat.
-   Copyright (C) 2006, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "filenamecat.h"
 #include "openat.h"
 #include "same-inode.h"

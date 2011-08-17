@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU tar 1.12\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
 "PO-Revision-Date: 1997-05-30 22:55+0900\n"
 "Last-Translator: Bang Jun-Young <bangjy@nownuri.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -56,21 +56,21 @@ msgstr ""
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr ""
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr ""
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr ""
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr ""
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 #, fuzzy
 msgid " [OPTION...]"
 msgstr ""
@@ -79,17 +79,17 @@ msgstr ""
 "\n"
 
 #
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, fuzzy, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "더 많은 정보를 보려면 `%s --help' 하십시오.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr ""
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "알 수 없는 시스템 오류"
 
@@ -195,18 +195,18 @@ msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "오래된 옵션 `%c'는 인수가 필요합니다."
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 #, fuzzy
 msgid "memory exhausted"
 msgstr "메모리가 바닥남"
 
 #
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "현재 디렉토리를 알 수 없습니다"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, c-format
 msgid "failed to return to initial working directory"
 msgstr ""
@@ -230,11 +230,11 @@ msgstr ""
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr ""
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr ""
 
@@ -485,22 +485,22 @@ msgstr[0] "%s: %d 바이트(%d 바이트 중)만 썼습니다"
 msgstr[1] "%s: %d 바이트(%d 바이트 중)만 썼습니다"
 
 #
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, fuzzy, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "절대 링크들에서 앞에 붙은 `/'를 제거함"
 
 #
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, fuzzy, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "절대 링크들에서 앞에 붙은 `/'를 제거함"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr ""
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr ""
 
@@ -823,24 +823,24 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "%d 바이트(%ld 바이트 중)만 읽을 수 있습니다"
 msgstr[1] "%d 바이트(%ld 바이트 중)만 읽을 수 있습니다"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 #, fuzzy
 msgid "Contents differ"
 msgstr "모드가 다릅니다"
 
 #
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "아카이브에 예기치 않은 EOF"
 
 #
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 #, fuzzy
 msgid "File type differs"
 msgstr "크기가 다릅니다"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "모드가 다릅니다"
 
@@ -860,56 +860,60 @@ msgid "Mod time differs"
 msgstr "변경 시각이 다릅니다"
 
 #
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "크기가 다릅니다"
 
 #
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "%s에 연결되지 않음"
 
 #
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "기호링크가 다릅니다"
 
 #
-#: src/compare.c:316
+#: src/compare.c:317
 #, fuzzy
 msgid "Device number differs"
 msgstr "장치 번호가 바뀌었음"
 
 #
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "검증 "
 
 #
-#: src/compare.c:463
+#: src/compare.c:464
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: 알 수 없는 파일 타입; 파일이 무시됨"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr ""
 
-#: src/compare.c:520
+#: src/compare.c:526
+msgid "Archive contains transformed file names."
+msgstr ""
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr ""
 
 #
-#: src/compare.c:593
+#: src/compare.c:603
 #, fuzzy, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "검증 실패: %d개의 부적절한 헤더가 검출됨"
 msgstr[1] "검증 실패: %d개의 부적절한 헤더가 검출됨"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr ""
@@ -965,7 +969,7 @@ msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: 다른 파일시스템 상에 있음; 덤프되지 않음"
 
 #
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 #, fuzzy
 msgid "contents not dumped"
 msgstr " (코어 출력됨)"
@@ -994,7 +998,7 @@ msgstr "%s: 변경되지 않았습니다; 덤프되지 않음"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s는 아카이브입니다; 덤프되지 않음"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr ""
 
@@ -1003,12 +1007,12 @@ msgstr ""
 msgid "%s: file changed as we read it"
 msgstr ""
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr ""
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr ""
@@ -1038,181 +1042,181 @@ msgstr ""
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr ""
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr ""
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "연속되어 있는 파일을 일반 파일로 추출함"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "기호 링크를 하드 링크로 추출하고 있습니다"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, fuzzy, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "`%s'를 추출할 수 없습니다 -- 이 파일은 다른 볼륨에 연속되어 있습니다"
 
 #
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "아카이브 파일에 예기치 않은 EOF"
 
 #
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: 알 수 없는 파일 타입; 파일이 무시됨"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr ""
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: 이 파일을 백업할 수 없었습니다"
 
 #
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s를 %s로 이름을 바꿀 수 없습니다"
 
 #
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
 #
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
 #
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, fuzzy, c-format
 msgid "%s: Directory is new"
 msgstr "%s는 새 디렉토리입니다"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr ""
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "옵션에 부적절한 모드가 주어짐"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr ""
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr ""
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
 #
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 #, fuzzy
 msgid "Read error in snapshot file"
 msgstr "%s에서 읽기 오류"
 
 #
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "아카이브 파일에 예기치 않은 EOF"
 
 #
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 #, fuzzy
 msgid "Unexpected field value in snapshot file"
 msgstr "아카이브 파일에 예기치 않은 EOF"
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr ""
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr ""
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
 #
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, fuzzy, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "%s로 디렉토리를 바꿀 수 없습니다"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr ""
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr ""
 
 #
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: %s를 지움\n"
 
 #
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, fuzzy, c-format
 msgid "%s: Cannot remove"
 msgstr "%s를 지울 수 없습니다"
@@ -1233,172 +1237,166 @@ msgstr "블럭 %10ld: ** NUL로 된 블럭 **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "블럭 %10ld: ** 파일의 끝 **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, fuzzy, c-format
 msgid "block %s: "
 msgstr "블럭 %10ld: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr ""
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr ""
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr ""
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr ""
 
 #
-#: src/list.c:844
+#: src/list.c:840
 #, fuzzy, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "이 볼륨은 순서를 벗어났습니다"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr ""
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr ""
 
 #
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " %s로 링크\n"
 
 #
-#: src/list.c:1269
+#: src/list.c:1265
 #, fuzzy, c-format
 msgid " unknown file type %s\n"
 msgstr " 알 수 없는 파일 타입 `%c'\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr ""
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr ""
 
 #
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--볼륨 헤더--\n"
 
 #
-#: src/list.c:1303
+#: src/list.c:1299
 #, fuzzy, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--%ld 바이트 째에 계속됨--\n"
 
 #
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "디렉토리를 만드는 중:"
 
 #
-#: src/misc.c:298
+#: src/misc.c:297
 #, fuzzy
 msgid "Cannot get working directory"
 msgstr "%s로 디렉토리를 바꿀 수 없습니다"
 
 #
-#: src/misc.c:571
+#: src/misc.c:570
 #, fuzzy, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s를 %s로 이름 바꿈"
 
 #
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, fuzzy, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s를 %s로 이름을 바꿀 수 없습니다"
 
 #
-#: src/misc.c:604
+#: src/misc.c:603
 #, fuzzy, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s를 %s로 이름 바꿈"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr ""
 
-#
-#: src/misc.c:866
-#, fuzzy, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s 디렉토리는 이름이 바뀌었습니다"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr ""
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr ""
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
 #
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: 아카이브에 없음"
 
 #
-#: src/names.c:615
+#: src/names.c:611
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: 아카이브에 없음"
 
-#: src/names.c:649
+#: src/names.c:645
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "`%s'와 일치하도록 라벨이 붙지 않은 아카이브"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -2767,6 +2765,11 @@ msgstr ""
 #, c-format
 msgid "--stat requires file names"
 msgstr ""
+
+#
+#, fuzzy
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s 디렉토리는 이름이 바뀌었습니다"
 
 #
 #, fuzzy

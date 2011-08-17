@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.13.25 \n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
 "PO-Revision-Date: 2004-03-08 14:44+0200\n"
 "Last-Translator: Μπαλάσκας Ευάγγελος (Balaskas Euaggelos) <ebalaskas@cs."
 "teiath.gr>\n"
@@ -59,40 +59,40 @@ msgstr ""
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr ""
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr ""
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr ""
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr ""
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 #, fuzzy
 msgid " [OPTION...]"
 msgstr ""
 "\n"
 "Χρήση: %s [ΕΠΙΛΟΓΉ]...\n"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, fuzzy, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "Προσπαθήστε `%s --help' για περισσότερες πληροφορίες.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, fuzzy, c-format
 msgid "Report bugs to %s.\n"
 msgstr ""
 "\n"
 "Αναφορά σφαλμάτων στο <bug-tar@gnu.org>.\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Άγνωστο σφάλμα συστήματος"
 
@@ -198,16 +198,16 @@ msgstr "%s: η επιλογή `-W %s' δεν επιτρέπει όρισμα\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: η επιλογή `%s' απαιτεί όρισμα\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "η μνήμη εξαντλήθηκε"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "Δεν είναι δυνατή η τροποποίηση του τρέχοντος καταλόγου"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, fuzzy, c-format
 msgid "failed to return to initial working directory"
 msgstr "Δεν είναι δυνατή η αποθήκευση του τρέχοντος καταλόγου"
@@ -231,11 +231,11 @@ msgstr "Δεν είναι δυνατή η αποθήκευση του τρέχο
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "`"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "'"
 
@@ -488,22 +488,22 @@ msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Γράφτηκαν μόνο %lu από %lu byte"
 msgstr[1] "%s: Γράφτηκαν μόνο %lu από %lu byte"
 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, fuzzy, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Απομακρύνονται τα αρχικά `%.*s' από τα ονόματα των μελών"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, fuzzy, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Απομακρύνονται τα αρχικά `%.*s' από τα ονόματα των μελών"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 #, fuzzy
 msgid "Substituting `.' for empty member name"
 msgstr "Απομακρύνονται τα αρχικά `%.*s' από τα ονόματα των μελών"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr ""
 
@@ -802,20 +802,20 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Δυνατή μόνο η ανάγνωση %lu από %lu byte"
 msgstr[1] "Δυνατή μόνο η ανάγνωση %lu από %lu byte"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "Τα περιεχόμενα διαφέρουν"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Μη αναμενόμενο EOF (Τέλος Αρχείου) στην αρχειοθήκη"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "Οι τύποι αρχείων διαφέρουν"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "Οι καταστάσεις διαφέρουν"
 
@@ -831,49 +831,54 @@ msgstr "Ταυτότητες ομάδας διαφέρουν"
 msgid "Mod time differs"
 msgstr "Ώρες τροποποίησης διαφέρουν"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "Τα μεγέθη διαφέρουν"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "Δεν είναι συνδεδεμένο με %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "Οι σύνδεσμοι διαφέρουν"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "Οι αριθμοί των συσκευών διαφέρουν"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Επαλήθευση "
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: Άγνωστος τύπος αρχείου '%c', εκτέλεση της diff ως κανονικό αρχείο"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr ""
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "Η αρχειοθήκη περιέχει απαρχαιωμένες επικεφαλίδες κωδικοποίησης base64"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr ""
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, fuzzy, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "Η ΕΠΑΛΎΘΕΥΣΗ ΑΠΈΤΥΧΕ: ανιχνεύτηκαν %d άκυρη(ες) επικεφαλίδα(δες)"
 msgstr[1] "Η ΕΠΑΛΎΘΕΥΣΗ ΑΠΈΤΥΧΕ: ανιχνεύτηκαν %d άκυρη(ες) επικεφαλίδα(δες)"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr ""
@@ -924,7 +929,7 @@ msgstr[1] "%s: Το αρχείο συρρικνώθηκε σε %s bytes; συμ�
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: το αρχείο είναι σε διαφορετικό σύστημα αρχείων; δεν αποθηκεύτηκε"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr ""
 
@@ -948,7 +953,7 @@ msgstr "%s: δεν μπορεί να τροποποιηθεί το αρχείο;
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: το αρχείο είναι η αρχειοθήκη; δεν αποθηκεύτηκε"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr ""
 
@@ -957,12 +962,12 @@ msgstr ""
 msgid "%s: file changed as we read it"
 msgstr "%s: αρχείο τροποποιήθηκε κατά την ανάγνωση"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: η υποδοχή αγνοήθηκε"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: η πόρτα αγνοήθηκε"
@@ -990,167 +995,167 @@ msgstr "%s: η ένδειξη χρόνου %s είναι %lu s στο μέλλο
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Μη αναμενόμενη ανακολουθία κατά την δημιουργία του καταλόγου"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Ο κατάλογος μετονομάστηκε πριν η κατάστασή του γίνει μη εξαγώγιμη"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Εξαγωγή συνεχόμενων αρχείων ως κανονικών αρχείων"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Προσπάθεια εξαγωγής των συμβολικών συνδέσμων ως σθεναρών συνδέσμων"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Δεν είναι δυνατή η εξαγωγή -- το αρχείο συνεχίζεται σε άλλο τόμο"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "Μη αναμενόμενο EOF (Τέλος Αρχείου) στα κατακερματισμένα ονόματα"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Άγνωστος τύπος αρχείου '%c', εξαγωγή ως κανονικό αρχείο"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr ""
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Δεν είναι δυνατή η αποθήκευση αυτού του αρχείου"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s: Δεν είναι δυνατή η μετονομασία σε %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Ο κατάλογος έχει μετονομαστεί"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Ο κατάλογος έχει μετονομαστεί"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Ο κατάλογος είναι καινούριος"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Άκυρη ένδειξη χρόνου"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "Άκυρη κατάσταση δόθηκε σε επιλογή"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Άκυρος αριθμός συσκευής"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Άκυρος αριθμός i-κόμβου"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "Μη αναμενόμενο EOF (Τέλος Αρχείου) στην αρχειοθήκη"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr ""
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr ""
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, fuzzy, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "Δεν είναι δυνατή η δέσμευση μνήμης για τον συντελεστή ομαδοποίησης %d"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr ""
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, fuzzy, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: το αρχείο είναι σε διαφορετικό σύστημα αρχείων; δεν αποθηκεύτηκε"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Διαγραφή %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Δεν είναι δυνατή η απομάκρυνση"
@@ -1170,20 +1175,20 @@ msgstr "μπλοκ %s: ** Μπλοκ με χαρακτήρες NUL **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "μπλοκ %s: ** Τέλος Αρχείου **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "μπλοκ %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Κενά στην επικεφαλίδα ενώ αναμενόταν αριθμητική τιμή %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1191,142 +1196,137 @@ msgstr ""
 "συμπληρώματα"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Αρχειοθήκη οκταδικής τιμής %.*s είναι εκτός του %s εύρους"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Η αρχειοθήκη περιέχει απαρχαιωμένες επικεφαλίδες κωδικοποίησης base64"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr ""
 "Η αρχειοθήκη είναι υπογεγραμμένη με αλφαριθμητικά base-64 %s είναι εκτός του "
 "%s εύρους"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Η αρχειοθήκη με base-256 τιμές είναι εκτός του %s εύρους"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Η αρχειοθήκη περιέχει %.*s όπου αριθμητικές %s τιμές αναμένονται"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Η τιμή της αρχειοθήκης %s είναι εκτός του %s εύρους %s..%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " σύνδεσμος σε %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " άγνωστος τύπος αρχείου %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr ""
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr ""
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Επικεφαλίδα Τόμου--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Συνέχιση στο byte %s--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Δημιουργία καταλόγου:"
 
-#: src/misc.c:298
+#: src/misc.c:297
 #, fuzzy
 msgid "Cannot get working directory"
 msgstr "Δεν είναι δυνατή η τροποποίηση του τρέχοντος καταλόγου"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Μετονομασία %s σε %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Δεν είναι δυνατή η μετονομασία σε %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Μετονομασία %s πίσω στο %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Το αρχείο απομακρύνθηκε πριν το διαβάσουμε"
 
-#: src/misc.c:866
-#, fuzzy, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: Το αρχείο απομακρύνθηκε πριν το διαβάσουμε"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "θυγατρική διεργασία"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "κανάλι μεταξύ διεργασιών"
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Δεν βρέθηκε στην αρχειοθήκη"
 
-#: src/names.c:615
+#: src/names.c:611
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Δεν βρέθηκε στην αρχειοθήκη"
 
-#: src/names.c:649
+#: src/names.c:645
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "Η αρχειοθήκη δεν έχει ετικέτα για ταίριασμα %s"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -2699,6 +2699,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "--stat requires file names"
 msgstr "--Κατακερματισμένα ονόματα αρχείων--\n"
+
+#, fuzzy
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: Το αρχείο απομακρύνθηκε πριν το διαβάσουμε"
 
 #, fuzzy
 #~ msgid "Cannot restore working directory"

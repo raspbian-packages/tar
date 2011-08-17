@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU tar 1.15.1\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
 "PO-Revision-Date: 2004-12-27 20:45+0100\n"
 "Last-Translator: Santiago Vila Doncel <sanvila@unex.es>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -59,7 +59,7 @@ msgstr "%.*s: Parámetro ARGP_HELP_FMT desconocido"
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr "Incongruencia en ARGP_HELP_FMT: %s"
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
@@ -68,19 +68,19 @@ msgstr ""
 "también\n"
 "obligatorios u opcionales para las opciones cortas correspondientes."
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr "Modo de empleo:"
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr " o bien: "
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 msgid " [OPTION...]"
 msgstr " [OPCIÓN...]"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "Pruebe `%s --help' o `%s --usage' para más información.\n"
@@ -101,12 +101,12 @@ msgstr "Pruebe `%s --help' o `%s --usage' para más información.\n"
 # ¿No tendría sentido catalogarlos entonces?
 #
 # Véase "A Bug's life".
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr "Comunicar bichos a %s.\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Error del sistema desconocido"
 
@@ -215,16 +215,16 @@ msgstr "%s: la opción `-W %s' no admite ningún argumento\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: la opción `%s' requiere un argumento\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "memoria agotada"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "No se pudo obtener el directorio actual"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, fuzzy, c-format
 msgid "failed to return to initial working directory"
 msgstr "No se puede determinar el directorio de trabajo inicial"
@@ -248,11 +248,11 @@ msgstr "No se puede determinar el directorio de trabajo inicial"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "`"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "'"
 
@@ -529,22 +529,22 @@ msgstr[0] "%s: Sólo se escribieron %lu de %lu byte"
 msgstr[1] "%s: Sólo se escribieron %lu de %lu bytes"
 
 # FIXME. This might not always work. Is `%.*s' male or female? sv
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Eliminando la `%s' inicial de los nombres"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Eliminando la `%s' inicial de los objetivos de los enlaces"
 
 # FIXME. This might not always work. Is `%.*s' male or female? sv
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr "Se sustituye `.' por el nombre vacío"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr "Se sustituye `.' por un objetivo vacío de enlace duro"
 
@@ -951,16 +951,16 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Sólo se pudieron leer %lu de %lu byte"
 msgstr[1] "Sólo se pudieron leer %lu de %lu bytes"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "El contenido es distinto"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Fin de fichero inesperado en el archivo"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "El tipo de fichero es distinto"
 
@@ -970,7 +970,7 @@ msgstr "El tipo de fichero es distinto"
 # corresponder siempre una frase corta española, el resultado sonará a indio
 # completamente (me refiero a los indios esos de las películas del oeste,
 # que solamente hablan con sustantivos, verbos y adjetivos). sv
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "El modo es distinto"
 
@@ -986,30 +986,30 @@ msgstr "El gid es distinto"
 msgid "Mod time differs"
 msgstr "La fecha de modificación es distinta"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "El tamaño es distinto"
 
 # Creo que este enlace se efectúa al descomprimir un archivo tar.
 # No es que nos diga si está enlazado o no lo está, sino si él hace
 # el enlace o no lo hace. sv
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "No se enlaza a %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "El enlace simbólico es distinto"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "El número de dispositivo es distinto"
 
 # "Verifica ". Supongo que depende de si se concatena en algún
 # mensaje. jmg
 # FUZZY. Es verdad, habrá que verlo.
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Verificar "
@@ -1022,30 +1022,35 @@ msgstr "Verificar "
 # Realmente, dice lo que hace y no lo que ha hecho. sv
 # FIXME. Decirle al autor que estandarice las comillas: ¿'%c' o `%c'?
 # De momento lo estandarizo en la traducción.
-#: src/compare.c:463
+#: src/compare.c:464
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr ""
 "%s: Tipo de fichero `%c' desconocido, se toma la diferencia\n"
 "como fichero normal"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr ""
 "El archivo contiene nombres de fichero con los prefijos iniciales eliminados."
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "El archivo contiene la marca de tiempo en el futuro %s"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr "Puede que la verificación no encuentre los ficheros originales."
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "FALLO DE VERIFICACIÓN: %d cabecera inválida detectada"
 msgstr[1] "FALLO DE VERIFICACIÓN: %d cabeceras inválidas detectadas"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Un bloque de ceros aislado en %s"
@@ -1109,7 +1114,7 @@ msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: el fichero está en un sistema de ficheros distinto; no se vuelca"
 
 # Se vuelca la *memoria* del proceso en un fichero llamado `core'.
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 #, fuzzy
 msgid "contents not dumped"
 msgstr " (memoria volcada)"
@@ -1151,7 +1156,7 @@ msgstr "%s: el fichero no ha cambiado; no se vuelca"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: el fichero es el propio archivo; no se vuelca"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 #, fuzzy
 msgid "directory not dumped"
 msgstr "%s: contiene una marca de directorio caché; no se vuelca"
@@ -1161,12 +1166,12 @@ msgstr "%s: contiene una marca de directorio caché; no se vuelca"
 msgid "%s: file changed as we read it"
 msgstr "%s: el fichero cambió mientras se estaba leyendo"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: el `socket' no se tendrá en cuenta"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: no se tendrá en cuenta la puerta"
@@ -1194,7 +1199,7 @@ msgstr "%s: la marca de tiempo %s está %lu s en el futuro"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Inconsistencia inesperada al crear el directorio"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr ""
@@ -1204,7 +1209,7 @@ msgstr ""
 # ni un dispositivo (de bloques o de caracteres) ni un fifo, etc.
 # Uno puede pensar que son los ficheros "normales", pero eso depende,
 # pues un directorio es de lo más "normal"...
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Extrayendo ficheros contiguos como ficheros regulares"
 
@@ -1213,165 +1218,165 @@ msgstr "Extrayendo ficheros contiguos como ficheros regulares"
 # Es una cuestión todavía no dirimida.
 # ¿Tienes algún dato más? ¿Qué dicen los libros? sv
 # Enlaces duros. Lo acabo de mirar en un libro. gag
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Intentando la extracción de enlaces simbólicos como enlaces duros"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: No se puede extraer -- el fichero es continuación de otro volumen"
 
 # ¿No se referirá al autor a "mangled filenames"?... jmg
 # FIXME. Preguntárselo.
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "Fin de fichero inesperado en los nombres modificados"
 
 # FIXME. Lo de las comillas '%c'.
 # Como antes, lo estandarizo en la traducción a pesar de todo.
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Tipo de fichero `%c' desconocido, se extrae como fichero normal"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, fuzzy, c-format
 msgid "Current %s is newer or same age"
 msgstr "El `%s' actual es más reciente"
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: No se pudo hacer copia de seguridad de este fichero"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s: No se puede renombrar a %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: El directorio ha sido renombrado"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: El directorio ha sido renombrado"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: El directorio es nuevo"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Marca de tiempo inválida"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "Se ha especificado un modo no válido en la opción"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Número de dispositivo inválido"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Número de nodo-i inválido"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 #, fuzzy
 msgid "Read error in snapshot file"
 msgstr "Error de lectura en %s"
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "Fin de fichero inesperado en el archivo"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 #, fuzzy
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr "Argumento de densidad mal formado: '%s'"
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 #, fuzzy
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr "Argumento de densidad mal formado: '%s'"
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr ""
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr "%s: No se purga el directorio: no se puede efectuar `stat'"
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: el directorio está en un dispositivo distinto: no se purga"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Borrando %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: No se puede borrar"
@@ -1391,20 +1396,20 @@ msgstr "bloque %s: ** Bloque de NULos **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "bloque %s: ** Fin de Fichero **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "bloque %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Hay blancos en la cabecera cuando se esperaba el valor numérico %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1412,127 +1417,122 @@ msgstr ""
 "se supone complemento a dos"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "El valor octal %.*s del archivo está fuera del rango %s"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "El archivo contiene cabeceras base 64 obsoletas"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "La cadena firmada en base 64 %s del archivo está fuera del rango %s"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "El valor en base 256 del archivo está fuera del rango %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "El archivo contiene %.*s donde se esperaba el valor numérico %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, fuzzy, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "El valor del archivo %s está fuera del rango %s %s.%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " enlace a %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " tipo de fichero desconocido %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Enlace largo--\n"
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Nombre largo--\n"
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Cabecera de Volumen--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Continúa en el byte %s--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Creando el directorio:"
 
-#: src/misc.c:298
+#: src/misc.c:297
 #, fuzzy
 msgid "Cannot get working directory"
 msgstr "No se puede cambiar el directorio de trabajo"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Se renombra %s como %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: No se puede renombrar a %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Se vuelve a renombrar %s como %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: El fichero fue borrado antes de leerlo"
 
-#: src/misc.c:866
-#, fuzzy, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: El fichero fue borrado antes de leerlo"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "proceso hijo"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "canal de interproceso"
 
-#: src/names.c:594
+#: src/names.c:590
 #, fuzzy
 msgid "Pattern matching characters used in file names"
 msgstr ""
 "los patrones de exclusión encajan con el comienzo del nombre del fichero"
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: No se encuentra en el archivo"
 
-#: src/names.c:615
+#: src/names.c:611
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: El elemento solicitado no se encuentra en el archivo"
@@ -1543,17 +1543,17 @@ msgstr "%s: El elemento solicitado no se encuentra en el archivo"
 # Si no se sabe eso, se podría dejar de forma más neutra como
 # "Archivo no etiquetado para concordancia con `%s'" - gerardo (gag)
 # FIXME: Preguntar.
-#: src/names.c:649
+#: src/names.c:645
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "El archivo no está etiquetado para que coincida con %s"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -3103,6 +3103,10 @@ msgid "--stat requires file names"
 msgstr "--Nombres de fichero modificados--\n"
 
 #, fuzzy
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: El fichero fue borrado antes de leerlo"
+
+#, fuzzy
 #~ msgid "Cannot restore working directory"
 #~ msgstr "No se puede guardar el directorio de trabajo"
 
@@ -3746,9 +3750,6 @@ msgstr "--Nombres de fichero modificados--\n"
 
 #~ msgid "Removing `%.*s' prefix from member names"
 #~ msgstr "Eliminando el prefijo `%.*s' de los nombres"
-
-#~ msgid "Archive contains future timestamp %s"
-#~ msgstr "El archivo contiene la marca de tiempo en el futuro %s"
 
 #~ msgid "%s: Cannot symlink %s %s"
 #~ msgstr "%s: No se puede crear el enlace simbólico %s %s"

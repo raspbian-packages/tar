@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* provide a replacement openat function
-   Copyright (C) 2004-2010 Free Software Foundation, Inc.
+   Copyright (C) 2004-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "openat-priv.h"
 #include "save-cwd.h"
 
@@ -55,7 +55,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
       va_end (arg);
     }
 
-#if OPEN_TRAILING_SLASH_BUG
+# if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and one of O_CREAT, O_WRONLY, O_RDWR
      is specified, then fail.
      Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
@@ -86,11 +86,11 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
           return -1;
         }
     }
-#endif
+# endif
 
   fd = openat (dfd, filename, flags, mode);
 
-#if OPEN_TRAILING_SLASH_BUG
+# if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and fd does not refer to a directory,
      then fail.
      Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
@@ -119,7 +119,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
             }
         }
     }
-#endif
+# endif
 
   return fd;
 }

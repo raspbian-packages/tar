@@ -1,7 +1,7 @@
 # -*- buffer-read-only: t -*- vi: set ro:
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2010 Free Software Foundation, Inc.
+# Copyright (C) 2002-2011 Free Software Foundation, Inc.
 #
 # This file is free software, distributed under the terms of the GNU
 # General Public License.  As a special exception to the GNU General
@@ -58,6 +58,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module dirfd:
   # Code from module dirname:
   # Code from module dirname-lgpl:
+  # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module dup2:
   # Code from module environ:
@@ -103,6 +104,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module intprops:
   # Code from module inttostr:
   # Code from module inttypes:
+  # Code from module iswblank:
   # Code from module langinfo:
   # Code from module lchown:
   # Code from module link:
@@ -119,6 +121,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module mbscasecmp:
   # Code from module mbsinit:
   # Code from module mbsrtowcs:
+  # Code from module mbtowc:
   # Code from module mbuiter:
   # Code from module memchr:
   # Code from module mempcpy:
@@ -222,7 +225,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module warn-on-use:
   # Code from module wchar:
   # Code from module wcrtomb:
-  # Code from module wctype:
+  # Code from module wctype-h:
   # Code from module wcwidth:
   # Code from module write:
   # Code from module xalloc:
@@ -300,6 +303,7 @@ AC_DEFUN([gl_INIT],
   # Code from module closeout:
   gl_CLOSEOUT
   # Code from module configmake:
+  gl_CONFIGMAKE_PREP
   # Code from module d-ino:
   gl_CHECK_TYPE_STRUCT_DIRENT_D_INO
   # Code from module dirent:
@@ -315,6 +319,7 @@ AC_DEFUN([gl_INIT],
   gl_MODULE_INDICATOR([dirname])
   # Code from module dirname-lgpl:
   gl_DIRNAME_LGPL
+  # Code from module dosname:
   # Code from module double-slash-root:
   gl_DOUBLE_SLASH_ROOT
   # Code from module dup2:
@@ -416,6 +421,9 @@ AC_DEFUN([gl_INIT],
   gl_INTTOSTR
   # Code from module inttypes:
   gl_INTTYPES_H
+  # Code from module iswblank:
+  gl_FUNC_ISWBLANK
+  gl_WCTYPE_MODULE_INDICATOR([iswblank])
   # Code from module langinfo:
   gl_LANGINFO_H
   # Code from module lchown:
@@ -460,6 +468,9 @@ AC_DEFUN([gl_INIT],
   # Code from module mbsrtowcs:
   gl_FUNC_MBSRTOWCS
   gl_WCHAR_MODULE_INDICATOR([mbsrtowcs])
+  # Code from module mbtowc:
+  gl_FUNC_MBTOWC
+  gl_STDLIB_MODULE_INDICATOR([mbtowc])
   # Code from module mbuiter:
   gl_MBITER
   # Code from module memchr:
@@ -565,6 +576,7 @@ AC_DEFUN([gl_INIT],
   # Code from module snprintf:
   gl_FUNC_SNPRINTF
   gl_STDIO_MODULE_INDICATOR([snprintf])
+  gl_MODULE_INDICATOR([snprintf])
   # Code from module ssize_t:
   gt_TYPE_SSIZE_T
   # Code from module stat:
@@ -660,7 +672,7 @@ AC_DEFUN([gl_INIT],
   # Code from module uniwidth/base:
   gl_LIBUNISTRING_LIBHEADER([0.9], [uniwidth.h])
   # Code from module uniwidth/width:
-  gl_LIBUNISTRING_MODULE([0.9], [uniwidth/width])
+  gl_LIBUNISTRING_MODULE([0.9.4], [uniwidth/width])
   # Code from module unlink:
   gl_FUNC_UNLINK
   gl_UNISTD_MODULE_INDICATOR([unlink])
@@ -697,7 +709,7 @@ AC_DEFUN([gl_INIT],
   # Code from module wcrtomb:
   gl_FUNC_WCRTOMB
   gl_WCHAR_MODULE_INDICATOR([wcrtomb])
-  # Code from module wctype:
+  # Code from module wctype-h:
   gl_WCTYPE_H
   # Code from module wcwidth:
   gl_FUNC_WCWIDTH
@@ -923,6 +935,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/dirname-lgpl.c
   lib/dirname.c
   lib/dirname.h
+  lib/dosname.h
   lib/dup-safer.c
   lib/dup2.c
   lib/errno.in.h
@@ -978,6 +991,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/inttostr.c
   lib/inttostr.h
   lib/inttypes.in.h
+  lib/iswblank.c
   lib/langinfo.in.h
   lib/lchown.c
   lib/link.c
@@ -995,8 +1009,11 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/mbrtowc.c
   lib/mbscasecmp.c
   lib/mbsinit.c
+  lib/mbsrtowcs-impl.h
   lib/mbsrtowcs-state.c
   lib/mbsrtowcs.c
+  lib/mbtowc-impl.h
+  lib/mbtowc.c
   lib/mbuiter.h
   lib/memchr.c
   lib/memchr.valgrind
@@ -1078,7 +1095,6 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stddef.in.h
   lib/stdint.in.h
   lib/stdio-impl.h
-  lib/stdio-write.c
   lib/stdio.in.h
   lib/stdlib.in.h
   lib/stpcpy.c
@@ -1163,7 +1179,6 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/alloca.m4
   m4/argmatch.m4
   m4/argp.m4
-  m4/asm-underscore.m4
   m4/backupfile.m4
   m4/bison.m4
   m4/btowc.m4
@@ -1176,12 +1191,12 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/close.m4
   m4/closeout.m4
   m4/codeset.m4
+  m4/configmake.m4
   m4/d-ino.m4
   m4/dirent-safer.m4
   m4/dirent_h.m4
   m4/dirfd.m4
   m4/dirname.m4
-  m4/dos.m4
   m4/double-slash-root.m4
   m4/dup2.m4
   m4/eealloc.m4
@@ -1232,6 +1247,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/inttypes-pri.m4
   m4/inttypes.m4
   m4/inttypes_h.m4
+  m4/iswblank.m4
   m4/langinfo_h.m4
   m4/lchown.m4
   m4/lcmessage.m4
@@ -1258,6 +1274,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/mbsinit.m4
   m4/mbsrtowcs.m4
   m4/mbstate_t.m4
+  m4/mbtowc.m4
   m4/memchr.m4
   m4/mempcpy.m4
   m4/memrchr.m4

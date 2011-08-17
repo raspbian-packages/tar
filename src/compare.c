@@ -234,7 +234,8 @@ diff_file (void)
 	      else
 		read_and_process (&current_stat_info, process_rawdata);
 
-	      if (atime_preserve_option == replace_atime_preserve)
+	      if (atime_preserve_option == replace_atime_preserve
+		  && stat_data.st_size != 0)
 		{
 		  struct timespec atime = get_stat_atime (&stat_data);
 		  if (set_file_atime (diff_handle, chdir_fd, file_name, atime)
@@ -512,13 +513,22 @@ diff_archive (void)
 void
 verify_volume (void)
 {
+  int may_fail = 0;
   if (removed_prefixes_p ())
     {
       WARN((0, 0,
 	    _("Archive contains file names with leading prefixes removed.")));
-      WARN((0, 0,
-	    _("Verification may fail to locate original files.")));
+      may_fail = 1;
     }
+  if (transform_program_p ())
+    {
+      WARN((0, 0,
+	    _("Archive contains transformed file names.")));
+      may_fail = 1;
+    }
+  if (may_fail)
+    WARN((0, 0,
+	  _("Verification may fail to locate original files.")));
 
   if (!diff_buffer)
     diff_init ();
@@ -611,8 +621,10 @@ verify_volume (void)
 		       (0, 0, _("A lone zero block at %s"),
 			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
             }
+	  continue;
 	}
 
+      decode_header (current_header, &current_stat_info, &current_format, 1);
       diff_archive ();
       tar_stat_destroy (&current_stat_info);
     }

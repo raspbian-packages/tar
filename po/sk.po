@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar- \n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
 "PO-Revision-Date: 2002-02-10 12:00CEST\n"
 "Last-Translator: Martin Lacko <lacko@host.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -57,33 +57,33 @@ msgstr ""
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr ""
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
 msgstr ""
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr ""
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr ""
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 #, fuzzy
 msgid " [OPTION...]"
 msgstr ""
 "\n"
 "Pou¾itie: %s [PREPÍNAÈ]...\n"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, fuzzy, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "Viac informácií získate príkazom `%s --help'.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, fuzzy, c-format
 msgid "Report bugs to %s.\n"
 msgstr ""
@@ -92,7 +92,7 @@ msgstr ""
 "pripomienky k pkekladu zasielajte na adresu <sk-i18n@lists.linux.sk> "
 "(slovensky).\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Neznáma systémová chyba"
 
@@ -198,16 +198,16 @@ msgstr "%s: prepínaè `-W %s' musí by» zadaný bez argumentu\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: prepínaè `%s' vy¾aduje argument\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "Pamä» vyèerpaná"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "Pracovný adresár nie je mo¾né zmeni»"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, fuzzy, c-format
 msgid "failed to return to initial working directory"
 msgstr "Pracovný adresár nie je mo¾né uchova»"
@@ -231,11 +231,11 @@ msgstr "Pracovný adresár nie je mo¾né uchova»"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "`"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "'"
 
@@ -484,22 +484,22 @@ msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Zapísané iba %lu z %lu bajtov"
 msgstr[1] "%s: Zapísané iba %lu z %lu bajtov"
 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, fuzzy, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Odstraòujem úvodné `%.*s' z názvov súborov"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, fuzzy, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Odstraòujem úvodné `%.*s' z názvov súborov"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 #, fuzzy
 msgid "Substituting `.' for empty member name"
 msgstr "Odstraòujem úvodné `%.*s' z názvov súborov"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr ""
 
@@ -797,20 +797,20 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Dá sa èíta» iba %lu z %lu bajtov"
 msgstr[1] "Dá sa èíta» iba %lu z %lu bajtov"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "Obsah sa lí¹i"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Neoèekávaný koniec archívu"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "Typ súboru sa lí¹i"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "Práva sa lí¹ia"
 
@@ -826,49 +826,54 @@ msgstr "Gid sa lí¹i"
 msgid "Mod time differs"
 msgstr "Èas poslednej úpravy sa lí¹i"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "Veµkos» sa lí¹i"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "Nie je odkazom na %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "Symbolický odkaz sa lí¹i"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "Èíslo zariadenia sa lí¹i"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Overujem "
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: Neznámy typ súboru '%c', porovnávaný ako normálny súbor"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr ""
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "Archív obsahuje zastaralé base-64 hlavièky"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr ""
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, fuzzy, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "CHYBNÉ OVERENIE: nájdených chybných hlavièiek: %d"
 msgstr[1] "CHYBNÉ OVERENIE: nájdených chybných hlavièiek: %d"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr ""
@@ -919,7 +924,7 @@ msgstr[1] "%s: Súbor je krat¹í o : %s bajtov; Doplòujem nulami."
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: súbor je na inom súborovom systéme; nearchivovaný"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr ""
 
@@ -943,7 +948,7 @@ msgstr "%s: súbor nie je zmenený; neaktualizovaný"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: súbor je archiv; nearchivovaný"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr ""
 
@@ -952,12 +957,12 @@ msgstr ""
 msgid "%s: file changed as we read it"
 msgstr "%s: súbor bol poèas èítania zmenený"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: soket ignorovaný"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: dvere ignorované"
@@ -985,168 +990,168 @@ msgstr "%s: èasová nálepka %s je %lu z dátumu budúcnosti"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Neoèakávaná nekonzistencia, pri vytvárení adresára"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr ""
 "%s: Prieèinok bol premenovaný predtým, ako mohol by» extrahovaný jeho stav"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Súvisle ulo¾ené súbory rozbaµujem ako obyèajné súbory"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Skú¹am rozbali» symbolické odkazy ako pevné odkazy"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Nedá sa rozbali» -- súbor je pokraèovaním iného zväzku"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "Neoèakávaný koniec v rozsekanom mene"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Neznámy typ súboru `%c', rozbalený ako normálny súbor"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr ""
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Tento súbor nebolo mo¾né zálohova»"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s: nie je mo¾né premenova» na %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Adresár bol premenovaný"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Adresár bol premenovaný"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Adresár je nový"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Neplatný èas súboru"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "Zadáné chybné práva"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Neplatné èíslo zariadenia"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Neplatné èíslo i-uzlu"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "Neoèekávaný koniec archívu"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr ""
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr ""
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, fuzzy, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "Pre blokový faktor (blokov na záznam) %d nie je mo¾né alokovat pamä»"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr ""
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, fuzzy, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: súbor je na inom súborovom systéme; nearchivovaný"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Ma¾em %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Nedá sa zmaza»"
@@ -1166,20 +1171,20 @@ msgstr "blok %s: ** Blok NUL **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Konec súboru **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Medzery v hlavièke na mieste, kde je oèakávaná èíselná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1187,140 +1192,135 @@ msgstr ""
 "complement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Osmièková hodnota %.*s typu %s je mimo rozsah"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Archív obsahuje zastaralé base-64 hlavièky"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Hodnota base-64 typu %s je mimo %s rozsah"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Hodnota base-256 typu %s je mimo rozsah"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Archív obsahuje %.*s tam, kde je oèakaváná èísalná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Hodnota %s typu %s je mimo rozsah %s..%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " odkaz na %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " neznámy typ súboru %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr ""
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr ""
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Hlavièka zväzku--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Pokraèované od %s bajtu--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Vytváram adresár:"
 
-#: src/misc.c:298
+#: src/misc.c:297
 #, fuzzy
 msgid "Cannot get working directory"
 msgstr "Pracovný adresár nie je mo¾né zmeni»"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Premenovávam %s na %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: nie je mo¾né premenova» na %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Premenovávám %s spä» na %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Súbor zmazaný skôr ako mohl by» èítaný"
 
-#: src/misc.c:866
-#, fuzzy, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: Súbor zmazaný skôr ako mohl by» èítaný"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "potomok"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "meziprocesový kanál"
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: V archíve nenájdený"
 
-#: src/names.c:615
+#: src/names.c:611
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: V archíve nenájdený"
 
-#: src/names.c:649
+#: src/names.c:645
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "Pre vyhodnotenie vzorky `%s' musí by» archív pomenovaný"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -2691,6 +2691,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "--stat requires file names"
 msgstr "--Rozdelené meno súboru--\n"
+
+#, fuzzy
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: Súbor zmazaný skôr ako mohl by» èítaný"
 
 #, fuzzy
 #~ msgid "Cannot restore working directory"
