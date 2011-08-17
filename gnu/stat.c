@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Work around platform bugs in stat.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ orig_stat (const char *filename, struct stat *buf)
 #include <limits.h>
 #include <stdbool.h>
 #include <string.h>
+#include "dosname.h"
 
 /* Store information about NAME into ST.  Work around bugs with
    trailing slashes.  Mingw has other bugs (such as st_ino always

@@ -1,7 +1,7 @@
-# serial 2
+# serial 3
 # See if we need to provide mknod replacement.
 
-dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -30,7 +30,7 @@ AC_DEFUN([gl_FUNC_MKNOD],
       if (!geteuid ()) return 99;
       if (mknod ("conftest.fifo", S_IFIFO | 0600, 0)) return 2;]])],
          [gl_cv_func_mknod_works=yes],
-         [if test $? == 99 && test x"$FORCE_UNSAFE_CONFIGURE" = x; then
+         [if test $? = 99 && test x"$FORCE_UNSAFE_CONFIGURE" = x; then
             AC_MSG_FAILURE([you should not run configure as root ]dnl
 [(set FORCE_UNSAFE_CONFIGURE=1 in environment to bypass this check)])
           fi

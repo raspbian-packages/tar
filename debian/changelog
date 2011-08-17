@@ -1,9 +1,10 @@
-tar (1.25-4) UNRELEASED; urgency=low
+tar (1.26-1) unstable; urgency=low
 
-  * add a check to the rules file to ensure test suite is no attempted while
+  * new upstream version
+  * add a check to the rules file to ensure test suite is not attempted while
     building as root, closes: #596268
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 16 Aug 2011 16:46:49 -0700
+ -- Bdale Garbee <bdale@gag.com>  Wed, 17 Aug 2011 10:46:03 -0700
 
 tar (1.25-3) unstable; urgency=low
 

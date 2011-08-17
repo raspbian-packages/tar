@@ -1,3 +1,156 @@
+2011-03-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.26
+	* NEWS, configure.ac: Update.
+	* po/POTFILES.in: Remove paxexit.c (see bb971a1e).
+
+2011-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	--atime-preserve=replace: fix correctness and performance bugs
+	reported by Eric Blake in
+	<http://lists.gnu.org/archive/html/bug-tar/2011-03/msg00000.html>.
+	* src/compare.c (diff_file): Do not restore atime of size-zero
+	files.
+	* src/create.c (dump_file0): Likewise.	Also, do not restore atime
+	when fd is zero, because that indicates a file we haven't opened.
+
+2011-02-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* doc/tar.texi: Adjust example commands and output for accuracy.
+	The original problem was reported by Michael Witten in
+	<http://lists.gnu.org/archive/html/bug-tar/2011-02/msg00033.html>.
+
+2011-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: if (p) free (p); -> free (p);
+	There is no longer (since SunOS 4) any need to guard against
+	free (NULL), so replace each "if (p) free (p);" with "free (p);".
+	From Jim Meyering in
+	<http://lists.gnu.org/archive/html/bug-tar/2011-01/msg00026.html>.
+	* src/incremen.c (scan_directory, read_directory_file): As above.
+	(try_purge_directory): Likewise.
+	* src/list.c (read_header): Likewise.
+	* src/misc.c (assign_string): Likewise.
+
+2010-12-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Correctly store long sparse file names in PAX archives.
+	* src/sparse.c (pax_dump_header_1): Make sure the created header
+	name is
+	shorter than NAME_FIELD_SIZE bytes.
+	* tests/sparse04.at: New testcase.
+	* tests/Makefile.am (TESTSUITE_AT): Add sparse04.at.
+	* tests/testsuite.at: Include sparse04.at.
+	* NEWS: Update.
+
+2010-12-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: make the truncate test smaller and less buggy (tiny change)
+	Reported by Solar Designer in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-12/msg00003.html>.
+	* tests/truncate.at: Use a smaller test case, and make its
+	race condition less likely.
+
+2010-11-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: skip SIGPIPE-dependent tests in environments ignoring
+	SIGPIPE
+	Problem reported by Sven Joachim in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00043.html>.
+	* tests/remfiles01.at: Use AT_SIGPIPE_PREREQ.
+	* tests/sigpipe.at: Likewise.
+	* tests/testsuite.at (AT_SIGPIPE_PREREQ): New macro.
+
+2010-11-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: work around NetBSD and Tru64 symlink incompatibility
+	with POSIX
+	Problem reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00306.html>.
+	* src/extract.c (maybe_recoverable):  Also treat EFTYPE (if
+	defined)
+	and ENOTSUP like ELOOP.
+
+2010-11-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: adjust to paxutils change: paxexit.c -> paxexit-status.c
+	* lib/Makefile.am (libtar_a_SOURCES): paxexit.c renamed to
+	paxexit-status.c.
+
+	tar: remove unused function dir_removed_diag
+	* src/common.h (dir_removed_diag): Remove unused decl.
+	* src/misc.c (dir_removed_diag): Remove unused function.
+
+2010-11-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: work around FreeBSD symlink incompatibility with POSIX
+	* src/extract.c (maybe_recoverable): Treat EMLINK like ELOOP, for
+	FreeBSD.  Problem reported by Christian Weisgerber in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00080.html>.
+
+	* src/names.c: tar: fix bug with --one-file-system
+	--listed-incremental
+	Problem (and idea for fix) reported by Martin Weigel
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00071.html>.
+	* src/common.h (is_individual_file): Remove decl.
+	* src/create.c (dump_file0): Replace "is_individual_file (p)"
+	with "top_level".
+	* src/incremen.c (procdir): Replace "!is_individual_file
+	(name_buffer)" with "st->parent".  Fix bug with --one-file-system
+	and --listed-incremental.
+	* src/names.c (individual_file_table, register_individual_file):
+	(is_individual_file): Remove.  All uses removed.
+
+	tests: new test listed04 for --one-file-system
+	--listed-incremental
+	* tests/Makefile.am (TESTSUITE_AT): Add listed04.at.
+	* tests/listed04.at: New file.
+	* tests/testsuite.at: Include it.
+
+	scripts: fix option parsing
+	Problem reported by Dennis Wydra in
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00082.html>.
+	* scripts/backup.in: Accept "-l LEVEL".  Be more systematic about
+	backslashes inside ``; it shouldn't matter for modern shells but
+	it might matter for older ones.
+	* scripts/restore.in: Likewise.
+	* scripts/backup.in: Adjust implementation of -t/--time to match
+	the new implementation of -l/--level.
+
+2010-11-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Issue a warning if the archive being compared contais transformed
+	file names.
+	* src/common.h (transform_program_p): New proto.
+	* src/transform.c (transform_program_p): New function.
+	* src/compare.c (verify_volume): Warn if the archive contains
+	transformed file names.
+
+	Minor change.
+	* doc/tar.texi: Reword the description of decompress-program.
+
+2010-11-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: fix --verify option, which broke in 1.24
+	* NEWS: Document this.
+	* src/compare.c (verify_volume): Decode the header before invoking
+	diff_archive, as diff_archive no longer does this as of the
+	2010-06-28 commit.  Also, don't try to invoke diff_archive on a
+	zero block.
+	* tests/Makefile.am (TESTSUITE_AT): Add verify.at.
+	* tests/testsuite.at: Include verify.at.
+	* tests/verify.at: New file.
+
+2010-11-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge branch 'master' of ssh://git.sv.gnu.org/srv/git/tar
+
+2010-11-08  Jim Meyering  <meyering@redhat.com>
+
+	tests: avoid spurious failure when VERSION_CONTROL envvar is set
+	* tests/backup01.at: Unset VERSION_CONTROL.  Otherwise,
+	when set to e.g., 'always', it would cause this test to fail.
+
 2010-11-07  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Version 1.25
@@ -1180,9 +1333,8 @@
 	* tests/extrac05.at: Skip test if creating
 	sparse file fails.
 
-	Fix eventual memory override and fd exhaustion in create.c
-	Both bugs reported by Kamil Dudka.
-
+	Fix eventual memory override and fd exhaustion in create.c Both
+	bugs reported by Kamil Dudka.
 	* src/create.c (check_exclusion_tags): Do not keep
 	pointer to a location within tagname: it may change
 	after xrealloc. Use byte offset instead.

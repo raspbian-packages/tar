@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* obstack.h - object stack macros
-   Copyright (C) 1988-1994, 1996-1999, 2003-2006, 2009-2010 Free Software
+   Copyright (C) 1988-1994, 1996-1999, 2003-2006, 2009-2011 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
 

@@ -2,15 +2,15 @@
 # Copyright © 1996, 2001, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 # This file is distributed under the same license as the tar package.
 # Jan Djärv <jan.h.d@swipnet.se>, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010
-# Revision: 1.102
+# Revision: 1.105
 #
 #: src/create.c:1552
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.23.90\n"
+"Project-Id-Version: tar 1.24\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
-"PO-Revision-Date: 2010-07-15 17:04+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
+"PO-Revision-Date: 2010-11-05 11:14+0100\n"
 "Last-Translator: Jan Djärv <jan.h.d@swipnet.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -59,7 +59,7 @@ msgstr "%.*s: Okänd ARGP_HELP_FMT-parameter"
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr "Skräp i ARGP_HELP_FMT: %s"
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
@@ -67,24 +67,24 @@ msgstr ""
 "Obligatoriska respektive valfria argument för långa flaggor är obligatoriska "
 "repektive valfria även för motsvarande korta."
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr "Användning:"
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr "  eller: "
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 msgid " [OPTION...]"
 msgstr " [FLAGGA...]"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr "Försök med \"%s --help\" eller \"%s --usage\" för mer information.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr ""
@@ -92,7 +92,7 @@ msgstr ""
 "Rapportera fel eller synpunkter på översättningen till <tp-sv@listor.tp-sv."
 "se>.\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Okänt systemfel"
 
@@ -198,16 +198,16 @@ msgstr "%s: flaggan \"-W %s\" tar inget argument\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: flaggan \"-W %s\" kräver ett argument\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "minnet slut"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, c-format
 msgid "unable to record current working directory"
 msgstr "kan inte lagra nuvarande arbetskatalog"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, c-format
 msgid "failed to return to initial working directory"
 msgstr "kan inte gå tillbaka till initial arbetskatalog"
@@ -231,11 +231,11 @@ msgstr "kan inte gå tillbaka till initial arbetskatalog"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "\""
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "\""
 
@@ -425,7 +425,7 @@ msgstr ""
 #: gnu/version-etc.c:253
 #, c-format
 msgid "%s home page: <%s>\n"
-msgstr "%s hemsida: <%s>\n"
+msgstr "hemsida för %s: <%s>\n"
 
 #: gnu/version-etc.c:255
 #, c-format
@@ -506,21 +506,21 @@ msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Skrev bara %lu av %lu byte"
 msgstr[1] "%s: Skrev bara %lu av %lu byte"
 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Tar bort inledande \"%s\" från namnen i arkivet"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Tar bort inledande \"%s\" från mål för hårda länkar"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr "Ersätter tomma namn i arkivet med \".\""
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr "Ersätter tomt mål för hård länk med \".\""
 
@@ -812,20 +812,20 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Kunde bara läsa %lu av %lu byte"
 msgstr[1] "Kunde bara läsa %lu av %lu byte"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "Innehållet är olika"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "Oväntat filslut i arkivet"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "Filtyper är olika"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "Rättigheterna är olika"
 
@@ -841,49 +841,54 @@ msgstr "Gid är olika"
 msgid "Mod time differs"
 msgstr "Modifieringstiderna är olika"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "Storlekarna är olika"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "Inte länkad till %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "Symboliska länkar är olika"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "Enhetsnummer är olika"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Verifierar "
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr "%s: Okänd filtyp \"%c\" jämförd som en normal fil"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr "Arkivet innehåller filnamn med inledande prefix borttaget."
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "Arkivet innehåller föråldrade \"base-64\"-huvuden"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr "Verifiering kan misslyckas med att hitta originalfiler."
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "VERIFIKATIONSFEL: %d felaktigt arkivhuvud upptäckt"
 msgstr[1] "VERIFIKATIONSFEL: %d felaktiga arkivhuvuden upptäckta"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Ett ensamt nollblock vid %s"
@@ -934,7 +939,7 @@ msgstr[1] "%s: Fil krympte med %s byte, fyller ut med nolltecken"
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: filen finns på ett annat filsystem; inte arkiverad"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr "innehållet inte arkiverat"
 
@@ -958,7 +963,7 @@ msgstr "%s: filen är oförändrad; inte arkiverad"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: filen är själva arkivet; inte arkiverad"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 msgid "directory not dumped"
 msgstr "katalog inte arkiverad"
 
@@ -967,12 +972,12 @@ msgstr "katalog inte arkiverad"
 msgid "%s: file changed as we read it"
 msgstr "%s: fil ändrades under tiden vi läste den"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: socketfil ignorerad"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: door-fil ignorerad"
@@ -1000,165 +1005,165 @@ msgstr "%s: tidsvärde %s är %s sekunder i framtiden"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Oväntad inkonsistens när katalog skapades"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Katalog bytte namn innan dess status kunde extraheras"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Extraherar sammanhängande filer som vanliga filer"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Försöker extrahera symboliska länkar som hårda länkar"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Kan inte extrahera -- filen fortsätter från en annan volym"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 msgid "Unexpected long name header"
 msgstr "Oväntat huvud för långt filnamn"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Okänd filtyp \"%c\", extraherad som en normal fil"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Nuvarade \"%s\" är nyare eller lika gammal"
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Kunde inte säkerhetskopiera denna fil"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Kan inte byta namn på %s till %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Katalogen har bytt namn från %s"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Katalogen har bytt namn"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Katalogen är ny"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Ogiltigt värde på tidsvärde"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 msgid "Invalid modification time (seconds)"
 msgstr "Ogiltig modifikationstid (sekunder)"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr "Ogiltig modifikationstid (nanosekunder)"
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Ogiltigt enhetsnummer"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Ogiltigt inodnummer"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr "Fält för långt när ögonblicksfil lästes"
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr "Läsfel i ögonblicksfil"
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 msgid "Unexpected EOF in snapshot file"
 msgstr "Oväntat filslut i ögonblicksfil"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr "Oväntat fältvärde i ögonblicksfil"
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr "Postavslutare fattas"
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr "Felaktigt filformat för inkrementell säkerhetskopiering"
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 "Formatversion för inkrementell säkerhetskopiering stöds inte: %<PRIuMAX>"
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr "Felaktig dumpkatalog: förväntade \"%c\" men hittade %#3o"
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr "Felaktig dumpkatalog: \"X\" duplicerad"
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr "Felaktig dumpkatalog: tomt namn i \"R\""
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr "Felaktig dumpkatalog: \"T\" föregås inte av \"R\""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr "Felaktig dumpkatalog: tomt namn i \"T\""
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr "Felaktig dumpkatalog: förväntade \"%c\" men hittade dataslut"
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr "Felaktig dumpkatalog: \"X\" används inte"
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr "Kan inte skapa temporärkatalog med mall %s"
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr "%s: Rensar inte katalog: kunde inte ta status"
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: katalogen finns på ett annat filsystem; inte rensad"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: Tar bort %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Kan inte ta bort"
@@ -1178,20 +1183,20 @@ msgstr "block %s: ** Block av nolltecken **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "block %s: ** Filslut **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "block %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Blanka i huvud där numeriskt värde av typ %s förväntades"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1199,114 +1204,108 @@ msgstr ""
 "komplement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Arkivets oktala värde %.*s är utanför intervallet för %s"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arkivet innehåller föråldrade \"base-64\"-huvuden"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arkivets \"base-64\"-sträng \"%s\" är utanför intervallet för %s"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Arkivets \"base-256\"-värde är utanför intervallet för %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arkivet innehåller %.*s där ett numeriskt värde av typ %s förväntades"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Arkivets värde %s är utanför intervallet för %s: %s..%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " länk till %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " okänd filtyp \"%s\"\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Lång länk--\n"
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Långt namn--\n"
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Volymhuvud--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Fortsätter vid byte %s--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Skapar katalog:"
 
-#: src/misc.c:298
-#, fuzzy
+#: src/misc.c:297
 msgid "Cannot get working directory"
-msgstr "Kan inte byta arbetskatalog"
+msgstr "Kan inte avgöra arbetskatalog"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Byter namn på %s till %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Kan inte byta namn till %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Byter namn på %s tillbaka till %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fil borttagen innan vi läste den"
 
-#: src/misc.c:866
-#, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: Katalog borttagen innan vi läste den"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "barnprocess"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "interprocesskanal"
 
-#: src/names.c:594
+#: src/names.c:590
 msgid "Pattern matching characters used in file names"
 msgstr "Mönstermatchningstecken används i filnamn"
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1314,27 +1313,27 @@ msgstr ""
 "Använd --wildcards för att slå på mönstermatchning, eller --no-wildcards för "
 "att undertrycka denna varning"
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Fanns inte i arkivet"
 
-#: src/names.c:615
+#: src/names.c:611
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Nödvändig förekomst hittades inte i arkivet"
 
-#: src/names.c:649
+#: src/names.c:645
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Arkivmärkning stämmer inte överrens"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr "Att används -C i en fillista är inte tillåtet med --listed-incremental"
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Bara en -C-flagga är tillåtet med --listed-incremental"
 
@@ -2731,5 +2730,5 @@ msgstr "Kommandot avslutade\n"
 msgid "--stat requires file names"
 msgstr "--stat kräver filnamn"
 
-#~ msgid "Cannot save working directory"
-#~ msgstr "Kan inte spara arbetskatalog"
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: Katalog borttagen innan vi läste den"

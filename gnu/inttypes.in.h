@@ -1,6 +1,6 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
-/* Copyright (C) 2006-2010 Free Software Foundation, Inc.
+/* Copyright (C) 2006-2011 Free Software Foundation, Inc.
    Written by Paul Eggert, Bruno Haible, Derek Price.
    This file is part of gnulib.
 
@@ -1062,7 +1062,10 @@ _GL_WARN_ON_USE (imaxabs, "imaxabs is unportable - "
 
 #if @GNULIB_IMAXDIV@
 # if !@HAVE_DECL_IMAXDIV@
+#  if !GNULIB_defined_imaxdiv_t
 typedef struct { intmax_t quot; intmax_t rem; } imaxdiv_t;
+#   define GNULIB_defined_imaxdiv_t 1
+#  endif
 extern imaxdiv_t imaxdiv (intmax_t, intmax_t);
 # endif
 #elif defined GNULIB_POSIXCHECK

@@ -1,7 +1,8 @@
 # Process this file with autom4te to create testsuite. -*- Autotest -*-
 
 # Test suite for GNU tar.
-# Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010 Free Software
+# Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -78,6 +79,13 @@ tarball_prereq $1 $2 $[]STAR_TESTSCRIPTS $[]STAR_DATA_URL || AT_SKIP_TEST
 dnl AT_GZIP_PREREQ - Skip test unless gzip (or $1) is available
 m4_define([AT_GZIP_PREREQ],[
 cat /dev/null | m4_if([$1],[],gzip,[$1]) - > /dev/null 2>&1 || AT_SKIP_TEST
+])
+
+dnl AT_SIGPIPE_PREREQ - Skip test unless SIGPIPE handling is the default
+m4_define([AT_SIGPIPE_PREREQ],[
+case `(cat "$at_myself" 2>&3 | :) 3>&1 >/dev/null` in #(
+?*) AT_SKIP_TEST;;
+esac
 ])
 
 dnl AT_SORT_PREREQ - Skip test if sort utility outputs unwanted data on stderr
@@ -224,6 +232,7 @@ m4_include([shortrec.at])
 m4_include([sparse01.at])
 m4_include([sparse02.at])
 m4_include([sparse03.at])
+m4_include([sparse04.at])
 m4_include([sparsemv.at])
 m4_include([spmvp00.at])
 m4_include([spmvp01.at])
@@ -232,6 +241,8 @@ m4_include([spmvp10.at])
 m4_include([update.at])
 m4_include([update01.at])
 m4_include([update02.at])
+
+m4_include([verify.at])
 
 m4_include([volume.at])
 m4_include([volsize.at])

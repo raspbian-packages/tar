@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.15.1\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2010-11-07 17:07+0200\n"
+"POT-Creation-Date: 2011-03-12 11:53+0200\n"
 "PO-Revision-Date: 2005-07-15 12:00-0500\n"
 "Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
 "Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
@@ -58,7 +58,7 @@ msgstr "%.*s: parametru ARGP_HELP_FMT necunoscut"
 msgid "Garbage in ARGP_HELP_FMT: %s"
 msgstr "Gunoi în ARGP_HELP_FMT: %s"
 
-#: gnu/argp-help.c:1246
+#: gnu/argp-help.c:1248
 msgid ""
 "Mandatory or optional arguments to long options are also mandatory or "
 "optional for any corresponding short options."
@@ -66,30 +66,30 @@ msgstr ""
 "Argumentele obligatorii sau opþionale pentru opþiunile lungi sunt "
 "obligatorii sau opþionale ºi pentru opþiunile corespunzãtoare scurte."
 
-#: gnu/argp-help.c:1639
+#: gnu/argp-help.c:1641
 msgid "Usage:"
 msgstr "Folosire:"
 
-#: gnu/argp-help.c:1643
+#: gnu/argp-help.c:1645
 msgid "  or: "
 msgstr " sau: "
 
-#: gnu/argp-help.c:1655
+#: gnu/argp-help.c:1657
 msgid " [OPTION...]"
 msgstr " [OPÞIUNE...]"
 
-#: gnu/argp-help.c:1682
+#: gnu/argp-help.c:1684
 #, c-format
 msgid "Try `%s --help' or `%s --usage' for more information.\n"
 msgstr ""
 "Încercaþi `%s --help' sau `%s --usage'  pentru informaþii suplimentare.\n"
 
-#: gnu/argp-help.c:1710
+#: gnu/argp-help.c:1712
 #, c-format
 msgid "Report bugs to %s.\n"
 msgstr "Raportaþi bug-uri la %s.\n"
 
-#: gnu/argp-help.c:1929 gnu/error.c:183
+#: gnu/argp-help.c:1931 gnu/error.c:183
 msgid "Unknown system error"
 msgstr "Eroare sistem necunoscutã"
 
@@ -198,16 +198,16 @@ msgstr "%s: opþiunea `-W %s' nu permite un argument\n"
 msgid "%s: option '-W %s' requires an argument\n"
 msgstr "%s: opþiunea `%s' necesitã un argument\n"
 
-#: gnu/obstack.c:425 gnu/obstack.c:427 gnu/xalloc-die.c:36
+#: gnu/obstack.c:423 gnu/obstack.c:425 gnu/xalloc-die.c:36
 msgid "memory exhausted"
 msgstr "memorie epuizatã"
 
-#: gnu/openat-die.c:36
+#: gnu/openat-die.c:40
 #, fuzzy, c-format
 msgid "unable to record current working directory"
 msgstr "Nu pot schimba directorul în care lucrez"
 
-#: gnu/openat-die.c:54
+#: gnu/openat-die.c:59
 #, fuzzy, c-format
 msgid "failed to return to initial working directory"
 msgstr "Nu pot salva directorul în care lucrez"
@@ -231,11 +231,11 @@ msgstr "Nu pot salva directorul în care lucrez"
 #. If you don't know what to put here, please see
 #. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:274
+#: gnu/quotearg.c:273
 msgid "`"
 msgstr "`"
 
-#: gnu/quotearg.c:275
+#: gnu/quotearg.c:274
 msgid "'"
 msgstr "'"
 
@@ -478,21 +478,21 @@ msgid_plural "%s: Wrote only %lu of %lu bytes"
 msgstr[0] "%s: Am scris numai %lu din %lu octet"
 msgstr[1] "%s: Am scris numai %lu din %lu octeþi"
 
-#: lib/paxnames.c:155
+#: lib/paxnames.c:140
 #, c-format
 msgid "Removing leading `%s' from member names"
 msgstr "Eliminãm primul `%s' din numele membrilor"
 
-#: lib/paxnames.c:156
+#: lib/paxnames.c:141
 #, c-format
 msgid "Removing leading `%s' from hard link targets"
 msgstr "Eliminãm primul `%s' din destinaþiile hard link"
 
-#: lib/paxnames.c:169
+#: lib/paxnames.c:154
 msgid "Substituting `.' for empty member name"
 msgstr "Înlocuiesc `.' pentru nume de membrii goale"
 
-#: lib/paxnames.c:170
+#: lib/paxnames.c:155
 msgid "Substituting `.' for empty hard link target"
 msgstr "Înlocuiesc `.' pentru destinaþii hard link goale"
 
@@ -793,20 +793,20 @@ msgid_plural "Could only read %lu of %lu bytes"
 msgstr[0] "Am putut citi doar %lu din %lu octet"
 msgstr[1] "Am putut citi doar %lu din %lu octeþi"
 
-#: src/compare.c:105 src/compare.c:382
+#: src/compare.c:105 src/compare.c:383
 msgid "Contents differ"
 msgstr "Conþinuturile diferã"
 
-#: src/compare.c:131 src/extract.c:972 src/incremen.c:1462 src/list.c:458
-#: src/list.c:1392 src/xheader.c:711
+#: src/compare.c:131 src/extract.c:984 src/incremen.c:1456 src/list.c:456
+#: src/list.c:1388 src/xheader.c:711
 msgid "Unexpected EOF in archive"
 msgstr "EOF neaºteptat în arhivã"
 
-#: src/compare.c:179 src/compare.c:195 src/compare.c:308 src/compare.c:406
+#: src/compare.c:179 src/compare.c:195 src/compare.c:309 src/compare.c:407
 msgid "File type differs"
 msgstr "Tipul fiºierelor diferã"
 
-#: src/compare.c:182 src/compare.c:202 src/compare.c:322
+#: src/compare.c:182 src/compare.c:202 src/compare.c:323
 msgid "Mode differs"
 msgstr "Modurile diferã"
 
@@ -822,50 +822,55 @@ msgstr "Gid diferã"
 msgid "Mod time differs"
 msgstr "Timp modificare diferã"
 
-#: src/compare.c:215 src/compare.c:414
+#: src/compare.c:215 src/compare.c:415
 msgid "Size differs"
 msgstr "Dimensiunea diferã"
 
-#: src/compare.c:263
+#: src/compare.c:264
 #, c-format
 msgid "Not linked to %s"
 msgstr "Nu este link-at cãtre %s"
 
-#: src/compare.c:287
+#: src/compare.c:288
 msgid "Symlink differs"
 msgstr "Symlink diferã"
 
-#: src/compare.c:316
+#: src/compare.c:317
 msgid "Device number differs"
 msgstr "Numãr dispozitiv diferã"
 
-#: src/compare.c:456
+#: src/compare.c:457
 #, c-format
 msgid "Verify "
 msgstr "Verificã "
 
-#: src/compare.c:463
+#: src/compare.c:464
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', diffed as normal file"
 msgstr ""
 "%s: Tip de fiºier necunoscut '%c', folosesc diff ca pentru un fiºier normal"
 
-#: src/compare.c:518
+#: src/compare.c:520
 msgid "Archive contains file names with leading prefixes removed."
 msgstr "Arhiva conþine nume de fiºiere cu prefixele îndepãrtate."
 
-#: src/compare.c:520
+#: src/compare.c:526
+#, fuzzy
+msgid "Archive contains transformed file names."
+msgstr "Arhiva conþine antete în baza-64 depãºite"
+
+#: src/compare.c:531
 msgid "Verification may fail to locate original files."
 msgstr "Verificare ar putea eºua sã gãseascã fiºierele originale."
 
-#: src/compare.c:593
+#: src/compare.c:603
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
 msgstr[0] "VERIFICÃ EªEC: detectat %d antet invalid"
 msgstr[1] "VERIFICÃ EªEC: detectat %d antete invalide"
 
-#: src/compare.c:611 src/list.c:222
+#: src/compare.c:621 src/list.c:222
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Un bloc zero singuratic la %s"
@@ -916,7 +921,7 @@ msgstr[1] "%s: Fiºier scurtat cu %s octeþi; completat cu zerouri"
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: fiºierul este pe un sistem de fiºiere diferit; nimic generat"
 
-#: src/create.c:1203 src/create.c:1214 src/incremen.c:582 src/incremen.c:588
+#: src/create.c:1203 src/create.c:1214 src/incremen.c:578 src/incremen.c:584
 msgid "contents not dumped"
 msgstr ""
 
@@ -940,7 +945,7 @@ msgstr "%s: fiºierul este neschimbat; nimic generat"
 msgid "%s: file is the archive; not dumped"
 msgstr "%s: fiºierul este în arhivã; nimic generat"
 
-#: src/create.c:1723 src/incremen.c:575
+#: src/create.c:1723 src/incremen.c:571
 #, fuzzy
 msgid "directory not dumped"
 msgstr "%s: conþine o etichetã de director cache; nimic generat"
@@ -950,12 +955,12 @@ msgstr "%s: conþine o etichetã de director cache; nimic generat"
 msgid "%s: file changed as we read it"
 msgstr "%s: fiºier schimbat în timp ce îl citeam"
 
-#: src/create.c:1857
+#: src/create.c:1858
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: socket ignorat"
 
-#: src/create.c:1863
+#: src/create.c:1864
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: uºã ignoratã"
@@ -983,169 +988,169 @@ msgstr "%s: înregistrare timp %s este %lu sec în viitor"
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Inconsistenþã neaºteptatã când cream directorul"
 
-#: src/extract.c:709
+#: src/extract.c:721
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Director redenumit înainte de a fi putut extrage starea sa"
 
-#: src/extract.c:863
+#: src/extract.c:875
 msgid "Extracting contiguous files as regular files"
 msgstr "Extragem fiºiere contigue ca fiºiere normale"
 
-#: src/extract.c:1197
+#: src/extract.c:1209
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Încerc extragerea link-urilor simbolice ca link-uri hard"
 
-#: src/extract.c:1353
+#: src/extract.c:1365
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Nu pot extrage -- fiºierul este continuat din altã arhivã"
 
-#: src/extract.c:1360 src/list.c:1125
+#: src/extract.c:1372 src/list.c:1121
 #, fuzzy
 msgid "Unexpected long name header"
 msgstr "EOF neaºteptat în numele amestecate"
 
-#: src/extract.c:1367
+#: src/extract.c:1379
 #, fuzzy, c-format
 msgid "%s: Unknown file type `%c', extracted as normal file"
 msgstr "%s: Tip de fiºier necunoscut '%c', extras ca fiºier normal"
 
-#: src/extract.c:1393
+#: src/extract.c:1405
 #, fuzzy, c-format
 msgid "Current %s is newer or same age"
 msgstr "`%s' curent este mai nou"
 
-#: src/extract.c:1445
+#: src/extract.c:1457
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Nu am putut arhiva (backup) acest fiºier"
 
-#: src/extract.c:1582
+#: src/extract.c:1594
 #, fuzzy, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s: Nu pot redenumi ca %s"
 
-#: src/incremen.c:474 src/incremen.c:518
+#: src/incremen.c:473 src/incremen.c:517
 #, fuzzy, c-format
 msgid "%s: Directory has been renamed from %s"
 msgstr "%s: Directorul a fost redenumit"
 
-#: src/incremen.c:486
+#: src/incremen.c:485
 #, c-format
 msgid "%s: Directory has been renamed"
 msgstr "%s: Directorul a fost redenumit"
 
-#: src/incremen.c:531
+#: src/incremen.c:530
 #, c-format
 msgid "%s: Directory is new"
 msgstr "%s: Directorul este nou"
 
-#: src/incremen.c:956 src/incremen.c:973
+#: src/incremen.c:951 src/incremen.c:968
 msgid "Invalid time stamp"
 msgstr "Înregistrare timp invalidã"
 
-#: src/incremen.c:1012
+#: src/incremen.c:1007
 #, fuzzy
 msgid "Invalid modification time (seconds)"
 msgstr "Mod invalid furnizat ca opþiune"
 
-#: src/incremen.c:1027
+#: src/incremen.c:1022
 msgid "Invalid modification time (nanoseconds)"
 msgstr ""
 
-#: src/incremen.c:1047
+#: src/incremen.c:1042
 msgid "Invalid device number"
 msgstr "Numãr dispozitiv invalid"
 
-#: src/incremen.c:1062
+#: src/incremen.c:1057
 msgid "Invalid inode number"
 msgstr "Numãr inode invalid"
 
-#: src/incremen.c:1113 src/incremen.c:1150
+#: src/incremen.c:1108 src/incremen.c:1145
 msgid "Field too long while reading snapshot file"
 msgstr ""
 
-#: src/incremen.c:1120 src/incremen.c:1158
+#: src/incremen.c:1115 src/incremen.c:1153
 msgid "Read error in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1122 src/incremen.c:1162 src/incremen.c:1214
-#: src/incremen.c:1272
+#: src/incremen.c:1117 src/incremen.c:1157 src/incremen.c:1209
+#: src/incremen.c:1267
 #, fuzzy
 msgid "Unexpected EOF in snapshot file"
 msgstr "EOF neaºteptat în arhivã"
 
-#: src/incremen.c:1129 src/incremen.c:1169
+#: src/incremen.c:1124 src/incremen.c:1164
 msgid "Unexpected field value in snapshot file"
 msgstr ""
 
-#: src/incremen.c:1264
+#: src/incremen.c:1259
 msgid "Missing record terminator"
 msgstr ""
 
-#: src/incremen.c:1325 src/incremen.c:1328
+#: src/incremen.c:1320 src/incremen.c:1323
 msgid "Bad incremental file format"
 msgstr ""
 
-#: src/incremen.c:1347
+#: src/incremen.c:1342
 #, c-format
 msgid "Unsupported incremental format version: %<PRIuMAX>"
 msgstr ""
 
-#: src/incremen.c:1502
+#: src/incremen.c:1496
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found %#3o"
 msgstr ""
 
-#: src/incremen.c:1512
+#: src/incremen.c:1506
 msgid "Malformed dumpdir: 'X' duplicated"
 msgstr ""
 
-#: src/incremen.c:1525
+#: src/incremen.c:1519
 #, fuzzy
 msgid "Malformed dumpdir: empty name in 'R'"
 msgstr "Argument densitate malformat: '%s'"
 
-#: src/incremen.c:1538
+#: src/incremen.c:1532
 msgid "Malformed dumpdir: 'T' not preceeded by 'R'"
 msgstr ""
 
-#: src/incremen.c:1544
+#: src/incremen.c:1538
 #, fuzzy
 msgid "Malformed dumpdir: empty name in 'T'"
 msgstr "Argument densitate malformat: '%s'"
 
-#: src/incremen.c:1564
+#: src/incremen.c:1558
 #, c-format
 msgid "Malformed dumpdir: expected '%c' but found end of data"
 msgstr ""
 
-#: src/incremen.c:1571
+#: src/incremen.c:1565
 msgid "Malformed dumpdir: 'X' never used"
 msgstr ""
 
-#: src/incremen.c:1615
+#: src/incremen.c:1609
 #, c-format
 msgid "Cannot create temporary directory using template %s"
 msgstr ""
 
-#: src/incremen.c:1677
+#: src/incremen.c:1670
 #, c-format
 msgid "%s: Not purging directory: unable to stat"
 msgstr "%s: Nu curãþ director: nu pot determina statistici"
 
-#: src/incremen.c:1690
+#: src/incremen.c:1683
 #, c-format
 msgid "%s: directory is on a different device: not purging"
 msgstr "%s: directorul este pe un dispozitiv (device) diferit; necurãþat"
 
-#: src/incremen.c:1698
+#: src/incremen.c:1691
 #, c-format
 msgid "%s: Deleting %s\n"
 msgstr "%s: ªtergem %s\n"
 
-#: src/incremen.c:1703
+#: src/incremen.c:1696
 #, c-format
 msgid "%s: Cannot remove"
 msgstr "%s: Nu pot ºterge"
@@ -1165,20 +1170,20 @@ msgstr "bloc %s: ** Bloc de NUL-uri **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "bloc %s: ** Sfârºit de fiºier **\n"
 
-#: src/list.c:256 src/list.c:1097 src/list.c:1360
+#: src/list.c:256 src/list.c:1093 src/list.c:1356
 #, c-format
 msgid "block %s: "
 msgstr "bloc %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:712
+#: src/list.c:708
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Spaþii libere în antet unde valoare %s numericã aºteptatã"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:767
+#: src/list.c:763
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1186,141 +1191,136 @@ msgstr ""
 "lui doi"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:778
+#: src/list.c:774
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Valoare octalã arhivã %.*s este în afara %s intervalului"
 
-#: src/list.c:799
+#: src/list.c:795
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arhiva conþine antete în baza-64 depãºite"
 
-#: src/list.c:813
+#: src/list.c:809
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "ªir în baza-64 (semnãtura arhivei) %s este în afara %s intervalului"
 
-#: src/list.c:844
+#: src/list.c:840
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Valoare baza-256 a arhivei este în afara %s intervalului"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:873
+#: src/list.c:869
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arhiva conþine %.*s unde valoare %s numericã aºteptatã"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:895
+#: src/list.c:891
 #, fuzzy, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Valoare arhivã %s este în afara %s intervalului %s.%s"
 
-#: src/list.c:1261
+#: src/list.c:1257
 #, c-format
 msgid " link to %s\n"
 msgstr " link cãtre %s\n"
 
-#: src/list.c:1269
+#: src/list.c:1265
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " tip fiºier necunoscut %s\n"
 
-#: src/list.c:1287
+#: src/list.c:1283
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Link Lung--\n"
 
-#: src/list.c:1291
+#: src/list.c:1287
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Nume Lung--\n"
 
-#: src/list.c:1295
+#: src/list.c:1291
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Antet Volum--\n"
 
-#: src/list.c:1303
+#: src/list.c:1299
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Continuat la octet %s--\n"
 
-#: src/list.c:1365
+#: src/list.c:1361
 msgid "Creating directory:"
 msgstr "Creez director:"
 
-#: src/misc.c:298
+#: src/misc.c:297
 #, fuzzy
 msgid "Cannot get working directory"
 msgstr "Nu pot schimba directorul în care lucrez"
 
-#: src/misc.c:571
+#: src/misc.c:570
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Redenumesc %s ca %s\n"
 
-#: src/misc.c:580 src/misc.c:599
+#: src/misc.c:579 src/misc.c:598
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Nu pot redenumi ca %s"
 
-#: src/misc.c:604
+#: src/misc.c:603
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Redenumesc %s înapoi ca %s\n"
 
-#: src/misc.c:851
+#: src/misc.c:850
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fiºier ºters înainte de a-l putea citi"
 
-#: src/misc.c:866
-#, fuzzy, c-format
-msgid "%s: Directory removed before we read it"
-msgstr "%s: Fiºier ºters înainte de a-l putea citi"
-
-#: src/misc.c:887
+#: src/misc.c:871
 msgid "child process"
 msgstr "proces copil"
 
-#: src/misc.c:896
+#: src/misc.c:880
 msgid "interprocess channel"
 msgstr "canal între-procese"
 
-#: src/names.c:594
+#: src/names.c:590
 #, fuzzy
 msgid "Pattern matching characters used in file names"
 msgstr "pattern-urile de excludere potrivesc începutul numelor de fiºiere"
 
-#: src/names.c:596
+#: src/names.c:592
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:614 src/names.c:630
+#: src/names.c:610 src/names.c:626
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Nu a fost gãsit în arhivã"
 
-#: src/names.c:615
+#: src/names.c:611
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Lucrul cerut nu a fost gãsit în arhivã"
 
-#: src/names.c:649
+#: src/names.c:645
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "Arhiva nu este etichetatã sã se potriveascã cu %s"
 
-#: src/names.c:953
+#: src/names.c:949
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:959
+#: src/names.c:955
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 
@@ -2746,6 +2746,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "--stat requires file names"
 msgstr "--Amestecat numele fiºierelor--\n"
+
+#, fuzzy
+#~ msgid "%s: Directory removed before we read it"
+#~ msgstr "%s: Fiºier ºters înainte de a-l putea citi"
 
 #, fuzzy
 #~ msgid "Cannot restore working directory"
