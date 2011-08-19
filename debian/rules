@@ -18,7 +18,9 @@ configure-stamp:
 		$(CONFARGS) 
 	touch configure-stamp
 
-build: build-stamp
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 	RSH="/usr/bin/rsh" CFLAGS="-O2 -g -Wall -fno-gnu89-inline" $(MAKE)
