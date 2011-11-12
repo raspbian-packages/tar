@@ -1,3 +1,10 @@
+tar (1.26-3) UNRELEASED; urgency=low
+
+  * only run listed03.at on Linux systems synce upstream says it's known to
+    fail on BSD, apparently including our kfreebsd variants, closes: #639178
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 12 Nov 2011 10:38:26 -0700
+
 tar (1.26-2) unstable; urgency=low
 
   * clean up various lintian warnings
