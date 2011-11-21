@@ -1,3 +1,9 @@
+tar (1.26-4) UNRELEASED; urgency=low
+
+  * mark "Mult-Arch: foreign" to ease crossgrading, closes: #649478
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 21 Nov 2011 08:03:32 -0700
+
 tar (1.26-3) unstable; urgency=low
 
   * only run listed03.at on Linux systems synce upstream says it's known to

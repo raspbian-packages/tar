@@ -10,6 +10,7 @@ Vcs-Browser: http://git.gag.com/?p=debian/tar
 
 Package: tar
 Architecture: any
+Multi-Arch: foreign
 Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
 Essential: yes
 Conflicts: cpio (<= 2.4.2-38)
