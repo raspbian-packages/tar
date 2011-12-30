@@ -1,4 +1,4 @@
-tar (1.26-4) UNRELEASED; urgency=low
+tar (1.26-4) unstable; urgency=low
 
   * mark "Mult-Arch: foreign" to ease crossgrading, closes: #649478
   * hardened build flags patch from Moritz Huehlenhoff, closes: #653722
