@@ -1,8 +1,9 @@
 tar (1.26-4) UNRELEASED; urgency=low
 
   * mark "Mult-Arch: foreign" to ease crossgrading, closes: #649478
+  * hardened build flags patch from Moritz Huehlenhoff, closes: #653722
 
- -- Bdale Garbee <bdale@gag.com>  Mon, 21 Nov 2011 08:03:32 -0700
+ -- Bdale Garbee <bdale@gag.com>  Fri, 30 Dec 2011 09:18:11 -0700
 
 tar (1.26-3) unstable; urgency=low
 
