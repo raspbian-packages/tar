@@ -1,3 +1,11 @@
+tar (1.26+dfsg-0.1) unstable; urgency=low
+
+  * non-maintainer upload
+  * remove unused and non-DFSG compliant doc/*.texi and doc/*.info* files from
+    source, closes: #695803
+
+ -- David Prévot <taffit@debian.org>  Mon, 31 Dec 2012 11:05:50 -0400
+
 tar (1.26-4) unstable; urgency=low
 
   * mark "Mult-Arch: foreign" to ease crossgrading, closes: #649478

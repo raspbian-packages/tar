@@ -1,9 +1,0 @@
-.deps
-Makefile
-atconfig
-atlocal
-genfile
-testsuite
-testsuite.log
-testsuite.dir
-*.o
