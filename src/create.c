@@ -26,6 +26,8 @@
 #include "common.h"
 #include <hash.h>
 
+extern int debian_longlink_hack;
+
 /* Error number to use when an impostor is discovered.
    Pretend the impostor isn't there.  */
 enum { IMPOSTOR_ERRNO = ENOENT };
@@ -735,7 +737,7 @@ write_header_name (struct tar_stat_info *st)
       return write_short_name (st);
     }
   else if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
-	   < strlen (st->file_name))
+	   < strlen (st->file_name) + debian_longlink_hack)
     return write_long_name (st);
   else
     return write_short_name (st);
@@ -1456,7 +1458,7 @@ dump_hard_link (struct tar_stat_info *st)
 	  block_ordinal = current_block_ordinal ();
 	  assign_string (&st->link_name, link_name);
 	  if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
-	      < strlen (link_name))
+	      < strlen (link_name) + debian_longlink_hack)
 	    write_long_link (st);
 
 	  st->stat.st_size = 0;

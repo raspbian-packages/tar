@@ -2566,6 +2566,16 @@ decode_options (int argc, char **argv)
   report_textual_dates (&args);
 }
 
+/* Debian specific environment variable used by pristine-tar to enable use of
+ * longlinks for filenames exactly 100 bytes long. */
+void debian_longlink_hack_init () {
+ char *s=getenv ("TAR_LONGLINK_100");
+ if (s && strcmp(s, "1") == 0)
+	 debian_longlink_hack=1;
+ else
+	 debian_longlink_hack=0;
+}
+
 
 /* Tar proper.  */
 
@@ -2584,6 +2594,8 @@ main (int argc, char **argv)
   exit_status = TAREXIT_SUCCESS;
   filename_terminator = '\n';
   set_quoting_style (0, DEFAULT_QUOTING_STYLE);
+
+  debian_longlink_hack_init ();
 
   /* Make sure we have first three descriptors available */
   stdopen ();
