@@ -4,7 +4,7 @@ Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 5), gettext, autoconf, autotools-dev
-Standards-Version: 3.9.2
+Standards-Version: 3.9.4
 Vcs-Git: git://git.gag.com/debian/tar
 Vcs-Browser: http://git.gag.com/?p=debian/tar
 
