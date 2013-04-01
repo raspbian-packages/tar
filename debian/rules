@@ -63,6 +63,7 @@ install: build
 		libexecdir=`pwd`/debian/tar/usr/sbin 
 	install -m 755 debian/rmt.sh debian/tar/etc/rmt
 	mv debian/tar/usr/sbin/rmt debian/tar/usr/sbin/rmt-tar
+	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
 
 # Build architecture-independent files here.
 binary-indep: build install

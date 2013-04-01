@@ -6,6 +6,8 @@ tar (1.26+dfsg-5) UNRELEASED; urgency=low
 
   [ Bdale Garbee ]
   * update mailcap entries to use %s, closes: #681302
+  * include the http://www.gnu.org/software/tar/utils/tarcat script for use 
+    with multi-volume archives, closes: #492036
 
  -- Bdale Garbee <bdale@gag.com>  Mon, 01 Apr 2013 09:17:04 -0600
 
