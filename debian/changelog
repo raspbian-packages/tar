@@ -1,4 +1,4 @@
-tar (1.26+dfsg-5) UNRELEASED; urgency=low
+tar (1.26+dfsg-5) unstable; urgency=low
 
   [ Wookey ]
   * Fix included gnulib so we don't get FTBFS with eglibc-2.16, 
