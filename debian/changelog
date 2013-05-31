@@ -1,3 +1,10 @@
+tar (1.26+dfsg-6) unstable; urgency=low
+
+  * cherry-pick upstream commit at Paul Eggert's suggestion to address link
+    extraction issue, closes: #452365
+
+ -- Bdale Garbee <bdale@gag.com>  Fri, 31 May 2013 12:12:35 -0600
+
 tar (1.26+dfsg-5) unstable; urgency=low
 
   [ Wookey ]
