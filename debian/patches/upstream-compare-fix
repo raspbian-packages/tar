@@ -1,0 +1,151 @@
+From d88b2a613f4b1a5554e8c34c8f75b91abff5f0e9 Mon Sep 17 00:00:00 2001
+From: Sergey Poznyakoff <gray@gnu.org.ua>
+Date: Tue, 15 Nov 2011 10:58:32 +0000
+Subject: Fix operation of --verify in conjunction with --listed-incremental
+
+* src/common.h (clear_directory_table): New proto.
+* src/incremen.c (clear_directory_table): New function.
+* src/compare.c (diff_dumpdir): Take a pointer to struct
+tar_stat_info as argument.
+Initialize its fd.
+(diff_archive): Update call to diff_dumpdir.
+(verify_volume): Call clear_directory_table.
+---
+diff --git a/src/common.h b/src/common.h
+index 0b9bd7a..6074ac3 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -522,6 +522,7 @@ void update_parent_directory (struct tar_stat_info *st);
+ 
+ size_t dumpdir_size (const char *p);
+ bool is_dumpdir (struct tar_stat_info *stat_info);
++void clear_directory_table (void);
+ 
+ /* Module list.c.  */
+ 
+diff --git a/src/compare.c b/src/compare.c
+index 273269a..185a61a 100644
+--- a/src/compare.c
++++ b/src/compare.c
+@@ -359,31 +359,47 @@ dumpdir_cmp (const char *a, const char *b)
+ }
+ 
+ static void
+-diff_dumpdir (void)
++diff_dumpdir (struct tar_stat_info *dir)
+ {
+   const char *dumpdir_buffer;
+   dev_t dev = 0;
+   struct stat stat_data;
+ 
+-  if (deref_stat (current_stat_info.file_name, &stat_data) != 0)
++  if (deref_stat (dir->file_name, &stat_data) != 0)
+     {
+       if (errno == ENOENT)
+-	stat_warn (current_stat_info.file_name);
++	stat_warn (dir->file_name);
+       else
+-	stat_error (current_stat_info.file_name);
++	stat_error (dir->file_name);
+     }
+   else
+     dev = stat_data.st_dev;
+ 
+-  dumpdir_buffer = directory_contents (scan_directory (&current_stat_info));
++  if (dir->fd == 0)
++    {
++      void (*diag) (char const *) = NULL;
++      int fd = subfile_open (dir->parent, dir->orig_file_name, open_read_flags);
++      if (fd < 0)
++	diag = open_diag;
++      else if (fstat (fd, &dir->stat))
++	diag = stat_diag;
++      else
++	dir->fd = fd;
++      if (diag)
++	{
++	  file_removed_diag (dir->orig_file_name, false, diag);
++	  return;
++	}
++    }      
++  dumpdir_buffer = directory_contents (scan_directory (dir));
+ 
+   if (dumpdir_buffer)
+     {
+-      if (dumpdir_cmp (current_stat_info.dumpdir, dumpdir_buffer))
+-	report_difference (&current_stat_info, _("Contents differ"));
++      if (dumpdir_cmp (dir->dumpdir, dumpdir_buffer))
++	report_difference (dir, _("Contents differ"));
+     }
+   else
+-    read_and_process (&current_stat_info, process_noop);
++    read_and_process (dir, process_noop);
+ }
+ 
+ static void
+@@ -446,7 +462,7 @@ diff_multivol (void)
+ void
+ diff_archive (void)
+ {
+-
++  
+   set_next_block_after (current_header);
+ 
+   /* Print the block from current_header and current_stat_info.  */
+@@ -498,7 +514,7 @@ diff_archive (void)
+     case GNUTYPE_DUMPDIR:
+     case DIRTYPE:
+       if (is_dumpdir (&current_stat_info))
+-	diff_dumpdir ();
++	diff_dumpdir (&current_stat_info);
+       diff_dir ();
+       break;
+ 
+@@ -530,6 +546,8 @@ verify_volume (void)
+     WARN((0, 0,
+ 	  _("Verification may fail to locate original files.")));
+ 
++  clear_directory_table ();
++  
+   if (!diff_buffer)
+     diff_init ();
+ 
+diff --git a/src/incremen.c b/src/incremen.c
+index b2ab5bf..69cbd59 100644
+--- a/src/incremen.c
++++ b/src/incremen.c
+@@ -300,6 +300,24 @@ dirlist_replace_prefix (const char *pref, const char *repl)
+     replace_prefix (&dp->name, pref, pref_len, repl, repl_len);
+ }
+ 
++void
++clear_directory_table (void)
++{
++  struct directory *dp;
++
++  if (directory_table)
++    hash_clear (directory_table);
++  if (directory_meta_table)
++    hash_clear (directory_meta_table);
++  for (dp = dirhead; dp; )
++    {
++      struct directory *next = dp->next;
++      free_directory (dp);
++      dp = next;
++    }
++  dirhead = dirtail = NULL;
++}
++
+ /* Create and link a new directory entry for directory NAME, having a
+    device number DEV and an inode number INO, with NFS indicating
+    whether it is an NFS device and FOUND indicating whether we have
+@@ -327,7 +345,8 @@ note_directory (char const *name, struct timespec mtime,
+   if (! ((directory_table
+ 	  || (directory_table = hash_initialize (0, 0,
+ 						 hash_directory_canonical_name,
+-						 compare_directory_canonical_names, 0)))
++						 compare_directory_canonical_names,
++						 0)))
+ 	 && hash_insert (directory_table, directory)))
+     xalloc_die ();
+ 
