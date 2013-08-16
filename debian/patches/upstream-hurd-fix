@@ -1,0 +1,36 @@
+>From 6689e8db4f53f6a0bed3d1bc4ed12d31eaa3bf51 Mon Sep 17 00:00:00 2001
+From: Paul Eggert <eggert@cs.ucla.edu>
+Date: Tue, 17 Jan 2012 22:21:52 -0800
+Subject: [PATCH] tar: port --overwrite symlink test to GNU/Hurd
+
+Problem reported by Pino Toscano in
+<http://lists.gnu.org/archive/html/bug-tar/2012-01/msg00040.html>.
+* gnulib.modules: Add fcntl-h, which defines
+HAVE_WORKING_O_NOFOLLOW.
+* src/extract.c (open_output_file): Use HAVE_WORKING_O_NOFOLLOW,
+not O_NOFOLLOW, when testing whther O_NOFOLLOW works.
+
+This file is a placeholder. It will be replaced with the actual ChangeLog
+by make dist.  Run make ChangeLog if you wish to create it earlier.
+---
+ gnulib.modules |    1 +
+ src/extract.c  |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/extract.c b/src/extract.c
+index 55f3eb8..bd5e7bf 100644
+--- a/src/extract.c
++++ b/src/extract.c
+@@ -887,7 +887,8 @@ open_output_file (char const *file_name, int typeflag, mode_t mode,
+   /* If O_NOFOLLOW is needed but does not work, check for a symlink
+      separately.  There's a race condition, but that cannot be avoided
+      on hosts lacking O_NOFOLLOW.  */
+-  if (! O_NOFOLLOW && overwriting_old_files && ! dereference_option)
++  if (! HAVE_WORKING_O_NOFOLLOW
++      && overwriting_old_files && ! dereference_option)
+     {
+       struct stat st;
+       if (fstatat (chdir_fd, file_name, &st, AT_SYMLINK_NOFOLLOW) == 0
+-- 
+1.7.10.4
+

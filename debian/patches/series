@@ -4,3 +4,4 @@ listed03-linux-only
 eglibc-2.16-ftbfs-gnulib-nogets
 link-extraction-fix
 upstream-compare-fix
+upstream-hurd-fix

@@ -1,3 +1,10 @@
+tar (1.26+dfsg-8) unstable; urgency=low
+
+  * cherry-pick upstream commit at Pino Toscano's suggestion to fix FTBFS
+    on hurd-i386, closes: #719863
+
+ -- Bdale Garbee <bdale@gag.com>  Fri, 16 Aug 2013 11:37:40 +0200
+
 tar (1.26+dfsg-7) unstable; urgency=low
 
   * cherry-pick upstream commit at Marc Schaeffer's suggestion to fix
