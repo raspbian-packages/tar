@@ -1,3 +1,10 @@
+tar (1.26+dfsg-9) unstable; urgency=low
+
+  * add a tar-scripts package containing the --enable-backup-scripts content,
+    which conflicts with files in at least the dump package, closes: #293671
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 21 Sep 2013 09:44:48 -0600
+
 tar (1.26+dfsg-8) unstable; urgency=low
 
   * cherry-pick upstream commit at Pino Toscano's suggestion to fix FTBFS

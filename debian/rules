@@ -19,6 +19,7 @@ configure-stamp:
 	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure \
 		--prefix=/usr \
 		--libexecdir=/usr/sbin \
+		--enable-backup-scripts \
 		--with-lzma=xz \
 		$(CONFARGS) 
 	touch configure-stamp
@@ -38,7 +39,6 @@ ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 	  echo "Sorry, but the test suite is not designed to be run as root."; \
 	  exit 1 ;\
 	fi
-	(cd tests ; $(MAKE) clean)
 	$(MAKE) check
 endif
 endif
@@ -64,6 +64,10 @@ install: build
 	install -m 755 debian/rmt.sh debian/tar/etc/rmt
 	mv debian/tar/usr/sbin/rmt debian/tar/usr/sbin/rmt-tar
 	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
+
+	mv debian/tar/usr/sbin/backup* debian/tar-scripts/usr/sbin/
+	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/
+	mv debian/tar/usr/sbin/dump-remind debian/tar-scripts/usr/sbin/
 
 # Build architecture-independent files here.
 binary-indep: build install
