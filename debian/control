@@ -26,6 +26,7 @@ Description: GNU version of the tar archiving utility
 
 Package: tar-scripts
 Architecture: any
+Priority: optional
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Conflicts: dump

@@ -1,3 +1,9 @@
+tar (1.26+dfsg-10) UNRELEASED; urgency=low
+
+  * tar-scripts should be optional, not required
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 21 Sep 2013 23:36:15 -0600
+
 tar (1.26+dfsg-9) unstable; urgency=low
 
   * add a tar-scripts package containing the --enable-backup-scripts content,
