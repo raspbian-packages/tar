@@ -1,8 +1,10 @@
 tar (1.26+dfsg-11) unstable; urgency=low
 
-  * tar-scripts must conflict with openafs-client, closes: #724064
+  * prefix backup and restore scripts with tar- to avoid conflicts with
+    other packages like openafs-client, closes: #724064, #724240
+  * move "libexec" content from tar-scripts to /usr/lib/tar, closes: #724238
 
- -- Bdale Garbee <bdale@gag.com>  Sun, 22 Sep 2013 18:00:35 -0600
+ -- Bdale Garbee <bdale@gag.com>  Mon, 23 Sep 2013 23:46:56 -0600
 
 tar (1.26+dfsg-10) unstable; urgency=low
 

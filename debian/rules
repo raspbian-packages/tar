@@ -18,7 +18,7 @@ configure-stamp:
 	cp -f /usr/share/misc/config.guess build-aux/config.guess
 	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure \
 		--prefix=/usr \
-		--libexecdir=/usr/sbin \
+		--libexecdir=/usr/lib/tar \
 		--enable-backup-scripts \
 		--with-lzma=xz \
 		$(CONFARGS) 
@@ -60,14 +60,15 @@ install: build
 	dh_installdirs
 
 	make install bindir=`pwd`/debian/tar/bin prefix=`pwd`/debian/tar/usr \
-		libexecdir=`pwd`/debian/tar/usr/sbin 
+		libexecdir=`pwd`/debian/tar/usr/lib/tar 
 	install -m 755 debian/rmt.sh debian/tar/etc/rmt
-	mv debian/tar/usr/sbin/rmt debian/tar/usr/sbin/rmt-tar
+	mv debian/tar/usr/lib/tar/rmt debian/tar/usr/sbin/rmt-tar
 	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
 
-	mv debian/tar/usr/sbin/backup* debian/tar-scripts/usr/sbin/
-	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/
-	mv debian/tar/usr/sbin/dump-remind debian/tar-scripts/usr/sbin/
+	mv debian/tar/usr/sbin/backup debian/tar-scripts/usr/sbin/tar-backup
+	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/tar-restore
+	mv debian/tar/usr/lib/tar/backup.sh debian/tar-scripts/usr/lib/tar/
+	mv debian/tar/usr/lib/tar/dump-remind debian/tar-scripts/usr/lib/tar/
 
 # Build architecture-independent files here.
 binary-indep: build install
