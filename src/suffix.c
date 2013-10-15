@@ -1,5 +1,5 @@
 /* This file is part of GNU tar.
-   Copyright (C) 2007, 2009 Free Software Foundation, Inc.
+   Copyright 2007, 2009, 2013 Free Software Foundation, Inc.
 
    Written by Sergey Poznyakoff.
 
@@ -43,6 +43,7 @@ static struct compression_suffix compression_suffixes[] = {
   { S(tlz,  LZMA) },
   { S(lzo,  LZOP) },
   { S(xz,   XZ) },
+  { S(txz,  XZ) }, /* Slackware */
 #undef S
 #undef __CAT2__
 };
