@@ -1,4 +1,4 @@
-tar (1.27-1) UNRELEASED; urgency=low
+tar (1.27-1) unstable; urgency=low
 
   * new upstream version
   * prefix backup and restore scripts with tar- to avoid conflicts with
