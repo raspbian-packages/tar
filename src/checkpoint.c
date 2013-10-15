@@ -1,19 +1,21 @@
 /* Checkpoint management for tar.
 
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright 2007, 2013 Free Software Foundation, Inc.
 
-   This program is free software; you can redistribute it and/or modify it
-   under the terms of the GNU General Public License as published by the
-   Free Software Foundation; either version 3, or (at your option) any later
-   version.
+   This file is part of GNU tar.
 
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-   Public License for more details.
+   GNU tar is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
 
-   You should have received a copy of the GNU General Public License along
-   with this program.  If not, see <http://www.gnu.org/licenses/>. */
+   GNU tar is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <system.h>
 #include "common.h"
@@ -113,7 +115,7 @@ checkpoint_compile_action (const char *str)
 }
 
 void
-checkpoint_finish_compile ()
+checkpoint_finish_compile (void)
 {
   if (checkpoint_option)
     {
@@ -215,16 +217,16 @@ run_checkpoint_actions (bool do_write)
 	    if (!str)
 	      {
 		if (do_write)
-		  /* TRANSLATORS: This is a ``checkpoint of write operation'',
- 		     *not* ``Writing a checkpoint''.
-		     E.g. in Spanish ``Punto de comprobaci@'on de escritura'',
-		     *not* ``Escribiendo un punto de comprobaci@'on'' */
+		  /* TRANSLATORS: This is a "checkpoint of write operation",
+		     *not* "Writing a checkpoint".
+		     E.g. in Spanish "Punto de comprobaci@'on de escritura",
+		     *not* "Escribiendo un punto de comprobaci@'on" */
 		  str = gettext ("Write checkpoint %u");
 		else
-		  /* TRANSLATORS: This is a ``checkpoint of read operation'',
-	             *not* ``Reading a checkpoint''.
-		     E.g. in Spanish ``Punto de comprobaci@'on de lectura'',
-		     *not* ``Leyendo un punto de comprobaci@'on'' */
+		  /* TRANSLATORS: This is a "checkpoint of read operation",
+	             *not* "Reading a checkpoint".
+		     E.g. in Spanish "Punto de comprobaci@'on de lectura",
+		     *not* "Leyendo un punto de comprobaci@'on" */
 		  str = gettext ("Read checkpoint %u");
 	      }
 	    tmp = expand_checkpoint_string (str, do_write, checkpoint);
