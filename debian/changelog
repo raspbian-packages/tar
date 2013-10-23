@@ -1,3 +1,10 @@
+tar (1.27-3) UNRELEASED; urgency=low
+
+  * honor DEB_BUILD_OPTIONS parallel=<n>, honor dpkg-buildflags in build
+    target in addition to configure target, closes: #727196
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 23 Oct 2013 09:53:31 -0600
+
 tar (1.27-2) unstable; urgency=low
 
   * claim support for mime type application/x-ustar too, and no longer
