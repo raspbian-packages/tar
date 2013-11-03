@@ -1,11 +1,13 @@
-tar (1.27-3) UNRELEASED; urgency=low
+tar (1.27-3) unstable; urgency=low
 
+  * patch from Joey Hess to allow tar to replicate 1.26 output on behalf
+    of pristine-tar, closes: #728025
   * honor DEB_BUILD_OPTIONS parallel=<n>, honor dpkg-buildflags in build
     target in addition to configure target, closes: #727196
   * lower mime priority to 1 so interactive packages using the default
     priority of 5 win, closes: #727303
 
- -- Bdale Garbee <bdale@gag.com>  Wed, 23 Oct 2013 16:13:07 -0600
+ -- Bdale Garbee <bdale@gag.com>  Sun, 03 Nov 2013 09:40:31 -0700
 
 tar (1.27-2) unstable; urgency=low
 
