@@ -1,3 +1,10 @@
+tar (1.27-4) unstable; urgency=low
+
+  * add ACL, XATTR, and SELinux support by augmenting build-deps so the
+    configure will find the right libraries, closes: #732071
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 14 Dec 2013 10:05:08 -0700
+
 tar (1.27-3) unstable; urgency=low
 
   * patch from Joey Hess to allow tar to replicate 1.26 output on behalf
