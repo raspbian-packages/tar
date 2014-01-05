@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.24\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2010-10-25 15:22+0300\n"
 "Last-Translator: Sergey Poznyakoff <gray@gnu.org>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
@@ -1313,31 +1313,31 @@ msgstr "--Продовжується з байту %s--\n"
 msgid "Creating directory:"
 msgstr "Створення каталогу:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Перейменовано %s у %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Не вдається перейменувати на %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Перейменовано %s назад у %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Файл було видалено перед тим як tar встиг його прочитати"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "процес-нащадок"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "канал між процесами"
 
@@ -1361,11 +1361,11 @@ msgstr "не вдається встановити час файла `%s'"
 msgid "%s: file name read contains nul character"
 msgstr "%s: прочитана назва файла містить нульовий символ"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Назви файлів містять символи-шаблони"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1373,29 +1373,29 @@ msgstr ""
 "Користайтеся опцією --wildcards аби увімкнути шаблони, або опцією --no-"
 "wildcards, щоб позбутися цього повідомлення"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Не знайдено в архіві"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Потрібну копію у архіві не знайдено"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Незгідність назви тому"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Використання опції -C у переліку файлів разом з опцією --listed-incremental "
 "не дозволяється"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Разом з --listed-incremental дозволяється лише одна опція -C"
 

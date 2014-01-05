@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar-1.15.91-eu\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2006-12-13 19:52+0100\n"
 "Last-Translator: Mikel Olasagasti <hey_neken@mundurat.net>\n"
 "Language-Team: Basque <translation-team-eu@lists.sourceforge.net>\n"
@@ -1279,31 +1279,31 @@ msgstr "--%s byte-an jarraitzen du--\n"
 msgid "Creating directory:"
 msgstr "Direktorioa sortzen:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s %s-ra berrizendatzen\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Ezin da %s-ra berrizendatu"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s %s-ra atzera berrizendatzen\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fitxategia irakurri baino lehen ezabaturik"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "ume prozesua"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "prozesu arteko kanala"
 
@@ -1327,37 +1327,37 @@ msgstr "ezin da `%s'-ren denbora ezarri"
 msgid "%s: file name read contains nul character"
 msgstr ""
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Ez da paketean aurkitu"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr ""
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr ""
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 

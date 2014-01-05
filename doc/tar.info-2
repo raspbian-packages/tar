@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.27, 24 September 2013), which
+This manual is for GNU `tar' (version 1.27.1, 24 September 2013), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994-1997, 1999-2001, 2003-2013 Free Software
@@ -267,7 +267,7 @@ v7
      Makefiles.  This practice will change in the future, in the
      meantime, however this means that projects containing file names
      more than 99 characters long will not be able to use GNU `tar'
-     1.27 and Automake prior to 1.9.
+     1.27.1 and Automake prior to 1.9.
 
 ustar
      Archive format defined by POSIX.1-1988 specification.  It stores
@@ -403,7 +403,7 @@ a list of recognized suffixes).
    Some compression programs are able to handle different compression
 formats.  GNU `tar' uses this, if the principal decompressor for the
 given format is not available.  For example, if `compress' is not
-installed, `tar' will try to use `gzip'.  As of version 1.27 the
+installed, `tar' will try to use `gzip'.  As of version 1.27.1 the
 following alternatives are tried(2):
 
 Format                 Main decompressor      Alternatives
@@ -3285,7 +3285,7 @@ Appendix A Changes
 ******************
 
 This appendix lists some important user-visible changes between version
-GNU `tar' 1.27 and previous versions. An up-to-date version of this
+GNU `tar' 1.27.1 and previous versions. An up-to-date version of this
 document is available at the GNU `tar' documentation page
 (http://www.gnu.org/software/tar/manual/changes.html).
 
@@ -4353,13 +4353,13 @@ backups (*note Incremental Dumps::).  It contains the status of the
 file system at the time of the dump and is used to determine which
 files were modified since the last backup.
 
-   GNU `tar' version 1.27 supports three snapshot file formats.  The
+   GNU `tar' version 1.27.1 supports three snapshot file formats.  The
 first format, called "format 0", is the one used by GNU `tar' versions
 up to and including 1.15.1. The second format, called "format 1" is an
 extended version of this format, that contains more metadata and allows
 for further extensions. It was used by alpha release version 1.15.90.
 For alpha version 1.15.91 and stable releases version 1.16 up through
-1.27, the "format 2" is used.
+1.27.1, the "format 2" is used.
 
    GNU `tar' is able to read all three formats, but will create
 snapshots only in format 2.
@@ -4418,7 +4418,7 @@ snapshots only in format 2.
   2.   `Format 2' snapshot file begins with a format identifier, as
      described for version 1, e.g.:
 
-          GNU tar-1.27-2
+          GNU tar-1.27.1-2
 
      This line is followed by newline. Rest of file consists of
      records, separated by null (ASCII 0) characters. Thus, in contrast

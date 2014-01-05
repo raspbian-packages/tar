@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.27, 24 September 2013), which
+This manual is for GNU `tar' (version 1.27.1, 24 September 2013), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994-1997, 1999-2001, 2003-2013 Free Software
@@ -34,7 +34,7 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.27, 24 September 2013), which
+This manual is for GNU `tar' (version 1.27.1, 24 September 2013), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994-1997, 1999-2001, 2003-2013 Free Software
@@ -567,7 +567,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.27
+to create version 1.12.  The book for versions from 1.14 up to 1.27.1
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2523,9 +2523,9 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--level=N'
      Force incremental backup of level N.  As of GNU `tar' version
-     1.27, the option `--level=0' truncates the snapshot file, thereby
-     forcing the level 0 dump.  Other values of N are effectively
-     ignored.  *Note --level=0::, for details and examples.
+     1.27.1, the option `--level=0' truncates the snapshot file,
+     thereby forcing the level 0 dump.  Other values of N are
+     effectively ignored.  *Note --level=0::, for details and examples.
 
      The use of this option is valid only in conjunction with the
      `--listed-incremental' option.  *Note Incremental Dumps::, for a
@@ -3083,7 +3083,7 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.27
+     tar (GNU tar) 1.27.1
      Copyright (C) 2013 Free Software Foundation, Inc.
      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
      This is free software: you are free to change and redistribute it.
@@ -6219,7 +6219,7 @@ difficult to catch using text editors.
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-     As of version 1.27, the following files are excluded:
+     As of version 1.27.1, the following files are excluded:
 
         * `CVS/', and everything under it
 
