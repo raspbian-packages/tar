@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.24\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2010-10-25 14:41+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -1314,31 +1314,31 @@ msgstr "--Folytatva %s bájttól--\n"
 msgid "Creating directory:"
 msgstr "Könyvtár létrehozása:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s átnevezése a következőre: %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Nem nevezhető át a következőre: %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s helyreállítása a következő névre: %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: a fájl el lett távolítva a beolvasás előtt"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "gyermekfolyamat"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "folyamatközi csatorna"
 
@@ -1362,11 +1362,11 @@ msgstr "nem állítható be az idő a következőn: „%s”"
 msgid "%s: file name read contains nul character"
 msgstr "%s: a beolvasott fájlnév null karaktert tartalmaz"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Mintaillesztő karaktereket használt a fájlnevekben"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1374,29 +1374,29 @@ msgstr ""
 "Használja a --wildcards kapcsolót a mintaillesztés engedélyezéséhez, vagy a "
 "--no-wildcards kapcsolót ezen figyelmeztetés letiltásához"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Nem található az archívumban"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: A szükséges előfordulás nem található az archívumban"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Hibás archívumcímke"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "A -C használata fájllistán belül nem engedélyezett a --listed-incremental "
 "kapcsolóval"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Csak egy -C engedélyezett a --listed-incremental kapcsolóval"
 

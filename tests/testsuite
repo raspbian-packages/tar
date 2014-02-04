@@ -1082,7 +1082,7 @@ fi
 # List of tests.
 if $at_list_p; then
   cat <<_ATEOF || at_write_fail=1
-GNU tar 1.27 test suite test groups:
+GNU tar 1.27.1 test suite test groups:
 
  NUM: FILE-NAME:LINE     TEST-GROUP-NAME
       KEYWORDS
@@ -1123,7 +1123,7 @@ _ATEOF
   exit $at_write_fail
 fi
 if $at_version_p; then
-  $as_echo "$as_me (GNU tar 1.27)" &&
+  $as_echo "$as_me (GNU tar 1.27.1)" &&
   cat <<\_ATEOF || at_write_fail=1
 
 Copyright (C) 2012 Free Software Foundation, Inc.
@@ -1377,13 +1377,13 @@ fi
 exec 5>>"$at_suite_log"
 
 # Banners and logs.
-$as_echo "## ------------------------ ##
-## GNU tar 1.27 test suite. ##
-## ------------------------ ##"
+$as_echo "## -------------------------- ##
+## GNU tar 1.27.1 test suite. ##
+## -------------------------- ##"
 {
-  $as_echo "## ------------------------ ##
-## GNU tar 1.27 test suite. ##
-## ------------------------ ##"
+  $as_echo "## -------------------------- ##
+## GNU tar 1.27.1 test suite. ##
+## -------------------------- ##"
   echo
 
   $as_echo "$as_me: command line was:"
@@ -2226,7 +2226,7 @@ _ASBOX
   $as_echo "Please send $at_msg and all information you think might help:
 
    To: <bug-tar@gnu.org>
-   Subject: [GNU tar 1.27] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
+   Subject: [GNU tar 1.27.1] $as_me: $at_fail_list${at_fail_list:+ failed${at_xpass_list:+, }}$at_xpass_list${at_xpass_list:+ passed unexpectedly}
 
 You may investigate any problem if you feel able to do so, in which
 case the test suite provides a good starting point.  Its output may
@@ -2257,7 +2257,7 @@ at_fn_check_prepare_notrace 'a shell pipeline' "version.at:21"
 at_status=$? at_failed=false
 $at_check_filter
 at_fn_diff_devnull "$at_stderr" || at_failed=:
-echo >>"$at_stdout"; $as_echo "tar (GNU tar) 1.27
+echo >>"$at_stdout"; $as_echo "tar (GNU tar) 1.27.1
 " | \
   $at_diff - "$at_stdout" || at_failed=:
 at_fn_check_status 0 $at_status "$at_srcdir/version.at:21"

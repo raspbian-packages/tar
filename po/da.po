@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU tar 1.26\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2011-04-12 10:18+0100\n"
 "Last-Translator: Keld Simonsen <keld@keldix.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -1292,31 +1292,31 @@ msgstr "--Fortsat ved byte %s--\n"
 msgid "Creating directory:"
 msgstr "Opretter katalog:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Omdøber %s til %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Kan ikke omdøbe til %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Omdøber %s tilbage til %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fil fjernet før vi læste den"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "underproces"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "mellemproces-kanal"
 
@@ -1340,11 +1340,11 @@ msgstr "kan ikke sætte tid på \"%s\""
 msgid "%s: file name read contains nul character"
 msgstr "%s: filnavnet som læstes indeholder nultegn"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Mønstermatchningstegn bruges i filnavne"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1352,28 +1352,28 @@ msgstr ""
 "Brug --wildcards for at aktivere mønstermatchning, eller --no-wildcards for "
 "at undertrykke denne advarsel"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Ikke fundet i arkivet"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Krævet forekomst blev ikke fundet i arkivet"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Arkivetiket stemmer ikke overrens"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "At bruge -C-flaget i en filliste er ikke tilladt med --listed-incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Kun ét -C-flag er tilladt med --listed-incremental"
 

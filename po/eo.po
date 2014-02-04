@@ -6,17 +6,18 @@
 #: src/create.c:1572
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.26\n"
+"Project-Id-Version: tar 1.27\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
-"PO-Revision-Date: 2013-05-27 08:08-0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
+"PO-Revision-Date: 2013-10-07 11:32-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
-"Language: \n"
+"Language: Esperanto\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: gnu/argmatch.c:135
 #, c-format
@@ -78,7 +79,7 @@ msgid " [OPTION...]"
 msgstr " [MODIFILO...]"
 
 #: gnu/argp-help.c:1686
-#, fuzzy, c-format
+#, c-format
 msgid "Try '%s --help' or '%s --usage' for more information.\n"
 msgstr "Provu '%s --help' aŭ '%s --usage' por pli da informo.\n"
 
@@ -138,9 +139,9 @@ msgid "write error"
 msgstr "skrib-eraro"
 
 #: gnu/getopt.c:549 gnu/getopt.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: modifilo '%s' estas plursenca\n"
+msgstr "%s: modifilo '%s' estas plursenca; ebloj:"
 
 #: gnu/getopt.c:626 gnu/getopt.c:630
 #, c-format
@@ -539,9 +540,9 @@ msgid "Cannot connect to %s: resolve failed"
 msgstr "Ne eblas konekti al %s: adres-trovo fiaskis"
 
 #: lib/rtapelib.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot redirect files for remote shell"
-msgstr "Ne eblas lanĉi foran ŝelon"
+msgstr "Ne eblas redirektigi dosierojn por fora ŝelo"
 
 #: lib/rtapelib.c:516
 #, c-format
@@ -864,9 +865,9 @@ msgid "Verify "
 msgstr "Kontroli "
 
 #: src/compare.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', diffed as normal file"
-msgstr "%s: nekonata dosiertipo '%c', komparita kiel normala dosiero"
+msgstr "%s: nekonata dosiertipo '%c', ni komparas kiel normalan dosieron"
 
 #: src/compare.c:527
 msgid "Archive contains file names with leading prefixes removed."
@@ -1007,7 +1008,7 @@ msgstr "%s: neatendita malkohero dum kreo de dosierujo"
 #: src/extract.c:705
 #, c-format
 msgid "%s: skipping existing file"
-msgstr ""
+msgstr "%s: ni preterpasas ekzistantan dosieron"
 
 #: src/extract.c:821
 #, c-format
@@ -1032,7 +1033,7 @@ msgid "Unexpected long name header"
 msgstr "Neatendita long-noma kapo"
 
 #: src/extract.c:1542
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: nekonata dosiertipo '%c', ni eltiras kiel normalan dosieron"
 
@@ -1062,9 +1063,9 @@ msgid "%s: Directory is new"
 msgstr "%s: dosierujo estas nova"
 
 #: src/incremen.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "%s: directory is on a different filesystem; not dumped"
-msgstr "%s: dosiero estas en malsama dosiersistemo; ne ŝutita"
+msgstr "%s: dosierujo estas en malsama dosiersistemo; ne ŝutita"
 
 #: src/incremen.c:587
 #, c-format
@@ -1076,9 +1077,8 @@ msgid "Invalid time stamp"
 msgstr "Malvalida temp-indiko"
 
 #: src/incremen.c:1045
-#, fuzzy
 msgid "Invalid modification time"
-msgstr "Malvalida modif-tempo (sekundoj)"
+msgstr "Malvalida modif-tempo"
 
 #: src/incremen.c:1055
 msgid "Invalid modification time (nanoseconds)"
@@ -1095,16 +1095,16 @@ msgstr "Malvalida numero 'inode'"
 #: src/incremen.c:1135
 #, c-format
 msgid "%s: byte %s: %s %.*s... too long"
-msgstr ""
+msgstr "%s: bajto %s: %s %.*s... tro longas"
 
 #: src/incremen.c:1151 src/incremen.c:1206 src/incremen.c:1268
 msgid "Unexpected EOF in snapshot file"
-msgstr "Neatendita EOF en specimena dosiero"
+msgstr "Neatendita EOF en statkopia dosiero"
 
 #: src/incremen.c:1157
 #, c-format
 msgid "%s: byte %s: %s %s followed by invalid byte 0x%02x"
-msgstr ""
+msgstr "%s: bajto %s: %s %s sekvata de malvalida bajto 0x%02x"
 
 #: src/incremen.c:1169
 #, c-format
@@ -1112,16 +1112,18 @@ msgid ""
 "%s: byte %s: (valid range %s..%s)\n"
 "\t%s %s"
 msgstr ""
+"%s: bajto %s: (valida intervalo %s..%s)\n"
+"\t%s %s"
 
 #: src/incremen.c:1176
 #, c-format
 msgid "%s: byte %s: %s %s"
-msgstr ""
+msgstr "%s: bajto %s: %s %s"
 
 #: src/incremen.c:1257
 #, c-format
 msgid "%s: byte %s: %s"
-msgstr ""
+msgstr "%s: bajto %s: %s"
 
 #: src/incremen.c:1260
 msgid "Missing record terminator"
@@ -1292,59 +1294,58 @@ msgstr "--Daŭrigita ĉe bajto %s--\n"
 msgid "Creating directory:"
 msgstr "Kreado de dosierujo:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Alinomigo de %s al %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: ne eblas renomigi al %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Renomigo de %s reen al %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: dosiero estis forigata antaŭ ol ni legis ĝin"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "ida procezo"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "interproceza kanalo"
 
 #: src/names.c:360
-#, fuzzy
 msgid "command line"
-msgstr "La komando %s fiaskis"
+msgstr "komandlinio"
 
 #: src/names.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file list requested from %s already read from %s"
-msgstr "%s: dosierlisto jam estas legita"
+msgstr "%s: dosierlisto petita el %s jam estas legita el %s"
 
 #: src/names.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "cannot split string '%s': %s"
-msgstr "ne eblas difini horon por '%s'"
+msgstr "ne eblas apartigi ĉenon '%s': %s"
 
 #: src/names.c:490
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr "%s: lego de dosiernomo enhavas nul-signon"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Ŝablon-kongruaj signoj uzataj en dosiernomoj"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1352,34 +1353,34 @@ msgstr ""
 "Uzu --wildcards por ebligi ŝablon-kongruon, aŭ --no-wildcards por eviti tiun "
 "ĉi averton"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: ne trovita en arĥivo"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: postulata apero ne estis trovata en arĥivo"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Miskongruo de arĥiva etikedo"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Uzo de la modifilo -C ene de dosierlisto ne estas permesata kun --listed-"
 "incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Nur unu modifilo -C estas permesata kun --listed-incremental"
 
 #: src/tar.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-%s' and '-%s' both want standard input"
 msgstr "Ambaŭ modifiloj '-%s' kaj '-%s' postulas ĉefenigujon"
 
@@ -1393,7 +1394,7 @@ msgid "GNU features wanted on incompatible archive format"
 msgstr "GNU-trajtoj estas dezirataj en neakordigebla arĥiv-formo"
 
 #: src/tar.c:255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown quoting style '%s'. Try '%s --quoting-style=help' to get a list."
 msgstr ""
@@ -1401,7 +1402,6 @@ msgstr ""
 "liston."
 
 #: src/tar.c:364
-#, fuzzy
 msgid ""
 "GNU 'tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1421,7 +1421,6 @@ msgstr ""
 "  tar -xf archive.tar          # Eltiras ĉiujn dosierojn el archive.tar.\n"
 
 #: src/tar.c:373
-#, fuzzy
 msgid ""
 "The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1555,14 +1554,14 @@ msgid "remove files after adding them to the archive"
 msgstr "forigi dosierojn post aldoni ilin al la arĥivo"
 
 #: src/tar.c:471
-#, fuzzy
 msgid "don't replace existing files when extracting, treat them as errors"
-msgstr "ne anstataŭigi ekzistantajn dosierojn dum eltiro"
+msgstr ""
+"ne anstataŭigi ekzistantajn dosierojn dum eltiro, trakti ilin kiel erarojn"
 
 #: src/tar.c:474
-#, fuzzy
 msgid "don't replace existing files when extracting, silently skip over them"
-msgstr "ne anstataŭigi ekzistantajn dosierojn dum eltiro"
+msgstr ""
+"ne anstataŭigi ekzistantajn dosierojn dum eltiro, silente preterpasi ilin"
 
 #: src/tar.c:477
 msgid "don't replace existing files that are newer than their archive copies"
@@ -1591,9 +1590,8 @@ msgstr ""
 "anstataŭigi metadatumaron pri ekzistantaj dosierujoj dum eltiro (aprioras)"
 
 #: src/tar.c:490
-#, fuzzy
 msgid "preserve existing symlinks to directories when extracting"
-msgstr "anstataŭigi ekzistantajn dosierojn dum eltiro"
+msgstr "teni ekzistantajn simbolajn ligojn al dosierujoj dum eltiro"
 
 #: src/tar.c:496
 msgid "Select output stream:"
@@ -1697,6 +1695,7 @@ msgstr ""
 msgid ""
 "member arguments are listed in the same order as the files in the archive"
 msgstr ""
+"membraj argumentoj estas listigitaj samorde ol la dosieroj en la arĥivo"
 
 #: src/tar.c:544
 msgid "same as both -p and -s"
@@ -1715,45 +1714,44 @@ msgid "cancel the effect of --delay-directory-restore option"
 msgstr "nuligi la efikon de la modifilo --delay-directory-restore"
 
 #: src/tar.c:554
-#, fuzzy
 msgid "Handling of extended file attributes:"
-msgstr "Traktado de dosier-atributoj:"
+msgstr "Traktado de etenditaj dosier-atributoj:"
 
 #: src/tar.c:557
 msgid "Enable extended attributes support"
-msgstr ""
+msgstr "Ebligi subtenon al etenditaj atributoj"
 
 #: src/tar.c:559
 msgid "Disable extended attributes support"
-msgstr ""
+msgstr "Malebligi subtenon al etenditaj atributoj"
 
 #: src/tar.c:560 src/tar.c:562
 msgid "MASK"
-msgstr ""
+msgstr "MASKO"
 
 #: src/tar.c:561
 msgid "specify the include pattern for xattr keys"
-msgstr ""
+msgstr "indiki la inkluzivan ŝablonon por klavoj xattr"
 
 #: src/tar.c:563
 msgid "specify the exclude pattern for xattr keys"
-msgstr ""
+msgstr "indiki la malinkluzivan ŝablonon por klavoj xattr"
 
 #: src/tar.c:565
 msgid "Enable the SELinux context support"
-msgstr ""
+msgstr "Ebligi subtenon al la kunteksto SELinux"
 
 #: src/tar.c:567
 msgid "Disable the SELinux context support"
-msgstr ""
+msgstr "Malebligi subtenon al la kunteksto SELinux"
 
 #: src/tar.c:569
 msgid "Enable the POSIX ACLs support"
-msgstr ""
+msgstr "Ebligi subtenon al POSIX ACL-oj"
 
 #: src/tar.c:571
 msgid "Disable the POSIX ACLs support"
-msgstr ""
+msgstr "Malebligi subtenon al POSIX ACL-oj"
 
 #: src/tar.c:576
 msgid "Device selection and switching:"
@@ -1955,48 +1953,48 @@ msgstr "ŜABLONO"
 
 #: src/tar.c:700
 msgid "exclude files, given as a PATTERN"
-msgstr "ekskluzivi dosierojn, indikitaj kiel ŜABLONO"
+msgstr "malinkluzivi dosierojn, indikitaj kiel ŜABLONO"
 
 #: src/tar.c:702
 msgid "exclude patterns listed in FILE"
-msgstr "ekskluzivi ŝablonojn listigitajn en DOSIERO"
+msgstr "malinkkluzivi ŝablonojn listigitajn en DOSIERO"
 
 #: src/tar.c:704
 msgid ""
 "exclude contents of directories containing CACHEDIR.TAG, except for the tag "
 "file itself"
 msgstr ""
-"ekskluzivi enhavojn de dosierujoj enhavantaj CACHEDIR.TAG, krom por la "
+"malinkluzivi enhavojn de dosierujoj enhavantaj CACHEDIR.TAG, krom por la "
 "markdosiero mem"
 
 #: src/tar.c:707
 msgid "exclude everything under directories containing CACHEDIR.TAG"
-msgstr "ekskluzivi ĉion sub dosierujoj enhavantaj CACHEDIR.TAG"
+msgstr "malinkluzivi ĉion sub dosierujoj enhavantaj CACHEDIR.TAG"
 
 #: src/tar.c:710
 msgid "exclude directories containing CACHEDIR.TAG"
-msgstr "ekskluzivi dosierujojn enhavantajn CACHEDIR.TAG"
+msgstr "malinkluzivi dosierujojn enhavantajn CACHEDIR.TAG"
 
 #: src/tar.c:712
 msgid "exclude contents of directories containing FILE, except for FILE itself"
 msgstr ""
-"ekskluzivi enhavojn de dosierujoj enhavantaj DOSIEROn, krom por DOSIERO mem"
+"malinkluzivi enhavojn de dosierujoj enhavantaj DOSIEROn, krom por DOSIERO mem"
 
 #: src/tar.c:715
 msgid "exclude everything under directories containing FILE"
-msgstr "ekskluzivi ĉion sub dosierujoj enhavantaj DOSIERO"
+msgstr "malinkluzivi ĉion sub dosierujoj enhavantaj DOSIERO"
 
 #: src/tar.c:717
 msgid "exclude directories containing FILE"
-msgstr "ekskluzivi dosierujojn enhavantajn DOSIEROn"
+msgstr "malinkluzivi dosierujojn enhavantajn DOSIEROn"
 
 #: src/tar.c:719
 msgid "exclude version control system directories"
-msgstr "ekskluzivi versikontrol-sistemajn dosierujojn"
+msgstr "malinkluzivi versikontrol-sistemajn dosierujojn"
 
 #: src/tar.c:721
 msgid "exclude backup and lock files"
-msgstr "ekskluzivi savkopiajn kaj ŝlosajn dosierojn"
+msgstr "malinkluzivi savkopiajn kaj ŝlosajn dosierojn"
 
 #: src/tar.c:723
 msgid "avoid descending automatically in directories"
@@ -2011,9 +2009,8 @@ msgid "recurse into directories (default)"
 msgstr "rekursigi en dosierujojn (aprioras)"
 
 #: src/tar.c:729
-#, fuzzy
 msgid "don't strip leading '/'s from file names"
-msgstr "ne demeti antaŭirajn '/'-oj el dosiernomoj"
+msgstr "ne demeti antaŭirajn '/'-ojn el dosiernomoj"
 
 #: src/tar.c:731
 msgid "follow symlinks; archive and dump the files they point to"
@@ -2029,9 +2026,8 @@ msgid "MEMBER-NAME"
 msgstr "MEMBRO-NOMO"
 
 #: src/tar.c:735
-#, fuzzy
 msgid "begin at member MEMBER-NAME when reading the archive"
-msgstr "komenci per la membro MEMBRO-NOMO en la arĥivo"
+msgstr "komenci per la membro MEMBRO-NOMO dum lego de la arĥivo"
 
 #: src/tar.c:737
 msgid "only store files newer than DATE-OR-FILE"
@@ -2096,9 +2092,8 @@ msgid "patterns match file name start"
 msgstr "ŝablonoj kongruas al komenco de dosiernomo"
 
 #: src/tar.c:767
-#, fuzzy
 msgid "patterns match after any '/' (default for exclusion)"
-msgstr "ŝablonoj kongruas post iu ajn '/' (aprioras por ekskluzivo)"
+msgstr "ŝablonoj kongruas post iu ajn '/' (aprioras por malinkluzivo)"
 
 #: src/tar.c:769
 msgid "case sensitive matching (default)"
@@ -2106,21 +2101,19 @@ msgstr "uskleca kongruo (aprioras)"
 
 #: src/tar.c:771
 msgid "use wildcards (default for exclusion)"
-msgstr "uzi ĵokerojn (aprioras por ekskluzivo)"
+msgstr "uzi ĵokerojn (aprioras por malinkluzivo)"
 
 #: src/tar.c:773
 msgid "verbatim string matching"
 msgstr "laŭvorta ĉena kongruo"
 
 #: src/tar.c:775
-#, fuzzy
 msgid "wildcards do not match '/'"
 msgstr "ĵokeroj ne kongruas kun '/'"
 
 #: src/tar.c:777
-#, fuzzy
 msgid "wildcards match '/' (default for exclusion)"
-msgstr "ĵokeroj kongruas kun '/' (aprioras por ekskluzivo)"
+msgstr "ĵokeroj kongruas kun '/' (aprioras por malinkluzivo)"
 
 #: src/tar.c:782
 msgid "Informative output:"
@@ -2196,7 +2189,7 @@ msgstr "montri apriorojn de tar"
 
 #: src/tar.c:815
 msgid "show valid ranges for snapshot-file fields"
-msgstr ""
+msgstr "montri validajn intervalojn por kampoj de statkopi-dosiero"
 
 #: src/tar.c:817
 msgid ""
@@ -2245,12 +2238,12 @@ msgid "disable use of some potentially harmful options"
 msgstr "malebligi uzon de kelkaj eble damaĝaj modifiloj"
 
 #: src/tar.c:978
-#, fuzzy
 msgid ""
 "You may not specify more than one '-Acdtrux', '--delete' or  '--test-label' "
 "option"
 msgstr ""
-"Vi ne devas indiki pli ol unu el la modifiloj '-Acdtrux' aŭ '--test-label'"
+"Vi ne devas indiki pli ol unu el la modifiloj '-Acdtrux', '--delete' aŭ '--"
+"test-label'"
 
 #: src/tar.c:988
 msgid "Conflicting compression options"
@@ -2271,7 +2264,7 @@ msgid "Substituting %s for unknown date format %s"
 msgstr "Ni anstataŭigas %s por la nekonata dato-formo %s"
 
 #: src/tar.c:1108
-#, fuzzy, c-format
+#, c-format
 msgid "Option %s: Treating date '%s' as %s"
 msgstr "Modifilo %s: ni traktas daton '%s' kiel %s"
 
@@ -2294,9 +2287,8 @@ msgstr ""
 "*Tiu ĉi* tar apriorigas tion:\n"
 
 #: src/tar.c:1295
-#, fuzzy
 msgid "Invalid owner or group ID"
-msgstr "Malvalida posedanto"
+msgstr "Malvalida posedanto aŭ grupo-ID"
 
 #: src/tar.c:1339
 msgid "Invalid blocking factor"
@@ -2365,12 +2357,12 @@ msgid "Malformed density argument: %s"
 msgstr "Fuŝa densiga argumento: %s"
 
 #: src/tar.c:2133
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown density: '%c'"
 msgstr "Nekonata densigo: '%c'"
 
 #: src/tar.c:2150
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-[0-7][lmh]' not supported by *this* tar"
 msgstr "Modifiloj '-[0-7][lmh]' ne estas subtenata de *tiu ĉi* tar"
 
@@ -2379,7 +2371,7 @@ msgid "[FILE]..."
 msgstr "[DOSIERO]..."
 
 #: src/tar.c:2306
-#, fuzzy, c-format
+#, c-format
 msgid "Old option '%c' requires an argument."
 msgstr "La malnova modifilo '%c' postulas argumenton."
 
@@ -2388,12 +2380,11 @@ msgid "--occurrence is meaningless without a file list"
 msgstr "Sen dosierlisto, --occurrence estas sensignifa"
 
 #: src/tar.c:2389
-#, fuzzy, c-format
+#, c-format
 msgid "--occurrence cannot be used with %s"
-msgstr "--occurrence ne povas esti uzata en la petita operaci-reĝimo"
+msgstr "--occurrence ne povas esti uzata kun %s"
 
 #: src/tar.c:2408
-#, fuzzy
 msgid "Multiple archive files require '-M' option"
 msgstr "Multoblaj arĥiv-dosieroj postulas modifilon '-M'"
 
@@ -2421,9 +2412,9 @@ msgid "Cannot verify compressed archives"
 msgstr "Ne eblas kontroli densigitajn arĥivojn"
 
 #: src/tar.c:2450
-#, fuzzy, c-format
+#, c-format
 msgid "--verify cannot be used with %s"
-msgstr "Ŝablono %s ne povas esti uzata"
+msgstr "--verify ne povas esti uzata kun %s"
 
 #: src/tar.c:2457
 msgid "Cannot use multi-volume compressed archives"
@@ -2438,24 +2429,21 @@ msgid "--pax-option can be used only on POSIX archives"
 msgstr "--pax-option nur uzeblas en arĥivoj POSIX"
 
 #: src/tar.c:2478
-#, fuzzy
 msgid "--acls can be used only on POSIX archives"
-msgstr "--pax-option nur uzeblas en arĥivoj POSIX"
+msgstr "--acls nur uzeblas en arĥivoj POSIX"
 
 #: src/tar.c:2483
-#, fuzzy
 msgid "--selinux can be used only on POSIX archives"
-msgstr "--pax-option nur uzeblas en arĥivoj POSIX"
+msgstr "--selinux nur uzeblas en arĥivoj POSIX"
 
 #: src/tar.c:2488
-#, fuzzy
 msgid "--xattrs can be used only on POSIX archives"
-msgstr "--pax-option nur uzeblas en arĥivoj POSIX"
+msgstr "--xattrs nur uzeblas en arĥivoj POSIX"
 
 #: src/tar.c:2493
-#, fuzzy, c-format
+#, c-format
 msgid "--%s option cannot be used with %s"
-msgstr "Ŝablono %s ne povas esti uzata"
+msgstr "la modifilo --%s ne uzeblas kun %s"
 
 #: src/tar.c:2525
 msgid "Volume length cannot be less than record size"
@@ -2470,15 +2458,14 @@ msgid "Cowardly refusing to create an empty archive"
 msgstr "Malkuraĝe ni rifuzas krei malplenan arĥivon"
 
 #: src/tar.c:2565
-#, fuzzy
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Modifiloj '-Aru' ne akordigeblas kun '-f -'"
 
 #: src/tar.c:2660
-#, fuzzy
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
-msgstr "Vi devas indiki unu el la modifiloj '-Acdtrux' aŭ '--test-label'"
+msgstr ""
+"Vi devas indiki unu el la modifiloj '-Acdtrux', --delete' aŭ '--test-label'"
 
 #: src/tar.c:2715
 #, c-format
@@ -2533,7 +2520,7 @@ msgid "Malformed extended header: missing newline"
 msgstr "Fuŝa etendita kapo: mankas nov-linio"
 
 #: src/xheader.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Ignoring unknown extended header keyword '%s'"
 msgstr "Ni preteratentas nekonatan etenditan kapan ŝlosilon '%s'"
 
@@ -2814,14 +2801,14 @@ msgid "cannot set time on `%s'"
 msgstr "ne eblas difini horon por '%s'"
 
 #: tests/genfile.c:692
-#, fuzzy, c-format
+#, c-format
 msgid "cannot truncate `%s'"
-msgstr "ne eblas apliki 'unlink' al '%s'"
+msgstr "ne eblas tranĉi '%s'"
 
 #: tests/genfile.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "command failed: %s"
-msgstr "La komando %s fiaskis"
+msgstr "komando fiaskis: %s"
 
 #: tests/genfile.c:706
 #, c-format
@@ -2863,20 +2850,20 @@ msgstr "Komando estas ĉesigita\n"
 msgid "--stat requires file names"
 msgstr "--stat postulas dosiernomojn"
 
+#~ msgid "Field too long while reading snapshot file"
+#~ msgstr "Kampo tro longa dum lego de stat-kopia dosiero"
+
+#~ msgid "Read error in snapshot file"
+#~ msgstr "Leg-eraro en statkopia dosiero"
+
+#~ msgid "Unexpected field value in snapshot file"
+#~ msgstr "Neatendita kamp-valoro en statkopia dosiero"
+
 #~ msgid "Cannot get working directory"
 #~ msgstr "Ne eblas scii la laboran dosierujon"
 
 #~ msgid "sort names to extract to match archive"
 #~ msgstr "ordigi eltirotajn nomojn por kongrui al la arĥivo"
-
-#~ msgid "Field too long while reading snapshot file"
-#~ msgstr "Kampo tro longa dum lego de specimena dosiero"
-
-#~ msgid "Read error in snapshot file"
-#~ msgstr "Leg-eraro en specimena dosiero"
-
-#~ msgid "Unexpected field value in snapshot file"
-#~ msgstr "Neatendita kamp-valoro en specimena dosiero"
 
 #~ msgid "Invalid group"
 #~ msgstr "Malvalida grupo"

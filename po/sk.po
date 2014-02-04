@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar- \n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2002-02-10 12:00CEST\n"
 "Last-Translator: Martin Lacko <lacko@host.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -1286,31 +1286,31 @@ msgstr "--Pokraèované od %s bajtu--\n"
 msgid "Creating directory:"
 msgstr "Vytváram adresár:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Premenovávam %s na %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: nie je mo¾né premenova» na %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Premenovávám %s spä» na %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Súbor zmazaný skôr ako mohl by» èítaný"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "potomok"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "meziprocesový kanál"
 
@@ -1334,37 +1334,37 @@ msgstr "%s: Nedá sa zmeni» pozícia v súbore na %s"
 msgid "%s: file name read contains nul character"
 msgstr ""
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr ""
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
 msgstr ""
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: V archíve nenájdený"
 
-#: src/names.c:842
+#: src/names.c:844
 #, fuzzy, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: V archíve nenájdený"
 
-#: src/names.c:876
+#: src/names.c:878
 #, fuzzy, c-format
 msgid "Archive label mismatch"
 msgstr "Pre vyhodnotenie vzorky `%s' musí by» archív pomenovaný"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 

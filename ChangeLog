@@ -1,3 +1,53 @@
+2013-11-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Version 1.27.1
+
+2013-11-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix star compatibility (sparse headers)
+
+	* src/sparse.c (star_get_sparse_info): Update file->dumped_size
+
+2013-11-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix GNU long link header.
+
+	* src/create.c (write_gnu_long_link): Set timestamp to
+	0 for backward compatibility.  Bug reported by David Barri.
+	* THANKS: Update.
+
+2013-11-17  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix unquoting of input file names.
+
+	* src/names.c (read_next_name): Unquote file names coming from the
+	-T argument.  Bug reported by Nicolas Dudebout.
+	* THANKS: Update.
+
+2013-10-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	build: fix bug where 'configure --with-posix-acls' disables ACLs
+
+	Reported by Lars Wendler in
+	<http://lists.gnu.org/archive/html/bug-tar/2013-10/msg00022.html>.
+	* configure.ac (with_posix_acls): Fix typo.
+
+2013-10-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Fix core dump on Solaris 10 when "." isn't readable.
+
+	Reported by Peter Kruse in
+	<http://lists.gnu.org/archive/html/bug-tar/2013-10/msg00017.html>.
+	This doesn't fix all the Solaris 10 test failures, just the
+	core dump.
+	* src/common.h, src/misc.c (tar_getcdpath): Now static.
+	* src/misc.c (normalize_filename): Report a fatal error
+	if cdpath is null, since we don't know the absolute name
+	of the working directory in that case.	FIXME: there should
+	be no need to know absolute file names.
+	(chdir_arg): Simplify wd allocation.
+	Don't assume that xgetcwd returns non-null.
+
 2013-10-06  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Version 1.27

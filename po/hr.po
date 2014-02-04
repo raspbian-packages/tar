@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.26\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2012-12-21 00:09+0100\n"
 "Last-Translator: Tomislav Krznar <tomislav.krznar@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -1319,31 +1319,31 @@ msgstr "--Nastavljeno na bajtu %s--\n"
 msgid "Creating directory:"
 msgstr "Stvaram direktorij:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Mijenjam ime %s u %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Ne mogu preimenovati u %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Mijenjam ime %s natrag u %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Datoteka uklonjena prije nego što smo ju pročitali"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "proces dijete"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "međuprocesni kanal"
 
@@ -1367,11 +1367,11 @@ msgstr "ne mogu postaviti vrijeme na „%s”"
 msgid "%s: file name read contains nul character"
 msgstr "%s: pročitano ime datoteke sadrži prazan znak"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Znakovi za uspoređivanje uzoraka korišteni u imenima datoteka"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1379,30 +1379,30 @@ msgstr ""
 "Koristite --wildcards za omogućavanje uspoređivanja uzoraka ili --no-"
 "wildcards za potiskivanje ovog upozorenja"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Nije pronađen u arhivi"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Potrebna pojava nije pronađen u arhivi"
 
 # FIXME -- clean against source! (TM)
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Oznaka arhive ne odgovara"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Korištenje opcije -C u popisu datoteka nije dozvoljeno uz --listed-"
 "incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Samo jedna opcija -C je dozvoljena uz --listed-incremental"
 
