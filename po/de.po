@@ -4,15 +4,15 @@
 # Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1995?
 # Karl Eichwalder <ke@ke.central.de>, 1996
 # Christian Kirsch <ck@held.mind.de>, 1996, 2001
-# Michael Piefel <piefel@informatik.hu-berlin.de>, 2003, 2006, 2007, 2008, 2009, 2010, 2011
+# Michael Piefel <piefel@informatik.hu-berlin.de>, 2003, 2006, 2007, 2008, 2009, 2010, 2011, 2013
 #
 #: src/create.c:1572
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.26\n"
+"Project-Id-Version: tar 1.27\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
-"PO-Revision-Date: 2011-03-14 21:35+0100\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
+"PO-Revision-Date: 2013-10-26 21:35+0200\n"
 "Last-Translator: Michael Piefel <piefel@informatik.hu-berlin.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
 "Language: de\n"
@@ -81,7 +81,7 @@ msgid " [OPTION...]"
 msgstr " [OPTION...]"
 
 #: gnu/argp-help.c:1686
-#, fuzzy, c-format
+#, c-format
 msgid "Try '%s --help' or '%s --usage' for more information.\n"
 msgstr "„%s --help“ oder „%s --usage“ gibt weitere Informationen.\n"
 
@@ -141,9 +141,9 @@ msgid "write error"
 msgstr "Schreibfehler"
 
 #: gnu/getopt.c:549 gnu/getopt.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: Option „%s“ ist mehrdeutig\n"
+msgstr "%s: Option „%s“ ist mehrdeutig; Möglichkeiten:"
 
 #: gnu/getopt.c:626 gnu/getopt.c:630
 #, c-format
@@ -539,9 +539,9 @@ msgid "Cannot connect to %s: resolve failed"
 msgstr "Kann nicht mit %s verbinden: Auflösung fehlgeschlagen"
 
 #: lib/rtapelib.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot redirect files for remote shell"
-msgstr "Kann Remote-Shell nicht ausführen."
+msgstr "Kann Dateien für Remote-Shell nicht umleiten."
 
 #: lib/rtapelib.c:516
 #, c-format
@@ -866,7 +866,7 @@ msgid "Verify "
 msgstr "Prüfe "
 
 #: src/compare.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', diffed as normal file"
 msgstr "%s: Unbekannter Dateityp „%c“, Differenz wie für eine normale Datei."
 
@@ -1010,7 +1010,7 @@ msgstr "%s: Unerwarteter Inkonsitenz beim Erstellen des Verzeichnisses."
 #: src/extract.c:705
 #, c-format
 msgid "%s: skipping existing file"
-msgstr ""
+msgstr "%s: überspringe existierende Datei"
 
 #: src/extract.c:821
 #, c-format
@@ -1037,7 +1037,7 @@ msgid "Unexpected long name header"
 msgstr "Unerwarteter Kopfteil mit langem Namen"
 
 #: src/extract.c:1542
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Unbekannter Dateityp „%c“, wie normale Datei extrahiert."
 
@@ -1067,9 +1067,9 @@ msgid "%s: Directory is new"
 msgstr "Verzeichnis „%s“ ist neu."
 
 #: src/incremen.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "%s: directory is on a different filesystem; not dumped"
-msgstr "Datei %s liegt auf einem anderen Dateisystem; nicht gesichert."
+msgstr "Verzeichnis %s liegt auf einem anderen Dateisystem; nicht gesichert."
 
 #: src/incremen.c:587
 #, c-format
@@ -1081,9 +1081,8 @@ msgid "Invalid time stamp"
 msgstr "Ungültiger Zeitstempel"
 
 #: src/incremen.c:1045
-#, fuzzy
 msgid "Invalid modification time"
-msgstr "Ungültige Änderungszeit (Sekunden)."
+msgstr "Ungültige Änderungszeit"
 
 #: src/incremen.c:1055
 msgid "Invalid modification time (nanoseconds)"
@@ -1100,7 +1099,7 @@ msgstr "Ungültige Inode-Nummer"
 #: src/incremen.c:1135
 #, c-format
 msgid "%s: byte %s: %s %.*s... too long"
-msgstr ""
+msgstr "%s: Byte %s: %s %.*s... zu lang"
 
 #: src/incremen.c:1151 src/incremen.c:1206 src/incremen.c:1268
 msgid "Unexpected EOF in snapshot file"
@@ -1109,7 +1108,7 @@ msgstr "Unerwartetes Dateiende im Schnappschussdatei."
 #: src/incremen.c:1157
 #, c-format
 msgid "%s: byte %s: %s %s followed by invalid byte 0x%02x"
-msgstr ""
+msgstr "%s: Byte %s: %s %s gefolgt von ungültigem Byte 0x%02x"
 
 #: src/incremen.c:1169
 #, c-format
@@ -1117,16 +1116,18 @@ msgid ""
 "%s: byte %s: (valid range %s..%s)\n"
 "\t%s %s"
 msgstr ""
+"%s: Byte %s: (gültiger Bereich %s..%s)\n"
+"\t%s %s"
 
 #: src/incremen.c:1176
 #, c-format
 msgid "%s: byte %s: %s %s"
-msgstr ""
+msgstr "%s: Byte %s: %s %s"
 
 #: src/incremen.c:1257
 #, c-format
 msgid "%s: byte %s: %s"
-msgstr ""
+msgstr "%s: Byte %s: %s"
 
 #: src/incremen.c:1260
 msgid "Missing record terminator"
@@ -1300,59 +1301,59 @@ msgstr "––Fortgesetzt bei Byte %s––\n"
 msgid "Creating directory:"
 msgstr "Erzeuge Verzeichnis:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Benenne „%s“ in „%s“ um.\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Kann nicht in %s umbenennen"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Benenne „%s“ zurück in „%s“.\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Datei gelöscht, bevor sie gelesen wurde."
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "Kindprozess"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "Interprocess-Kanal"
 
 #: src/names.c:360
-#, fuzzy
 msgid "command line"
-msgstr "„%s“-Befehl gescheitert."
+msgstr "Kommandozeile"
 
 #: src/names.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file list requested from %s already read from %s"
-msgstr "%s: Dateiliste schon gelesen"
+msgstr ""
+"%s: Dateiliste, die von %s angefordert wurde, wurde schon von %s gelesen"
 
 #: src/names.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "cannot split string '%s': %s"
-msgstr "kann an „%s“ keine Zeit setzen"
+msgstr "kann Zeichenkette „%s“ nicht zerteilen: %s"
 
 #: src/names.c:490
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr "%s: gelesener Dateiname enthält ein NULL-Zeichen"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Zeichen für Musterüberdeckung im Dateinamen benutzt"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1360,32 +1361,32 @@ msgstr ""
 "Benutzen Sie --wildcards, um Musterüberdeckung zu ermöglichen oder\n"
 "--no-wildcards, um diese Warnung zu unterdrücken."
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Nicht im Archiv gefunden."
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Erforderliches Auftreten nicht im Archiv gefunden."
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Kennzeichnung des Archivs passt nicht"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr "Option -C in Dateiliste ist nicht erlaubt mit --listed-incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "In --listed-incremental ist nur eine Option -C erlaubt"
 
 #: src/tar.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-%s' and '-%s' both want standard input"
 msgstr "Die beiden Optionen „-%s“ und „-%s“ verlangen Standard-Eingabe."
 
@@ -1399,7 +1400,7 @@ msgid "GNU features wanted on incompatible archive format"
 msgstr "GNU-Erweiterungen bei einem inkompatiblen Archiv-Format verlangt."
 
 #: src/tar.c:255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown quoting style '%s'. Try '%s --quoting-style=help' to get a list."
 msgstr ""
@@ -1407,7 +1408,6 @@ msgstr ""
 "Liste."
 
 #: src/tar.c:364
-#, fuzzy
 msgid ""
 "GNU 'tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1427,7 +1427,6 @@ msgstr ""
 "  tar -xf archiv.tar          # alle Dateien aus archiv.tar extrahieren\n"
 
 #: src/tar.c:373
-#, fuzzy
 msgid ""
 "The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1565,14 +1564,16 @@ msgid "remove files after adding them to the archive"
 msgstr "Dateien nach dem Hinzufügen zum Archiv löschen"
 
 #: src/tar.c:471
-#, fuzzy
 msgid "don't replace existing files when extracting, treat them as errors"
-msgstr "vorhandene Dateien beim Extrahieren nicht überschreiben"
+msgstr ""
+"vorhandene Dateien beim Extrahieren nicht überschreiben, sondern als Fehler "
+"behandeln"
 
 #: src/tar.c:474
-#, fuzzy
 msgid "don't replace existing files when extracting, silently skip over them"
-msgstr "vorhandene Dateien beim Extrahieren nicht überschreiben"
+msgstr ""
+"vorhandene Dateien beim Extrahieren nicht überschreiben, kommentarlos "
+"überspringen"
 
 #: src/tar.c:477
 msgid "don't replace existing files that are newer than their archive copies"
@@ -1604,9 +1605,10 @@ msgstr ""
 "(Voreinstellung)"
 
 #: src/tar.c:490
-#, fuzzy
 msgid "preserve existing symlinks to directories when extracting"
-msgstr "vorhandene Dateien beim Extrahieren überschreiben"
+msgstr ""
+"vorhandene symbolische Verknüpfungen auf Verzeichnisse beim Extrahieren "
+"erhalten"
 
 #: src/tar.c:496
 msgid "Select output stream:"
@@ -1715,6 +1717,8 @@ msgstr ""
 msgid ""
 "member arguments are listed in the same order as the files in the archive"
 msgstr ""
+"Argumente für Elemente werden in der gleichen Anordnung wie die Dateien im "
+"Archiv aufgeführt"
 
 #: src/tar.c:544
 msgid "same as both -p and -s"
@@ -1733,45 +1737,44 @@ msgid "cancel the effect of --delay-directory-restore option"
 msgstr "den Effekt von --delay-directory-restore aufheben"
 
 #: src/tar.c:554
-#, fuzzy
 msgid "Handling of extended file attributes:"
-msgstr "Behandlung der Datei-Attribute:"
+msgstr "Behandlung der erweiterten Datei-Attribute:"
 
 #: src/tar.c:557
 msgid "Enable extended attributes support"
-msgstr ""
+msgstr "Unterstützung für erweiterte Attribute ermöglichen"
 
 #: src/tar.c:559
 msgid "Disable extended attributes support"
-msgstr ""
+msgstr "Unterstützung für erweiterte Attribute abschalten"
 
 #: src/tar.c:560 src/tar.c:562
 msgid "MASK"
-msgstr ""
+msgstr "MASKE"
 
 #: src/tar.c:561
 msgid "specify the include pattern for xattr keys"
-msgstr ""
+msgstr "das Einschluss-Muster für xattr-Schlüssel angeben"
 
 #: src/tar.c:563
 msgid "specify the exclude pattern for xattr keys"
-msgstr ""
+msgstr "das Ausschluss-Muster für xattr-Schlüssel angeben"
 
 #: src/tar.c:565
 msgid "Enable the SELinux context support"
-msgstr ""
+msgstr "Unterstützung für SELinux-Kontext ermöglichen"
 
 #: src/tar.c:567
 msgid "Disable the SELinux context support"
-msgstr ""
+msgstr "Unterstützung für SELinux-Kontext abschalten"
 
 #: src/tar.c:569
 msgid "Enable the POSIX ACLs support"
-msgstr ""
+msgstr "Unterstützung für POSIX-ACLs ermöglichen"
 
 #: src/tar.c:571
 msgid "Disable the POSIX ACLs support"
-msgstr ""
+msgstr "Unterstützung für POSIX-ACLs abschalten"
 
 #: src/tar.c:576
 msgid "Device selection and switching:"
@@ -2031,7 +2034,6 @@ msgid "recurse into directories (default)"
 msgstr "in Verzeichnisse absteigen (Voreinstellung)"
 
 #: src/tar.c:729
-#, fuzzy
 msgid "don't strip leading '/'s from file names"
 msgstr "führende „/“-Zeichen in den Dateinamen erhalten"
 
@@ -2052,9 +2054,8 @@ msgid "MEMBER-NAME"
 msgstr "ELEMENT-NAME"
 
 #: src/tar.c:735
-#, fuzzy
 msgid "begin at member MEMBER-NAME when reading the archive"
-msgstr "mit ELEMENT-NAME im Archiv beginnen"
+msgstr "beim Lesen der Archivs mit ELEMENT-NAME beginnen"
 
 #: src/tar.c:737
 msgid "only store files newer than DATE-OR-FILE"
@@ -2118,7 +2119,6 @@ msgid "patterns match file name start"
 msgstr "Muster am Dateinamensanfang ausrichten"
 
 #: src/tar.c:767
-#, fuzzy
 msgid "patterns match after any '/' (default for exclusion)"
 msgstr "Muster passen nach jedem „/“ (Voreinstellung beim Ausschluss)"
 
@@ -2135,12 +2135,10 @@ msgid "verbatim string matching"
 msgstr "Zeichenketten sind buchstabengetreu"
 
 #: src/tar.c:775
-#, fuzzy
 msgid "wildcards do not match '/'"
 msgstr "Jokerzeichen passen nicht auf „/“"
 
 #: src/tar.c:777
-#, fuzzy
 msgid "wildcards match '/' (default for exclusion)"
 msgstr "Jokerzeichen passen auf „/“ (Voreinstellung für Ausschluss)"
 
@@ -2220,7 +2218,7 @@ msgstr "Voreinstellungen von tar anzeigen"
 
 #: src/tar.c:815
 msgid "show valid ranges for snapshot-file fields"
-msgstr ""
+msgstr "gültige Bereiche für die Felder von Snapshot-Dateien anzeigen"
 
 #: src/tar.c:817
 msgid ""
@@ -2269,12 +2267,12 @@ msgid "disable use of some potentially harmful options"
 msgstr "möglicherweise schädliche Optionen deaktivieren"
 
 #: src/tar.c:978
-#, fuzzy
 msgid ""
 "You may not specify more than one '-Acdtrux', '--delete' or  '--test-label' "
 "option"
 msgstr ""
-"Von den Optionen „-Acdtrux“ oder „--test-label“ ist jeweils nur eine erlaubt"
+"Von den Optionen „-Acdtrux“, „--delete“ oder „--test-label“ ist jeweils nur "
+"eine erlaubt"
 
 #: src/tar.c:988
 msgid "Conflicting compression options"
@@ -2295,7 +2293,7 @@ msgid "Substituting %s for unknown date format %s"
 msgstr "Ersetze %s für unbekanntes Datumsformat %s"
 
 #: src/tar.c:1108
-#, fuzzy, c-format
+#, c-format
 msgid "Option %s: Treating date '%s' as %s"
 msgstr "Option %s: Behandle Datum „%s“ als %s"
 
@@ -2318,9 +2316,8 @@ msgstr ""
 "*Dieses* „tar“ hat als Voreinstellung:\n"
 
 #: src/tar.c:1295
-#, fuzzy
 msgid "Invalid owner or group ID"
-msgstr "Ungültiger Benutzer"
+msgstr "Ungültige Benutzer- oder Gruppen-ID"
 
 #: src/tar.c:1339
 msgid "Invalid blocking factor"
@@ -2389,12 +2386,12 @@ msgid "Malformed density argument: %s"
 msgstr "Fehlgeformtes Dichteargument: %s"
 
 #: src/tar.c:2133
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown density: '%c'"
-msgstr "Unbekannte Dicht: „%c“"
+msgstr "Unbekannte Dichte: „%c“"
 
 #: src/tar.c:2150
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-[0-7][lmh]' not supported by *this* tar"
 msgstr "Die Optionen „-[0-7][lmh]“ unterstützt *dieses* „tar“ nicht."
 
@@ -2403,7 +2400,7 @@ msgid "[FILE]..."
 msgstr "[DATEI]..."
 
 #: src/tar.c:2306
-#, fuzzy, c-format
+#, c-format
 msgid "Old option '%c' requires an argument."
 msgstr "Die alte Option „%c“ benötigt einen Parameter."
 
@@ -2412,13 +2409,11 @@ msgid "--occurrence is meaningless without a file list"
 msgstr "--occurrence ist ohne Dateiliste bedeutungslos"
 
 #: src/tar.c:2389
-#, fuzzy, c-format
+#, c-format
 msgid "--occurrence cannot be used with %s"
-msgstr ""
-"--occurrence kann im angeforderten Operationsmodus nicht benutzt werden"
+msgstr "--occurrence kann mit %s nicht benutzt werden"
 
 #: src/tar.c:2408
-#, fuzzy
 msgid "Multiple archive files require '-M' option"
 msgstr "Mehrere Archivdateien verlangen die Option „-M“."
 
@@ -2446,9 +2441,9 @@ msgid "Cannot verify compressed archives"
 msgstr "Kann komprimierte Archive nicht prüfen"
 
 #: src/tar.c:2450
-#, fuzzy, c-format
+#, c-format
 msgid "--verify cannot be used with %s"
-msgstr "Muster %s kann nicht benutzt werden"
+msgstr "--verify kann nicht mit %s benutzt werden"
 
 #: src/tar.c:2457
 msgid "Cannot use multi-volume compressed archives"
@@ -2463,24 +2458,21 @@ msgid "--pax-option can be used only on POSIX archives"
 msgstr "--pax-option kann nur mit POSIX-Archiven benutzt werden"
 
 #: src/tar.c:2478
-#, fuzzy
 msgid "--acls can be used only on POSIX archives"
-msgstr "--pax-option kann nur mit POSIX-Archiven benutzt werden"
+msgstr "--acls kann nur mit POSIX-Archiven benutzt werden"
 
 #: src/tar.c:2483
-#, fuzzy
 msgid "--selinux can be used only on POSIX archives"
-msgstr "--pax-option kann nur mit POSIX-Archiven benutzt werden"
+msgstr "--selinux kann nur mit POSIX-Archiven benutzt werden"
 
 #: src/tar.c:2488
-#, fuzzy
 msgid "--xattrs can be used only on POSIX archives"
-msgstr "--pax-option kann nur mit POSIX-Archiven benutzt werden"
+msgstr "--xattrs kann nur mit POSIX-Archiven benutzt werden"
 
 #: src/tar.c:2493
-#, fuzzy, c-format
+#, c-format
 msgid "--%s option cannot be used with %s"
-msgstr "Muster %s kann nicht benutzt werden"
+msgstr "Option --%s kann nicht mit %s benutzt werden"
 
 #: src/tar.c:2525
 msgid "Volume length cannot be less than record size"
@@ -2495,15 +2487,14 @@ msgid "Cowardly refusing to create an empty archive"
 msgstr "Anlegen eines leeren Archivs wird feige verweigert."
 
 #: src/tar.c:2565
-#, fuzzy
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Die Optionen „-Aru“ sind nicht kompatibel mit „-f -“."
 
 #: src/tar.c:2660
-#, fuzzy
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
-msgstr "Eine der Optionen „-Acdtrux“ oder „--test-label“ ist notwendig."
+msgstr ""
+"Eine der Optionen „-Acdtrux“, „--delete“ oder „--test-label“ ist notwendig."
 
 #: src/tar.c:2715
 #, c-format
@@ -2558,7 +2549,7 @@ msgid "Malformed extended header: missing newline"
 msgstr "Fehlgeformter erweiterter Kopfteil: fehlender Zeilenvorschub"
 
 #: src/xheader.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Ignoring unknown extended header keyword '%s'"
 msgstr "Ignoriere unbekanntes Schlüsselwort „%s“ für erweiterten Kopfteil"
 
@@ -2847,14 +2838,14 @@ msgid "cannot set time on `%s'"
 msgstr "kann an „%s“ keine Zeit setzen"
 
 #: tests/genfile.c:692
-#, fuzzy, c-format
+#, c-format
 msgid "cannot truncate `%s'"
-msgstr "kann „%s“ nicht entfernen (unlink)"
+msgstr "kann „%s“ nicht abschneiden"
 
 #: tests/genfile.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "command failed: %s"
-msgstr "„%s“-Befehl gescheitert."
+msgstr "Befehl fehlgeschlagen: %s"
 
 #: tests/genfile.c:706
 #, c-format
@@ -2896,12 +2887,6 @@ msgstr "Befehl beendet\n"
 msgid "--stat requires file names"
 msgstr "--stat erfordert Dateinamen"
 
-#~ msgid "Cannot get working directory"
-#~ msgstr "Kann Arbeitsverzeichnis nicht ermitteln."
-
-#~ msgid "sort names to extract to match archive"
-#~ msgstr "zu entpackende Dateinamen wie im Archiv sortieren"
-
 #~ msgid "Field too long while reading snapshot file"
 #~ msgstr "Feld zu lang beim Lesen der Schnappschussdatei"
 
@@ -2911,12 +2896,18 @@ msgstr "--stat erfordert Dateinamen"
 #~ msgid "Unexpected field value in snapshot file"
 #~ msgstr "Unerwarteter Feldwert in Schnappschussdatei"
 
-#~ msgid "Extended header length is out of allowed range"
-#~ msgstr ""
-#~ "Länge des erweiterten Kopfteils ist außerhalb des erlaubten Bereichs"
+#~ msgid "Cannot get working directory"
+#~ msgstr "Kann Arbeitsverzeichnis nicht ermitteln."
+
+#~ msgid "sort names to extract to match archive"
+#~ msgstr "zu entpackende Dateinamen wie im Archiv sortieren"
 
 #~ msgid "Invalid group"
 #~ msgstr "Ungültige Gruppe"
+
+#~ msgid "Extended header length is out of allowed range"
+#~ msgstr ""
+#~ "Länge des erweiterten Kopfteils ist außerhalb des erlaubten Bereichs"
 
 #~ msgid "%s: Directory removed before we read it"
 #~ msgstr "%s: Verzeichnis gelöscht, bevor es gelesen wurde."

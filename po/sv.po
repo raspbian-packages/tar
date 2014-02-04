@@ -1,16 +1,14 @@
 # Swedish messages for tar
-# Copyright © 1996, 2001, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
+# Copyright © 1996, 2001, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the tar package.
-# Jan Djärv <jan.h.d@swipnet.se>, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010, 2011
-# Revision: 1.107
-#
+# Jan Djärv <jan.h.d@swipnet.se>, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2013
 #: src/create.c:1572
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.26\n"
+"Project-Id-Version: tar 1.27\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
-"PO-Revision-Date: 2011-03-13 19:23+0100\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
+"PO-Revision-Date: 2013-10-13 16:44+0200\n"
 "Last-Translator: Jan Djärv <jan.h.d@swipnet.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -79,7 +77,7 @@ msgid " [OPTION...]"
 msgstr " [FLAGGA...]"
 
 #: gnu/argp-help.c:1686
-#, fuzzy, c-format
+#, c-format
 msgid "Try '%s --help' or '%s --usage' for more information.\n"
 msgstr "Försök med \"%s --help\" eller \"%s --usage\" för mer information.\n"
 
@@ -142,9 +140,9 @@ msgid "write error"
 msgstr "skrivfel"
 
 #: gnu/getopt.c:549 gnu/getopt.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: flaggan \"%s\" är tvetydig\n"
+msgstr "%s: flaggan \"%s\" är tvetydig, alternativ:"
 
 #: gnu/getopt.c:626 gnu/getopt.c:630
 #, c-format
@@ -545,9 +543,9 @@ msgid "Cannot connect to %s: resolve failed"
 msgstr "Kan inte ansluta till %s: namnuppslagning misslyckades"
 
 #: lib/rtapelib.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot redirect files for remote shell"
-msgstr "Kan inte exekvera fjärrskal"
+msgstr "Kan inte omdirigera filer för fjärrskal"
 
 #: lib/rtapelib.c:516
 #, c-format
@@ -869,7 +867,7 @@ msgid "Verify "
 msgstr "Verifierar "
 
 #: src/compare.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', diffed as normal file"
 msgstr "%s: Okänd filtyp \"%c\" jämförd som en normal fil"
 
@@ -1012,7 +1010,7 @@ msgstr "%s: Oväntad inkonsistens när katalog skapades"
 #: src/extract.c:705
 #, c-format
 msgid "%s: skipping existing file"
-msgstr ""
+msgstr "%s: hoppar över existerande fil"
 
 #: src/extract.c:821
 #, c-format
@@ -1037,7 +1035,7 @@ msgid "Unexpected long name header"
 msgstr "Oväntat huvud för långt filnamn"
 
 #: src/extract.c:1542
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Okänd filtyp \"%c\", extraherad som en normal fil"
 
@@ -1067,9 +1065,9 @@ msgid "%s: Directory is new"
 msgstr "%s: Katalogen är ny"
 
 #: src/incremen.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "%s: directory is on a different filesystem; not dumped"
-msgstr "%s: filen finns på ett annat filsystem; inte arkiverad"
+msgstr "%s: katalogen finns på ett annat filsystem; inte arkiverad"
 
 #: src/incremen.c:587
 #, c-format
@@ -1081,9 +1079,8 @@ msgid "Invalid time stamp"
 msgstr "Ogiltigt värde på tidsvärde"
 
 #: src/incremen.c:1045
-#, fuzzy
 msgid "Invalid modification time"
-msgstr "Ogiltig modifikationstid (sekunder)"
+msgstr "Ogiltig modifikationstid"
 
 #: src/incremen.c:1055
 msgid "Invalid modification time (nanoseconds)"
@@ -1100,7 +1097,7 @@ msgstr "Ogiltigt inodnummer"
 #: src/incremen.c:1135
 #, c-format
 msgid "%s: byte %s: %s %.*s... too long"
-msgstr ""
+msgstr "%s: byte %s: %s %.*s... för lång"
 
 #: src/incremen.c:1151 src/incremen.c:1206 src/incremen.c:1268
 msgid "Unexpected EOF in snapshot file"
@@ -1109,7 +1106,7 @@ msgstr "Oväntat filslut i ögonblicksfil"
 #: src/incremen.c:1157
 #, c-format
 msgid "%s: byte %s: %s %s followed by invalid byte 0x%02x"
-msgstr ""
+msgstr "%s: byte %s: %s %s följs av ogilitg byte 0x%02x"
 
 #: src/incremen.c:1169
 #, c-format
@@ -1117,16 +1114,18 @@ msgid ""
 "%s: byte %s: (valid range %s..%s)\n"
 "\t%s %s"
 msgstr ""
+"%s: byte %s: (giltigt intervall %s..%s)\n"
+"\t%s %s"
 
 #: src/incremen.c:1176
 #, c-format
 msgid "%s: byte %s: %s %s"
-msgstr ""
+msgstr "%s: byte %s: %s %s"
 
 #: src/incremen.c:1257
 #, c-format
 msgid "%s: byte %s: %s"
-msgstr ""
+msgstr "%s: byte %s: %s"
 
 #: src/incremen.c:1260
 msgid "Missing record terminator"
@@ -1298,59 +1297,58 @@ msgstr "--Fortsätter vid byte %s--\n"
 msgid "Creating directory:"
 msgstr "Skapar katalog:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "Byter namn på %s till %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Kan inte byta namn till %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "Byter namn på %s tillbaka till %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fil borttagen innan vi läste den"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "barnprocess"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "interprocesskanal"
 
 #: src/names.c:360
-#, fuzzy
 msgid "command line"
-msgstr "kommandot \"%s\" misslyckades"
+msgstr "kommandorad"
 
 #: src/names.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file list requested from %s already read from %s"
-msgstr "%s: fillistan redan läst"
+msgstr "%s: fillista begärd från %s redan läst från %s"
 
 #: src/names.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "cannot split string '%s': %s"
-msgstr "kan inte sätta tid på \"%s\""
+msgstr "kan inte dela sträng \"%s\": %s"
 
 #: src/names.c:490
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr "%s: filnamnet som lästes innehåller nolltecken"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "Mönstermatchningstecken används i filnamn"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1358,32 +1356,32 @@ msgstr ""
 "Använd --wildcards för att slå på mönstermatchning, eller --no-wildcards för "
 "att undertrycka denna varning"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Fanns inte i arkivet"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Nödvändig förekomst hittades inte i arkivet"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Arkivmärkning stämmer inte överrens"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr "Att används -C i en fillista är inte tillåtet med --listed-incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "Bara en -C-flagga är tillåtet med --listed-incremental"
 
 #: src/tar.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-%s' and '-%s' both want standard input"
 msgstr "Flaggorna \"-%s\" och \"-%s\" vill båda läsa från standard in"
 
@@ -1397,7 +1395,7 @@ msgid "GNU features wanted on incompatible archive format"
 msgstr "GNU-tillägg önskade i ett inkompatibelt arkivformat"
 
 #: src/tar.c:255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown quoting style '%s'. Try '%s --quoting-style=help' to get a list."
 msgstr ""
@@ -1405,7 +1403,6 @@ msgstr ""
 "lista."
 
 #: src/tar.c:364
-#, fuzzy
 msgid ""
 "GNU 'tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1424,7 +1421,6 @@ msgstr ""
 "  tar -xf arkiv.tar          # Extrahera alla filer i arkiv.tar.\n"
 
 #: src/tar.c:373
-#, fuzzy
 msgid ""
 "The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1561,14 +1557,12 @@ msgid "remove files after adding them to the archive"
 msgstr "ta bort filer efter de sparats i arkivet"
 
 #: src/tar.c:471
-#, fuzzy
 msgid "don't replace existing files when extracting, treat them as errors"
-msgstr "ersätt inte befintliga filer vid extrahering"
+msgstr "ersätt inte befintliga filer vid extrahering, behandla dem som fel"
 
 #: src/tar.c:474
-#, fuzzy
 msgid "don't replace existing files when extracting, silently skip over them"
-msgstr "ersätt inte befintliga filer vid extrahering"
+msgstr "ersätt inte befintliga filer vid extrahering, hoppa tyst över dem"
 
 #: src/tar.c:477
 msgid "don't replace existing files that are newer than their archive copies"
@@ -1596,9 +1590,8 @@ msgstr ""
 "skriv över metadata för befintliga kataloger vid extrahering (standardvärde)"
 
 #: src/tar.c:490
-#, fuzzy
 msgid "preserve existing symlinks to directories when extracting"
-msgstr "skriv över befintliga filer vid extrahering"
+msgstr "bevara befintliga symboliska länkar till kataloger vid extrahering"
 
 #: src/tar.c:496
 msgid "Select output stream:"
@@ -1703,7 +1696,7 @@ msgstr ""
 #: src/tar.c:540
 msgid ""
 "member arguments are listed in the same order as the files in the archive"
-msgstr ""
+msgstr "namnargument är givna i samma ordning som filerna förekommer i arkivet"
 
 #: src/tar.c:544
 msgid "same as both -p and -s"
@@ -1722,45 +1715,44 @@ msgid "cancel the effect of --delay-directory-restore option"
 msgstr "ta bort effekten av flaggan --delay-directory-restore"
 
 #: src/tar.c:554
-#, fuzzy
 msgid "Handling of extended file attributes:"
-msgstr "Hantering av filattribut:"
+msgstr "Hantering av utökade filattribut:"
 
 #: src/tar.c:557
 msgid "Enable extended attributes support"
-msgstr ""
+msgstr "Aktivera stöd för utökade attribut"
 
 #: src/tar.c:559
 msgid "Disable extended attributes support"
-msgstr ""
+msgstr "Avaktivera stöd för utökade attribut"
 
 #: src/tar.c:560 src/tar.c:562
 msgid "MASK"
-msgstr ""
+msgstr "MÖNSTER"
 
 #: src/tar.c:561
 msgid "specify the include pattern for xattr keys"
-msgstr ""
+msgstr "ange inkuderingsmönster för xattr-nycklar"
 
 #: src/tar.c:563
 msgid "specify the exclude pattern for xattr keys"
-msgstr ""
+msgstr "ange exkluderingsmönster för xattr-nycklar"
 
 #: src/tar.c:565
 msgid "Enable the SELinux context support"
-msgstr ""
+msgstr "Aktivera stöd för SELinux-omgivningar"
 
 #: src/tar.c:567
 msgid "Disable the SELinux context support"
-msgstr ""
+msgstr "Avaktivera stöd för SELinux-omgivningar"
 
 #: src/tar.c:569
 msgid "Enable the POSIX ACLs support"
-msgstr ""
+msgstr "Aktivera stöd för POSIX ACL"
 
 #: src/tar.c:571
 msgid "Disable the POSIX ACLs support"
-msgstr ""
+msgstr "Avaktivera stöd för POSIX ACL"
 
 #: src/tar.c:576
 msgid "Device selection and switching:"
@@ -2016,7 +2008,6 @@ msgid "recurse into directories (default)"
 msgstr "gå rekursivt ned i kataloger (standardvärde)"
 
 #: src/tar.c:729
-#, fuzzy
 msgid "don't strip leading '/'s from file names"
 msgstr "tag inte bort inledande \"/\" från namn"
 
@@ -2033,9 +2024,8 @@ msgid "MEMBER-NAME"
 msgstr "NAMN"
 
 #: src/tar.c:735
-#, fuzzy
 msgid "begin at member MEMBER-NAME when reading the archive"
-msgstr "börja med fil NAMN i arkivet"
+msgstr "börja med fil NAMN när arkivet läses"
 
 #: src/tar.c:737
 msgid "only store files newer than DATE-OR-FILE"
@@ -2102,7 +2092,6 @@ msgid "patterns match file name start"
 msgstr "mönster måste matcha i början på filnamn"
 
 #: src/tar.c:767
-#, fuzzy
 msgid "patterns match after any '/' (default for exclusion)"
 msgstr "mönster matchas efter \"/\" i filnamn (standardvärde vid uteslutning)"
 
@@ -2119,12 +2108,10 @@ msgid "verbatim string matching"
 msgstr "ordagrann strängjämförelse"
 
 #: src/tar.c:775
-#, fuzzy
 msgid "wildcards do not match '/'"
 msgstr "jokertecken matchar inte \"/\""
 
 #: src/tar.c:777
-#, fuzzy
 msgid "wildcards match '/' (default for exclusion)"
 msgstr "jokertecken matchar \"/\" (standardvärde för uteslutning)"
 
@@ -2202,7 +2189,7 @@ msgstr "visa standardvärden för \"tar\""
 
 #: src/tar.c:815
 msgid "show valid ranges for snapshot-file fields"
-msgstr ""
+msgstr "visa giltiga intervall för fält i ögonblicksfil"
 
 #: src/tar.c:817
 msgid ""
@@ -2253,11 +2240,12 @@ msgid "disable use of some potentially harmful options"
 msgstr "begränsa användningen av eventuellt farliga flaggor"
 
 #: src/tar.c:978
-#, fuzzy
 msgid ""
 "You may not specify more than one '-Acdtrux', '--delete' or  '--test-label' "
 "option"
-msgstr "Du kan endast ange en av flaggorna \"-Acdtrux eller \"--test-label\""
+msgstr ""
+"Du kan endast ange en av flaggorna \"-Acdtrux, \"--delete\" eller \"--test-"
+"label\""
 
 #: src/tar.c:988
 msgid "Conflicting compression options"
@@ -2278,7 +2266,7 @@ msgid "Substituting %s for unknown date format %s"
 msgstr "Använder %s istället för okänt datumformat %s"
 
 #: src/tar.c:1108
-#, fuzzy, c-format
+#, c-format
 msgid "Option %s: Treating date '%s' as %s"
 msgstr "Flagga %s: Tolkar tidsangivelse \"%s\" som %s"
 
@@ -2301,9 +2289,8 @@ msgstr ""
 "*Denna* tar har standardvärdena:\n"
 
 #: src/tar.c:1295
-#, fuzzy
 msgid "Invalid owner or group ID"
-msgstr "Ogiltig ägare"
+msgstr "Ogiltig ägare eller grupp-id"
 
 #: src/tar.c:1339
 msgid "Invalid blocking factor"
@@ -2372,12 +2359,12 @@ msgid "Malformed density argument: %s"
 msgstr "Ogiltig densitetsangivelse: %s"
 
 #: src/tar.c:2133
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown density: '%c'"
 msgstr "Okänd densitet: \"%c\""
 
 #: src/tar.c:2150
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-[0-7][lmh]' not supported by *this* tar"
 msgstr "Flaggorna \"-[0-7][lmh]\" stöds inte av *detta* tar-program"
 
@@ -2386,7 +2373,7 @@ msgid "[FILE]..."
 msgstr "[FIL]..."
 
 #: src/tar.c:2306
-#, fuzzy, c-format
+#, c-format
 msgid "Old option '%c' requires an argument."
 msgstr "Gammal flagga \"%c\" kräver ett argument"
 
@@ -2395,12 +2382,11 @@ msgid "--occurrence is meaningless without a file list"
 msgstr "--occurrence är meningslöst utan en fillista"
 
 #: src/tar.c:2389
-#, fuzzy, c-format
+#, c-format
 msgid "--occurrence cannot be used with %s"
-msgstr "--occurrence kan inte användas i det begärda operationsläget."
+msgstr "--occurrence kan inte användas med %s"
 
 #: src/tar.c:2408
-#, fuzzy
 msgid "Multiple archive files require '-M' option"
 msgstr "Multipla arkivfiler kräver \"-M\" flaggan"
 
@@ -2428,9 +2414,9 @@ msgid "Cannot verify compressed archives"
 msgstr "Komprimerade arkiv kan inte verifieras"
 
 #: src/tar.c:2450
-#, fuzzy, c-format
+#, c-format
 msgid "--verify cannot be used with %s"
-msgstr "Mönster %s kan inte användas"
+msgstr "--verify kan inte användas med %s"
 
 #: src/tar.c:2457
 msgid "Cannot use multi-volume compressed archives"
@@ -2445,24 +2431,21 @@ msgid "--pax-option can be used only on POSIX archives"
 msgstr "--pax-option kan bara användas på POSIX-arkiv"
 
 #: src/tar.c:2478
-#, fuzzy
 msgid "--acls can be used only on POSIX archives"
-msgstr "--pax-option kan bara användas på POSIX-arkiv"
+msgstr "--acls kan bara användas på POSIX-arkiv"
 
 #: src/tar.c:2483
-#, fuzzy
 msgid "--selinux can be used only on POSIX archives"
-msgstr "--pax-option kan bara användas på POSIX-arkiv"
+msgstr "--selinux kan bara användas på POSIX-arkiv"
 
 #: src/tar.c:2488
-#, fuzzy
 msgid "--xattrs can be used only on POSIX archives"
-msgstr "--pax-option kan bara användas på POSIX-arkiv"
+msgstr "--xattrs kan bara användas på POSIX-arkiv"
 
 #: src/tar.c:2493
-#, fuzzy, c-format
+#, c-format
 msgid "--%s option cannot be used with %s"
-msgstr "Mönster %s kan inte användas"
+msgstr "flaggan --%s kan inte användas med %s"
 
 #: src/tar.c:2525
 msgid "Volume length cannot be less than record size"
@@ -2477,15 +2460,14 @@ msgid "Cowardly refusing to create an empty archive"
 msgstr "Vägrar fegt att skapa ett tomt arkiv"
 
 #: src/tar.c:2565
-#, fuzzy
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Flaggorna \"-Aru\" är inkompatibla med \"-f -\""
 
 #: src/tar.c:2660
-#, fuzzy
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
-msgstr "Du måste ange en av flaggorna \"-Acdtrux\" eller --test-label"
+msgstr ""
+"Du måste ange en av flaggorna \"-Acdtrux\", \"--delete\" eller --test-label"
 
 #: src/tar.c:2715
 #, c-format
@@ -2540,7 +2522,7 @@ msgid "Malformed extended header: missing newline"
 msgstr "Felaktigt utökat huvud: nyrad saknas"
 
 #: src/xheader.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Ignoring unknown extended header keyword '%s'"
 msgstr "Ignorerar nykelord \"%s\" i utökat huvud"
 
@@ -2816,14 +2798,14 @@ msgid "cannot set time on `%s'"
 msgstr "kan inte sätta tid på \"%s\""
 
 #: tests/genfile.c:692
-#, fuzzy, c-format
+#, c-format
 msgid "cannot truncate `%s'"
-msgstr "kan inte ta bort \"%s\""
+msgstr "kan inte trunkera \"%s\""
 
 #: tests/genfile.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "command failed: %s"
-msgstr "kommandot \"%s\" misslyckades"
+msgstr "kommando misslyckades: %s "
 
 #: tests/genfile.c:706
 #, c-format
@@ -2864,24 +2846,3 @@ msgstr "Kommandot avslutade\n"
 #, c-format
 msgid "--stat requires file names"
 msgstr "--stat kräver filnamn"
-
-#~ msgid "Cannot get working directory"
-#~ msgstr "Kan inte avgöra arbetskatalog"
-
-#~ msgid "sort names to extract to match archive"
-#~ msgstr "sortera namn som ska extraheras så de passar ihop med arkivet"
-
-#~ msgid "Field too long while reading snapshot file"
-#~ msgstr "Fält för långt när ögonblicksfil lästes"
-
-#~ msgid "Read error in snapshot file"
-#~ msgstr "Läsfel i ögonblicksfil"
-
-#~ msgid "Unexpected field value in snapshot file"
-#~ msgstr "Oväntat fältvärde i ögonblicksfil"
-
-#~ msgid "Extended header length is out of allowed range"
-#~ msgstr "Längd på utökat huvud är utanför giltigt intervall"
-
-#~ msgid "Invalid group"
-#~ msgstr "Ogiltig grupp"

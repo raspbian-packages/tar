@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.24\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
 "PO-Revision-Date: 2010-10-25 12:19+0200\n"
 "Last-Translator: Pavel Maryanov <acid@jack.kiev.ua>\n"
 "Language-Team: Russian <gnu@mx.ru>\n"
@@ -1309,31 +1309,31 @@ msgstr "--Продолжение с позиции %s--\n"
 msgid "Creating directory:"
 msgstr "Создание каталога:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s переименован в %s\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Невозможно переименовать в %s"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s переименовывается назад в %s\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Файла удален до его считывания"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "дочерний процесс"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "межпроцессорный канал"
 
@@ -1357,11 +1357,11 @@ msgstr "невозможно установить время в `%s'"
 msgid "%s: file name read contains nul character"
 msgstr "%s: в прочитанном имени файла присутствует пустой символ"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "В именах файлов используются символы подстановки"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1369,29 +1369,29 @@ msgstr ""
 "Используйте --wildcards, чтобы задействовать эти символы, или --no-"
 "wildcards, чтобы убрать это предепреждение."
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Не найден в архиве"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Требуемое вхождение не найдено в архиве"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Несоответствиве метки архива"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Параметра -C в списке файлов нельзя Использовать с параметром --listed-"
 "incremental"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 "С параметром --listed-incremental можно использовать только параметр -C"

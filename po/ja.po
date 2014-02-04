@@ -1,7 +1,7 @@
-# Japanese messages for GNU tar 1.26
-# Copyright (C) 1999, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2012 Free Software Foundation, Inc.
+# Japanese messages for GNU tar 1.27
+# Copyright (C) 1999, 2000, 2001, 2004, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the tar package.
-# Masahito Yamaga <ma@yama-ga.com>, 2012.
+# Masahito Yamaga <ma@yama-ga.com>, 2013.
 #  derived from the version by
 #              Daisuke Yamashita <yamad@mb.infoweb.ne.jp>, 1999-2001.
 #              Masahito Yamaga <yamaga@ipc.chiba-u.ac.jp>, 2007.
@@ -9,10 +9,10 @@
 #: src/create.c:1572
 msgid ""
 msgstr ""
-"Project-Id-Version: GNU tar 1.26\n"
+"Project-Id-Version: GNU tar 1.27\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2013-10-05 23:10+0300\n"
-"PO-Revision-Date: 2012-10-21 12:14+0900\n"
+"POT-Creation-Date: 2013-11-17 18:20+0200\n"
+"PO-Revision-Date: 2013-10-07 08:18+0900\n"
 "Last-Translator: Masahito Yamaga <ma@yama-ga.com>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
 "Language: ja\n"
@@ -81,9 +81,9 @@ msgid " [OPTION...]"
 msgstr " [オプション...]"
 
 #: gnu/argp-help.c:1686
-#, fuzzy, c-format
+#, c-format
 msgid "Try '%s --help' or '%s --usage' for more information.\n"
-msgstr "より詳しい情報は `%s --help' または `%s --usage' で.\n"
+msgstr "より詳しい情報は '%s --help' または '%s --usage' で.\n"
 
 #: gnu/argp-help.c:1714
 #, c-format
@@ -141,9 +141,9 @@ msgid "write error"
 msgstr "書き込みエラー"
 
 #: gnu/getopt.c:549 gnu/getopt.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous; possibilities:"
-msgstr "%s: オプション '%s' はあいまいです\n"
+msgstr "%s: オプション '%s' はあいまいです. 可能性があるのは"
 
 #: gnu/getopt.c:626 gnu/getopt.c:630
 #, c-format
@@ -543,9 +543,9 @@ msgid "Cannot connect to %s: resolve failed"
 msgstr "%s に接続できません: 名前解決失敗"
 
 #: lib/rtapelib.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot redirect files for remote shell"
-msgstr "遠隔シェルが実行できません"
+msgstr "遠隔シェルに対してファイルをリダイレクトできません"
 
 #: lib/rtapelib.c:516
 #, c-format
@@ -870,9 +870,9 @@ msgid "Verify "
 msgstr "検証"
 
 #: src/compare.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', diffed as normal file"
-msgstr "%s: 未知のファイルタイプ `%c', 通常ファイルと差分を取ります"
+msgstr "%s: 未知のファイルタイプ '%c', 通常ファイルと差分を取ります"
 
 #: src/compare.c:527
 msgid "Archive contains file names with leading prefixes removed."
@@ -1013,7 +1013,7 @@ msgstr "%s: ディレクトリ作成時に不測の矛盾が起こりました"
 #: src/extract.c:705
 #, c-format
 msgid "%s: skipping existing file"
-msgstr ""
+msgstr "%s: 既存ファイルをスキップします"
 
 #: src/extract.c:821
 #, c-format
@@ -1038,7 +1038,7 @@ msgid "Unexpected long name header"
 msgstr "予期せぬ長い名前ヘッダ"
 
 #: src/extract.c:1542
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: 未知のファイルタイプ '%c', 通常ファイルとして抽出"
 
@@ -1068,9 +1068,9 @@ msgid "%s: Directory is new"
 msgstr "%s: ディレクトリは新しく作られました"
 
 #: src/incremen.c:566
-#, fuzzy, c-format
+#, c-format
 msgid "%s: directory is on a different filesystem; not dumped"
-msgstr "%s: ファイルは異なるファイルシステム上にあるのでダンプしません"
+msgstr "%s: ディレクトリは異なるファイルシステム上にあるのでダンプしません"
 
 #: src/incremen.c:587
 #, c-format
@@ -1082,9 +1082,8 @@ msgid "Invalid time stamp"
 msgstr "無効なタイムスタンプ"
 
 #: src/incremen.c:1045
-#, fuzzy
 msgid "Invalid modification time"
-msgstr "不正な最終更新時刻 (秒)"
+msgstr "不正な最終更新時刻"
 
 #: src/incremen.c:1055
 msgid "Invalid modification time (nanoseconds)"
@@ -1101,7 +1100,7 @@ msgstr "無効な inode 番号"
 #: src/incremen.c:1135
 #, c-format
 msgid "%s: byte %s: %s %.*s... too long"
-msgstr ""
+msgstr "%s: バイト %s: %s %.*s... 長過ぎます"
 
 #: src/incremen.c:1151 src/incremen.c:1206 src/incremen.c:1268
 msgid "Unexpected EOF in snapshot file"
@@ -1110,7 +1109,7 @@ msgstr "スナップショットファイルに予期せぬ EOF"
 #: src/incremen.c:1157
 #, c-format
 msgid "%s: byte %s: %s %s followed by invalid byte 0x%02x"
-msgstr ""
+msgstr "%s: バイト %s: %s %s が不正なバイト 0x%02x に続いています"
 
 #: src/incremen.c:1169
 #, c-format
@@ -1118,16 +1117,18 @@ msgid ""
 "%s: byte %s: (valid range %s..%s)\n"
 "\t%s %s"
 msgstr ""
+"%s: バイト %s: (正当な範囲 %s..%s)\n"
+"\t%s %s"
 
 #: src/incremen.c:1176
 #, c-format
 msgid "%s: byte %s: %s %s"
-msgstr ""
+msgstr "%s: バイト %s: %s %s"
 
 #: src/incremen.c:1257
 #, c-format
 msgid "%s: byte %s: %s"
-msgstr ""
+msgstr "%s: バイト %s: %s"
 
 #: src/incremen.c:1260
 msgid "Missing record terminator"
@@ -1296,59 +1297,58 @@ msgstr "--バイト %s で連続--\n"
 msgid "Creating directory:"
 msgstr "ディレクトリを作成:"
 
-#: src/misc.c:721
+#: src/misc.c:725
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "名前を %s から %s に変更します\n"
 
-#: src/misc.c:730 src/misc.c:749
+#: src/misc.c:734 src/misc.c:753
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: 名前を %s に変更できません"
 
-#: src/misc.c:754
+#: src/misc.c:758
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "名前を %s から %s に戻します\n"
 
-#: src/misc.c:1093
+#: src/misc.c:1100
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: 読み込み以前に削除されました"
 
-#: src/misc.c:1114
+#: src/misc.c:1121
 msgid "child process"
 msgstr "子プロセス"
 
-#: src/misc.c:1123
+#: src/misc.c:1130
 msgid "interprocess channel"
 msgstr "プロセス間チャネル"
 
 #: src/names.c:360
-#, fuzzy
 msgid "command line"
-msgstr "%s コマンドが失敗しました"
+msgstr "コマンドライン"
 
 #: src/names.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "%s: file list requested from %s already read from %s"
-msgstr "%s: ファイル一覧は既に読み込み済み"
+msgstr "%s: %s から要求されたファイル一覧は既に %s から読み込み済み"
 
 #: src/names.c:448
-#, fuzzy, c-format
+#, c-format
 msgid "cannot split string '%s': %s"
-msgstr "`%s' に時刻を設定できません"
+msgstr "文字列 '%s' を分割できません: %s"
 
 #: src/names.c:490
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr "%s: 読み込まれたファイル名にヌル文字"
 
-#: src/names.c:821
+#: src/names.c:823
 msgid "Pattern matching characters used in file names"
 msgstr "パターンマッチの文字がファイル名に使われています"
 
-#: src/names.c:823
+#: src/names.c:825
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1356,35 +1356,35 @@ msgstr ""
 "パターンマッチを有効にするなら --wildcards, この警告を抑止するなら --no-"
 "wildcards を使ってください"
 
-#: src/names.c:841 src/names.c:857
+#: src/names.c:843 src/names.c:859
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: アーカイブ内に見つかりません"
 
-#: src/names.c:842
+#: src/names.c:844
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: アーカイブ内に見つかりません"
 
-#: src/names.c:876
+#: src/names.c:878
 #, c-format
 msgid "Archive label mismatch"
 msgstr "アーカイブラベルが一致しません"
 
-#: src/names.c:1180
+#: src/names.c:1182
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "ファイルリスト内で -C オプションは --listed-incremental と一緒に使えません"
 
-#: src/names.c:1186
+#: src/names.c:1188
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr "-C オプションは 1つだけなら --listed-incremental と一緒に使えます"
 
 #: src/tar.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-%s' and '-%s' both want standard input"
-msgstr "オプション `-%s' と `-%s' はどちらも標準入力が必要です"
+msgstr "オプション '-%s' と '-%s' はどちらも標準入力が必要です"
 
 #: src/tar.c:163
 #, c-format
@@ -1396,13 +1396,12 @@ msgid "GNU features wanted on incompatible archive format"
 msgstr "GNU 特有の機能は、非互換な形式を必要とします"
 
 #: src/tar.c:255
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown quoting style '%s'. Try '%s --quoting-style=help' to get a list."
-msgstr "不明な引用形式 `%s', `%s --quoting-style=help' で一覧表示."
+msgstr "不明な引用形式 '%s', '%s --quoting-style=help' で一覧表示."
 
 #: src/tar.c:364
-#, fuzzy
 msgid ""
 "GNU 'tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1412,17 +1411,17 @@ msgid ""
 "  tar -tvf archive.tar         # List all files in archive.tar verbosely.\n"
 "  tar -xf archive.tar          # Extract all files from archive.tar.\n"
 msgstr ""
-"GNU `tar' は多くのファイルを一つのテープやディスクのアーカイブにまとめ, 更"
+"GNU 'tar' は多くのファイルを一つのテープやディスクのアーカイブにまとめ, 更"
 "に\n"
 "そこから個々のファイルを取り出すことができます.\n"
 "\n"
 "例:\n"
-"  tar -cf archive.tar foo bar  # ファイル foo と bar から archive.tar 作成\n"
-"  tar -tvf archive.tar         # archive.tar 内の全ファイルを詳しく一覧表示\n"
-"  tar -xf archive.tar          # archive.tar から全ファイルを取り出す\n"
+"  tar -cf archive.tar foo bar  # ファイル foo と bar から archive.tar 作成.\n"
+"  tar -tvf archive.tar         # archive.tar 内の全ファイルを詳しく一覧表"
+"示.\n"
+"  tar -xf archive.tar          # archive.tar から全ファイルを取り出す.\n"
 
 #: src/tar.c:373
-#, fuzzy
 msgid ""
 "The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1434,7 +1433,7 @@ msgid ""
 "  never, simple   always make simple backups\n"
 msgstr ""
 "--suffix や SIMPLE_BACKUP_SUFFIX で指定されない限り, バックアップの接尾辞は\n"
-" `~' です. また, バージョン管理は --backup や VERSION_CONTROL に次のような\n"
+"'~' です. また, バージョン管理は --backup や VERSION_CONTROL に次のような\n"
 "値を指定することで設定できます.\n"
 "\n"
 "  none, off       バックアップを取らない\n"
@@ -1556,14 +1555,12 @@ msgid "remove files after adding them to the archive"
 msgstr "ファイルをアーカイブに加えた後で削除"
 
 #: src/tar.c:471
-#, fuzzy
 msgid "don't replace existing files when extracting, treat them as errors"
-msgstr "取り出す際に既存のファイルを置き換えない"
+msgstr "取り出す際に既存のファイルを置き換えず, エラーとして扱う"
 
 #: src/tar.c:474
-#, fuzzy
 msgid "don't replace existing files when extracting, silently skip over them"
-msgstr "取り出す際に既存のファイルを置き換えない"
+msgstr "取り出す際に既存のファイルを置き換えず, そのままスキップする"
 
 #: src/tar.c:477
 msgid "don't replace existing files that are newer than their archive copies"
@@ -1590,9 +1587,8 @@ msgid "overwrite metadata of existing directories when extracting (default)"
 msgstr "取り出す際に既存ディレクトリのメタデータを上書き (標準)"
 
 #: src/tar.c:490
-#, fuzzy
 msgid "preserve existing symlinks to directories when extracting"
-msgstr "取り出す際に既存ファイルを上書き"
+msgstr "取り出す際にディレクトリへの既存シンボリックリンクを維持"
 
 #: src/tar.c:496
 msgid "Select output stream:"
@@ -1693,7 +1689,7 @@ msgstr ""
 #: src/tar.c:540
 msgid ""
 "member arguments are listed in the same order as the files in the archive"
-msgstr ""
+msgstr "メンバー引数はアーカイブ内のファイルと同じ順番で並んでいます"
 
 #: src/tar.c:544
 msgid "same as both -p and -s"
@@ -1711,45 +1707,44 @@ msgid "cancel the effect of --delay-directory-restore option"
 msgstr "--delay-directory-restore オプションの効果を取り消し"
 
 #: src/tar.c:554
-#, fuzzy
 msgid "Handling of extended file attributes:"
-msgstr "ファイル属性の処理"
+msgstr "拡張ファイル属性の処理"
 
 #: src/tar.c:557
 msgid "Enable extended attributes support"
-msgstr ""
+msgstr "拡張属性対応を有効に"
 
 #: src/tar.c:559
 msgid "Disable extended attributes support"
-msgstr ""
+msgstr "拡張属性対応を無効に"
 
 #: src/tar.c:560 src/tar.c:562
 msgid "MASK"
-msgstr ""
+msgstr "MASK"
 
 #: src/tar.c:561
 msgid "specify the include pattern for xattr keys"
-msgstr ""
+msgstr "xattr キーに対する包含パターンを指定"
 
 #: src/tar.c:563
 msgid "specify the exclude pattern for xattr keys"
-msgstr ""
+msgstr "xattr キーに対する除外パターンを指定"
 
 #: src/tar.c:565
 msgid "Enable the SELinux context support"
-msgstr ""
+msgstr "SELinux コンテクスト対応を有効に"
 
 #: src/tar.c:567
 msgid "Disable the SELinux context support"
-msgstr ""
+msgstr "SELinux コンテクスト対応を無効に"
 
 #: src/tar.c:569
 msgid "Enable the POSIX ACLs support"
-msgstr ""
+msgstr "POSIX ACL 対応を有効に"
 
 #: src/tar.c:571
 msgid "Disable the POSIX ACLs support"
-msgstr ""
+msgstr "POSIX ACL 対応を無効に"
 
 #: src/tar.c:576
 msgid "Device selection and switching:"
@@ -2004,9 +1999,8 @@ msgid "recurse into directories (default)"
 msgstr "ディレクトリを順繰りに下っていく (default)"
 
 #: src/tar.c:729
-#, fuzzy
 msgid "don't strip leading '/'s from file names"
-msgstr "ファイル名から先頭の `/' を取り除かない"
+msgstr "ファイル名から先頭の '/' を取り除かない"
 
 #: src/tar.c:731
 msgid "follow symlinks; archive and dump the files they point to"
@@ -2021,9 +2015,8 @@ msgid "MEMBER-NAME"
 msgstr "MEMBER-NAME"
 
 #: src/tar.c:735
-#, fuzzy
 msgid "begin at member MEMBER-NAME when reading the archive"
-msgstr "アーカイブ中のメンバー MEMBER-NAME で開始"
+msgstr "アーカイブの読み取り時にメンバー MEMBER-NAME で開始"
 
 #: src/tar.c:737
 msgid "only store files newer than DATE-OR-FILE"
@@ -2086,9 +2079,8 @@ msgid "patterns match file name start"
 msgstr "ファイル名の先頭とパターンが一致"
 
 #: src/tar.c:767
-#, fuzzy
 msgid "patterns match after any '/' (default for exclusion)"
-msgstr "任意の `/' 以降にパターンが一致 (標準で除外)"
+msgstr "任意の '/' 以降にパターンが一致 (標準で除外)"
 
 #: src/tar.c:769
 msgid "case sensitive matching (default)"
@@ -2103,14 +2095,12 @@ msgid "verbatim string matching"
 msgstr "逐語的文字列一致"
 
 #: src/tar.c:775
-#, fuzzy
 msgid "wildcards do not match '/'"
-msgstr "ワイルドカードが `/' に一致しない"
+msgstr "ワイルドカードが '/' に一致しない"
 
 #: src/tar.c:777
-#, fuzzy
 msgid "wildcards match '/' (default for exclusion)"
-msgstr "ワイルドカードが `/' に一致 (標準で除外)"
+msgstr "ワイルドカードが '/' に一致 (標準で除外)"
 
 #: src/tar.c:782
 msgid "Informative output:"
@@ -2185,7 +2175,7 @@ msgstr "tar の既定値を表示"
 
 #: src/tar.c:815
 msgid "show valid ranges for snapshot-file fields"
-msgstr ""
+msgstr "スナップショットファイルの領域の正当な範囲を表示"
 
 #: src/tar.c:817
 msgid ""
@@ -2232,13 +2222,12 @@ msgid "disable use of some potentially harmful options"
 msgstr "潜在的に害になるオプションの使用を無効に"
 
 #: src/tar.c:978
-#, fuzzy
 msgid ""
 "You may not specify more than one '-Acdtrux', '--delete' or  '--test-label' "
 "option"
 msgstr ""
-"`-Acdtrux' または `--test-label' オプションのうち 2つ以上指定することはできま"
-"せん"
+"'-Acdtrux', '--delete' または '--test-label' オプションのうち 2つ以上指定する"
+"ことはできません"
 
 #: src/tar.c:988
 msgid "Conflicting compression options"
@@ -2259,9 +2248,9 @@ msgid "Substituting %s for unknown date format %s"
 msgstr "未知の日付フォーマットの %2$s 代わりに %1$s とします"
 
 #: src/tar.c:1108
-#, fuzzy, c-format
+#, c-format
 msgid "Option %s: Treating date '%s' as %s"
-msgstr "オプション %s: `%s' を %s として扱う"
+msgstr "オプション %s: 日付 '%s' を %s として扱う"
 
 #: src/tar.c:1151 src/tar.c:1155 src/tar.c:1159 src/tar.c:1163 src/tar.c:1167
 #: src/tar.c:1171
@@ -2282,9 +2271,8 @@ msgstr ""
 "「この」tar の規定値:\n"
 
 #: src/tar.c:1295
-#, fuzzy
 msgid "Invalid owner or group ID"
-msgstr "無効な所有者"
+msgstr "無効な所有者またはグループID"
 
 #: src/tar.c:1339
 msgid "Invalid blocking factor"
@@ -2353,37 +2341,36 @@ msgid "Malformed density argument: %s"
 msgstr "不正形式の密度引数: %s"
 
 #: src/tar.c:2133
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown density: '%c'"
-msgstr "未知の密度: `%c'"
+msgstr "未知の密度: '%c'"
 
 #: src/tar.c:2150
-#, fuzzy, c-format
+#, c-format
 msgid "Options '-[0-7][lmh]' not supported by *this* tar"
-msgstr "オプション `-[0-7][lmh]' は「この」tar では実装されていません"
+msgstr "オプション '-[0-7][lmh]' は「この」tar では実装されていません"
 
 #: src/tar.c:2163
 msgid "[FILE]..."
 msgstr "[ファイル]..."
 
 #: src/tar.c:2306
-#, fuzzy, c-format
+#, c-format
 msgid "Old option '%c' requires an argument."
-msgstr "古いオプション `%c' は引数を必要とします"
+msgstr "古いオプション '%c' は引数を必要とします"
 
 #: src/tar.c:2386
 msgid "--occurrence is meaningless without a file list"
 msgstr "--occurrence はファイル一覧がなければ無意味"
 
 #: src/tar.c:2389
-#, fuzzy, c-format
+#, c-format
 msgid "--occurrence cannot be used with %s"
-msgstr "--occurrence は要求された操作モードでは使えません"
+msgstr "--occurrence は %s と一緒に使えません"
 
 #: src/tar.c:2408
-#, fuzzy
 msgid "Multiple archive files require '-M' option"
-msgstr "分割型のアーカイブファイルには `-M' オプションが必要です"
+msgstr "複合型アーカイブファイルには '-M' オプションが必要です"
 
 #: src/tar.c:2413
 msgid "Cannot combine --listed-incremental with --newer"
@@ -2409,9 +2396,9 @@ msgid "Cannot verify compressed archives"
 msgstr "圧縮されたアーカイブは確認できません"
 
 #: src/tar.c:2450
-#, fuzzy, c-format
+#, c-format
 msgid "--verify cannot be used with %s"
-msgstr "パターン %s は使えません"
+msgstr "--verify は %s と一緒に使えません"
 
 #: src/tar.c:2457
 msgid "Cannot use multi-volume compressed archives"
@@ -2426,24 +2413,21 @@ msgid "--pax-option can be used only on POSIX archives"
 msgstr "--pax-option は POSIX アーカイブでのみ使えます"
 
 #: src/tar.c:2478
-#, fuzzy
 msgid "--acls can be used only on POSIX archives"
-msgstr "--pax-option は POSIX アーカイブでのみ使えます"
+msgstr "--acls は POSIX アーカイブでのみ使えます"
 
 #: src/tar.c:2483
-#, fuzzy
 msgid "--selinux can be used only on POSIX archives"
-msgstr "--pax-option は POSIX アーカイブでのみ使えます"
+msgstr "--selinux は POSIX アーカイブでのみ使えます"
 
 #: src/tar.c:2488
-#, fuzzy
 msgid "--xattrs can be used only on POSIX archives"
-msgstr "--pax-option は POSIX アーカイブでのみ使えます"
+msgstr "--xattrs は POSIX アーカイブでのみ使えます"
 
 #: src/tar.c:2493
-#, fuzzy, c-format
+#, c-format
 msgid "--%s option cannot be used with %s"
-msgstr "パターン %s は使えません"
+msgstr "--%s は %s と一緒に使えません"
 
 #: src/tar.c:2525
 msgid "Volume length cannot be less than record size"
@@ -2458,17 +2442,15 @@ msgid "Cowardly refusing to create an empty archive"
 msgstr "空のアーカイブ作成はご容赦願います"
 
 #: src/tar.c:2565
-#, fuzzy
 msgid "Options '-Aru' are incompatible with '-f -'"
-msgstr "オプション `-Aru' と `-f -' とは相容れません"
+msgstr "オプション '-Aru' と '-f -' とは相容れません"
 
 #: src/tar.c:2660
-#, fuzzy
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr ""
-"`-Acdtrux' または `--test-label' オプションのうち、いずれか 1つを指定しなけれ"
-"ばなりません"
+"'-Acdtrux', '--delete' または '--test-label' オプションのうち、いずれか 1つを"
+"指定しなければなりません"
 
 #: src/tar.c:2715
 #, c-format
@@ -2523,9 +2505,9 @@ msgid "Malformed extended header: missing newline"
 msgstr "不正形式の拡張ヘッダ: 改行がありません"
 
 #: src/xheader.c:740
-#, fuzzy, c-format
+#, c-format
 msgid "Ignoring unknown extended header keyword '%s'"
-msgstr "未知の拡張ヘッダキーワード `%s' を無視"
+msgstr "未知の拡張ヘッダキーワード '%s' を無視"
 
 #: src/xheader.c:1012
 #, c-format
@@ -2798,14 +2780,14 @@ msgid "cannot set time on `%s'"
 msgstr "`%s' に時刻を設定できません"
 
 #: tests/genfile.c:692
-#, fuzzy, c-format
+#, c-format
 msgid "cannot truncate `%s'"
-msgstr "`%s' を unlink できません"
+msgstr "`%s' を truncate できません"
 
 #: tests/genfile.c:701
-#, fuzzy, c-format
+#, c-format
 msgid "command failed: %s"
-msgstr "%s コマンドが失敗しました"
+msgstr "コマンド失敗: %s"
 
 #: tests/genfile.c:706
 #, c-format
@@ -2846,24 +2828,3 @@ msgstr "コマンドが終了\n"
 #, c-format
 msgid "--stat requires file names"
 msgstr "--stat にはファイル名が必要"
-
-#~ msgid "Cannot get working directory"
-#~ msgstr "ワークディレクトリを取得できません"
-
-#~ msgid "sort names to extract to match archive"
-#~ msgstr "アーカイブとマッチさせるために取り出す名前を並び替え"
-
-#~ msgid "Field too long while reading snapshot file"
-#~ msgstr "スナップショットファイルの読み込み中にフィールドが長過ぎます"
-
-#~ msgid "Read error in snapshot file"
-#~ msgstr "スナップショットファイルに読み込みエラー"
-
-#~ msgid "Unexpected field value in snapshot file"
-#~ msgstr "スナップショットファイルに予期せぬフィールド値"
-
-#~ msgid "Extended header length is out of allowed range"
-#~ msgstr "拡張ヘッダ長は許可された範囲外です"
-
-#~ msgid "Invalid group"
-#~ msgstr "無効なグループ"
