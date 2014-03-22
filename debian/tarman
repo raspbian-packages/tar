@@ -94,6 +94,15 @@ while (<>) {
 					$$lastoperation{'description'} .= $c3[1];
 				}
 			}
+			if (!$nflag && !/\}/) {
+				while (<>) {
+					my @extended_desc = split('"', $_);
+					$$lastoperation{'description'} .= $extended_desc[1];
+					if (/\}/) {
+						last;
+					}
+				}
+			}
 		}
 	}
 	if ($mode == 3 ) {
