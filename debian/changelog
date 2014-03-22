@@ -1,6 +1,7 @@
 tar (1.27.1-2) unstable; urgency=low
 
-  * patch from David Gilman adds watch file with signature verification
+  * patch from David Gilman adds watch file with signature verification, 
+    closes: #742351
 
  -- Bdale Garbee <bdale@gag.com>  Sat, 22 Mar 2014 13:31:09 -0600
 
