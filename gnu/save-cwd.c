@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* save-cwd.c -- Save and restore current working directory.
 
-   Copyright (C) 1995, 1997-1998, 2003-2006, 2009-2013 Free Software
+   Copyright (C) 1995, 1997-1998, 2003-2006, 2009-2014 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

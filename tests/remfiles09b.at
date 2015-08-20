@@ -1,6 +1,6 @@
 # Process this file with autom4te to create testsuite. -*- Autotest -*-
 # Test suite for GNU tar.
-# Copyright 2013 Free Software Foundation, Inc.
+# Copyright 2013-2014 Free Software Foundation, Inc.
 #
 # GNU tar is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,12 +32,10 @@ AT_KEYWORDS([create incremental remove-files remfiles09 remfiles09b])
 AT_XFAIL_IF(true) # we expect to fail in tar 1.27
 
 AT_TAR_CHECK([
-AT_SORT_PREREQ
 mkdir foo
 echo foo/file > foo/file
 decho A
 tar -cvf foo.tar --incremental --remove-files foo
-TARSTAT=$?
 decho B
 find .
 ],
@@ -47,7 +45,6 @@ foo/
 foo/file
 B
 .
-./foo
 ./foo.tar
 ],
 [A

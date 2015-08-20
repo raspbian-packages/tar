@@ -1,3 +1,486 @@
+2014-07-27  Sergey Poznyakoff  <gray@gnu.org>
+
+	Version 1.28
+
+2014-07-27  Nathan Stratton Treadway  <nathanst@ontko.com>
+
+	Minor change in docstrings. nor ch#
+
+	Restructure the remfiles testsuite.
+
+2014-07-22  Sergey Poznyakoff  <gray@gnu.org>
+
+	Don't build ttyemu and run tty I/O test if grantpt is not
+	available.
+
+	* configure.ac (TAR_COND_GRANTPT): Define conditional depending
+	on whether grantpt is available.
+	* gnulib.modules: Remove grantpt. It relies upon a helper binary
+	pt_chown which it installs and which is useless in the testsuite.
+	* tests/Makefile.am [TAR_COND_GRANTPT]: Build ttyemu
+	* tests/iotty.at: Skip test if ttyemu is not build.
+	* tests/ttyemu.c (noecho): Fix error message
+	(main): Use TIOCSCTTY if it is defined.
+
+2014-07-22  Benno Schulenberg  <bensberg@justemail.net>
+
+	Fix a typo and some wordings in the documentation.
+
+	* doc/tar.texi: Fix some missing articles, and make it clearer
+	that "any" does not mean "anything" but "either of the two".
+
+2014-07-22  Nathan Stratton Treadway  <nathanst@ontko.com>
+
+	Fix the testsuite
+
+	* tests/incr07.at: Don't assume case-sensitive filesystem.
+
+2014-07-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: minor fixups related to recent checkpoint.c change
+
+	* src/checkpoint.c (getwidth, format_checkpoint_string):
+	Use long and strtol, not int, to avoid overflow issues.
+	(getwidth): Don't assume termios.h defines TIOCGWINSZ,
+	as it doesn't on some older hosts.
+
+2014-07-11  Sergey Poznyakoff  <gray@gnu.org>
+
+	Bugfixes
+
+	* gnulib.modules: Add faccessat
+	* src/checkpoint.c: Include termios.h
+
+2014-06-29  Nathan Stratton Treadway  <nathanst@ontko.com>
+
+	tar: document xgetcwd test case better
+
+	* src/misc.c (normalize_filename): Add commentary for clarity.
+	* tests/extrac09.at: Retitle test case and add comments for
+	clarity.
+
+2014-06-24  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix typos in ChangeLog
+
+	* ChangeLog.CVS: Fix typos.
+	* ChangeLog.amend: New file.
+	* Makefile.am: Define changelog_amend_file.
+
+2014-04-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: do not dereference NULL pointer with '--remove-files .'
+
+	Problem reported by Thorsten Hirsch in:
+	http://lists.gnu.org/archive/html/bug-tar/2014-04/msg00011.html
+	* src/unlink.c (flush_deferred_unlinks):
+	Do not attempt to find the parent of "." when "." is
+	at the top level.
+	* tests/remfiles10.at: New file.
+	* tests/Makefile.am (TESTSUITE_AT):
+	* tests/testsuite.at: Add it.
+
+2014-03-27  Sergey Poznyakoff  <gray@gnu.org>
+
+	Refuse to write archive contents to a tty.
+
+	* NEWS: Update.
+	* src/buffer.c (_open_archive): Refuse to write to a tty.
+	* tests/iotty.at: Test output to a tty.
+
+2014-03-26  Vitezslav Cizek  <vcizek@suse.cz>
+
+	fix an eternal loop in handle_option
+
+	* src/names.c (handle_option): increment loop counter
+
+2014-03-20  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fail if archive comes from a terminal.
+
+	Based on patch from Pavel Raiskup <praiskup@redhat.com>.
+
+	* gnulib.modules: Add new modules.
+	* src/buffer.c (_open_archive): Refuse to read archive from a tty.
+	* tests/Makefile.am (TESTSUITE_AT): Add iotty.at
+	(check_PROGRAMS): New program ttyemu
+	* tests/testsuite.at: Include iotty.at
+	* tests/iotty.at: New file.
+	* tests/ttyemu.c: New file.
+
+2014-03-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: port to Solaris 9
+
+	Problem reported by Jesse C in:
+	http://lists.gnu.org/archive/html/bug-tar/2014-03/msg00034.html
+	* gnulib.modules: Add strtoimax and strtoumax, since tar invokes
+	these functions directly and they don't exist on Solaris 9.
+
+2014-02-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Test the --[no-]recursive options (see commit 2bd9c153_.
+
+	* tests/recurs02.at: New test case.
+	* tests/Makefile.am: Add new file.
+	* tests/testsuite.at: Add new file.
+
+2014-02-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Support exclusion patterns from various VCS ignore lists.
+
+	* src/Makefile.am (tar_SOURCES): Add exclist.c
+	* src/common.h (EXCL_DEFAULT, EXCL_RECURSIVE)
+	(EXCL_NON_RECURSIVE): New flags.
+	(excfile_add, info_attach_exclist)
+	(info_cleanup_exclist,info_free_exclist)
+	(exclude_vcs_ignores): New prototypes.
+	* src/create.c (dump_dir0): Call info_attach_exclist.
+	* src/exclist.c: New file.
+	* src/incremen.c (scan_directory): Call info_attach_exclist.
+	* src/names.c (excluded_name): Moved to exclist.c. Change
+	signature.
+	All uses updated.
+	* src/tar.c: New options: --exclude-ignore,
+	--exclude-ignore-recursive
+	and --exclude-vcs-ignores.
+	(tar_stat_destroy): Free exclist.
+	* src/tar.h (tar_stat_info): New member exclude_list.
+
+	* NEWS: Document new exclusion options.
+	* doc/tar.texi: Likewise.
+	* doc/tar.1: Likewise.
+
+2014-02-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix in testsuite
+
+	* acls03.at: Fix improper invocation of setfacl.
+
+2014-02-14  Pavel Raiskup  <praiskup@redhat.com>
+
+	testsuite: add test for buggy default ACLs
+
+	* tests/Makefile.am: Mention acls03.at.
+	* tests/testsuite.at: Likewise.
+	* tests/acls03.at: New testcase.
+
+2014-02-14  Pavel Raiskup  <praiskup@redhat.com>
+
+	acls: bugfix for default ACLs extraction
+
+	When --acls option is on (regardless of tarball contents or
+	tarball format), we should explicitly set OR delete default ACLs
+	for extracted directories.  Prior to this update, we always
+	created arbitrary default ACLs based standard file permissions.
+
+	* configure.ac (with_posix_acls): Check also for acl_free and
+	acl_delete_def_file to mark IEEE 1003.1e ACLs as supported.
+	* src/xattrs.c (acl_delete_def_file_at): New function.
+	(xattrs__acls_set): Do not treat acls_option at all;  Delete
+	default ACLs if appropriate.
+
+	References:
+	http://www.mail-archive.com/bug-tar@gnu.org/msg04355.html
+	Thanks: Juan J. Martínez and Mark Steinborn
+
+2014-02-14  Pavel Raiskup  <praiskup@redhat.com>
+
+	tar: imply --xattrs when --xattrs-{inc,exc}lude used
+
+	Options --xattrs-include=MASK and --xattrs-exclude=MASK now turn
+	on the --xattrs option.
+
+	Fix also bug in printing in xattrs.c - don't print when option is
+	negative.
+
+	* src/tar.c (set_xattr_option): New static function.
+	(parse_opt): Call new function when --xatrrs, --xattrs-include or
+	--xattrs-exclude option is used.
+	* src/xattrs.c (xattrs_print, xattrs_print_char): Expect positive
+	values in options.
+
+2014-02-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	THANKS: Add Anthony G. Basile.
+
+2014-02-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Use correct headers/libraries when providing xattr support
+
+	See https://savannah.gnu.org/patch/index.php?8252. Patch provided
+	by Anthony G. Basile.
+
+	* acinclude.m4 (TAR_HEADERS_ATTR_XATTR_H): Look for <sys/xattr.h>
+	first and then for <attr/xattr.h>.  Link against libattr.so if
+	needed.
+	* lib/xattr-at.h: Include sys/xattr.h or attr/xattr.h, depending
+	on which one is detected.
+	* src/Makefile.am [TAR_LIB_ATTR] (tar_LDADD): Link against -lattr.
+
+2014-02-14  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor change
+
+	* src/tar.c (decode_options): Silently ignore --one-top-level
+	if used with a non-reading command.
+
+2014-02-14  Sergey Poznyakoff  <gray@gnu.org>
+
+	New option --sort=ORDER
+
+	This option makes tar sort the entries of directories that will be
+	added to an archive according to ORDER (none, name, or order).
+
+	Based on proposition by Dick Streefland
+	(https://savannah.gnu.org/patch/?7892).
+
+	* src/common.h (savedir_sort_order): New global.
+	* src/create.c: Pass savedir_sort_order to streamsavedir.
+	* src/misc.c: Likewise.
+	* src/tar.c: New option --sort.
+
+	* NEWS: Update.
+	* doc/tar.texi: Document the --sort option.
+	* doc/tar.1: Likewise.
+
+2014-02-13  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix the testsuite
+
+	* tests/opcomp01.at: Update expected error messages.
+	* tests/opcomp03.at: Likewise.
+
+2014-02-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix --one-top-level used together with --list.
+
+	* src/extract.c: Move one_top_level stuff to tar.c
+	(decode_options).
+	* src/tar.c (option_conflict_error): New function.
+	(decode_options): Use option_conflict_error to complain about
+	conflicting options in a uniform manner.
+	Process one_top_level options here.
+	(request_stdin): Fix error message.
+	* tests/onetop04.at: New testcase: check --one-top-level with
+	--list.
+	* tests/Makefile.am: Add new testcase.
+	* tests/testsuite.at: Add new testcase.
+
+2014-02-13  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix NEWS
+
+	* NEWS: Remove duplicate description of the --one-top-level
+	option.
+
+2014-02-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	configure.ac: look for host-prefixed ar
+
+	See https://savannah.gnu.org/patch/?8183
+
+2014-02-10  Sergey Poznyakoff  <gray@gnu.org>
+
+	Bugfix
+
+	* src/suffix.c (find_compression_suffix): Fix eventual coredump.
+
+2014-02-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Fix docs.
+
+2014-02-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update docs.
+
+	* NEWS: Document --one-top-level
+	* THANKS: Mention Connor Behan
+
+2014-01-30  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Update copyright years.
+
+2014-01-28  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Improve one-top-level functionality
+
+	Make sure the changes become visible with
+	--show-transformed-names.
+
+	* src/common.h (strip_compression_suffix): New function.
+	(one_top_level): Rename to one_top_level_dir. All uses changed.
+	* src/extract.c (extr_init): Use strip_compression_suffix.
+	Bail out if unable to determine top-level directory.
+	(maybe_prepend_name): Remove. All uses removed.
+	* src/tar.c (options): --one-top-level takes optional argument.
+	(parse_opt): Handle it.
+	* src/list.c (enforce_one_top_level): New function.
+	(transform_stat_info): Call enforce_one_top_level if required.
+	* src/suffix.c (compression_suffixes): List "tar" (no
+	compression);
+	terminate with NULL entry.
+	(find_compression_suffix): New static.
+	(strip_compression_suffix): New function.
+
+	* doc/tar.1: Update.
+	* doc/tar.texi: Update.
+
+	* tests/onetop01.at: New testcase.
+	* tests/onetop02.at: New testcase.
+	* tests/onetop03.at: New testcase.
+	* tests/Makefile.am: Add new testcases.
+	* tests/testsuite.at: Likewise.
+
+2014-01-27  Connor Behan  <connor.behan@gmail.com>
+
+	Detect tarbombs while extracting
+
+	* src/common.h (one_top_level_option): New global.
+	(one_top_level): New global.
+	* src/extract.c (extr_init): If one_top_level_option is set,
+	determine
+	the name one_top_level that might have to be prepended.
+	(extract_archive): If one_top_level_option is set, prepend
+	one_top_level
+	to all names that don't already start with it.
+	* src/tar.c (ONE_TOP_LEVEL_OPTION): New contant.
+	(options): New option --one-top-level.
+	(parse_opt): Handle this option.
+	(decode_options): Make it conflict with --absolute-names.
+
+2014-01-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Don't install rmt.8 if rmt is not built.
+
+	* doc/Makefile.am [PU_RMT_COND]: Define RMT_8
+	(dist_man_MANS): use RMT_8 instead of the hardcoded rmt.8
+
+2014-01-27  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide tar(1) and rmt(8) manpages.
+
+	* NEWS: Update.
+	* doc/Makefile.am: Add manpages.
+	* doc/tar.1: New file.
+
+	* src/tar.c (tar_help_filter): Handle LZOP_OPTION.
+
+2014-01-23  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Make sure transformed file names retain trailing slash in listing.
+
+	* src/list.c (simple_print_header): Print trailing slash
+	if using the transformed name.
+	Use had_trailing_slash instead of analyzing last byte if temp_name
+
+2014-01-22  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	checkpoint actions: further improvements.
+
+	* NEWS: Update.
+	* doc/tar.texi: Update.
+	* src/buffer.c (print_stats): Avoid use of additional string
+	buffer.
+	Allow for text to be NULL.
+	Call gettext if it is not.
+	(format_total_stats): Don't use gettext when calling print_stats.
+	* src/checkpoint.c (def_format): Change default format.
+	(format_checkpoint_string): Implement optional arguments for
+	T conversion.
+	(finish_checkpoint_actions): Rename to checkpoint_flush_actions,
+	make extern.  All uses changed.
+	* src/common.h (checkpoint_flush_actions): New proto.
+	* src/tar.c (main): Set error_hook
+
+2014-01-22  Sergey Poznyakoff  <gray@gnu.org>
+
+	Improve checkpoint interface.
+
+	* src/buffer.c (format_total_stats): The format arg is const
+	All uses updated.
+	(default_total_format): const
+	* src/checkpoint.c (tty, tty_cleanup): New static.
+	(format_checkpoint_string): New "canned" format %c
+	(checkpoint_finish): New function.
+	* src/common.h (checkpoint_finish): New proto.
+	* src/tar.c (main): Call checkpoint_finish.`
+
+2014-01-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Implement statistics display in checkpoint actions.
+
+	* NEWS: Update.
+	* configure.ac: Version 1.27.90
+	* gnulib.modules: Add fprintftime.
+	* doc/tar.texi: Document the "totals" action and new format
+	specifiers
+	for echo and ttyout checkpoint actions.
+	* src/buffer.c (compute_duration): Return computed value.
+	(print_stats): Don't print trailing newline.  Return number of
+	characters output.
+	(format_total_stats): New function.
+	(print_total_stats): Rewrite via format_total_stats.
+	* src/checkpoint.c (checkpoint_opcode) <cop_totals>: New opcode.
+	(checkpoint_compile_action): Handle cop_totals.
+	(expand_checkpoint_string): Remove.
+	(format_checkpoint_string): New function to be used instead of
+	expand_checkpoint_string.  All callers updated.
+	* src/common.h (TF_READ,TF_WRITE)
+	(TF_DELETED): New constants.
+	(format_total_stats,print_total_stats): New protos.
+
+2014-01-10  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Remove shar archives from distribution.
+
+	These are going to phase out in automake 2.0
+
+2014-01-10  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix the use of --no-recursion and --recursion options.
+
+	Each option remains in effect until cancelled by the next
+	ocurrence
+	of its counterpart, as stated in the documentation.
+
+	* src/names.c (name_next_elt): Restore recursion_option from the
+	value of matching_flags.
+
+2014-01-09  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor bugfixes
+
+	* src/compare.c (diff_dumpdir): Close descriptor if fstat failed.
+	(diff_multivol): Make sure the descriptor is closed and eventual
+	errors reported if lseek fails.
+	Both reported by Jiri Kukacka.
+
+2014-01-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: work aruond IBM XL C bug
+
+	* src/incremen.c (show_snapshot_field_ranges)
+	(write_directory_file_entry): Use simpler array size expression,
+	one that evaluates to the same value.  This works around
+	a compiler
+	bug with IBM XL C.  Problem reported by Yannick Bergeron in
+	<http://lists.gnu.org/archive/html/bug-tar/2014-01/msg00009.html>.
+
+2014-01-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tar: update ancient configure cruft
+
+	* configure.ac: Use AC_PROG_CC_STDC, not just AC_PROG_CC.
+	Remove obsolete macros AC_ISC_POSIX, AC_HEADER_SYS_WAIT,
+	AC_HEADER_DIRENT, AC_HEADER_STAT, AC_HEADER_STDC, AC_TYPE_SIGNAL,
+	AC_TYPE_SIZE_T.
+	* lib/prepargs.c (IN_CTYPE_DOMAIN): Remove.  All uses removed.
+	* src/list.c (from_header): Use isspace, not ISSPACE.
+	* src/system.c (pipe_handler, sys_exec_info_script):
+	* src/tar.c (sigstat):
+	Use void, not RETSIGTYPE.
+
 2013-11-17  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Version 1.27.1
@@ -4777,7 +5260,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	this has undefined behavior.  Likewise for assigning arbitrary
 	uintmax_t values to other types.
 	(read_negative_num, read_unsigned_num, read_timespec):
-	New functions, to check input values a bit more carefuly.
+	New functions, to check input values a bit more carefully.
 	(read_num): Use read_unsigned_num.  New arg MAX_VAL;
 	all callers changed.
 	(read_incr_db_2): Use these new functions.
@@ -4957,7 +5440,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	* src/delete.c: Remove second argument from calls to name_scan
 	* src/update.c: Likewise
 	* src/incremen.c (procdir): Use is_individual_file to check for
-	files explicitely specified in the command line. Fixes bug
+	files explicitly specified in the command line. Fixes bug
 	reported by Dat Head on 19 Jun 2006 (descending into mountpoints
 	with --one-file-system in use)
 	* src/misc.c (maybe_backup_file): Second argument is bool
@@ -5016,7 +5499,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	* src/delete.c (records_skipped): Remove static qualifier, the
 	variable is used by print_total_stats in buffer.c
 	* src/extract.c (check_time): Use volume_start_time when checking
-	for timestamp plausability.
+	for timestamp plausibility.
 	* src/tar.c: (options, parse_opt): Allow for optional argument to
 	the --totals option, which specifies a signal upon delivery of which
 	the statistics must be output.
@@ -5074,7 +5557,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	* src/transform.c (set_transform_expr,_transform_name_to_obstack):
 	Implement NUMBER flag.
-	(add_char_segment): Fix length assignement
+	(add_char_segment): Fix length assignment
 
 	* doc/tar.texi: Update
 
@@ -5131,7 +5614,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	* doc/tar.texi: Update
 	* configure.ac (AM_INIT_AUTOMAKE): Use tar-ustar option. Raise
 	version requirement to 1.9
-	* src/common.h (struct name): Refactured
+	* src/common.h (struct name): Refactored
 	(warn_regex_usage): New variable.
 	(dump_file): First argument is const char*.
 	(name_init,name_add): Removed
@@ -5506,13 +5989,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	* src/common.h (struct name): New member `explicit'. Remove unused
 	member `isdir'.
 	* src/incremen.c (procdir): If name_scan() returns something,
-	check if it was explicitely given in the command line
+	check if it was explicitly given in the command line
 	* src/names.c (addname,add_hierarchy_to_namelist): Initialize
 	explicit member appropriately.
 
 	* src/incremen.c (procdir): If --one-file-system is given and a
 	directory is found to be on another device, *and* this directory
-	is explicitely given in the command line, then do not omit it.
+	is explicitly given in the command line, then do not omit it.
 
 2005-12-11  Sergey Poznyakoff  <gray@gnu.org.ua>
 
@@ -5547,7 +6030,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	(mode_to_chars, off_to_chars, size_to_chars, time_to_chars)
 	(uid_to_chars, uintmax_to_chars): Return bool
 	(to_chars): Return bool
-	(start_header): Check return values of convertion routines. Fail
+	(start_header): Check return values of conversion routines. Fail
 	if unable to store data in the header.
 
 2005-12-07  Sergey Poznyakoff  <gray@gnu.org.ua>
@@ -5847,13 +6330,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	archives.
 	* src/incremen.c (dumpdir_size, get_gnu_dumpdir): New functions.
 	(purge_directory): Use stat_info.dumpdir instead of getting its
-	value explicitely.
+	value explicitly.
 	* src/list.c (list_archive): Handle incremental backups in pax
 	format.
 	(decode_header): Initialize stat_info.dumpdir
 	* src/sparse.c (sparse_diff_file): Bugfix: set seekable.
 	(pax_dump_header): Store sparse map in GNU.sparse.map. If this
-	variable has been explicitely deleted, use GNU.sparse.offset/
+	variable has been explicitly deleted, use GNU.sparse.offset/
 	GNU.sparse.numbytes variables.
 	* src/tar.c (decode_options): Incremental options are allowed with
 	--format=pax
@@ -5931,7 +6414,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	* bootstrap: Fix quoting in help output.
 	(update_po): Use backward-compatible wget option --cache instead
-	of deprecated -C to accomodate for wget 1.10.
+	of deprecated -C to accommodate for wget 1.10.
 	Changes proposed by Eric Blake
 	* THANKS: Add Eric Blake
 
@@ -6482,7 +6965,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	* src/list.c: Likewise
 
 	* tests/multiv03.at: Modified to match the new behavior
-	* tests/multiv04.at: New file. Test splittind directory members between
+	* tests/multiv04.at: New file. Test splitting directory members between
 	the archive volumes.
 	* tests/Makefile.am: Add multiv04.at
 	* tests/testsuite.at: Likewise.
@@ -8236,7 +8719,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	* src/create.c: Do not zero-terminate name field if
 	the name is exactly 100 characters long.
-	(write_ustar_long_name): Fixed cheking for unsplittable
+	(write_ustar_long_name): Fixed checking for unsplittable
 	names.
 
 2003-11-14  Sergey Poznyakoff  <gray@Mirddin.farlep.net>
@@ -8933,7 +9416,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	interface.
 	(child_open_for_compress): Do not increase size to BLOCKSIZE.
 	(open_archive): Open index file name.
-	Strip trailing slahes from file names.
+	Strip trailing slashes from file names.
 	(flush_write): Set size to 0 if not saving names.
 	(flush_write, flush_read): Use safer_name_suffix rather than
 	inline code.
@@ -9766,7 +10249,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	(decode_options): Dates that look like an absolute path name,
 	or that start with '.', are presumed to be file names whose
 	dates are taken.
-	Remove 'I' as an aliase for 'T'.
+	Remove 'I' as an alias for 'T'.
 	Update copyright.
 
 	* src/extract.c (<time.h>): Do not include; system.h now does this.

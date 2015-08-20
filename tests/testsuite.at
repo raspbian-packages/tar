@@ -1,7 +1,7 @@
 # Process this file with autom4te to create testsuite. -*- Autotest -*-
 
 # Test suite for GNU tar.
-# Copyright 2004-2008, 2010-2013 Free Software Foundation, Inc.
+# Copyright 2004-2008, 2010-2014 Free Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -211,7 +211,9 @@ m4_include([indexfile.at])
 m4_include([verbose.at])
 m4_include([gzip.at])
 m4_include([recurse.at])
+m4_include([recurs02.at])
 m4_include([shortrec.at])
+m4_include([iotty.at])
 
 AT_BANNER([The --same-order option])
 m4_include([same-order01.at])
@@ -397,6 +399,7 @@ m4_include([remfiles08c.at])
 m4_include([remfiles09a.at])
 m4_include([remfiles09b.at])
 m4_include([remfiles09c.at])
+m4_include([remfiles10.at])
 
 AT_BANNER([Extended attributes])
 m4_include([xattr01.at])
@@ -407,11 +410,18 @@ m4_include([xattr05.at])
 
 m4_include([acls01.at])
 m4_include([acls02.at])
+m4_include([acls03.at])
 
 m4_include([selnx01.at])
 m4_include([selacl01.at])
 
 m4_include([capabs_raw01.at])
+
+AT_BANNER([One top level])
+m4_include([onetop01.at])
+m4_include([onetop02.at])
+m4_include([onetop03.at])
+m4_include([onetop04.at])
 
 AT_BANNER([Star tests])
 m4_include([star/gtarfail.at])

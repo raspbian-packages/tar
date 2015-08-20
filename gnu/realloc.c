@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* realloc() function that is glibc compatible.
 
-   Copyright (C) 1997, 2003-2004, 2006-2007, 2009-2013 Free Software
+   Copyright (C) 1997, 2003-2004, 2006-2007, 2009-2014 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

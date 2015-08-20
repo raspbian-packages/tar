@@ -1,6 +1,6 @@
 This is tar.info, produced by makeinfo version 4.13 from tar.texi.
 
-This manual is for GNU `tar' (version 1.27.1, 24 September 2013), which
+This manual is for GNU `tar' (version 1.28, 22 July 2014), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994-1997, 1999-2001, 2003-2013 Free Software
@@ -34,7 +34,7 @@ File: tar.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU tar: an archiver tool
 *************************
 
-This manual is for GNU `tar' (version 1.27.1, 24 September 2013), which
+This manual is for GNU `tar' (version 1.28, 22 July 2014), which
 creates and extracts files from archives.
 
    Copyright (C) 1992, 1994-1997, 1999-2001, 2003-2013 Free Software
@@ -567,7 +567,7 @@ in version 1.11.  Thomas Bushnell, n/BSG and Amy Gorin worked on a
 tutorial and manual for GNU `tar'.  Franc,ois Pinard put version 1.11.8
 of the manual together by taking information from all these sources and
 merging them.  Melissa Weisshaus finally edited and redesigned the book
-to create version 1.12.  The book for versions from 1.14 up to 1.27.1
+to create version 1.12.  The book for versions from 1.14 up to 1.28
 were edited by the current maintainer, Sergey Poznyakoff.
 
    For version 1.12, Daniel Hagerty contributed a great deal of
@@ -2340,6 +2340,16 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      Exclude from dump any directory containing a valid cache directory
      tag file.  *Note exclude::.
 
+`--exclude-ignore=FILE'
+     Before dumping a directory, `tar' checks if it contains FILE.  If
+     so, exclusion patterns are read from this file.  The patterns
+     affect only the directory itself.  *Note exclude::.
+
+`--exclude-ignore-recursive=FILE'
+     Before dumping a directory, `tar' checks if it contains FILE.  If
+     so, exclusion patterns are read from this file.  The patterns
+     affect the directory and all itssubdirectories.  *Note exclude::.
+
 `--exclude-tag=FILE'
      Exclude from dump any directory containing file named FILE, but
      dump the directory node and FILE itself.  *Note exclude-tag:
@@ -2358,7 +2368,15 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      Exclude from dump directories and files, that are internal for some
      widely used version control systems.
 
-     *Note exclude-vcs: exclude.
+     *Note exclude-vcs::.
+
+`--exclude-vcs-ignores'
+     Exclude files that match patterns read from VCS-specific ignore
+     files.  Supported files are: `.cvsignore', `.gitignore',
+     `.bzrignore', and `.hgignore'.  The semantics of each file is the
+     same as for the corresponding VCS, e.g. patterns read from
+     `.gitignore' affect the directory and all its subdirectories.
+     *Note exclude-vcs-ignores::.
 
 `--file=ARCHIVE'
 `-f ARCHIVE'
@@ -2523,9 +2541,9 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
 
 `--level=N'
      Force incremental backup of level N.  As of GNU `tar' version
-     1.27.1, the option `--level=0' truncates the snapshot file,
-     thereby forcing the level 0 dump.  Other values of N are
-     effectively ignored.  *Note --level=0::, for details and examples.
+     1.28, the option `--level=0' truncates the snapshot file, thereby
+     forcing the level 0 dump.  Other values of N are effectively
+     ignored.  *Note --level=0::, for details and examples.
 
      The use of this option is valid only in conjunction with the
      `--listed-incremental' option.  *Note Incremental Dumps::, for a
@@ -2702,6 +2720,17 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      directories that are on different file systems from the current
      directory.
 
+`--one-top-level[=DIR]'
+     Tells `tar' to create a new directory beneath the extraction
+     directory (or the one passed to `-C') and use it to guard against
+     tarbombs.  In the absence of DIR argument, the name of the new
+     directory will be equal to the base name of the archive (file name
+     minus the archive suffix, if recognized).  Any member names that
+     do not begin with that directory name (after transformations from
+     `--transform' and `--strip-components') will be prefixed with it.
+     Recognized file name suffixes are `.tar', and any compression
+     suffixes recognizable by *Note --auto-compress::.
+
 `--overwrite'
      Overwrite existing files and directory metadata when extracting
      files from an archive.  *Note Overwrite Old Files::.
@@ -2863,6 +2892,25 @@ File: tar.info,  Node: Option Summary,  Next: Short Option Summary,  Prev: Opera
      The `--warning=existing-file' option can be used together with
      this option to produce warning messages about existing old files
      (*note warnings::).
+
+`--sort=ORDER'
+     Specify the directory sorting order when reading directories.
+     ORDER may be one of the following:
+
+    `none'
+          No directory sorting is performed. This is the default.
+
+    `name'
+          Sort the directory entries on name. The operating system may
+          deliver directory entries in a more or less random order, and
+          sorting them makes archive creation reproducible.
+
+    `inode'
+          Sort the directory entries on inode number. Sorting
+          directories on inode number may reduce the amount of disk
+          seek operations when creating an archive for some file
+          systems.
+
 
 `--sparse'
 `-S'
@@ -3083,8 +3131,8 @@ information about its name, version, origin and legal status, all on
 standard output, and then exit successfully.  For example,
 `tar --version' might print:
 
-     tar (GNU tar) 1.27.1
-     Copyright (C) 2013 Free Software Foundation, Inc.
+     tar (GNU tar) 1.28
+     Copyright (C) 2013-2014 Free Software Foundation, Inc.
      License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
      This is free software: you are free to change and redistribute it.
      There is NO WARRANTY, to the extent permitted by law.
@@ -3364,18 +3412,59 @@ do so by placing an equals sign and the message right after it, e.g.:
 
      --checkpoint-action="echo=Hit %s checkpoint #%u"
 
-   The `%s' and `%u' in the above example are "meta-characters".  The
-`%s' meta-character is replaced with the "type" of the checkpoint:
-`write' or `read' (or a corresponding translated version in locales
-other than POSIX).  The `%u' meta-character is replaced with the
-ordinal number of the checkpoint.  Thus, the above example could
-produce the following output when used with the `--create' option:
+   The `%s' and `%u' in the above example are "format specifiers".  The
+`%s' specifier is replaced with the "type" of the checkpoint: `write' or
+`read' (or a corresponding translated version in locales other than
+POSIX).  The `%u' specifier is replaced with the ordinal number of the
+checkpoint.  Thus, the above example could produce the following output
+when used with the `--create' option:
 
      tar: Hit write checkpoint #10
      tar: Hit write checkpoint #20
      tar: Hit write checkpoint #30
 
-   Aside from meta-character expansion, the message string is subject to
+   The complete list of available format specifiers follows.  Some of
+them can take optional arguments.  These arguments, if given, are
+supplied in curly braces between the percent sign and the specifier
+letter.
+
+`%s'
+     Print type of the checkpoint (`write' or `read').
+
+`%u'
+     Print number of the checkpoint.
+
+`%{r,w,d}T'
+     Print number of bytes transferred so far and approximate transfer
+     speed.  Optional arguments supply prefixes to be used before number
+     of bytes read, written and deleted, correspondingly.  If absent,
+     they default to `R'. `W', `D'.  Any or all of them can be omitted,
+     so, that e.g. `%{}T' means to print corresponding statistics
+     without any prefixes.  Any surplus arguments, if present, are
+     silently ignored.
+
+          $ tar --delete -f f.tar --checkpoint-action=echo="#%u: %T" main.c
+          tar: #1: R: 0 (0B, 0B/s),W: 0 (0B, 0B/s),D: 0
+          tar: #2: R: 10240 (10KiB, 19MiB/s),W: 0 (0B, 0B/s),D: 10240
+
+     See also the `totals' action, described below.
+
+`%{FMT}t'
+     Output current local time using FMT as format for `strftime'
+     (*note strftime: (strftime(3))strftime.).  The `{FMT}' part is
+     optional.  If not present, the default format is `%c', i.e. the
+     preferred date and time representation for the current locale.
+
+`%{N}*'
+     Pad output with spaces to the Nth column.  If the `{N}' part is
+     omitted, the current screen width is assumed.
+
+`%c'
+     This is a shortcut for `%{%Y-%m-%d %H:%M:%S}t: %ds,
+     %{read,wrote}T%*\r', intended mainly for use with `ttyout' action
+     (see below).
+
+   Aside from format expansion, the message string is subject to
 "unquoting", during which the backslash "escape sequences" are replaced
 with their corresponding ASCII characters (*note escape sequences::).
 E.g. the following action will produce an audible bell and the message
@@ -3396,7 +3485,16 @@ to the string, nor does it output a newline after it.  For example, the
 following action will print the checkpoint message at the same screen
 line, overwriting any previous message:
 
-     --checkpoint-action="ttyout=\rHit %s checkpoint #%u"
+     --checkpoint-action="ttyout=Hit %s checkpoint #%u%*\r"
+
+Notice the use of `%*' specifier to clear out any eventual remains of
+the prior output line.  As as more complex example, consider this:
+
+     --checkpoint-action=ttyout='%{%Y-%m-%d %H:%M:%S}t (%d sec): #%u, %T%*\r'
+
+This prints the current local time, number of seconds expired since tar
+was started, the checkpoint ordinal number, transferred bytes and
+average computed I/O speed.
 
    Another available checkpoint action is `dot' (or `.').  It instructs
 `tar' to print a single dot on the standard listing stream, e.g.:
@@ -3407,6 +3505,11 @@ line, overwriting any previous message:
    For compatibility with previous GNU `tar' versions, this action can
 be abbreviated by placing a dot in front of the checkpoint frequency,
 as shown in the previous section.
+
+   The `totals' action prints the total number of bytes transferred so
+far.  The format of the data is the same as for the `--totals' option
+(*note totals::).  See also `%T' format specifier of the `echo' or
+`ttyout' action.
 
    Yet another action, `sleep', pauses `tar' for a specified amount of
 seconds.  The following example will stop for 30 seconds at each
@@ -6214,12 +6317,60 @@ difficult to catch using text editors.
 
    However, empty lines are OK.
 
+   When archiving directories that are under some version control
+system (VCS), it is often convenient to read exclusion patterns from
+this VCS' ignore files (e.g. `.cvsignore', `.gitignore', etc.)  The
+following options provide such possibilty:
+
+`--exclude-vcs-ignores'
+     Before archiving a directory, see if it contains any of the
+     following files: `cvsignore', `.gitignore', `.bzrignore', or
+     `.hgignore'.  If so, read ignore patterns from these files.
+
+     The patterns are treated much as the corresponding VCS would treat
+     them, i.e.:
+
+    `.cvsignore'
+          Contains shell-style globbing patterns that apply only to the
+          directory where this file resides.  No comments are allowed
+          in the file.  Empty lines are ignored.
+
+    `.gitignore'
+          Contains shell-style globbing patterns.  Applies to the
+          directory where `.gitfile' is located and all its
+          subdirectories.
+
+          Any line beginning with a `#' is a comment.  Backslash escapes
+          the comment character.
+
+    `.bzrignore'
+          Contains shell globbing-patterns and regular expressions (if
+          prefixed with `RE:'(1).  Patterns affect the directory and
+          all its subdirectories.
+
+          Any line beginning with a `#' is a comment.
+
+    `.hgignore'
+          Contains posix regular expressions(2).  The line `syntax:
+          glob' switches to shell globbing patterns.  The line `syntax:
+          regexp' switches back.  Comments begin with a `#'.  Patterns
+          affect the directory and all its subdirectories.
+
+`--exclude-ignore=FILE'
+     Before dumping a directory, `tar' checks if it contains FILE.  If
+     so, exclusion patterns are read from this file.  The patterns
+     affect only the directory itself.
+
+`--exclude-ignore-recursive=FILE'
+     Same as `--exclude-ignore', except that the patterns read affect
+     both the directory where FILE resides and all its subdirectories.
+
 `--exclude-vcs'
      Exclude files and directories used by following version control
      systems: `CVS', `RCS', `SCCS', `SVN', `Arch', `Bazaar',
      `Mercurial', and `Darcs'.
 
-     As of version 1.27.1, the following files are excluded:
+     As of version 1.28, the following files are excluded:
 
         * `CVS/', and everything under it
 
@@ -6362,6 +6513,15 @@ entirely:
 * Menu:
 
 * problems with exclude::
+
+   ---------- Footnotes ----------
+
+   (1) According to the Bazaar docs, globbing-patterns are Korn-shell
+style and regular expressions are perl-style.  As of GNU `tar' version
+1.28, these are treated as shell-style globs and posix extended
+regexps.  This will be fixed in future releases.
+
+   (2) Support for perl-style regexps will appear in future releases.
 
 
 File: tar.info,  Node: problems with exclude,  Up: exclude
@@ -7557,121 +7717,4 @@ any of the following:
    Or, omitting the year:
 
      MONTH DAY
-
-
-File: tar.info,  Node: Time of day items,  Next: Time zone items,  Prev: Calendar date items,  Up: Date input formats
-
-7.3 Time of day items
-=====================
-
-A "time of day item" in date strings specifies the time on a given day.
-Here are some examples, all of which represent the same time:
-
-     20:02:00.000000
-     20:02
-     8:02pm
-     20:02-0500      # In EST (U.S. Eastern Standard Time).
-
-   More generally, the time of day may be given as
-`HOUR:MINUTE:SECOND', where HOUR is a number between 0 and 23, MINUTE
-is a number between 0 and 59, and SECOND is a number between 0 and 59
-possibly followed by `.' or `,' and a fraction containing one or more
-digits.  Alternatively, `:SECOND' can be omitted, in which case it is
-taken to be zero.  On the rare hosts that support leap seconds, SECOND
-may be 60.
-
-   If the time is followed by `am' or `pm' (or `a.m.' or `p.m.'), HOUR
-is restricted to run from 1 to 12, and `:MINUTE' may be omitted (taken
-to be zero).  `am' indicates the first half of the day, `pm' indicates
-the second half of the day.  In this notation, 12 is the predecessor of
-1: midnight is `12am' while noon is `12pm'.  (This is the zero-oriented
-interpretation of `12am' and `12pm', as opposed to the old tradition
-derived from Latin which uses `12m' for noon and `12pm' for midnight.)
-
-   The time may alternatively be followed by a time zone correction,
-expressed as `SHHMM', where S is `+' or `-', HH is a number of zone
-hours and MM is a number of zone minutes.  The zone minutes term, MM,
-may be omitted, in which case the one- or two-digit correction is
-interpreted as a number of hours.  You can also separate HH from MM
-with a colon.  When a time zone correction is given this way, it forces
-interpretation of the time relative to Coordinated Universal Time
-(UTC), overriding any previous specification for the time zone or the
-local time zone.  For example, `+0530' and `+05:30' both stand for the
-time zone 5.5 hours ahead of UTC (e.g., India).  This is the best way to
-specify a time zone correction by fractional parts of an hour.  The
-maximum zone correction is 24 hours.
-
-   Either `am'/`pm' or a time zone correction may be specified, but not
-both.
-
-
-File: tar.info,  Node: Time zone items,  Next: Combined date and time of day items,  Prev: Time of day items,  Up: Date input formats
-
-7.4 Time zone items
-===================
-
-A "time zone item" specifies an international time zone, indicated by a
-small set of letters, e.g., `UTC' or `Z' for Coordinated Universal
-Time.  Any included periods are ignored.  By following a
-non-daylight-saving time zone by the string `DST' in a separate word
-(that is, separated by some white space), the corresponding daylight
-saving time zone may be specified.  Alternatively, a
-non-daylight-saving time zone can be followed by a time zone
-correction, to add the two values.  This is normally done only for
-`UTC'; for example, `UTC+05:30' is equivalent to `+05:30'.
-
-   Time zone items other than `UTC' and `Z' are obsolescent and are not
-recommended, because they are ambiguous; for example, `EST' has a
-different meaning in Australia than in the United States.  Instead,
-it's better to use unambiguous numeric time zone corrections like
-`-0500', as described in the previous section.
-
-   If neither a time zone item nor a time zone correction is supplied,
-time stamps are interpreted using the rules of the default time zone
-(*note Specifying time zone rules::).
-
-
-File: tar.info,  Node: Combined date and time of day items,  Next: Day of week items,  Prev: Time zone items,  Up: Date input formats
-
-7.5 Combined date and time of day items
-=======================================
-
-The ISO 8601 date and time of day extended format consists of an ISO
-8601 date, a `T' character separator, and an ISO 8601 time of day.
-This format is also recognized if the `T' is replaced by a space.
-
-   In this format, the time of day should use 24-hour notation.
-Fractional seconds are allowed, with either comma or period preceding
-the fraction.  ISO 8601 fractional minutes and hours are not supported.
-Typically, hosts support nanosecond timestamp resolution; excess
-precision is silently discarded.
-
-   Here are some examples:
-
-     2012-09-24T20:02:00.052-0500
-     2012-12-31T23:59:59,999999999+1100
-     1970-01-01 00:00Z
-
-
-File: tar.info,  Node: Day of week items,  Next: Relative items in date strings,  Prev: Combined date and time of day items,  Up: Date input formats
-
-7.6 Day of week items
-=====================
-
-The explicit mention of a day of the week will forward the date (only
-if necessary) to reach that day of the week in the future.
-
-   Days of the week may be spelled out in full: `Sunday', `Monday',
-`Tuesday', `Wednesday', `Thursday', `Friday' or `Saturday'.  Days may
-be abbreviated to their first three letters, optionally followed by a
-period.  The special abbreviations `Tues' for `Tuesday', `Wednes' for
-`Wednesday' and `Thur' or `Thurs' for `Thursday' are also allowed.
-
-   A number may precede a day of the week item to move forward
-supplementary weeks.  It is best used in expression like `third
-monday'.  In this context, `last DAY' or `next DAY' is also acceptable;
-they move one week before or after the day that DAY by itself would
-represent.
-
-   A comma following a day of the week item is ignored.
 

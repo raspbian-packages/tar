@@ -1,7 +1,7 @@
 # Makefile for GNU tar documentation.
 
-# Copyright 1994-1997, 1999-2001, 2003, 2006-2007, 2013 Free Software
-# Foundation, Inc.
+# Copyright 1994-1997, 1999-2001, 2003, 2006-2007, 2013-2014 Free
+# Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -32,7 +32,13 @@ tar_TEXINFOS = \
  snapshot.texi\
  sparse.texi\
  value.texi
-EXTRA_DIST = gendocs_template mastermenu.el texify.sed untabify.el
+
+dist_man_MANS=tar.1 $(RMT_8)
+if PU_RMT_COND
+  RMT_8=rmt.8
+endif
+
+EXTRA_DIST = gendocs_template mastermenu.el texify.sed untabify.el rmt.8
 
 # The rendering level is anyone of PUBLISH, DISTRIB or PROOF.
 # Just call 'make RENDITION=PROOF [target]' if you want PROOF rendition.

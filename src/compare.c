@@ -1,7 +1,7 @@
 /* Diff files from a tar archive.
 
    Copyright 1988, 1992-1994, 1996-1997, 1999-2001, 2003-2007,
-   2009-2010, 2012-2013 Free Software Foundation, Inc.
+   2009-2010, 2012-2014 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -371,7 +371,10 @@ diff_dumpdir (struct tar_stat_info *dir)
       if (fd < 0)
 	diag = open_diag;
       else if (fstat (fd, &dir->stat))
-	diag = stat_diag;
+        {
+	  diag = stat_diag;
+          close (fd);
+        }
       else
 	dir->fd = fd;
       if (diag)
@@ -439,10 +442,9 @@ diff_multivol (void)
     {
       seek_error_details (current_stat_info.file_name, offset);
       report_difference (&current_stat_info, NULL);
-      return;
     }
-
-  read_and_process (&current_stat_info, process_rawdata);
+  else
+    read_and_process (&current_stat_info, process_rawdata);
 
   status = close (fd);
   if (status != 0)

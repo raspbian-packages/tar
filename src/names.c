@@ -1,7 +1,7 @@
 /* Various processing of names.
 
-   Copyright 1988, 1992, 1994, 1996-2001, 2003-2007, 2009, 2013 Free
-   Software Foundation, Inc.
+   Copyright 1988, 1992, 1994, 1996-2001, 2003-2007, 2009, 2013-2014
+   Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -439,7 +439,7 @@ handle_option (const char *str)
   int i;
 
   while (*str && isspace (*str))
-    ;
+    ++str;
   if (*str != '-')
     return 1;
 
@@ -570,6 +570,7 @@ name_next_elt (int change_dirs)
 
 	case NELT_FMASK:
 	  matching_flags = ep->v.matching_flags;
+	  recursion_option = matching_flags & FNM_LEADING_DIR;
 	  name_list_advance ();
 	  continue;
 
@@ -1372,12 +1373,6 @@ new_name (const char *file_name, const char *name)
   return buffer;
 }
 
-/* Return nonzero if file NAME is excluded.  */
-bool
-excluded_name (char const *name)
-{
-  return excluded_file_name (excluded, name + FILE_SYSTEM_PREFIX_LEN (name));
-}
 
 
 /* Return the size of the prefix of FILE_NAME that is removed after

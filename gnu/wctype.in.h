@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* A substitute for ISO C99 <wctype.h>, for platforms that lack it.
 
-   Copyright (C) 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2006-2014 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -63,6 +63,9 @@
 #ifndef _@GUARD_PREFIX@_WCTYPE_H
 #define _@GUARD_PREFIX@_WCTYPE_H
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_WCTYPE_INLINE
 # define _GL_WCTYPE_INLINE _GL_INLINE

@@ -1,7 +1,7 @@
 /* List a tar archive, with support routines for reading a tar archive.
 
-   Copyright 1988, 1992-1994, 1996-2001, 2003-2007, 2010, 2012-2013
-   Free Software Foundation, Inc.
+   Copyright 1988, 1992-1994, 1996-2001, 2003-2007, 2010, 2012-2014 Free
+   Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -115,6 +115,30 @@ transform_member_name (char **pinput, int type)
   return transform_name_fp (pinput, type, decode_xform, &type);
 }
 
+static void
+enforce_one_top_level (char **pfile_name)
+{
+  char *file_name = *pfile_name;
+  char *p;
+  
+  for (p = file_name; *p && (ISSLASH (*p) || *p == '.'); p++)
+    ;
+
+  if (!*p)
+    return;
+
+  if (strncmp (p, one_top_level_dir, strlen (one_top_level_dir)) == 0)
+    {
+      int pos = strlen (one_top_level_dir);
+      if (ISSLASH (p[pos]) || p[pos] == 0)
+	return;
+    }
+
+  *pfile_name = new_name (one_top_level_dir, file_name);
+  normalize_filename_x (*pfile_name);
+  free (file_name);
+}
+
 void
 transform_stat_info (int typeflag, struct tar_stat_info *stat_info)
 {
@@ -132,6 +156,9 @@ transform_stat_info (int typeflag, struct tar_stat_info *stat_info)
     case LNKTYPE:
       transform_member_name (&stat_info->link_name, XFORM_LINK);
     }
+
+  if (one_top_level_option)
+    enforce_one_top_level (&current_stat_info.file_name);
 }
 
 /* Main loop for reading an archive.  */
@@ -176,7 +203,8 @@ read_and (void (*do_something) (void))
 		      mtime.tv_nsec = 0,
 		      current_stat_info.mtime = mtime,
 		      OLDER_TAR_STAT_TIME (current_stat_info, m)))
-	      || excluded_name (current_stat_info.file_name))
+	      || excluded_name (current_stat_info.file_name,
+				current_stat_info.parent))
 	    {
 	      switch (current_header->header.typeflag)
 		{
@@ -194,6 +222,7 @@ read_and (void (*do_something) (void))
 		  continue;
 		}
 	    }
+
 	  transform_stat_info (current_header->header.typeflag,
 			       &current_stat_info);
 	  (*do_something) ();
@@ -723,7 +752,7 @@ from_header (char const *where0, size_t digs, char const *type,
 		    type));
 	  return -1;
 	}
-      if (!ISSPACE ((unsigned char) *where))
+      if (!isspace ((unsigned char) *where))
 	break;
       where++;
     }
@@ -861,7 +890,7 @@ from_header (char const *where0, size_t digs, char const *type,
 	value = -value;
     }
 
-  if (where != lim && *where && !ISSPACE ((unsigned char) *where))
+  if (where != lim && *where && !isspace ((unsigned char) *where))
     {
       if (type)
 	{
@@ -1111,7 +1140,10 @@ simple_print_header (struct tar_stat_info *st, union block *blk,
   if (verbose_option <= 1)
     {
       /* Just the fax, mam.  */
-      fprintf (stdlis, "%s\n", quotearg (temp_name));
+      fputs (quotearg (temp_name), stdlis);
+      if (show_transformed_names_option && st->had_trailing_slash)
+	fputc ('/', stdlis);
+      fputc ('\n', stdlis);
     }
   else
     {
@@ -1138,9 +1170,7 @@ simple_print_header (struct tar_stat_info *st, union block *blk,
 	case GNUTYPE_SPARSE:
 	case REGTYPE:
 	case AREGTYPE:
-	  modes[0] = '-';
-	  if (temp_name[strlen (temp_name) - 1] == '/')
-	    modes[0] = 'd';
+	  modes[0] = st->had_trailing_slash ? 'd' : '-';
 	  break;
 	case LNKTYPE:
 	  modes[0] = 'h';
@@ -1251,6 +1281,8 @@ simple_print_header (struct tar_stat_info *st, union block *blk,
 	       datewidth, time_stamp);
 
       fprintf (stdlis, " %s", quotearg (temp_name));
+      if (show_transformed_names_option && st->had_trailing_slash)
+	fputc ('/', stdlis);
 
       switch (blk->header.typeflag)
 	{

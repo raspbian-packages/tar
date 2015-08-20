@@ -16,8 +16,8 @@
 
 # Makefile for GNU tar documentation.
 
-# Copyright 1994-1997, 1999-2001, 2003, 2006-2007, 2013 Free Software
-# Foundation, Inc.
+# Copyright 1994-1997, 1999-2001, 2003, 2006-2007, 2013-2014 Free
+# Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -100,13 +100,13 @@ subdir = doc
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(tar_TEXINFOS) $(top_srcdir)/build-aux/mdate-sh \
 	$(srcdir)/version.texi $(srcdir)/stamp-vti \
-	$(top_srcdir)/build-aux/texinfo.tex
+	$(top_srcdir)/build-aux/texinfo.tex $(dist_man_MANS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
-	$(top_srcdir)/m4/acl.m4 $(top_srcdir)/m4/alloca.m4 \
-	$(top_srcdir)/m4/argp.m4 $(top_srcdir)/m4/backupfile.m4 \
-	$(top_srcdir)/m4/bison.m4 $(top_srcdir)/m4/btowc.m4 \
-	$(top_srcdir)/m4/canonicalize.m4 \
+	$(top_srcdir)/m4/absolute-header.m4 $(top_srcdir)/m4/acl.m4 \
+	$(top_srcdir)/m4/alloca.m4 $(top_srcdir)/m4/argp.m4 \
+	$(top_srcdir)/m4/backupfile.m4 $(top_srcdir)/m4/bison.m4 \
+	$(top_srcdir)/m4/btowc.m4 $(top_srcdir)/m4/canonicalize.m4 \
 	$(top_srcdir)/m4/chdir-long.m4 $(top_srcdir)/m4/chown.m4 \
 	$(top_srcdir)/m4/clock_time.m4 \
 	$(top_srcdir)/m4/close-stream.m4 $(top_srcdir)/m4/close.m4 \
@@ -118,9 +118,10 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/double-slash-root.m4 $(top_srcdir)/m4/dup.m4 \
 	$(top_srcdir)/m4/dup2.m4 $(top_srcdir)/m4/eealloc.m4 \
 	$(top_srcdir)/m4/environ.m4 $(top_srcdir)/m4/errno_h.m4 \
-	$(top_srcdir)/m4/error.m4 $(top_srcdir)/m4/exponentd.m4 \
-	$(top_srcdir)/m4/extensions.m4 \
-	$(top_srcdir)/m4/extern-inline.m4 $(top_srcdir)/m4/fchdir.m4 \
+	$(top_srcdir)/m4/error.m4 $(top_srcdir)/m4/euidaccess.m4 \
+	$(top_srcdir)/m4/exponentd.m4 $(top_srcdir)/m4/extensions.m4 \
+	$(top_srcdir)/m4/extern-inline.m4 \
+	$(top_srcdir)/m4/faccessat.m4 $(top_srcdir)/m4/fchdir.m4 \
 	$(top_srcdir)/m4/fchmodat.m4 $(top_srcdir)/m4/fchownat.m4 \
 	$(top_srcdir)/m4/fcntl-o.m4 $(top_srcdir)/m4/fcntl.m4 \
 	$(top_srcdir)/m4/fcntl_h.m4 $(top_srcdir)/m4/fdopendir.m4 \
@@ -132,19 +133,21 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/getcwd-abort-bug.m4 \
 	$(top_srcdir)/m4/getcwd-path-max.m4 $(top_srcdir)/m4/getcwd.m4 \
 	$(top_srcdir)/m4/getdelim.m4 $(top_srcdir)/m4/getdtablesize.m4 \
-	$(top_srcdir)/m4/getline.m4 $(top_srcdir)/m4/getopt.m4 \
-	$(top_srcdir)/m4/getpagesize.m4 $(top_srcdir)/m4/gettext.m4 \
-	$(top_srcdir)/m4/gettime.m4 $(top_srcdir)/m4/gettimeofday.m4 \
-	$(top_srcdir)/m4/glibc21.m4 $(top_srcdir)/m4/gnulib-common.m4 \
-	$(top_srcdir)/m4/gnulib-comp.m4 $(top_srcdir)/m4/human.m4 \
+	$(top_srcdir)/m4/getgroups.m4 $(top_srcdir)/m4/getline.m4 \
+	$(top_srcdir)/m4/getopt.m4 $(top_srcdir)/m4/getpagesize.m4 \
+	$(top_srcdir)/m4/gettext.m4 $(top_srcdir)/m4/gettime.m4 \
+	$(top_srcdir)/m4/gettimeofday.m4 $(top_srcdir)/m4/glibc21.m4 \
+	$(top_srcdir)/m4/gnulib-common.m4 \
+	$(top_srcdir)/m4/gnulib-comp.m4 \
+	$(top_srcdir)/m4/group-member.m4 $(top_srcdir)/m4/human.m4 \
 	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/include_next.m4 \
 	$(top_srcdir)/m4/intlmacosx.m4 $(top_srcdir)/m4/intmax_t.m4 \
 	$(top_srcdir)/m4/inttostr.m4 $(top_srcdir)/m4/inttypes-pri.m4 \
 	$(top_srcdir)/m4/inttypes.m4 $(top_srcdir)/m4/inttypes_h.m4 \
-	$(top_srcdir)/m4/iswblank.m4 $(top_srcdir)/m4/langinfo_h.m4 \
-	$(top_srcdir)/m4/largefile.m4 $(top_srcdir)/m4/lchown.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/isatty.m4 $(top_srcdir)/m4/iswblank.m4 \
+	$(top_srcdir)/m4/langinfo_h.m4 $(top_srcdir)/m4/largefile.m4 \
+	$(top_srcdir)/m4/lchown.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
 	$(top_srcdir)/m4/libunistring-base.m4 \
 	$(top_srcdir)/m4/link-follow.m4 $(top_srcdir)/m4/link.m4 \
 	$(top_srcdir)/m4/linkat.m4 $(top_srcdir)/m4/localcharset.m4 \
@@ -170,19 +173,21 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/open.m4 $(top_srcdir)/m4/openat.m4 \
 	$(top_srcdir)/m4/opendir.m4 $(top_srcdir)/m4/parse-datetime.m4 \
 	$(top_srcdir)/m4/pathmax.m4 $(top_srcdir)/m4/paxutils.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/printf.m4 \
-	$(top_srcdir)/m4/priv-set.m4 $(top_srcdir)/m4/progtest.m4 \
-	$(top_srcdir)/m4/quote.m4 $(top_srcdir)/m4/quotearg.m4 \
-	$(top_srcdir)/m4/raise.m4 $(top_srcdir)/m4/rawmemchr.m4 \
-	$(top_srcdir)/m4/read.m4 $(top_srcdir)/m4/readdir.m4 \
-	$(top_srcdir)/m4/readlink.m4 $(top_srcdir)/m4/readlinkat.m4 \
-	$(top_srcdir)/m4/realloc.m4 $(top_srcdir)/m4/regex.m4 \
-	$(top_srcdir)/m4/rename.m4 $(top_srcdir)/m4/renameat.m4 \
-	$(top_srcdir)/m4/rewinddir.m4 $(top_srcdir)/m4/rmdir.m4 \
-	$(top_srcdir)/m4/rmt.m4 $(top_srcdir)/m4/rpmatch.m4 \
-	$(top_srcdir)/m4/rtapelib.m4 $(top_srcdir)/m4/safe-read.m4 \
-	$(top_srcdir)/m4/safe-write.m4 $(top_srcdir)/m4/save-cwd.m4 \
-	$(top_srcdir)/m4/savedir.m4 $(top_srcdir)/m4/secure_getenv.m4 \
+	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/posix_openpt.m4 \
+	$(top_srcdir)/m4/printf.m4 $(top_srcdir)/m4/priv-set.m4 \
+	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/ptsname.m4 \
+	$(top_srcdir)/m4/ptsname_r.m4 $(top_srcdir)/m4/quote.m4 \
+	$(top_srcdir)/m4/quotearg.m4 $(top_srcdir)/m4/raise.m4 \
+	$(top_srcdir)/m4/rawmemchr.m4 $(top_srcdir)/m4/read.m4 \
+	$(top_srcdir)/m4/readdir.m4 $(top_srcdir)/m4/readlink.m4 \
+	$(top_srcdir)/m4/readlinkat.m4 $(top_srcdir)/m4/realloc.m4 \
+	$(top_srcdir)/m4/regex.m4 $(top_srcdir)/m4/rename.m4 \
+	$(top_srcdir)/m4/renameat.m4 $(top_srcdir)/m4/rewinddir.m4 \
+	$(top_srcdir)/m4/rmdir.m4 $(top_srcdir)/m4/rmt.m4 \
+	$(top_srcdir)/m4/rpmatch.m4 $(top_srcdir)/m4/rtapelib.m4 \
+	$(top_srcdir)/m4/safe-read.m4 $(top_srcdir)/m4/safe-write.m4 \
+	$(top_srcdir)/m4/save-cwd.m4 $(top_srcdir)/m4/savedir.m4 \
+	$(top_srcdir)/m4/secure_getenv.m4 \
 	$(top_srcdir)/m4/selinux-context-h.m4 \
 	$(top_srcdir)/m4/selinux-selinux-h.m4 \
 	$(top_srcdir)/m4/setenv.m4 $(top_srcdir)/m4/signal_h.m4 \
@@ -195,20 +200,23 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/00gnulib.m4 \
 	$(top_srcdir)/m4/stdio_h.m4 $(top_srcdir)/m4/stdlib_h.m4 \
 	$(top_srcdir)/m4/stpcpy.m4 $(top_srcdir)/m4/strcase.m4 \
 	$(top_srcdir)/m4/strchrnul.m4 $(top_srcdir)/m4/strdup.m4 \
-	$(top_srcdir)/m4/strerror.m4 $(top_srcdir)/m4/string_h.m4 \
-	$(top_srcdir)/m4/strings_h.m4 $(top_srcdir)/m4/strndup.m4 \
-	$(top_srcdir)/m4/strnlen.m4 $(top_srcdir)/m4/strtol.m4 \
-	$(top_srcdir)/m4/strtoul.m4 $(top_srcdir)/m4/strtoull.m4 \
-	$(top_srcdir)/m4/strtoumax.m4 $(top_srcdir)/m4/symlink.m4 \
-	$(top_srcdir)/m4/symlinkat.m4 $(top_srcdir)/m4/sys_socket_h.m4 \
+	$(top_srcdir)/m4/strerror.m4 $(top_srcdir)/m4/strftime.m4 \
+	$(top_srcdir)/m4/string_h.m4 $(top_srcdir)/m4/strings_h.m4 \
+	$(top_srcdir)/m4/strndup.m4 $(top_srcdir)/m4/strnlen.m4 \
+	$(top_srcdir)/m4/strtoimax.m4 $(top_srcdir)/m4/strtol.m4 \
+	$(top_srcdir)/m4/strtoll.m4 $(top_srcdir)/m4/strtoul.m4 \
+	$(top_srcdir)/m4/strtoull.m4 $(top_srcdir)/m4/strtoumax.m4 \
+	$(top_srcdir)/m4/symlink.m4 $(top_srcdir)/m4/symlinkat.m4 \
+	$(top_srcdir)/m4/sys_socket_h.m4 \
 	$(top_srcdir)/m4/sys_stat_h.m4 $(top_srcdir)/m4/sys_time_h.m4 \
 	$(top_srcdir)/m4/sys_types_h.m4 $(top_srcdir)/m4/sysexits.m4 \
 	$(top_srcdir)/m4/system.m4 $(top_srcdir)/m4/tempname.m4 \
 	$(top_srcdir)/m4/time_h.m4 $(top_srcdir)/m4/time_r.m4 \
 	$(top_srcdir)/m4/timespec.m4 $(top_srcdir)/m4/tm_gmtoff.m4 \
-	$(top_srcdir)/m4/unistd-safer.m4 $(top_srcdir)/m4/unistd_h.m4 \
-	$(top_srcdir)/m4/unlink.m4 $(top_srcdir)/m4/unlinkat.m4 \
-	$(top_srcdir)/m4/unlinkdir.m4 $(top_srcdir)/m4/unlocked-io.m4 \
+	$(top_srcdir)/m4/ttyname_r.m4 $(top_srcdir)/m4/unistd-safer.m4 \
+	$(top_srcdir)/m4/unistd_h.m4 $(top_srcdir)/m4/unlink.m4 \
+	$(top_srcdir)/m4/unlinkat.m4 $(top_srcdir)/m4/unlinkdir.m4 \
+	$(top_srcdir)/m4/unlocked-io.m4 $(top_srcdir)/m4/unlockpt.m4 \
 	$(top_srcdir)/m4/utimbuf.m4 $(top_srcdir)/m4/utimens.m4 \
 	$(top_srcdir)/m4/utimensat.m4 $(top_srcdir)/m4/utimes.m4 \
 	$(top_srcdir)/m4/vasnprintf.m4 $(top_srcdir)/m4/vasprintf.m4 \
@@ -287,7 +295,8 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__installdirs = "$(DESTDIR)$(infodir)"
+am__installdirs = "$(DESTDIR)$(infodir)" "$(DESTDIR)$(man1dir)" \
+	"$(DESTDIR)$(man8dir)"
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -315,6 +324,10 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
+man1dir = $(mandir)/man1
+man8dir = $(mandir)/man8
+NROFF = nroff
+MANS = $(dist_man_MANS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 pkglibexecdir = @pkglibexecdir@
@@ -884,6 +897,7 @@ LIBUNISTRING_UNITYPES_H = @LIBUNISTRING_UNITYPES_H@
 LIBUNISTRING_UNIWIDTH_H = @LIBUNISTRING_UNIWIDTH_H@
 LIB_ACL = @LIB_ACL@
 LIB_CLOCK_GETTIME = @LIB_CLOCK_GETTIME@
+LIB_EACCESS = @LIB_EACCESS@
 LIB_SELINUX = @LIB_SELINUX@
 LIB_SETSOCKOPT = @LIB_SETSOCKOPT@
 LOCALCHARSET_TESTS_ENVIRONMENT = @LOCALCHARSET_TESTS_ENVIRONMENT@
@@ -999,11 +1013,13 @@ REPLACE_FUTIMENS = @REPLACE_FUTIMENS@
 REPLACE_GETCWD = @REPLACE_GETCWD@
 REPLACE_GETDELIM = @REPLACE_GETDELIM@
 REPLACE_GETDOMAINNAME = @REPLACE_GETDOMAINNAME@
+REPLACE_GETDTABLESIZE = @REPLACE_GETDTABLESIZE@
 REPLACE_GETGROUPS = @REPLACE_GETGROUPS@
 REPLACE_GETLINE = @REPLACE_GETLINE@
 REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
+REPLACE_GMTIME = @REPLACE_GMTIME@
 REPLACE_ISATTY = @REPLACE_ISATTY@
 REPLACE_ISWBLANK = @REPLACE_ISWBLANK@
 REPLACE_ISWCNTRL = @REPLACE_ISWCNTRL@
@@ -1012,6 +1028,7 @@ REPLACE_LCHOWN = @REPLACE_LCHOWN@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
+REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
@@ -1078,6 +1095,7 @@ REPLACE_STRSTR = @REPLACE_STRSTR@
 REPLACE_STRTOD = @REPLACE_STRTOD@
 REPLACE_STRTOIMAX = @REPLACE_STRTOIMAX@
 REPLACE_STRTOK_R = @REPLACE_STRTOK_R@
+REPLACE_STRTOUMAX = @REPLACE_STRTOUMAX@
 REPLACE_STRUCT_LCONV = @REPLACE_STRUCT_LCONV@
 REPLACE_STRUCT_TIMEVAL = @REPLACE_STRUCT_TIMEVAL@
 REPLACE_SYMLINK = @REPLACE_SYMLINK@
@@ -1105,6 +1123,7 @@ REPLACE_WCTOMB = @REPLACE_WCTOMB@
 REPLACE_WCWIDTH = @REPLACE_WCWIDTH@
 REPLACE_WRITE = @REPLACE_WRITE@
 RSH = @RSH@
+SED = @SED@
 SELINUX_CONTEXT_H = @SELINUX_CONTEXT_H@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -1142,6 +1161,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -1186,6 +1206,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1209,7 +1230,9 @@ tar_TEXINFOS = \
  sparse.texi\
  value.texi
 
-EXTRA_DIST = gendocs_template mastermenu.el texify.sed untabify.el
+dist_man_MANS = tar.1 $(RMT_8)
+@PU_RMT_COND_TRUE@RMT_8 = rmt.8
+EXTRA_DIST = gendocs_template mastermenu.el texify.sed untabify.el rmt.8
 
 # The rendering level is anyone of PUBLISH, DISTRIB or PROOF.
 # Just call 'make RENDITION=PROOF [target]' if you want PROOF rendition.
@@ -1411,6 +1434,92 @@ maintainer-clean-aminfo:
 	  echo " rm -f $$i $$i-[0-9] $$i-[0-9][0-9] $$i_i[0-9] $$i_i[0-9][0-9]"; \
 	  rm -f $$i $$i-[0-9] $$i-[0-9][0-9] $$i_i[0-9] $$i_i[0-9][0-9]; \
 	done
+install-man1: $(dist_man_MANS)
+	@$(NORMAL_INSTALL)
+	@list1=''; \
+	list2='$(dist_man_MANS)'; \
+	test -n "$(man1dir)" \
+	  && test -n "`echo $$list1$$list2`" \
+	  || exit 0; \
+	echo " $(MKDIR_P) '$(DESTDIR)$(man1dir)'"; \
+	$(MKDIR_P) "$(DESTDIR)$(man1dir)" || exit 1; \
+	{ for i in $$list1; do echo "$$i"; done;  \
+	if test -n "$$list2"; then \
+	  for i in $$list2; do echo "$$i"; done \
+	    | sed -n '/\.1[a-z]*$$/p'; \
+	fi; \
+	} | while read p; do \
+	  if test -f $$p; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; echo "$$p"; \
+	done | \
+	sed -e 'n;s,.*/,,;p;h;s,.*\.,,;s,^[^1][0-9a-z]*$$,1,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,' | \
+	sed 'N;N;s,\n, ,g' | { \
+	list=; while read file base inst; do \
+	  if test "$$base" = "$$inst"; then list="$$list $$file"; else \
+	    echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man1dir)/$$inst'"; \
+	    $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man1dir)/$$inst" || exit $$?; \
+	  fi; \
+	done; \
+	for i in $$list; do echo "$$i"; done | $(am__base_list) | \
+	while read files; do \
+	  test -z "$$files" || { \
+	    echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(man1dir)'"; \
+	    $(INSTALL_DATA) $$files "$(DESTDIR)$(man1dir)" || exit $$?; }; \
+	done; }
+
+uninstall-man1:
+	@$(NORMAL_UNINSTALL)
+	@list=''; test -n "$(man1dir)" || exit 0; \
+	files=`{ for i in $$list; do echo "$$i"; done; \
+	l2='$(dist_man_MANS)'; for i in $$l2; do echo "$$i"; done | \
+	  sed -n '/\.1[a-z]*$$/p'; \
+	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^1][0-9a-z]*$$,1,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
+	dir='$(DESTDIR)$(man1dir)'; $(am__uninstall_files_from_dir)
+install-man8: $(dist_man_MANS)
+	@$(NORMAL_INSTALL)
+	@list1=''; \
+	list2='$(dist_man_MANS)'; \
+	test -n "$(man8dir)" \
+	  && test -n "`echo $$list1$$list2`" \
+	  || exit 0; \
+	echo " $(MKDIR_P) '$(DESTDIR)$(man8dir)'"; \
+	$(MKDIR_P) "$(DESTDIR)$(man8dir)" || exit 1; \
+	{ for i in $$list1; do echo "$$i"; done;  \
+	if test -n "$$list2"; then \
+	  for i in $$list2; do echo "$$i"; done \
+	    | sed -n '/\.8[a-z]*$$/p'; \
+	fi; \
+	} | while read p; do \
+	  if test -f $$p; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; echo "$$p"; \
+	done | \
+	sed -e 'n;s,.*/,,;p;h;s,.*\.,,;s,^[^8][0-9a-z]*$$,8,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,' | \
+	sed 'N;N;s,\n, ,g' | { \
+	list=; while read file base inst; do \
+	  if test "$$base" = "$$inst"; then list="$$list $$file"; else \
+	    echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man8dir)/$$inst'"; \
+	    $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man8dir)/$$inst" || exit $$?; \
+	  fi; \
+	done; \
+	for i in $$list; do echo "$$i"; done | $(am__base_list) | \
+	while read files; do \
+	  test -z "$$files" || { \
+	    echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(man8dir)'"; \
+	    $(INSTALL_DATA) $$files "$(DESTDIR)$(man8dir)" || exit $$?; }; \
+	done; }
+
+uninstall-man8:
+	@$(NORMAL_UNINSTALL)
+	@list=''; test -n "$(man8dir)" || exit 0; \
+	files=`{ for i in $$list; do echo "$$i"; done; \
+	l2='$(dist_man_MANS)'; for i in $$l2; do echo "$$i"; done | \
+	  sed -n '/\.8[a-z]*$$/p'; \
+	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^8][0-9a-z]*$$,8,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
+	dir='$(DESTDIR)$(man8dir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -1453,9 +1562,9 @@ distdir: $(DISTFILES)
 	  dist-info
 check-am: all-am
 check: check-am
-all-am: Makefile $(INFO_DEPS)
+all-am: Makefile $(INFO_DEPS) $(MANS)
 installdirs:
-	for dir in "$(DESTDIR)$(infodir)"; do \
+	for dir in "$(DESTDIR)$(infodir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(man8dir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -1508,7 +1617,7 @@ info: info-am
 
 info-am: $(INFO_DEPS)
 
-install-data-am: install-info-am
+install-data-am: install-info-am install-man
 
 install-dvi: install-dvi-am
 
@@ -1591,7 +1700,7 @@ install-info-am: $(INFO_DEPS)
 	    install-info --info-dir="$(DESTDIR)$(infodir)" "$(DESTDIR)$(infodir)/$$relfile" || :;\
 	  done; \
 	else : ; fi
-install-man:
+install-man: install-man1 install-man8
 
 install-pdf: install-pdf-am
 
@@ -1645,7 +1754,9 @@ ps: ps-am
 ps-am: $(PSS)
 
 uninstall-am: uninstall-dvi-am uninstall-html-am uninstall-info-am \
-	uninstall-pdf-am uninstall-ps-am
+	uninstall-man uninstall-pdf-am uninstall-ps-am
+
+uninstall-man: uninstall-man1 uninstall-man8
 
 .MAKE: install-am install-strip
 
@@ -1655,14 +1766,15 @@ uninstall-am: uninstall-dvi-am uninstall-html-am uninstall-info-am \
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-aminfo \
-	maintainer-clean-generic maintainer-clean-vti mostlyclean \
-	mostlyclean-aminfo mostlyclean-generic mostlyclean-vti pdf \
-	pdf-am ps ps-am tags-am uninstall uninstall-am \
-	uninstall-dvi-am uninstall-html-am uninstall-info-am \
-	uninstall-pdf-am uninstall-ps-am
+	install-man1 install-man8 install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-aminfo maintainer-clean-generic \
+	maintainer-clean-vti mostlyclean mostlyclean-aminfo \
+	mostlyclean-generic mostlyclean-vti pdf pdf-am ps ps-am \
+	tags-am uninstall uninstall-am uninstall-dvi-am \
+	uninstall-html-am uninstall-info-am uninstall-man \
+	uninstall-man1 uninstall-man8 uninstall-pdf-am uninstall-ps-am
 
 
 header.texi: $(top_srcdir)/src/tar.h
