@@ -1,7 +1,7 @@
 /* Update a tar archive.
 
-   Copyright 1988, 1992, 1994, 1996-1997, 1999-2001, 2003-2005, 2007, 2010,
-   2013 Free Software Foundation, Inc.
+   Copyright 1988, 1992, 1994, 1996-1997, 1999-2001, 2003-2005, 2007,
+   2010, 2013-2014 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -216,7 +216,7 @@ update_archive (void)
     while ((p = name_from_list ()) != NULL)
       {
 	char *file_name = p->name;
-	if (excluded_name (file_name))
+	if (excluded_name (file_name, NULL))
 	  continue;
 	if (interactive_option && !confirm ("add", file_name))
 	  continue;

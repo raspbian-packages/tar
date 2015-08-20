@@ -1,22 +1,22 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* obstack.h - object stack macros
-   Copyright (C) 1988-1994, 1996-1999, 2003-2006, 2009-2013 Free Software
-   Foundation, Inc.
+   Copyright (C) 1988-2014 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU General Public
+   License along with this program; if not, see
+   <http://www.gnu.org/licenses/>.  */
 
 /* Summary:
 
@@ -185,7 +185,7 @@ extern int _obstack_begin (struct obstack *, int, int,
 extern int _obstack_begin_1 (struct obstack *, int, int,
                              void *(*) (void *, long),
                              void (*) (void *, void *), void *);
-extern int _obstack_memory_used (struct obstack *);
+extern int _obstack_memory_used (struct obstack *) _GL_ATTRIBUTE_PURE;
 
 /* The default name of the function for freeing a chunk is 'obstack_free',
    but gnulib users can override this by defining '__obstack_free'.  */
@@ -503,9 +503,9 @@ __extension__                                                           \
 ( (h)->temp.tempint = (char *) (obj) - (char *) (h)->chunk,             \
   ((((h)->temp.tempint > 0                                              \
     && (h)->temp.tempint < (h)->chunk_limit - (char *) (h)->chunk))     \
-   ? (int) ((h)->next_free = (h)->object_base                           \
-            = (h)->temp.tempint + (char *) (h)->chunk)                  \
-   : (((__obstack_free) ((h), (h)->temp.tempint + (char *) (h)->chunk), 0), 0)))
+   ? (void) ((h)->next_free = (h)->object_base                          \
+             = (h)->temp.tempint + (char *) (h)->chunk)                 \
+   : (__obstack_free) (h, (h)->temp.tempint + (char *) (h)->chunk)))
 
 #endif /* not __GNUC__ */
 

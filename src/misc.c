@@ -1,7 +1,7 @@
 /* Miscellaneous functions, not really specific to GNU tar.
 
    Copyright 1988, 1992, 1994-1997, 1999-2001, 2003-2007, 2009-2010,
-   2012-2013 Free Software Foundation, Inc.
+   2012-2014 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -288,7 +288,8 @@ normalize_filename (int cdidx, const char *name)
          this following approach may lead to situations where the same
          file or directory is processed twice under different absolute
          paths without that duplication being detected.  Perhaps we
-         should use dev+ino pairs instead of names?  */
+         should use dev+ino pairs instead of names?  (See listed03.at for
+         a related test case.) */
       const char *cdpath = tar_getcdpath (cdidx);
       size_t copylen;
       bool need_separator;
@@ -1239,7 +1240,7 @@ tar_savedir (const char *name, int must_exist)
       open_error (name);
     }
   else if (! ((dir = fdopendir (fd))
-	      && (ret = streamsavedir (dir))))
+	      && (ret = streamsavedir (dir, savedir_sort_order))))
     savedir_error (name);
 
   if (dir ? closedir (dir) != 0 : 0 <= fd && close (fd) != 0)

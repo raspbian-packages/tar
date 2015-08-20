@@ -126,6 +126,14 @@
 /* Define to 1 if futimesat mishandles a NULL file name. */
 #undef FUTIMESAT_NULL_BUG
 
+/* Define to the type of elements in the array set by `getgroups'. Usually
+   this is either `int' or `gid_t'. */
+#undef GETGROUPS_T
+
+/* Define this to 1 if getgroups(0,NULL) does not return the number of groups.
+   */
+#undef GETGROUPS_ZERO_BUG
+
 /* Define if gettimeofday clobbers the localtime buffer. */
 #undef GETTIMEOFDAY_CLOBBERS_LOCALTIME
 
@@ -152,6 +160,10 @@
 /* Define to a C preprocessor expression that evaluates to 1 or 0, depending
    whether the gnulib module dirname shall be considered present. */
 #undef GNULIB_DIRNAME
+
+/* Define to a C preprocessor expression that evaluates to 1 or 0, depending
+   whether the gnulib module faccessat shall be considered present. */
+#undef GNULIB_FACCESSAT
 
 /* Define to a C preprocessor expression that evaluates to 1 or 0, depending
    whether the gnulib module fchmodat shall be considered present. */
@@ -246,6 +258,12 @@
 /* Define to 1 when the gnulib module environ should be tested. */
 #undef GNULIB_TEST_ENVIRON
 
+/* Define to 1 when the gnulib module euidaccess should be tested. */
+#undef GNULIB_TEST_EUIDACCESS
+
+/* Define to 1 when the gnulib module faccessat should be tested. */
+#undef GNULIB_TEST_FACCESSAT
+
 /* Define to 1 when the gnulib module fchdir should be tested. */
 #undef GNULIB_TEST_FCHDIR
 
@@ -285,6 +303,9 @@
 /* Define to 1 when the gnulib module getdtablesize should be tested. */
 #undef GNULIB_TEST_GETDTABLESIZE
 
+/* Define to 1 when the gnulib module getgroups should be tested. */
+#undef GNULIB_TEST_GETGROUPS
+
 /* Define to 1 when the gnulib module getline should be tested. */
 #undef GNULIB_TEST_GETLINE
 
@@ -296,6 +317,12 @@
 
 /* Define to 1 when the gnulib module gettimeofday should be tested. */
 #undef GNULIB_TEST_GETTIMEOFDAY
+
+/* Define to 1 when the gnulib module group-member should be tested. */
+#undef GNULIB_TEST_GROUP_MEMBER
+
+/* Define to 1 when the gnulib module isatty should be tested. */
+#undef GNULIB_TEST_ISATTY
 
 /* Define to 1 when the gnulib module iswblank should be tested. */
 #undef GNULIB_TEST_ISWBLANK
@@ -378,6 +405,15 @@
 /* Define to 1 when the gnulib module opendir should be tested. */
 #undef GNULIB_TEST_OPENDIR
 
+/* Define to 1 when the gnulib module posix_openpt should be tested. */
+#undef GNULIB_TEST_POSIX_OPENPT
+
+/* Define to 1 when the gnulib module ptsname should be tested. */
+#undef GNULIB_TEST_PTSNAME
+
+/* Define to 1 when the gnulib module ptsname_r should be tested. */
+#undef GNULIB_TEST_PTSNAME_R
+
 /* Define to 1 when the gnulib module raise should be tested. */
 #undef GNULIB_TEST_RAISE
 
@@ -450,6 +486,9 @@
 /* Define to 1 when the gnulib module strnlen should be tested. */
 #undef GNULIB_TEST_STRNLEN
 
+/* Define to 1 when the gnulib module strtoll should be tested. */
+#undef GNULIB_TEST_STRTOLL
+
 /* Define to 1 when the gnulib module strtoull should be tested. */
 #undef GNULIB_TEST_STRTOULL
 
@@ -462,11 +501,17 @@
 /* Define to 1 when the gnulib module time_r should be tested. */
 #undef GNULIB_TEST_TIME_R
 
+/* Define to 1 when the gnulib module ttyname_r should be tested. */
+#undef GNULIB_TEST_TTYNAME_R
+
 /* Define to 1 when the gnulib module unlink should be tested. */
 #undef GNULIB_TEST_UNLINK
 
 /* Define to 1 when the gnulib module unlinkat should be tested. */
 #undef GNULIB_TEST_UNLINKAT
+
+/* Define to 1 when the gnulib module unlockpt should be tested. */
+#undef GNULIB_TEST_UNLOCKPT
 
 /* Define to 1 when the gnulib module unsetenv should be tested. */
 #undef GNULIB_TEST_UNSETENV
@@ -491,6 +536,9 @@
 
 /* Define to the program name of gzip compressor program */
 #undef GZIP_PROGRAM
+
+/* Define to 1 if you have the `access' function. */
+#undef HAVE_ACCESS
 
 /* Define to 1 if you have the `aclsort' function. */
 #undef HAVE_ACLSORT
@@ -772,6 +820,14 @@
    don't. */
 #undef HAVE_DECL_STRNLEN
 
+/* Define to 1 if you have the declaration of `strtoimax', and to 0 if you
+   don't. */
+#undef HAVE_DECL_STRTOIMAX
+
+/* Define to 1 if you have the declaration of `strtoll', and to 0 if you
+   don't. */
+#undef HAVE_DECL_STRTOLL
+
 /* Define to 1 if you have the declaration of `strtoull', and to 0 if you
    don't. */
 #undef HAVE_DECL_STRTOULL
@@ -787,6 +843,10 @@
 /* Define to 1 if you have the declaration of `towlower', and to 0 if you
    don't. */
 #undef HAVE_DECL_TOWLOWER
+
+/* Define to 1 if you have the declaration of `ttyname_r', and to 0 if you
+   don't. */
+#undef HAVE_DECL_TTYNAME_R
 
 /* Define to 1 if you have the declaration of `tzname', and to 0 if you don't.
    */
@@ -825,8 +885,17 @@
 /* Define to 1 if you have the 'dup2' function. */
 #undef HAVE_DUP2
 
+/* Define to 1 if you have the `eaccess' function. */
+#undef HAVE_EACCESS
+
 /* Define if you have the declaration of environ. */
 #undef HAVE_ENVIRON_DECL
+
+/* Define to 1 if you have the `euidaccess' function. */
+#undef HAVE_EUIDACCESS
+
+/* Define to 1 if you have the `faccessat' function. */
+#undef HAVE_FACCESSAT
 
 /* Define to 1 if you have the `facl' function. */
 #undef HAVE_FACL
@@ -900,6 +969,9 @@
 /* Define to 1 if you have the `getdtablesize' function. */
 #undef HAVE_GETDTABLESIZE
 
+/* Define to 1 if your system has a working `getgroups' function. */
+#undef HAVE_GETGROUPS
+
 /* Define to 1 if you have the <getopt.h> header file. */
 #undef HAVE_GETOPT_H
 
@@ -920,6 +992,9 @@
 
 /* Define to 1 if you have the `getxattr' function. */
 #undef HAVE_GETXATTR
+
+/* Define to 1 if you have the `grantpt' function. */
+#undef HAVE_GRANTPT
 
 /* Define to 1 if you have the <grp.h> header file. */
 #undef HAVE_GRP_H
@@ -973,6 +1048,12 @@
 /* Define to 1 if you have the `lgetxattr' function. */
 #undef HAVE_LGETXATTR
 
+/* Define to 1 if you have the `attr' library (-lattr). */
+#undef HAVE_LIBATTR
+
+/* Define to 1 if you have the <libgen.h> header file. */
+#undef HAVE_LIBGEN_H
+
 /* Define to 1 if you have the <libintl.h> header file. */
 #undef HAVE_LIBINTL_H
 
@@ -1018,6 +1099,9 @@
 /* Define to 1 if your system has a GNU libc compatible 'malloc' function, and
    to 0 otherwise. */
 #undef HAVE_MALLOC_GNU
+
+/* Define to 1 if you have the <malloc.h> header file. */
+#undef HAVE_MALLOC_H
 
 /* Define if the 'malloc' function is POSIX compliant. */
 #undef HAVE_MALLOC_POSIX
@@ -1079,9 +1163,6 @@
 /* Define to 1 if you have the `nanotime' function. */
 #undef HAVE_NANOTIME
 
-/* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
-#undef HAVE_NDIR_H
-
 /* Define to 1 if you have the <netdb.h> header file. */
 #undef HAVE_NETDB_H
 
@@ -1113,8 +1194,14 @@
 /* Define to 1 if you have the `pipe' function. */
 #undef HAVE_PIPE
 
+/* Define if the ttyname_r function has a POSIX compliant declaration. */
+#undef HAVE_POSIXDECL_TTYNAME_R
+
 /* Define when we have working POSIX acls */
 #undef HAVE_POSIX_ACLS
+
+/* Define to 1 if you have the `posix_openpt' function. */
+#undef HAVE_POSIX_OPENPT
 
 /* Define to 1 if you have the <priv.h> header file. */
 #undef HAVE_PRIV_H
@@ -1124,6 +1211,12 @@
 
 /* Define if program_invocation_short_name is defined */
 #undef HAVE_PROGRAM_INVOCATION_SHORT_NAME
+
+/* Define to 1 if you have the `ptsname' function. */
+#undef HAVE_PTSNAME
+
+/* Define to 1 if you have the `ptsname_r' function. */
+#undef HAVE_PTSNAME_R
 
 /* Define to 1 if you have the <pwd.h> header file. */
 #undef HAVE_PWD_H
@@ -1741,6 +1834,9 @@
 /* Define to 1 if you have the `renameat' function. */
 #undef HAVE_RENAMEAT
 
+/* Define to 1 if you have the `revoke' function. */
+#undef HAVE_REVOKE
+
 /* Define to 1 if you have the `rewinddir' function. */
 #undef HAVE_REWINDDIR
 
@@ -1761,6 +1857,9 @@
 
 /* Define to 1 if you have the <selinux/selinux.h> header file. */
 #undef HAVE_SELINUX_SELINUX_H
+
+/* Define to 1 if you have the `setdtablesize' function. */
+#undef HAVE_SETDTABLESIZE
 
 /* Define to 1 if you have the `setenv' function. */
 #undef HAVE_SETENV
@@ -1843,8 +1942,14 @@
 /* Define to 1 if you have the `strnlen' function. */
 #undef HAVE_STRNLEN
 
+/* Define to 1 if you have the `strtoimax' function. */
+#undef HAVE_STRTOIMAX
+
 /* Define to 1 if you have the `strtol' function. */
 #undef HAVE_STRTOL
+
+/* Define to 1 if you have the `strtoll' function. */
+#undef HAVE_STRTOLL
 
 /* Define to 1 if you have the `strtoul' function. */
 #undef HAVE_STRTOUL
@@ -1924,10 +2029,6 @@
 /* Define to 1 if you have the <sys/device.h> header file. */
 #undef HAVE_SYS_DEVICE_H
 
-/* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
-   */
-#undef HAVE_SYS_DIR_H
-
 /* Define to 1 if you have the <sys/gentape.h> header file. */
 #undef HAVE_SYS_GENTAPE_H
 
@@ -1945,10 +2046,6 @@
 
 /* Define to 1 if you have the <sys/mtio.h> header file. */
 #undef HAVE_SYS_MTIO_H
-
-/* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
-   */
-#undef HAVE_SYS_NDIR_H
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
@@ -1977,6 +2074,9 @@
 /* Define to 1 if you have the <sys/wait.h> header file. */
 #undef HAVE_SYS_WAIT_H
 
+/* define to 1 if we have <sys/xattr.h> header */
+#undef HAVE_SYS_XATTR_H
+
 /* Define if struct tm has the tm_gmtoff member. */
 #undef HAVE_TM_GMTOFF
 
@@ -1990,15 +2090,27 @@
 /* Define to 1 if you have the `tsearch' function. */
 #undef HAVE_TSEARCH
 
+/* Define to 1 if you have the `ttyname' function. */
+#undef HAVE_TTYNAME
+
+/* Define to 1 if you have the `ttyname_r' function. */
+#undef HAVE_TTYNAME_R
+
 /* Define to 1 if you don't have `tm_zone' but do have the external array
    `tzname'. */
 #undef HAVE_TZNAME
+
+/* Define to 1 if you have the `tzset' function. */
+#undef HAVE_TZSET
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
 /* Define to 1 if you have the `unlinkat' function. */
 #undef HAVE_UNLINKAT
+
+/* Define to 1 if you have the `unlockpt' function. */
+#undef HAVE_UNLOCKPT
 
 /* Define to 1 if you have the `unsetenv' function. */
 #undef HAVE_UNSETENV
@@ -2032,9 +2144,6 @@
 
 /* Define to 1 if you have the `wcrtomb' function. */
 #undef HAVE_WCRTOMB
-
-/* Define to 1 if you have the `wcscoll' function. */
-#undef HAVE_WCSCOLL
 
 /* Define to 1 if you have the `wcslen' function. */
 #undef HAVE_WCSLEN
@@ -2094,14 +2203,14 @@
 /* Define to 1 if you have the `_set_invalid_parameter_handler' function. */
 #undef HAVE__SET_INVALID_PARAMETER_HANDLER
 
-/* Define to 1 if you have the `__fpending' function. */
-#undef HAVE___FPENDING
-
 /* Define to 1 if you have the `__secure_getenv' function. */
 #undef HAVE___SECURE_GETENV
 
 /* Define as const if the declaration of iconv() needs const. */
 #undef ICONV_CONST
+
+/* Define to 1 if isatty() may fail without setting errno. */
+#undef ISATTY_FAILS_WITHOUT_SETTING_ERRNO
 
 /* Define to 1 if linkat fails to recognize a trailing slash. */
 #undef LINKAT_TRAILING_SLASH_BUG
@@ -2254,9 +2363,6 @@
 
 /* Define if vasnprintf exists but is overridden by gnulib. */
 #undef REPLACE_VASNPRINTF
-
-/* Define as the return type of signal handlers (`int' or `void'). */
-#undef RETSIGTYPE
 
 /* Define to l, ll, u, ul, ull, etc., as suitable for constants of type
    'sig_atomic_t'. */
@@ -2448,27 +2554,41 @@
    'reference to static identifier "f" in extern inline function'.
    This bug was observed with Sun C 5.12 SunOS_i386 2011/11/16.
 
-   Suppress the use of extern inline on Apple's platforms, as Libc at least
-   through Libc-825.26 (2013-04-09) is incompatible with it; see, e.g.,
+   Suppress the use of extern inline on problematic Apple configurations.
+   OS X 10.8 and earlier mishandle it; see, e.g.,
    <http://lists.gnu.org/archive/html/bug-gnulib/2012-12/msg00023.html>.
+   OS X 10.9 has a macro __header_inline indicating the bug is fixed for C and
+   for clang but remains for g++; see <http://trac.macports.org/ticket/41033>.
    Perhaps Apple will fix this some day.  */
+#if (defined __APPLE__ \
+     && (defined __header_inline \
+         ? (defined __cplusplus && defined __GNUC_STDC_INLINE__ \
+            && ! defined __clang__) \
+         : ((! defined _DONT_USE_CTYPE_INLINE_ \
+             && (defined __GNUC__ || defined __cplusplus)) \
+            || (defined _FORTIFY_SOURCE && 0 < _FORTIFY_SOURCE \
+                && defined __GNUC__ && ! defined __cplusplus))))
+# define _GL_EXTERN_INLINE_APPLE_BUG
+#endif
 #if ((__GNUC__ \
       ? defined __GNUC_STDC_INLINE__ && __GNUC_STDC_INLINE__ \
       : (199901L <= __STDC_VERSION__ \
          && !defined __HP_cc \
          && !(defined __SUNPRO_C && __STDC__))) \
-     && !defined __APPLE__)
+     && !defined _GL_EXTERN_INLINE_APPLE_BUG)
 # define _GL_INLINE inline
 # define _GL_EXTERN_INLINE extern inline
+# define _GL_EXTERN_INLINE_IN_USE
 #elif (2 < __GNUC__ + (7 <= __GNUC_MINOR__) && !defined __STRICT_ANSI__ \
-       && !defined __APPLE__)
-# if __GNUC_GNU_INLINE__
+       && !defined _GL_EXTERN_INLINE_APPLE_BUG)
+# if defined __GNUC_GNU_INLINE__ && __GNUC_GNU_INLINE__
    /* __gnu_inline__ suppresses a GCC 4.2 diagnostic.  */
 #  define _GL_INLINE extern inline __attribute__ ((__gnu_inline__))
 # else
 #  define _GL_INLINE extern inline
 # endif
 # define _GL_EXTERN_INLINE extern
+# define _GL_EXTERN_INLINE_IN_USE
 #else
 # define _GL_INLINE static _GL_UNUSED
 # define _GL_EXTERN_INLINE static _GL_UNUSED
@@ -2512,9 +2632,6 @@
 /* A replacement for va_copy, if needed.  */
 #define gl_va_copy(a,b) ((a) = (b))
 
-/* Define to rpl_gmtime if the replacement function should be used. */
-#undef gmtime
-
 /* Conversion descriptor type */
 #undef iconv_t
 
@@ -2546,9 +2663,6 @@
 /* Define to 1 if the compiler is checking for lint. */
 #undef lint
 
-/* Define to rpl_localtime if the replacement function should be used. */
-#undef localtime
-
 /* Type of major device numbers. */
 #undef major_t
 
@@ -2560,6 +2674,9 @@
 
 /* Define to `int' if <sys/types.h> does not define. */
 #undef mode_t
+
+/* Define to the name of the strftime replacement function. */
+#undef my_strftime
 
 /* Define to the type of st_nlink in struct stat, or a supertype. */
 #undef nlink_t

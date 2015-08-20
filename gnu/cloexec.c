@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* closexec.c - set or clear the close-on-exec descriptor flag
 
-   Copyright (C) 1991, 2004-2006, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 1991, 2004-2006, 2009-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

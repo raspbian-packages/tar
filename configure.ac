@@ -1,6 +1,6 @@
 # Configure template for GNU tar.  -*- autoconf -*-
 
-# Copyright 1991, 1994-2010, 2013 Free Software Foundation, Inc.
+# Copyright 1991, 1994-2010, 2013-2014 Free Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -17,24 +17,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([GNU tar], [1.27.1], [bug-tar@gnu.org])
+AC_INIT([GNU tar], [1.28], [bug-tar@gnu.org])
 AC_CONFIG_SRCDIR([src/tar.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
 AC_PREREQ([2.63])
-AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-xz dist-shar std-options silent-rules])
+AM_INIT_AUTOMAKE([1.11 gnits tar-ustar dist-bzip2 dist-xz std-options silent-rules])
 
 # Enable silent rules by default:
 AM_SILENT_RULES([yes])
 
-AC_PROG_CC
+AC_PROG_CC_STDC
 AC_EXEEXT
 AC_PROG_RANLIB
 AC_PROG_YACC
 gl_EARLY
+AC_CHECK_TOOLS([AR], [ar])
 
 AC_SYS_LARGEFILE
-AC_ISC_POSIX
 AC_C_INLINE
 
 AC_CHECK_HEADERS_ONCE(fcntl.h linux/fd.h memory.h net/errno.h \
@@ -49,12 +49,7 @@ AC_CHECK_HEADERS([sys/buf.h], [], [],
 #include <sys/param.h>
 #endif])
 
-AC_HEADER_SYS_WAIT
-
-AC_HEADER_DIRENT
 AC_HEADER_MAJOR
-AC_HEADER_STAT
-AC_HEADER_STDC
 
 AC_MSG_CHECKING([for st_fstype string in struct stat])
 AC_CACHE_VAL(diff_cv_st_fstype_string,
@@ -79,7 +74,8 @@ AC_ARG_WITH([posix-acls],
 if test "x$with_posix_acls" != "xno"; then
   AC_CHECK_HEADERS(sys/acl.h,, [with_posix_acls=no])
   for tar_acl_func in acl_get_file acl_get_fd acl_set_file acl_set_fd \
-		      acl_to_text acl_from_text; do \
+		      acl_to_text acl_from_text acl_delete_def_file \
+		      acl_free; do \
     test "x$with_posix_acls" = xno && break
     AC_SEARCH_LIBS([$tar_acl_func], [acl pacl], [], [with_posix_acls=no])
   done
@@ -91,11 +87,9 @@ else
   export enable_acl=no
 fi
 
-AC_TYPE_SIGNAL
 AC_TYPE_MODE_T
 AC_TYPE_PID_T
 AC_TYPE_OFF_T
-AC_TYPE_SIZE_T
 AC_TYPE_UID_T
 AC_CHECK_TYPE(major_t, , AC_DEFINE(major_t, int,
 				   [Type of major device numbers.]))
@@ -210,7 +204,8 @@ fi
 
 TAR_HEADERS_ATTR_XATTR_H
 
-AC_CHECK_FUNCS_ONCE([fchmod fchown fsync lstat mkfifo readlink symlink])
+AC_CHECK_FUNCS_ONCE([fchmod fchown fsync lstat mkfifo readlink symlink grantpt])
+AM_CONDITIONAL([TAR_COND_GRANTPT], [test $ac_cv_func_grantpt = yes])
 
 AC_CHECK_DECLS([getgrgid],,, [#include <grp.h>])
 AC_CHECK_DECLS([getpwuid],,, [#include <pwd.h>])

@@ -1,6 +1,6 @@
 /* A tar (tape archiver) program.
 
-   Copyright 1988, 1992-1997, 1999-2001, 2003-2007, 2012-2013 Free
+   Copyright 1988, 1992-1997, 1999-2001, 2003-2007, 2012-2014 Free
    Software Foundation, Inc.
 
    Written by John Gilmore, starting 1985-08-25.
@@ -51,6 +51,7 @@
 #include <xstrtol.h>
 #include <stdopen.h>
 #include <priv-set.h>
+#include <savedir.h>
 
 /* Local declarations.  */
 
@@ -83,7 +84,7 @@ void
 request_stdin (const char *option)
 {
   if (stdin_used_by)
-    USAGE_ERROR ((0, 0, _("Options '-%s' and '-%s' both want standard input"),
+    USAGE_ERROR ((0, 0, _("Options '%s' and '%s' both want standard input"),
 		  stdin_used_by, option));
 
   stdin_used_by = option;
@@ -164,6 +165,14 @@ set_archive_format (char const *name)
 		    quotearg_colon (name)));
 
   archive_format = p->fmt;
+}
+
+static void
+set_xattr_option (int value)
+{
+  if (value == 1)
+    set_archive_format ("posix");
+  xattrs_option = value;
 }
 
 const char *
@@ -275,10 +284,13 @@ enum
   EXCLUDE_CACHES_UNDER_OPTION,
   EXCLUDE_CACHES_ALL_OPTION,
   EXCLUDE_OPTION,
+  EXCLUDE_IGNORE_OPTION,
+  EXCLUDE_IGNORE_RECURSIVE_OPTION,
   EXCLUDE_TAG_OPTION,
   EXCLUDE_TAG_UNDER_OPTION,
   EXCLUDE_TAG_ALL_OPTION,
   EXCLUDE_VCS_OPTION,
+  EXCLUDE_VCS_IGNORES_OPTION,
   FORCE_LOCAL_OPTION,
   FULL_TIME_OPTION,
   GROUP_OPTION,
@@ -319,6 +331,7 @@ enum
   OCCURRENCE_OPTION,
   OLD_ARCHIVE_OPTION,
   ONE_FILE_SYSTEM_OPTION,
+  ONE_TOP_LEVEL_OPTION,
   OVERWRITE_DIR_OPTION,
   OVERWRITE_OPTION,
   OWNER_OPTION,
@@ -341,6 +354,7 @@ enum
   SHOW_SNAPSHOT_FIELD_RANGES_OPTION,
   SHOW_TRANSFORMED_NAMES_OPTION,
   SKIP_OLD_FILES_OPTION,
+  SORT_OPTION,
   SPARSE_VERSION_OPTION,
   STRIP_COMPONENTS_OPTION,
   SUFFIX_OPTION,
@@ -489,6 +503,9 @@ static struct argp_option options[] = {
   {"keep-directory-symlink", KEEP_DIRECTORY_SYMLINK_OPTION, 0, 0,
    N_("preserve existing symlinks to directories when extracting"),
    GRID+1 },
+  {"one-top-level", ONE_TOP_LEVEL_OPTION, N_("DIR"), OPTION_ARG_OPTIONAL,
+   N_("create a subdirectory to avoid having loose files extracted"),
+   GRID+1 },
 #undef GRID
 
 #define GRID 40
@@ -547,6 +564,13 @@ static struct argp_option options[] = {
       " directories until the end of extraction"), GRID+1 },
   {"no-delay-directory-restore", NO_DELAY_DIRECTORY_RESTORE_OPTION, 0, 0,
    N_("cancel the effect of --delay-directory-restore option"), GRID+1 },
+  {"sort", SORT_OPTION, N_("ORDER"), 0,
+#if D_INO_IN_DIRENT
+   N_("directory sorting order: none (default), name or inode"
+#else
+   N_("directory sorting order: none (default) or name"
+#endif
+     ), GRID+1 },
 #undef GRID
 
 #define GRID 55
@@ -693,9 +717,9 @@ static struct argp_option options[] = {
   {"no-null", NO_NULL_OPTION, 0, 0,
    N_("disable the effect of the previous --null option"), GRID+1 },
   {"unquote", UNQUOTE_OPTION, 0, 0,
-   N_("unquote filenames read with -T (default)"), GRID+1 },
+   N_("unquote input file or member names (default)"), GRID+1 },
   {"no-unquote", NO_UNQUOTE_OPTION, 0, 0,
-   N_("do not unquote filenames read with -T"), GRID+1 },
+   N_("do not unquote input file or member names"), GRID+1 },
   {"exclude", EXCLUDE_OPTION, N_("PATTERN"), 0,
    N_("exclude files, given as a PATTERN"), GRID+1 },
   {"exclude-from", 'X', N_("FILE"), 0,
@@ -711,12 +735,20 @@ static struct argp_option options[] = {
   {"exclude-tag", EXCLUDE_TAG_OPTION, N_("FILE"), 0,
    N_("exclude contents of directories containing FILE, except"
       " for FILE itself"), GRID+1 },
+  {"exclude-ignore", EXCLUDE_IGNORE_OPTION, N_("FILE"), 0,
+    N_("read exclude patterns for each directory from FILE, if it exists"),
+   GRID+1 }, 
+  {"exclude-ignore-recursive", EXCLUDE_IGNORE_RECURSIVE_OPTION, N_("FILE"), 0,
+    N_("read exclude patterns for each directory and its subdirectories "
+       "from FILE, if it exists"), GRID+1 },
   {"exclude-tag-under", EXCLUDE_TAG_UNDER_OPTION, N_("FILE"), 0,
    N_("exclude everything under directories containing FILE"), GRID+1 },
   {"exclude-tag-all", EXCLUDE_TAG_ALL_OPTION, N_("FILE"), 0,
    N_("exclude directories containing FILE"), GRID+1 },
   {"exclude-vcs", EXCLUDE_VCS_OPTION, NULL, 0,
    N_("exclude version control system directories"), GRID+1 },
+  {"exclude-vcs-ignores", EXCLUDE_VCS_IGNORES_OPTION, NULL, 0,
+   N_("read exclude patterns from the VCS ignore files"), GRID+1 },
   {"exclude-backups", EXCLUDE_BACKUPS_OPTION, NULL, 0,
    N_("exclude backup and lock files"), GRID+1 },
   {"no-recursion", NO_RECURSION_OPTION, 0, 0,
@@ -990,7 +1022,7 @@ set_use_compress_program_option (const char *string)
   use_compress_program_option = string;
 }
 
-static RETSIGTYPE
+static void
 sigstat (int signo)
 {
   compute_duration ();
@@ -1167,6 +1199,9 @@ tar_help_filter (int key, const char *text, void *input)
       s = xasprintf (_("filter the archive through %s"), LZMA_PROGRAM);
       break;
 
+    case LZOP_OPTION:
+      s = xasprintf (_("filter the archive through %s"), LZOP_PROGRAM);
+      
     case 'J':
       s = xasprintf (_("filter the archive through %s"), XZ_PROGRAM);
       break;
@@ -1303,6 +1338,21 @@ parse_owner_group (char *arg, uintmax_t field_max, char const **name_option)
 /* Either NL or NUL, as decided by the --null option.  */
 static char filename_terminator;
 
+static char const *const sort_mode_arg[] = {
+  "none",
+  "name",
+  "inode",
+  NULL
+};
+
+static int sort_mode_flag[] = {
+    SAVEDIR_SORT_NONE,
+    SAVEDIR_SORT_NAME,
+    SAVEDIR_SORT_INODE
+};
+
+ARGMATCH_VERIFY (sort_mode_arg, sort_mode_flag);
+
 static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
 {
@@ -1436,6 +1486,11 @@ parse_opt (int key, char *arg, struct argp_state *state)
       /* When dumping directories, don't dump files/subdirectories
 	 that are on other filesystems. */
       one_file_system_option = true;
+      break;
+
+    case ONE_TOP_LEVEL_OPTION:
+      one_top_level_option = true;
+      one_top_level_dir = arg;
       break;
 
     case 'l':
@@ -1732,6 +1787,14 @@ parse_opt (int key, char *arg, struct argp_state *state)
 			 cachedir_file_p);
       break;
 
+    case EXCLUDE_IGNORE_OPTION:
+      excfile_add (arg, EXCL_NON_RECURSIVE);
+      break;
+
+    case EXCLUDE_IGNORE_RECURSIVE_OPTION:
+      excfile_add (arg, EXCL_RECURSIVE);
+      break;
+      
     case EXCLUDE_TAG_OPTION:
       add_exclusion_tag (arg, exclusion_tag_contents, NULL);
       break;
@@ -1748,6 +1811,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
       add_exclude_array (vcs_file_table, 0);
       break;
 
+    case EXCLUDE_VCS_IGNORES_OPTION:
+      exclude_vcs_ignores ();
+      break;
+      
     case FORCE_LOCAL_OPTION:
       force_local_option = true;
       break;
@@ -1775,7 +1842,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     case KEEP_DIRECTORY_SYMLINK_OPTION:
       keep_directory_symlink_option = true;
       break;
-      
+
     case KEEP_NEWER_FILES_OPTION:
       old_files_option = KEEP_NEWER_FILES;
       break;
@@ -1985,6 +2052,11 @@ parse_opt (int key, char *arg, struct argp_state *state)
       show_transformed_names_option = true;
       break;
 
+    case SORT_OPTION:
+      savedir_sort_order = XARGMATCH ("--sort", arg,
+				      sort_mode_arg, sort_mode_flag);
+      break;
+
     case SUFFIX_OPTION:
       backup_option = true;
       args->backup_suffix_string = arg;
@@ -2054,16 +2126,16 @@ parse_opt (int key, char *arg, struct argp_state *state)
       break;
 
     case XATTR_OPTION:
-      set_archive_format ("posix");
-      xattrs_option = 1;
+      set_xattr_option (1);
       break;
 
     case NO_XATTR_OPTION:
-      xattrs_option = -1;
+      set_xattr_option (-1);
       break;
 
     case XATTR_INCLUDE:
     case XATTR_EXCLUDE:
+      set_xattr_option (1);
       xattrs_mask_add (arg, (key == XATTR_INCLUDE));
       break;
 
@@ -2220,8 +2292,16 @@ static int subcommand_class[] = {
 
 /* Return t if the subcommand_option is in class(es) f */
 #define IS_SUBCOMMAND_CLASS(f) (subcommand_class[subcommand_option] & (f))
-  
+
 static struct tar_args args;
+
+static void
+option_conflict_error (const char *a, const char *b)
+{
+  /* TRANSLATORS: Both %s in this statement are replaced with
+     option names. */
+  USAGE_ERROR ((0, 0, _("'%s' cannot be used with '%s'"), a, b));
+}
 
 static void
 decode_options (int argc, char **argv)
@@ -2247,6 +2327,7 @@ decode_options (int argc, char **argv)
   blocking_factor = DEFAULT_BLOCKING;
   record_size = DEFAULT_BLOCKING * BLOCKSIZE;
   excluded = new_exclude ();
+  
   newer_mtime_option.tv_sec = TYPE_MINIMUM (time_t);
   newer_mtime_option.tv_nsec = -1;
   recursion_option = FNM_LEADING_DIR;
@@ -2254,6 +2335,8 @@ decode_options (int argc, char **argv)
   tar_sparse_major = 1;
   tar_sparse_minor = 0;
 
+  savedir_sort_order = SAVEDIR_SORT_NONE;
+  
   owner_option = -1; owner_name_option = NULL;
   group_option = -1; group_name_option = NULL;
 
@@ -2385,9 +2468,8 @@ decode_options (int argc, char **argv)
 	USAGE_ERROR ((0, 0,
 		      _("--occurrence is meaningless without a file list")));
       if (!IS_SUBCOMMAND_CLASS (SUBCL_OCCUR))
-	USAGE_ERROR ((0, 0,
-		      _("--occurrence cannot be used with %s"),
-		      subcommand_string (subcommand_option)));
+	option_conflict_error ("--occurrence",
+			       subcommand_string (subcommand_option));
     }
 
   if (archive_names == 0)
@@ -2409,8 +2491,8 @@ decode_options (int argc, char **argv)
 
   if (listed_incremental_option
       && NEWER_OPTION_INITIALIZED (newer_mtime_option))
-    USAGE_ERROR ((0, 0,
-		  _("Cannot combine --listed-incremental with --newer")));
+    option_conflict_error ("--listed-incremental", "--newer");
+  
   if (incremental_level != -1 && !listed_incremental_option)
     WARN ((0, 0,
 	   _("--level is meaningless without --listed-incremental")));
@@ -2447,8 +2529,8 @@ decode_options (int argc, char **argv)
       if (use_compress_program_option)
 	USAGE_ERROR ((0, 0, _("Cannot verify compressed archives")));
       if (!IS_SUBCOMMAND_CLASS (SUBCL_WRITE))
-	USAGE_ERROR ((0, 0, _("--verify cannot be used with %s"),
-		      subcommand_string (subcommand_option)));
+	option_conflict_error ("--verify",
+			       subcommand_string (subcommand_option));
     }
 
   if (use_compress_program_option)
@@ -2487,13 +2569,36 @@ decode_options (int argc, char **argv)
       && !IS_SUBCOMMAND_CLASS (SUBCL_READ))
     USAGE_ERROR ((0, 0, _("--xattrs can be used only on POSIX archives")));
 
-  if ((starting_file_option || same_order_option)
-      && !IS_SUBCOMMAND_CLASS (SUBCL_READ))
-    USAGE_ERROR ((0, 0,
-		  _("--%s option cannot be used with %s"),
-		  starting_file_option ? "starting-file" : "same-order",
-		  subcommand_string (subcommand_option)));
-  
+  if (starting_file_option && !IS_SUBCOMMAND_CLASS (SUBCL_READ))
+    option_conflict_error ("--starting-file",
+			   subcommand_string (subcommand_option));
+
+  if (same_order_option && !IS_SUBCOMMAND_CLASS (SUBCL_READ))
+    option_conflict_error ("--same-order",
+			   subcommand_string (subcommand_option));
+
+  if (one_top_level_option)
+    {
+      char *base;
+      
+      if (absolute_names_option)
+	option_conflict_error ("--one-top-level", "--absolute-names");
+      
+      if (!one_top_level_dir)
+	{
+	  /* If the user wants to guarantee that everything is under one
+	     directory, determine its name now and let it be created later.  */
+	  base = base_name (archive_name_array[0]);
+	  one_top_level_dir = strip_compression_suffix (base);
+	  free (base);
+
+	  if (!one_top_level_dir)
+	    USAGE_ERROR ((0, 0,
+			  _("Cannot deduce top-level directory name; "
+			    "please set it explicitly with --one-top-level=DIR")));
+	}
+    }
+
   /* If ready to unlink hierarchies, so we are for simpler files.  */
   if (recursive_unlink_option)
     old_files_option = UNLINK_FIRST_OLD_FILES;
@@ -2525,8 +2630,7 @@ decode_options (int argc, char **argv)
     USAGE_ERROR ((0, 0, _("Volume length cannot be less than record size")));
 
   if (same_order_option && listed_incremental_option)
-    USAGE_ERROR ((0, 0, _("--preserve-order is not compatible with "
-			  "--listed-incremental")));
+    option_conflict_error ("--preserve-order", "--listed-incremental");
 
   /* Forbid using -c with no input files whatsoever.  Check that '-f -',
      explicit or implied, is used correctly.  */
@@ -2623,6 +2727,8 @@ main (int argc, char **argv)
 
   exit_failure = TAREXIT_FAILURE;
   exit_status = TAREXIT_SUCCESS;
+  error_hook = checkpoint_flush_actions;
+  
   filename_terminator = '\n';
   set_quoting_style (0, DEFAULT_QUOTING_STYLE);
 
@@ -2696,6 +2802,8 @@ main (int argc, char **argv)
       test_archive_label ();
     }
 
+  checkpoint_finish ();
+  
   if (totals_option)
     print_total_stats ();
 
@@ -2765,6 +2873,7 @@ tar_stat_destroy (struct tar_stat_info *st)
   free (st->sparse_map);
   free (st->dumpdir);
   xheader_destroy (&st->xhdr);
+  info_free_exclist (st);
   memset (st, 0, sizeof (*st));
 }
 
