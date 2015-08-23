@@ -1,17 +1,13 @@
-diff --git a/src/common.h b/src/common.h
-index 42fd539..fe032ec 100644
 --- a/src/common.h
 +++ b/src/common.h
-@@ -906,4 +906,7 @@ void finish_deferred_unlinks (void);
- /* Module exit.c */
- extern void (*fatal_exit_hook) (void);
+@@ -931,4 +931,7 @@
+ bool excluded_name (char const *name, struct tar_stat_info *st);
+ void exclude_vcs_ignores (void);
  
 +GLOBAL int debian_longlink_hack;
 +GLOBAL int pristine_tar_compat;
 +
  _GL_INLINE_HEADER_END
-diff --git a/src/create.c b/src/create.c
-index 4344a24..de10cae 100644
 --- a/src/create.c
 +++ b/src/create.c
 @@ -27,6 +27,9 @@
@@ -24,7 +20,7 @@ index 4344a24..de10cae 100644
  /* Error number to use when an impostor is discovered.
     Pretend the impostor isn't there.  */
  enum { IMPOSTOR_ERRNO = ENOENT };
-@@ -534,6 +537,11 @@ write_short_name (struct tar_stat_info *st)
+@@ -534,6 +537,11 @@
    return header;
  }
  
@@ -36,7 +32,7 @@ index 4344a24..de10cae 100644
  /* Write a GNUTYPE_LONGLINK or GNUTYPE_LONGNAME block.  */
  static void
  write_gnu_long_link (struct tar_stat_info *st, const char *p, char type)
-@@ -544,6 +552,11 @@ write_gnu_long_link (struct tar_stat_info *st, const char *p, char type)
+@@ -544,6 +552,11 @@
    char *tmpname;
  
    header = start_private_header ("././@LongLink", size, 0);
@@ -48,7 +44,7 @@ index 4344a24..de10cae 100644
    uid_to_uname (0, &tmpname);
    UNAME_TO_CHARS (tmpname, header->header.uname);
    free (tmpname);
-@@ -724,7 +737,7 @@ write_header_name (struct tar_stat_info *st)
+@@ -724,7 +737,7 @@
        return write_short_name (st);
      }
    else if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
@@ -57,7 +53,7 @@ index 4344a24..de10cae 100644
      return write_long_name (st);
    else
      return write_short_name (st);
-@@ -1476,7 +1489,7 @@ dump_hard_link (struct tar_stat_info *st)
+@@ -1478,7 +1491,7 @@
  	  block_ordinal = current_block_ordinal ();
  	  assign_string (&st->link_name, link_name);
  	  if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
@@ -66,11 +62,9 @@ index 4344a24..de10cae 100644
  	    write_long_link (st);
  
  	  st->stat.st_size = 0;
-diff --git a/src/tar.c b/src/tar.c
-index 4f5017d..b72e25b 100644
 --- a/src/tar.c
 +++ b/src/tar.c
-@@ -1246,6 +1246,26 @@ expand_pax_option (struct tar_args *targs, const char *arg)
+@@ -1281,6 +1281,26 @@
    return res;
  }
  
@@ -97,7 +91,7 @@ index 4f5017d..b72e25b 100644
  
  static uintmax_t
  parse_owner_group (char *arg, uintmax_t field_max, char const **name_option)
-@@ -2626,6 +2646,9 @@ main (int argc, char **argv)
+@@ -2732,6 +2752,9 @@
    filename_terminator = '\n';
    set_quoting_style (0, DEFAULT_QUOTING_STYLE);
  
