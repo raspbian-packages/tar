@@ -1,9 +1,11 @@
-tar (1.27.1-2.0~reproducible1) UNRELEASED; urgency=low
+tar (1.27.1-3) UNRELEASED; urgency=low
 
   * Set timestamp in generated manpage to latest changelog date
     to make building the package reproducible.
-
- -- Reiner Herrmann <reiner@reiner-h.de>  Sat, 03 Jan 2015 02:30:39 +0100
+  * patch from Lunar adding --clamp-mtime option for reproducible builds,
+    closes: #790415
+ 
+ -- Bdale Garbee <bdale@gag.com>  Sun, 23 Aug 2015 19:50:32 +0200
 
 tar (1.27.1-2) unstable; urgency=low
 
