@@ -157,14 +157,14 @@ index 4f5017d..cbaa9df 100644
    recursion_option = FNM_LEADING_DIR;
    unquote_option = true;
    tar_sparse_major = 1;
-@@ -2408,7 +2418,7 @@ decode_options (int argc, char **argv)
+@@ -2490,7 +2490,7 @@ decode_options (int argc, char **argv)
  		  _("Multiple archive files require '-M' option")));
  
    if (listed_incremental_option
 -      && NEWER_OPTION_INITIALIZED (newer_mtime_option))
 +      && TIME_OPTION_INITIALIZED (newer_mtime_option))
-     USAGE_ERROR ((0, 0,
- 		  _("Cannot combine --listed-incremental with --newer")));
+     option_conflict_error ("--listed-incremental", "--newer");
+   
    if (incremental_level != -1 && !listed_incremental_option)
 @@ -2461,6 +2471,13 @@ decode_options (int argc, char **argv)
  	USAGE_ERROR ((0, 0, _("Cannot concatenate compressed archives")));
