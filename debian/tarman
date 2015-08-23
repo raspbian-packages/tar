@@ -4,9 +4,10 @@
 #
 
 use strict;
+use POSIX qw(strftime);
 
-my $t = "".localtime(time);
-my $datestr = substr($t,4,3)." ".substr($t,8,2).", ".substr($t,20,4);
+my $t = $ENV{'BUILD_DATE'} // strftime("%a, %d %b %Y %H:%M:%S %z", localtime(time));
+my $datestr = substr($t,8,3)." ".substr($t,5,2).", ".substr($t,12,4);
 
 @ARGV=qw(src/tar.c);
 my $mode;

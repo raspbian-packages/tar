@@ -1,3 +1,10 @@
+tar (1.27.1-2.0~reproducible1) UNRELEASED; urgency=low
+
+  * Set timestamp in generated manpage to latest changelog date
+    to make building the package reproducible.
+
+ -- Reiner Herrmann <reiner@reiner-h.de>  Sat, 03 Jan 2015 02:30:39 +0100
+
 tar (1.27.1-2) unstable; urgency=low
 
   * patch from David Gilman adds watch file with signature verification, 
