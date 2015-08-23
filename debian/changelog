@@ -1,4 +1,4 @@
-tar (1.28-1) UNRELEASED; urgency=low
+tar (1.28-1) unstable; urgency=low
 
   * new upstream version
   * patch from Reiner Herrman that sets timestamp in generated manpage to 
