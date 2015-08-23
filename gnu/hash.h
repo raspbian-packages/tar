@@ -1,7 +1,7 @@
 /* -*- buffer-read-only: t -*- vi: set ro: */
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* hash - hashing table processing.
-   Copyright (C) 1998-1999, 2001, 2003, 2009-2013 Free Software Foundation,
+   Copyright (C) 1998-1999, 2001, 2003, 2009-2014 Free Software Foundation,
    Inc.
    Written by Jim Meyering <meyering@ascend.com>, 1998.
 

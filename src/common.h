@@ -1,6 +1,6 @@
 /* Common declarations for the tar program.
 
-   Copyright 1988, 1992-1994, 1996-1997, 1999-2010, 2012-2013 Free
+   Copyright 1988, 1992-1994, 1996-1997, 1999-2010, 2012-2014 Free
    Software Foundation, Inc.
 
    This file is part of GNU tar.
@@ -235,6 +235,10 @@ GLOBAL bool numeric_owner_option;
 
 GLOBAL bool one_file_system_option;
 
+/* Create a top-level directory for extracting based on the archive name.  */
+GLOBAL bool one_top_level_option;
+GLOBAL char *one_top_level_dir;
+
 /* Specified value to be put into tar file in place of stat () results, or
    just null and -1 if such an override should not take place.  */
 GLOBAL char const *owner_name_option;
@@ -382,6 +386,8 @@ GLOBAL dev_t root_device;
 /* Unquote filenames */
 GLOBAL bool unquote_option;
 
+GLOBAL int savedir_sort_order;
+
 /* Show file or archive names after transformation.
    In particular, when creating archive in verbose mode, list member names
    as stored in the archive */
@@ -427,7 +433,7 @@ size_t available_space_after (union block *pointer);
 off_t current_block_ordinal (void);
 void close_archive (void);
 void closeout_volume_number (void);
-void compute_duration (void);
+double compute_duration (void);
 union block *find_next_block (void);
 void flush_read (void);
 void flush_write (void);
@@ -443,6 +449,12 @@ void archive_write_error (ssize_t status) __attribute__ ((noreturn));
 void archive_read_error (void);
 off_t seek_archive (off_t size);
 void set_start_time (void);
+
+#define TF_READ    0
+#define TF_WRITE   1
+#define TF_DELETED 2
+int format_total_stats (FILE *fp, const char **formats, int eor, int eol);
+void print_total_stats (void);
 
 void mv_begin_write (const char *file_name, off_t totsize, off_t sizeleft);
 
@@ -731,8 +743,6 @@ char *new_name (const char *dir_name, const char *name);
 size_t stripped_prefix_len (char const *file_name, size_t num);
 bool all_names_found (struct tar_stat_info *st);
 
-bool excluded_name (char const *name);
-
 void add_avoided_name (char const *name);
 bool is_avoided_name (char const *name);
 
@@ -850,11 +860,14 @@ bool transform_program_p (void);
 
 /* Module suffix.c */
 void set_compression_program_by_suffix (const char *name, const char *defprog);
+char *strip_compression_suffix (const char *name);
 
 /* Module checkpoint.c */
 void checkpoint_compile_action (const char *str);
 void checkpoint_finish_compile (void);
 void checkpoint_run (bool do_write);
+void checkpoint_finish (void);
+void checkpoint_flush_actions (void);
 
 /* Module warning.c */
 #define WARN_ALONE_ZERO_BLOCK    0x00000001
@@ -905,5 +918,17 @@ void finish_deferred_unlinks (void);
 
 /* Module exit.c */
 extern void (*fatal_exit_hook) (void);
+
+/* Module exclist.c */
+#define EXCL_DEFAULT       0x00
+#define EXCL_RECURSIVE     0x01
+#define EXCL_NON_RECURSIVE 0x02
+
+void excfile_add (const char *name, int flags);
+void info_attach_exclist (struct tar_stat_info *dir);
+void info_cleanup_exclist (struct tar_stat_info *dir);
+void info_free_exclist (struct tar_stat_info *dir);
+bool excluded_name (char const *name, struct tar_stat_info *st);
+void exclude_vcs_ignores (void);
 
 _GL_INLINE_HEADER_END

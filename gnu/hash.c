@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* hash - hashing table processing.
 
-   Copyright (C) 1998-2004, 2006-2007, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 1998-2004, 2006-2007, 2009-2014 Free Software Foundation, Inc.
 
    Written by Jim Meyering, 1992.
 

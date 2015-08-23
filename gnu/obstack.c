@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* obstack.c - subroutines used implicitly by object stack macros
 
-   Copyright (C) 1988-1994, 1996-2006, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 1988-1994, 1996-2006, 2009-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -315,7 +315,7 @@ libc_hidden_def (_obstack_newchunk)
 
 /* Suppress -Wmissing-prototypes warning.  We don't want to declare this in
    obstack.h because it is just for debugging.  */
-int _obstack_allocated_p (struct obstack *h, void *obj);
+int _obstack_allocated_p (struct obstack *h, void *obj) _GL_ATTRIBUTE_PURE;
 
 int
 _obstack_allocated_p (struct obstack *h, void *obj)

@@ -2,7 +2,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test whether a file has a nontrivial access control list.
 
-   Copyright (C) 2002-2003, 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -77,8 +77,7 @@ acl_access_nontrivial (acl_t acl)
     }
   return got_one;
 
-#  else /* IRIX, Tru64 */
-#   if HAVE_ACL_TO_SHORT_TEXT /* IRIX */
+#  elif HAVE_ACL_TO_SHORT_TEXT /* IRIX */
   /* Don't use acl_get_entry: it is undocumented.  */
 
   int count = acl->acl_cnt;
@@ -95,8 +94,7 @@ acl_access_nontrivial (acl_t acl)
     }
   return 0;
 
-#   endif
-#   if HAVE_ACL_FREE_TEXT /* Tru64 */
+#  elif HAVE_ACL_FREE_TEXT /* Tru64 */
   /* Don't use acl_get_entry: it takes only one argument and does not work.  */
 
   int count = acl->acl_num;
@@ -119,7 +117,10 @@ acl_access_nontrivial (acl_t acl)
     }
   return 0;
 
-#   endif
+#  else
+
+  errno = ENOSYS;
+  return -1;
 #  endif
 }
 

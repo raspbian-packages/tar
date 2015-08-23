@@ -1,6 +1,6 @@
 /* GNU dump extensions to tar.
 
-   Copyright 1988, 1992-1994, 1996-1997, 1999-2001, 2003-2009, 2013
+   Copyright 1988, 1992-1994, 1996-1997, 1999-2001, 2003-2009, 2013-2014
    Free Software Foundation, Inc.
 
    This file is part of GNU tar.
@@ -734,6 +734,8 @@ scan_directory (struct tar_stat_info *st)
   if (! dirp)
     savedir_error (dir);
 
+  info_attach_exclist (st);
+  
   tmp = xstrdup (dir);
   zap_slashes (tmp);
 
@@ -759,10 +761,10 @@ scan_directory (struct tar_stat_info *st)
 	       entry = dumpdir_next (itr))
 	    {
 	      char *full_name = namebuf_name (nbuf, entry + 1);
-	      
+
 	      if (*entry == 'I') /* Ignored entry */
 		*entry = 'N';
-	      else if (excluded_name (full_name))
+	      else if (excluded_name (full_name, st))
 		*entry = 'N';
 	      else
 		{
@@ -792,7 +794,7 @@ scan_directory (struct tar_stat_info *st)
 			    diag = stat_diag;
 			}
 		    }
-		  
+
 		  if (diag)
 		    {
 		      file_removed_diag (full_name, false, diag);
@@ -806,7 +808,7 @@ scan_directory (struct tar_stat_info *st)
 		      else if (directory->children == ALL_CHILDREN)
 			pd_flag |= PD_FORCE_CHILDREN | ALL_CHILDREN;
 		      *entry = 'D';
-		      
+
 		      stsub.parent = st;
 		      procdir (full_name, &stsub, pd_flag, entry);
 		      restore_parent_fd (&stsub);
@@ -823,7 +825,7 @@ scan_directory (struct tar_stat_info *st)
 		    *entry = 'N';
 		  else
 		    *entry = 'Y';
-		  
+
 		  tar_stat_destroy (&stsub);
 		}
 	    }
@@ -832,7 +834,7 @@ scan_directory (struct tar_stat_info *st)
       else if (directory->tagfile)
 	maketagdumpdir (directory);
     }
-  
+
   namebuf_free (nbuf);
 
   free (dirp);
@@ -1296,8 +1298,8 @@ void
 show_snapshot_field_ranges (void)
 {
   struct field_range const *p;
-  char minbuf[max (SYSINT_BUFSIZE, INT_BUFSIZE_BOUND (intmax_t))];
-  char maxbuf[max (SYSINT_BUFSIZE, INT_BUFSIZE_BOUND (uintmax_t))];
+  char minbuf[SYSINT_BUFSIZE];
+  char maxbuf[SYSINT_BUFSIZE];
 
   printf("This tar's snapshot file field ranges are\n");
   printf ("   (%-15s => [ %s, %s ]):\n\n", "field name", "min", "max");
@@ -1406,7 +1408,7 @@ write_directory_file_entry (void *entry, void *data)
 
   if (DIR_IS_FOUND (directory))
     {
-      char buf[max (SYSINT_BUFSIZE, INT_BUFSIZE_BOUND (intmax_t))];
+      char buf[SYSINT_BUFSIZE];
       char const *s;
 
       s = DIR_IS_NFS (directory) ? "1" : "0";

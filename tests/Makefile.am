@@ -116,6 +116,7 @@ TESTSUITE_AT = \
  incr09.at\
  indexfile.at\
  ignfail.at\
+ iotty.at\
  label01.at\
  label02.at\
  label03.at\
@@ -144,6 +145,10 @@ TESTSUITE_AT = \
  multiv07.at\
  multiv08.at\
  old.at\
+ onetop01.at\
+ onetop02.at\
+ onetop03.at\
+ onetop04.at\
  opcomp01.at\
  opcomp02.at\
  opcomp03.at\
@@ -155,6 +160,7 @@ TESTSUITE_AT = \
  owner.at\
  pipe.at\
  recurse.at\
+ recurs02.at\
  rename01.at\
  rename02.at\
  rename03.at\
@@ -181,6 +187,7 @@ TESTSUITE_AT = \
  remfiles09a.at\
  remfiles09b.at\
  remfiles09c.at\
+ remfiles10.at\
  same-order01.at\
  same-order02.at\
  shortfile.at\
@@ -221,6 +228,7 @@ TESTSUITE_AT = \
  xattr05.at\
  acls01.at\
  acls02.at\
+ acls03.at\
  selnx01.at\
  selacl01.at\
  capabs_raw01.at
@@ -257,7 +265,13 @@ installcheck-local:
 
 check_PROGRAMS = genfile
 
+if TAR_COND_GRANTPT
+check_PROGRAMS += ttyemu
+endif
+
 genfile_SOURCES = genfile.c argcv.c argcv.h
+
+ttyemu_SOURCES = ttyemu.c
 
 localedir = $(datadir)/locale
 AM_CPPFLAGS = \
