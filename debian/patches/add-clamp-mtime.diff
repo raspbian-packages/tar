@@ -28,11 +28,9 @@ has been renamed to TIME_OPTION_INITIALIZED.
  src/tar.c    | 23 ++++++++++++++++++++---
  4 files changed, 47 insertions(+), 10 deletions(-)
 
-diff --git a/src/common.h b/src/common.h
-index 42fd539..962ce1d 100644
 --- a/src/common.h
 +++ b/src/common.h
-@@ -211,13 +211,20 @@ GLOBAL bool multi_volume_option;
+@@ -211,13 +211,20 @@
     do not get archived (also see after_date_option above).  */
  GLOBAL struct timespec newer_mtime_option;
  
@@ -58,11 +56,9 @@ index 42fd539..962ce1d 100644
  
  /* Return true if the struct stat ST's M time is less than
     newer_mtime_option.  */
-diff --git a/src/create.c b/src/create.c
-index 4344a24..63585a1 100644
 --- a/src/create.c
 +++ b/src/create.c
-@@ -822,7 +822,20 @@ start_header (struct tar_stat_info *st)
+@@ -835,7 +835,20 @@
    }
  
    {
@@ -84,11 +80,9 @@ index 4344a24..63585a1 100644
      if (archive_format == POSIX_FORMAT)
        {
  	if (MAX_OCTAL_VAL (header->header.mtime) < mtime.tv_sec
-diff --git a/src/list.c b/src/list.c
-index 858aa73..ce2d304 100644
 --- a/src/list.c
 +++ b/src/list.c
-@@ -166,7 +166,7 @@ read_and (void (*do_something) (void))
+@@ -193,7 +193,7 @@
  	  decode_header (current_header, &current_stat_info,
  			 &current_format, 1);
  	  if (! name_match (current_stat_info.file_name)
@@ -97,11 +91,9 @@ index 858aa73..ce2d304 100644
  		  /* FIXME: We get mtime now, and again later; this causes
  		     duplicate diagnostics if header.mtime is bogus.  */
  		  && ((mtime.tv_sec
-diff --git a/src/tar.c b/src/tar.c
-index 4f5017d..cbaa9df 100644
 --- a/src/tar.c
 +++ b/src/tar.c
-@@ -267,6 +267,7 @@ enum
+@@ -276,6 +276,7 @@
    CHECK_DEVICE_OPTION,
    CHECKPOINT_OPTION,
    CHECKPOINT_ACTION_OPTION,
@@ -109,7 +101,7 @@ index 4f5017d..cbaa9df 100644
    DELAY_DIRECTORY_RESTORE_OPTION,
    HARD_DEREFERENCE_OPTION,
    DELETE_OPTION,
-@@ -515,6 +516,8 @@ static struct argp_option options[] = {
+@@ -532,6 +533,8 @@
     N_("force NAME as group for added files"), GRID+1 },
    {"mtime", MTIME_OPTION, N_("DATE-OR-FILE"), 0,
     N_("set mtime for added files from DATE-OR-FILE"), GRID+1 },
@@ -118,7 +110,7 @@ index 4f5017d..cbaa9df 100644
    {"mode", MODE_OPTION, N_("CHANGES"), 0,
     N_("force (symbolic) mode CHANGES for added files"), GRID+1 },
    {"atime-preserve", ATIME_PRESERVE_OPTION,
-@@ -1355,6 +1358,10 @@ parse_opt (int key, char *arg, struct argp_state *state)
+@@ -1425,6 +1428,10 @@
        set_subcommand_option (CREATE_SUBCOMMAND);
        break;
  
@@ -129,7 +121,7 @@ index 4f5017d..cbaa9df 100644
      case 'C':
        name_add_dir (arg);
        break;
-@@ -1492,7 +1499,8 @@ parse_opt (int key, char *arg, struct argp_state *state)
+@@ -1567,7 +1574,8 @@
  
      case MTIME_OPTION:
        get_date_or_file (args, "--mtime", arg, &mtime_option);
@@ -139,7 +131,7 @@ index 4f5017d..cbaa9df 100644
        break;
  
      case 'n':
-@@ -1508,7 +1516,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
+@@ -1583,7 +1591,7 @@
        /* Fall through.  */
  
      case NEWER_MTIME_OPTION:
@@ -148,8 +140,8 @@ index 4f5017d..cbaa9df 100644
  	USAGE_ERROR ((0, 0, _("More than one threshold date")));
        get_date_or_file (args,
  			key == NEWER_MTIME_OPTION ? "--newer-mtime"
-@@ -2249,6 +2257,8 @@ decode_options (int argc, char **argv)
-   excluded = new_exclude ();
+@@ -2350,6 +2358,8 @@
+   
    newer_mtime_option.tv_sec = TYPE_MINIMUM (time_t);
    newer_mtime_option.tv_nsec = -1;
 +  mtime_option.tv_sec = TYPE_MINIMUM (time_t);
@@ -157,7 +149,7 @@ index 4f5017d..cbaa9df 100644
    recursion_option = FNM_LEADING_DIR;
    unquote_option = true;
    tar_sparse_major = 1;
-@@ -2490,7 +2490,7 @@ decode_options (int argc, char **argv)
+@@ -2510,7 +2520,7 @@
  		  _("Multiple archive files require '-M' option")));
  
    if (listed_incremental_option
@@ -166,7 +158,7 @@ index 4f5017d..cbaa9df 100644
      option_conflict_error ("--listed-incremental", "--newer");
    
    if (incremental_level != -1 && !listed_incremental_option)
-@@ -2461,6 +2471,13 @@ decode_options (int argc, char **argv)
+@@ -2563,6 +2573,13 @@
  	USAGE_ERROR ((0, 0, _("Cannot concatenate compressed archives")));
      }
  
@@ -180,6 +172,3 @@ index 4f5017d..cbaa9df 100644
    /* It is no harm to use --pax-option on non-pax archives in archive
       reading mode. It may even be useful, since it allows to override
       file attributes from tar headers. Therefore I allow such usage.
--- 
-2.1.4
-
