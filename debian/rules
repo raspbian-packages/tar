@@ -23,8 +23,7 @@ configure-stamp:
 	dh_testdir
 	cp -f /usr/share/misc/config.sub build-aux/config.sub
 	cp -f /usr/share/misc/config.guess build-aux/config.guess
-	aclocal
-	automake
+	autoreconf --force -v --install
 	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure \
 		--prefix=/usr \
 		--libexecdir=/usr/lib/tar \
