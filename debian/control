@@ -3,7 +3,7 @@ Section: utils
 Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
-Build-Depends: debhelper (>> 5), gettext, autoconf, automake, autotools-dev, libacl1-dev, libattr1-dev, libselinux1-dev [linux-any]
+Build-Depends: debhelper (>> 5), gettext, autoconf, automake, autopoint, autotools-dev, libacl1-dev, libattr1-dev, libselinux1-dev [linux-any]
 Standards-Version: 3.9.6
 Vcs-Git: git://git.gag.com/debian/tar
 Vcs-Browser: http://git.gag.com/?p=debian/tar
