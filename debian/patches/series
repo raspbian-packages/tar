@@ -1,3 +1,4 @@
 pristine-tar.diff
 listed03-linux-only
 add-clamp-mtime.diff
+files-from-and-recursive-extract.diff

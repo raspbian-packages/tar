@@ -1,3 +1,10 @@
+tar (1.28-2) unstable; urgency=low
+
+  * patch from upstream to fix --files-from and recursive extract,
+    closes: #800380
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 28 Sep 2015 15:39:02 -0600
+
 tar (1.28-1) unstable; urgency=low
 
   * new upstream version
