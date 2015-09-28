@@ -1,8 +1,6 @@
-diff --git a/src/common.h b/src/common.h
-index edf787c..3cc2011 100644
 --- a/src/common.h
 +++ b/src/common.h
-@@ -725,7 +725,7 @@ int uname_to_uid (char const *uname, uid_t *puid);
+@@ -732,7 +732,7 @@
  void name_init (void);
  void name_add_name (const char *name, int matching_flags);
  void name_add_dir (const char *name);
@@ -11,11 +9,9 @@ index edf787c..3cc2011 100644
  void name_term (void);
  const char *name_next (int change_dirs);
  void name_gather (void);
-diff --git a/src/names.c b/src/names.c
-index 594e7fd..e3e145a 100644
 --- a/src/names.c
 +++ b/src/names.c
-@@ -258,6 +258,21 @@ name_elt_alloc (void)
+@@ -258,6 +258,21 @@
    return elt;
  }
  
@@ -37,7 +33,7 @@ index 594e7fd..e3e145a 100644
  static void
  name_list_adjust (void)
  {
-@@ -276,20 +291,13 @@ name_list_advance (void)
+@@ -276,20 +291,13 @@
    free (elt);
  }
  
@@ -62,7 +58,7 @@ index 594e7fd..e3e145a 100644
    ep->type = NELT_NAME;
    ep->v.name = name;
    name_count++;
-@@ -305,9 +313,10 @@ name_add_dir (const char *name)
+@@ -305,9 +313,10 @@
  }
  
  void
@@ -75,7 +71,7 @@ index 594e7fd..e3e145a 100644
    ep->type = NELT_FILE;
    ep->v.file.name = name;
    ep->v.file.term = term;
-@@ -389,6 +398,15 @@ add_file_id (const char *filename)
+@@ -389,6 +398,15 @@
    file_id_list = p;
    return 0;
  }
@@ -91,7 +87,7 @@ index 594e7fd..e3e145a 100644
  
  enum read_file_list_state  /* Result of reading file name from the list file */
    {
-@@ -428,7 +446,7 @@ read_name_from_file (struct name_elt *ent)
+@@ -428,7 +446,7 @@
    if (counter == name_buffer_length)
      name_buffer = x2realloc (name_buffer, &name_buffer_length);
    name_buffer[counter] = 0;
@@ -100,7 +96,7 @@ index 594e7fd..e3e145a 100644
    return (counter == 0 && c == EOF) ? file_list_end : file_list_success;
  }
  
-@@ -518,7 +536,6 @@ copy_name (struct name_elt *ep)
+@@ -518,7 +536,6 @@
  {
    const char *source;
    size_t source_len;
@@ -108,7 +104,7 @@ index 594e7fd..e3e145a 100644
  
    source = ep->v.name;
    source_len = strlen (source);
-@@ -536,11 +553,7 @@ copy_name (struct name_elt *ep)
+@@ -536,11 +553,7 @@
        name_buffer = xmalloc(name_buffer_length + 2);
      }
    strcpy (name_buffer, source);
@@ -121,7 +117,7 @@ index 594e7fd..e3e145a 100644
  }
  
  
-@@ -553,7 +566,8 @@ static int matching_flags; /* exclude_fnmatch options */
+@@ -553,7 +566,8 @@
     the request to change to the given directory.
  
     Entries of type NELT_FMASK cause updates of the matching_flags
@@ -131,24 +127,20 @@ index 594e7fd..e3e145a 100644
  static struct name_elt *
  name_next_elt (int change_dirs)
  {
-diff --git a/src/tar.c b/src/tar.c
-index cd32379..225c624 100644
 --- a/src/tar.c
 +++ b/src/tar.c
-@@ -1641,7 +1641,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
+@@ -1669,7 +1669,7 @@
        break;
  
      case 'T':
 -      name_add_file (arg, filename_terminator);
 +      name_add_file (arg, filename_terminator, MAKE_INCL_OPTIONS (args));
        /* Indicate we've been given -T option. This is for backward
-         compatibility only, so that `tar cfT archive /dev/null will
-         succeed */
-diff --git a/tests/Makefile.am b/tests/Makefile.am
-index 6684d1d..c71d294 100644
+ 	 compatibility only, so that `tar cfT archive /dev/null will
+ 	 succeed */
 --- a/tests/Makefile.am
 +++ b/tests/Makefile.am
-@@ -43,6 +43,8 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
+@@ -43,6 +43,8 @@
  
  TESTSUITE_AT = \
   T-cd.at\
@@ -157,9 +149,6 @@ index 6684d1d..c71d294 100644
   T-empty.at\
   T-null.at\
   T-rec.at\
-diff --git a/tests/T-dir00.at b/tests/T-dir00.at
-new file mode 100644
-index 0000000..7f89fcf
 --- /dev/null
 +++ b/tests/T-dir00.at
 @@ -0,0 +1,45 @@
@@ -208,9 +197,6 @@ index 0000000..7f89fcf
 +])
 +AT_CLEANUP
 +
-diff --git a/tests/T-dir01.at b/tests/T-dir01.at
-new file mode 100644
-index 0000000..155a373
 --- /dev/null
 +++ b/tests/T-dir01.at
 @@ -0,0 +1,45 @@
@@ -259,11 +245,9 @@ index 0000000..155a373
 +])
 +AT_CLEANUP
 +
-diff --git a/tests/testsuite.at b/tests/testsuite.at
-index 7f8e4c4..f28e86c 100644
 --- a/tests/testsuite.at
 +++ b/tests/testsuite.at
-@@ -205,6 +205,8 @@ m4_include([T-empty.at])
+@@ -205,6 +205,8 @@
  m4_include([T-null.at])
  m4_include([T-zfile.at])
  m4_include([T-nonl.at])
