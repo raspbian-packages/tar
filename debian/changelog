@@ -1,4 +1,4 @@
-tar (1.29-1) UNRELEASED; urgency=medium
+tar (1.29-1) unstable; urgency=medium
 
   * new upstream version, closes: #816072
 
