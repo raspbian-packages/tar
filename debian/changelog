@@ -1,3 +1,9 @@
+tar (1.29-1) UNRELEASED; urgency=medium
+
+  * new upstream version, closes: #816072
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 17 May 2016 12:37:57 -0600
+
 tar (1.28-2) unstable; urgency=low
 
   * patch from upstream to fix --files-from and recursive extract,
