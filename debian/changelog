@@ -1,3 +1,9 @@
+tar (1.29-2) unstable; urgency=medium
+
+  * re-enable parallel builds and increase build verbosity, closes: #824631
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 31 May 2016 11:55:12 -0600
+
 tar (1.29-1) unstable; urgency=medium
 
   * new upstream version, closes: #816072

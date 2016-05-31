@@ -29,6 +29,7 @@ configure-stamp:
 		--libexecdir=/usr/lib/tar \
 		--enable-backup-scripts \
 		--with-lzma=xz \
+		--disable-silent-rules \
 		$(CONFARGS) 
 	touch configure-stamp
 
@@ -38,7 +39,7 @@ build-indep: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" \
-		LDFLAGS="$(LDFLAGS)" $(MAKE)
+		LDFLAGS="$(LDFLAGS)" $(MAKE) $(MAKEFLAGS)
 
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
