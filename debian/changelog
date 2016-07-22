@@ -1,5 +1,6 @@
-tar (1.29-2) unstable; urgency=medium
+tar (1.29b-1) unstable; urgency=medium
 
+  * re-constitute the 1.29 orig.tar with man pages as version 1.29b
   * re-enable parallel builds and increase build verbosity, closes: #824631
   * switch to man pages provided by upstream since 1.28, closes: #827017, 
     #391714, #473228, #524819, #711725, #720877, #766016, #779795.
