@@ -253,7 +253,7 @@ else ${echo} "x - failed to remove lock directory ${lock_dir}."
      exit 1
 fi
 
-tar cf $tmpfile doc/tar.1 doc/rmt.8
+tar xf $tmpfile doc/tar.1 doc/rmt.8
 git add doc/Makefile doc/Makefile.in doc/README doc/tar.1 doc/rmt.8
 
 exit 0
