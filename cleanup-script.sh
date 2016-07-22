@@ -5,7 +5,7 @@
 #
 
 # preserve the man pages upstream has provided since 1.28
-tempfile=$(mktemp -p /tmp tar-doc.XXXXXXXX)
+tmpfile=$(mktemp -p /tmp tar-doc.XXXXXXXX)
 tar cf $tmpfile doc/tar.1 doc/rmt.8
 
 git rm -rf doc
