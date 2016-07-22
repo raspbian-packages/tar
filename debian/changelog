@@ -1,8 +1,10 @@
 tar (1.29-2) unstable; urgency=medium
 
   * re-enable parallel builds and increase build verbosity, closes: #824631
+  * switch to man pages provided by upstream since 1.28, closes: #827017, 
+    #391714, #473228, #524819, #711725, #720877, #766016, #779795.
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 31 May 2016 11:55:12 -0600
+ -- Bdale Garbee <bdale@gag.com>  Fri, 22 Jul 2016 13:13:55 -0600
 
 tar (1.29-1) unstable; urgency=medium
 
