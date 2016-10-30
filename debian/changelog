@@ -1,8 +1,11 @@
-tar (1.29b-2) UNRELEASED; urgency=medium
+tar (1.29b-1.1) unstable; urgency=medium
 
-  * add suggests tar-doc, closes: #856958
+  * Non-maintainer upload.
+  * CVE-2016-6321: Bypassing the extract path name.
+    When extracting, member names containing '..' components are skipped.
+    (Closes: #842339)
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 07 Mar 2017 08:49:50 -0700
+ -- Salvatore Bonaccorso <carnil@debian.org>  Sun, 30 Oct 2016 07:35:31 +0100
 
 tar (1.29b-1) unstable; urgency=medium
 
