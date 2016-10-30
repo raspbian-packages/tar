@@ -1204,6 +1204,26 @@ expand_pax_option (struct tar_args *targs, const char *arg)
   return res;
 }
 
+/* Debian specific environment variable used by pristine-tar to enable use of
+ * longlinks for filenames exactly 100 bytes long. */
+void debian_longlink_hack_init (void) {
+ char *s=getenv ("TAR_LONGLINK_100");
+ if (s && strcmp(s, "1") == 0)
+	 debian_longlink_hack=1;
+ else
+	 debian_longlink_hack=0;
+}
+
+/* pristine-tar sets this environment variable to force fields in longlinks
+ * to be zeroed as was the case in tar 1.26. */
+void pristine_tar_compat_init (void) {
+ char *s=getenv ("PRISTINE_TAR_COMPAT");
+ if (s && strcmp(s, "1") == 0)
+	 pristine_tar_compat=1;
+ else
+	 pristine_tar_compat=0;
+}
+
 
 static uintmax_t
 parse_owner_group (char *arg, uintmax_t field_max, char const **name_option)
@@ -2681,6 +2701,9 @@ main (int argc, char **argv)
   error_hook = checkpoint_flush_actions;
 
   set_quoting_style (0, DEFAULT_QUOTING_STYLE);
+
+  debian_longlink_hack_init ();
+  pristine_tar_compat_init ();
 
   /* Make sure we have first three descriptors available */
   stdopen ();
