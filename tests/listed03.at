@@ -24,6 +24,7 @@ AT_KEYWORDS([listed incremental listed03])
 
 AT_TAR_CHECK([
 AT_UNPRIVILEGED_PREREQ
+test `uname` = "Linux" || AT_SKIP_TEST
 
 mkdir dir
 mkdir dir/sub
