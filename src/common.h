@@ -832,3 +832,5 @@ void finish_deferred_unlinks (void);
 
 /* Module exit.c */
 extern void (*fatal_exit_hook) (void);
+
+GLOBAL int debian_longlink_hack;
