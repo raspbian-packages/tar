@@ -1,3 +1,9 @@
+tar (1.29b-2) unstable; urgency=medium
+
+  * add suggests tar-doc, closes: #856958
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 07 Mar 2017 08:49:50 -0700
+
 tar (1.29b-1) unstable; urgency=medium
 
   * re-constitute the 1.29 orig.tar with man pages as version 1.29b
