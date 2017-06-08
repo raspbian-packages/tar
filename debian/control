@@ -5,8 +5,8 @@ Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 5), gettext, autoconf, automake, autopoint, autotools-dev, libacl1-dev, libattr1-dev, libselinux1-dev [linux-any]
 Standards-Version: 3.9.8
-Vcs-Git: git://git.gag.com/debian/tar
-Vcs-Browser: http://git.gag.com/?p=debian/tar
+Vcs-Git: git://anonscm.debian.org/collab-maint/tar.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/tar.git
 
 Package: tar
 Architecture: any
