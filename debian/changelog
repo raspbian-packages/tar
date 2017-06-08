@@ -1,3 +1,9 @@
+tar (1.29b-3) UNRELEASED; urgency=medium
+
+  * dump test results into build log on make check failure for kfreebsd team
+
+ -- Bdale Garbee <bdale@gag.com>  Thu, 08 Jun 2017 12:20:20 -0600
+
 tar (1.29b-2) unstable; urgency=medium
 
   * add suggests tar-doc, closes: #856958
