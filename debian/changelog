@@ -1,4 +1,4 @@
-tar (1.29b-2) unstable; urgency=medium
+tar (1.29b-2) UNRELEASED; urgency=medium
 
   * add suggests tar-doc, closes: #856958
   * dump test results into build log on make check failure for kfreebsd team
