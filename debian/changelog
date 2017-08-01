@@ -1,3 +1,9 @@
+tar (1.29b-3) UNRELEASED; urgency=medium
+
+  * add depends/conflicts tar version details to tar-scripts, closes: #865428
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 31 Jul 2017 16:08:30 -0800
+
 tar (1.29b-2) unstable; urgency=medium
 
   * add suggests tar-doc, closes: #856958
