@@ -1,3 +1,10 @@
+tar (1.30+dfsg-3) UNRELEASED; urgency=medium
+
+  * elide reference to non-existent section 5 page from section 1 tar manpage,
+    closes: #846490
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 16 May 2018 11:54:07 -0600
+
 tar (1.30+dfsg-2) unstable; urgency=medium
 
   * updated pristine-tar patch from Antonio Terceiro, making it possible for
