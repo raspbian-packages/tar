@@ -4,6 +4,8 @@ tar (1.30+dfsg-2) unstable; urgency=medium
     pristine-tar to ask tar to recreate pre-1.30 broken behavior so that it's
     possible to recover a tar file stored in a repo in the old, broken format.
     closes: #897653
+  * patch from upstream that fixes race condition in dirrem01 and dirrem02
+    tests when building on a slow machine, closes: #897591
 
  -- Bdale Garbee <bdale@gag.com>  Wed, 16 May 2018 01:47:48 -0600
 
