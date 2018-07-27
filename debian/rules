@@ -70,7 +70,7 @@ install: build
 
 	make install bindir=`pwd`/debian/tar/bin prefix=`pwd`/debian/tar/usr \
 		libexecdir=`pwd`/debian/tar/usr/lib/tar 
-	install -m 755 debian/rmt.sh debian/tar/etc/rmt
+	ln -s /usr/sbin/rmt debian/tar/etc/rmt
 	mv debian/tar/usr/lib/tar/rmt debian/tar/usr/sbin/rmt-tar
 	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
 

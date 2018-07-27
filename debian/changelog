@@ -2,8 +2,12 @@ tar (1.30+dfsg-3) UNRELEASED; urgency=medium
 
   * elide reference to non-existent section 5 page from section 1 tar manpage,
     closes: #846490
+  * update README.Debian to reflect ncompress now being in main
+  * remove the NEWS file since it's more than a decade since the latest content
+    and the text there confuses new users
+  * stop delivering the /etc/rmt script, use a symlink instead, closes: #653043
 
- -- Bdale Garbee <bdale@gag.com>  Wed, 16 May 2018 11:54:07 -0600
+ -- Bdale Garbee <bdale@gag.com>  Tue, 22 May 2018 09:23:26 -0600
 
 tar (1.30+dfsg-2) unstable; urgency=medium
 
