@@ -10,6 +10,7 @@ tar (1.30+dfsg-3) UNRELEASED; urgency=medium
 
   [ Ondřej Nový ]
   * d/changelog: Remove trailing whitespaces
+  * d/control: Remove trailing whitespaces
 
  -- Bdale Garbee <bdale@gag.com>  Tue, 22 May 2018 09:23:26 -0600
 
