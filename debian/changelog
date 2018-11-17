@@ -1,4 +1,4 @@
-tar (1.30+dfsg-3) UNRELEASED; urgency=medium
+tar (1.30+dfsg-3) unstable; urgency=medium
 
   * elide reference to non-existent section 5 page from section 1 tar manpage,
     closes: #846490
