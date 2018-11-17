@@ -1,0 +1,6 @@
+The options -Z, --compress, and --uncompress all require that there be a
+'compress' utility installed on the system.  If there is no compress installed
+on your system, you will get errors if you try to use these options to tar.  
+
+While the algorithm used by compress was originally encumbered by patents, 
+enough time has passed that 'ncompress' is now available in Debian main.
