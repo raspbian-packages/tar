@@ -6,8 +6,11 @@ tar (1.30+dfsg-3) UNRELEASED; urgency=medium
   * remove the NEWS file since it's more than a decade since the latest content
     and the text there confuses new users
   * stop delivering the /etc/rmt script, use a symlink instead, closes: #653043
+  * fold in patch for difflink.at (test number 92) that fixes kfreebsd builds,
+    closes: #837351
+  * apply patch to allow test suite to pass on Hurd again, closes: #910985
 
- -- Bdale Garbee <bdale@gag.com>  Tue, 22 May 2018 09:23:26 -0600
+ -- Bdale Garbee <bdale@gag.com>  Fri, 16 Nov 2018 20:57:30 -1000
 
 tar (1.30+dfsg-2) unstable; urgency=medium
 
