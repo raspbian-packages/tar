@@ -10,6 +10,7 @@ tar (1.30+dfsg-3) UNRELEASED; urgency=medium
     closes: #837351
   * apply patch to allow test suite to pass on Hurd again, closes: #910985
   * apply patch to incorporate zstd support, closes: #894065
+  * apply patch to correct Italian translation, closes: #852462
 
  -- Bdale Garbee <bdale@gag.com>  Fri, 16 Nov 2018 21:33:47 -1000
 

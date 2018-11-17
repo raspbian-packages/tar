@@ -1,0 +1,53 @@
+Description: Proper translation for cowardly
+ Cowardly was inconrrectly translated, depriving the Italian message
+ of the funny tone that the original has.
+ .
+ This fixes it by properly translating cowardly, without paraphrasing it into
+ "total refusal".
+ .
+Author: Salvo Tomaselli <tiposchi@tiscali.it>
+Last-Update: 2017-01-24
+
+--- tar-1.29b.orig/po/it.po
++++ tar-1.29b/po/it.po
+@@ -2,25 +2,26 @@
+ # Copyright (C) 2008, 2009, 2010, 2011, 2013, 2014, 2016 Free Software Foundation, Inc.
+ # This file is distributed under the same license as the tar package.
+ #
++#
++#: src/create.c:1592
+ # Lele Gaifax <lele@nautilus.eclipse.it>, 1996.
+ # Marco d'Itri <md@linux.it>, 1998.
+ # Milo Casagrande <milo@milo.name>, 2008-2010, 2011, 2013, 2014, 2016.
+-#
+-#: src/create.c:1592
++# Salvo Tomaselli <tiposchi@tiscali.it>, 2017.
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: tar-1.28.90\n"
+ "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
+ "POT-Creation-Date: 2016-05-16 09:55+0300\n"
+-"PO-Revision-Date: 2016-03-15 12:18+0100\n"
+-"Last-Translator: Milo Casagrande <milo@milo.name>\n"
++"PO-Revision-Date: 2017-01-24 19:06+0100\n"
++"Last-Translator: Salvo Tomaselli <tiposchi@tiscali.it>\n"
+ "Language-Team: Italian <tp@lists.linux.it>\n"
+ "Language: it\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ "Plural-Forms: nplurals=2; plural=(n!=1);\n"
+-"X-Generator: Poedit 1.8.7\n"
++"X-Generator: Lokalize 2.0\n"
+ 
+ #: gnu/argmatch.c:133
+ #, c-format
+@@ -2581,7 +2582,7 @@ msgstr ""
+ 
+ #: src/tar.c:2602
+ msgid "Cowardly refusing to create an empty archive"
+-msgstr "Rifiuto totale di creare un archivio vuoto"
++msgstr "Rifiuto vigliaccamente di creare un archivio vuoto"
+ 
+ #: src/tar.c:2628
+ msgid "Options '-Aru' are incompatible with '-f -'"
