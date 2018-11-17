@@ -1,0 +1,107 @@
+Description: zstd support
+ Accept .tar.zst and .tzst, including magic sniffing.
+Forwarded: accepted upstream
+
+--- tar-1.29b.orig/configure.ac
++++ tar-1.29b/configure.ac
+@@ -250,6 +250,7 @@ TAR_COMPR_PROGRAM(lzip)
+ TAR_COMPR_PROGRAM(lzma)
+ TAR_COMPR_PROGRAM(lzop)
+ TAR_COMPR_PROGRAM(xz)
++TAR_COMPR_PROGRAM(zstd)
+ 
+ AC_MSG_CHECKING(for default archive format)
+ 
+--- tar-1.29b.orig/doc/tar.1
++++ tar-1.29b/doc/tar.1
+@@ -825,6 +825,10 @@ Filter the archive through
+ \fB\-Z\fR, \fB\-\-compress\fR, \fB\-\-uncompress\fR
+ Filter the archive through
+ .BR compress (1).
++.TP
++\fB\-\-zstd\fR
++Filter the archive through
++.BR zstd (1).
+ .SS Local file selection
+ .TP
+ \fB\-\-add\-file\fR=\fIFILE\fR
+--- tar-1.29b.orig/src/buffer.c
++++ tar-1.29b/src/buffer.c
+@@ -270,7 +270,8 @@ enum compress_type {
+   ct_lzip,
+   ct_lzma,
+   ct_lzop,
+-  ct_xz
++  ct_xz,
++  ct_zstd
+ };
+ 
+ static enum compress_type archive_compression_type = ct_none;
+@@ -299,6 +300,7 @@ static struct zip_magic const magic[] =
+   { ct_lzma,     6, "\xFFLZMA" },
+   { ct_lzop,     4, "\211LZO" },
+   { ct_xz,       6, "\xFD" "7zXZ" },
++  { ct_zstd,     4, "\x28\xB5\x2F\xFD" },
+ };
+ 
+ #define NMAGIC (sizeof(magic)/sizeof(magic[0]))
+@@ -314,6 +316,7 @@ static struct zip_program zip_program[]
+   { ct_lzma,     XZ_PROGRAM,       "-J" },
+   { ct_lzop,     LZOP_PROGRAM,     "--lzop" },
+   { ct_xz,       XZ_PROGRAM,       "-J" },
++  { ct_zstd,     ZSTD_PROGRAM,     "--zstd" },
+   { ct_none }
+ };
+ 
+--- tar-1.29b.orig/src/suffix.c
++++ tar-1.29b/src/suffix.c
+@@ -45,6 +45,7 @@ static struct compression_suffix compres
+   { S(lzo,  LZOP) },
+   { S(xz,   XZ) },
+   { S(txz,  XZ) }, /* Slackware */
++  { S(zst,  ZSTD) },
+   { NULL }
+ #undef S
+ #undef __CAT2__
+--- tar-1.29b.orig/src/tar.c
++++ tar-1.29b/src/tar.c
+@@ -348,7 +348,8 @@ enum
+   WARNING_OPTION,
+   XATTR_OPTION,
+   XATTR_EXCLUDE,
+-  XATTR_INCLUDE
++  XATTR_INCLUDE,
++  ZSTD_OPTION,
+ };
+ 
+ static char const doc[] = N_("\
+@@ -682,6 +683,7 @@ static struct argp_option options[] = {
+   {"lzma", LZMA_OPTION, 0, 0, NULL, GRID+1 },
+   {"lzop", LZOP_OPTION, 0, 0, NULL, GRID+1 },
+   {"xz", 'J', 0, 0, NULL, GRID+1 },
++  {"zstd", ZSTD_OPTION, 0, 0, NULL, GRID+1 },
+ #undef GRID
+ 
+ #define GRID 100
+@@ -1129,6 +1131,10 @@ tar_help_filter (int key, const char *te
+       s = xasprintf (_("filter the archive through %s"), XZ_PROGRAM);
+       break;
+ 
++    case ZSTD_OPTION:
++      s = xasprintf (_("filter the archive through %s"), ZSTD_PROGRAM);
++      break;
++
+     case ARGP_KEY_HELP_EXTRA:
+       {
+ 	const char *tstr;
+@@ -1673,6 +1679,10 @@ parse_opt (int key, char *arg, struct ar
+       set_use_compress_program_option (COMPRESS_PROGRAM, args->loc);
+       break;
+ 
++    case ZSTD_OPTION:
++      set_use_compress_program_option (ZSTD_PROGRAM, args->loc);
++      break;
++
+     case ATIME_PRESERVE_OPTION:
+       atime_preserve_option =
+ 	(arg
