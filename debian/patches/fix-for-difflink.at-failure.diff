@@ -1,0 +1,14 @@
+diff --git a/tests/difflink.at b/tests/difflink.at
+index eadfb088..4e011760 100644
+--- a/tests/difflink.at
++++ b/tests/difflink.at
+@@ -21,7 +21,7 @@ mkdir a
+ genfile -f a/x
+ ln -s x a/y
+-ln a/y a/z
+-tar cf a.tar a
++ln -P a/y a/z
++tar cf a.tar a/x a/y a/z
+ rm a/z
+ ln -s x a/z
+ tar df a.tar
