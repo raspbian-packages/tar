@@ -1,15 +1,13 @@
-tar (1.30+dfsg-4) UNRELEASED; urgency=medium
+tar (1.30+dfsg-3.1) unstable; urgency=medium
 
-  [ Ondřej Nový ]
-  * d/changelog: Remove trailing whitespaces
-  * d/control: Remove trailing whitespaces
-  * d/rules: Remove trailing whitespaces
+  * Non-maintainer upload.
+  * Infinite read loop in sparse_dump_region function (CVE-2018-20482)
+    (Closes: #917377)
 
- -- Bdale Garbee <bdale@gag.com>  Fri, 16 Nov 2018 21:33:47 -1000
+ -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 31 Dec 2018 21:08:52 +0100
 
 tar (1.30+dfsg-3) unstable; urgency=medium
 
-  [ Bdale Garbee ]
   * elide reference to non-existent section 5 page from section 1 tar manpage,
     closes: #846490
   * update README.Debian to reflect ncompress now being in main
@@ -46,7 +44,7 @@ tar (1.30+dfsg-1) unstable; urgency=medium
 tar (1.29b-2) unstable; urgency=medium
 
   * add suggests tar-doc, closes: #856958
-  * increase test suite verbosity and dump test results into build log on
+  * increase test suite verbosity and dump test results into build log on 
     make check failure for kfreebsd team
   * move primary git repo to collab-maint
 
@@ -65,7 +63,7 @@ tar (1.29b-1) unstable; urgency=medium
 
   * re-constitute the 1.29 orig.tar with man pages as version 1.29b
   * re-enable parallel builds and increase build verbosity, closes: #824631
-  * switch to man pages provided by upstream since 1.28, closes: #827017,
+  * switch to man pages provided by upstream since 1.28, closes: #827017, 
     #391714, #473228, #524819, #711725, #720877, #766016, #779795.
 
  -- Bdale Garbee <bdale@gag.com>  Fri, 22 Jul 2016 13:13:55 -0600
@@ -86,8 +84,8 @@ tar (1.28-2) unstable; urgency=low
 tar (1.28-1) unstable; urgency=low
 
   * new upstream version
-  * patch from Reiner Herrman that sets timestamp in generated manpage to
-    latest changelog date to make building the package reproducible,
+  * patch from Reiner Herrman that sets timestamp in generated manpage to 
+    latest changelog date to make building the package reproducible, 
     closes: #774463
   * patch from Lunar adding --clamp-mtime option for reproducible builds,
     closes: #790415
@@ -96,7 +94,7 @@ tar (1.28-1) unstable; urgency=low
 
 tar (1.27.1-2) unstable; urgency=low
 
-  * patch from David Gilman adds watch file with signature verification,
+  * patch from David Gilman adds watch file with signature verification, 
     closes: #742351
   * patch from David Gilman fixes problem with multi-line descriptions,
     closes: #593149
@@ -180,12 +178,12 @@ tar (1.26+dfsg-6) unstable; urgency=low
 tar (1.26+dfsg-5) unstable; urgency=low
 
   [ Wookey ]
-  * Fix included gnulib so we don't get FTBFS with eglibc-2.16,
+  * Fix included gnulib so we don't get FTBFS with eglibc-2.16, 
     closes: #693352, #701419
 
   [ Bdale Garbee ]
   * update mailcap entries to use %s, closes: #681302
-  * include the http://www.gnu.org/software/tar/utils/tarcat script for use
+  * include the http://www.gnu.org/software/tar/utils/tarcat script for use 
     with multi-volume archives, closes: #492036
 
  -- Bdale Garbee <bdale@gag.com>  Mon, 01 Apr 2013 09:17:04 -0600
@@ -237,11 +235,11 @@ tar (1.25-3) unstable; urgency=low
 
 tar (1.25-2) unstable; urgency=low
 
-  * accept a "hack" from Joey Hess to work around an unfortunate side effect
+  * accept a "hack" from Joey Hess to work around an unfortunate side effect 
     of removing the patch to src/create.c regarding links of 100 chars in
-    1.23-4 that broke pristine-tar in some cases.  The "fix" is to support
-    the old behavior if the environment variable TAR_LONGLINK_100 is set,
-    which pristine-tar knows about and will use when necessary but which
+    1.23-4 that broke pristine-tar in some cases.  The "fix" is to support 
+    the old behavior if the environment variable TAR_LONGLINK_100 is set, 
+    which pristine-tar knows about and will use when necessary but which 
     should never be used by anyone else!  closes: #603231
 
  -- Bdale Garbee <bdale@gag.com>  Fri, 12 Nov 2010 02:31:25 -0700
@@ -326,11 +324,11 @@ tar (1.22-1) unstable; urgency=low
 
   * new upstream version
   * version the Replaces entry for cpio, closes: #483355
-  * move config.* update to configure target, yields a smaller diff that
+  * move config.* update to configure target, yields a smaller diff that 
     doesn't clash with git-buildpackage... already had autotools-dev build dep!
   * script debian/tarman contributed by Marcus Watts now used to create tar.1
     by processing usage text in source code!  Partial fix for #473328.
-    closes: #515578, #429776, #411707,
+    closes: #515578, #429776, #411707, 
 
  -- Bdale Garbee <bdale@gag.com>  Fri, 03 Apr 2009 01:33:52 -0600
 
@@ -398,9 +396,9 @@ tar (1.16.1-1) unstable; urgency=low
 
 tar (1.16-2) unstable; urgency=high
 
-  * patch from Kees Cook via upstream to disable handling of GNUTYPE_NAMES
-    by default and add a new command-line switch --allow-name-mangling to
-    re-enable it, as a fix for directory traversal bug (CVE-2006-6097),
+  * patch from Kees Cook via upstream to disable handling of GNUTYPE_NAMES 
+    by default and add a new command-line switch --allow-name-mangling to 
+    re-enable it, as a fix for directory traversal bug (CVE-2006-6097), 
     closes: #399845
 
  -- Bdale Garbee <bdale@gag.com>  Fri,  1 Dec 2006 09:19:02 -0700
@@ -413,7 +411,7 @@ tar (1.16-1) unstable; urgency=medium
     to work around test suite repeatability problems, closes: #377330, #379393
   * accept patch from Raphael Bossek to zero nanoseconds, closes: #329843
   * update man page to reflect change in -l definition and other misc changes
-    to options since man page was last updated,
+    to options since man page was last updated, 
     closes: #384508, #391718, 361932, #315506
   * stop delivering upstream README, closes: #323232
 
@@ -422,7 +420,7 @@ tar (1.16-1) unstable; urgency=medium
 tar (1.15.91-2) unstable; urgency=low
 
   * add a NEWS.Debian file that communicates the change in wildcard processing
-  * re-institute the patch for filenames that are exactly 100 characters in
+  * re-institute the patch for filenames that are exactly 100 characters in 
     length originally reported in #230910, closes: #376909
 
  -- Bdale Garbee <bdale@gag.com>  Thu,  6 Jul 2006 19:30:46 -0600
@@ -453,7 +451,7 @@ tar (1.15.1dfsg-2) unstable; urgency=low
 
 tar (1.15.1dfsg-1) unstable; urgency=low
 
-  * remove the documentation source from this package, since it is licensed
+  * remove the documentation source from this package, since it is licensed 
     under the GFDL with invariant cover texts that upstream is unwilling or
     unable to to remove, closes: #357259
   * remove install-info call from postinst, since it is no longer relevant
@@ -473,7 +471,7 @@ tar (1.15.1-6) unstable; urgency=low
 
 tar (1.15.1-5) unstable; urgency=low
 
-  * patch from Goswin von Brederlow to sort tar output in test suite to
+  * patch from Goswin von Brederlow to sort tar output in test suite to 
     compensate for different file order when ext3 option dir_index is enabled
     on build system, first seen on amd64 autobuilder, closes: #354847
 
@@ -506,7 +504,7 @@ tar (1.15.1-3) unstable; urgency=high
 
 tar (1.15.1-2) unstable; urgency=low
 
-  * patch from LaMont to fix gcc-4.0 error in the test suite,
+  * patch from LaMont to fix gcc-4.0 error in the test suite, 
     closes: #308815, #310830
   * patch for de.po from Jens Seidel, closes: #313900
   * fix amanda upstream URL in the info pages, closes: #310158
@@ -517,7 +515,7 @@ tar (1.15.1-2) unstable; urgency=low
 tar (1.15.1-1) unstable; urgency=low
 
   * new upstream version, closes: #292255, #287251, #255067
-  * fetch tests/append.at from CVS since it was omitted from the 1.15.1
+  * fetch tests/append.at from CVS since it was omitted from the 1.15.1 
     tarball, and update the regression test invocation in debian/rules
   * tweaks to man page, closes: #265615
   * add --libexecdir definition to configure call, closes: #307070, #291068
@@ -529,7 +527,7 @@ tar (1.15.1-1) unstable; urgency=low
 
 tar (1.14-2) unstable; urgency=low
 
-  * patch from Paul Eggert that does a better job of eliminating the
+  * patch from Paul Eggert that does a better job of eliminating the 
     dependency on (buggy) valloc, closes: #234422, #248897
   * patch for typo in upstream po/de.po, closes: #154511
   * switch from dh_installmanpages to dh_installman
@@ -556,7 +554,7 @@ tar (1.13.93-4) unstable; urgency=high
 
 tar (1.13.93-3) unstable; urgency=high
 
-  * patch from upstream converts lone zero block errors to warnings,
+  * patch from upstream converts lone zero block errors to warnings, 
     closes: #235821
 
  -- Bdale Garbee <bdale@gag.com>  Fri, 12 Mar 2004 17:02:47 -0700
@@ -576,7 +574,7 @@ tar (1.13.93-1) unstable; urgency=low
 
 tar (1.13.92-5) unstable; urgency=low
 
-  * patch from Paul Eggert to revert bogus behavior where POSIXLY_CORRECT
+  * patch from Paul Eggert to revert bogus behavior where POSIXLY_CORRECT 
     set in the environment forced 'pax' format archives, closes: #230872
   * add a lintian override for rmt's man page, since delivering it as an
     alternative makes the filename no longer match the script and symlink
@@ -617,7 +615,7 @@ tar (1.13.92-1) unstable; urgency=low
 
 tar (1.13.25-6) unstable; urgency=low
 
-  * accept patch from Goswin Brederlow to hard-code RSH definition in rules
+  * accept patch from Goswin Brederlow to hard-code RSH definition in rules 
     file, eliminating rsh-client from build deps, closes: #185594, #200042
   * patch from Marc SCHAEFER <schaefer@alphanet.ch> to fix symlink extraction
     as empty files, closes: #149532
@@ -687,11 +685,11 @@ tar (1.13.22-1) unstable; urgency=medium
         58890 Fixed, I think -- at least, I can't reproduce it now.
         65719 Not a bug? last message in that bug report says it works for him.
         77664 Not a bug.  In that context FOO:BAR means 'file BAR on host FOO'.
-        78179 Sorry, I don't follow this report.  Tar does strip leading '/'s
+        78179 Sorry, I don't follow this report.  Tar does strip leading '/'s 
         	for me.
         83458 Fixed.
         83735 Fixed.
-        85400 Fixed for the info page only.  The man page is not part of
+        85400 Fixed for the info page only.  The man page is not part of 
         	tar-1.13.20.
         90794 This partly seems to be a Debian packaging problem; see 94257.
         94287 Fixed.
@@ -741,7 +739,7 @@ tar (1.13.17-2) frozen unstable; urgency=low
 tar (1.13.17-1) unstable; urgency=low
 
   * new upstream source from alpha.gnu.org recommended by uptream maintainer
-    Paul Eggert.
+    Paul Eggert.  
   * this version should handle multibyte encoded filenames, closes: #25140
   * upstream says the problem reported with -g is unreproducible in this
     version, closes: #23511
@@ -879,7 +877,7 @@ tar (1.12-6) frozen unstable; urgency=low
 
 tar (1.12-5) frozen unstable; urgency=low
 
-  * fix for erroneous time reports from --totals from Rob Browning,
+  * fix for erroneous time reports from --totals from Rob Browning, 
     closes 18345
   * add --numeric-owner to man page, closes 20801
   * add some examples to the man page, closes 20290
@@ -967,7 +965,7 @@ Sun Apr 14 21:50:21 MDT 1996	Bdale Garbee	<bdale@gag.com>
 Wed Dec 27 00:29:37 MST 1995	Bdale Garbee	<bdale@gag.com>
 
   * fixed a null pointer dereference when the username on a remote
-    tape reference was omitted... this closes several essentially
+    tape reference was omitted... this closes several essentially 
     duplicate bug reports about segmentation violation core dumps.
 
 Sun Dec  3 01:13:19 MST 1995	Bdale Garbee	<bdale@gag.com>

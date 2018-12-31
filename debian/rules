@@ -30,7 +30,7 @@ configure-stamp:
 		--enable-backup-scripts \
 		--with-lzma=xz \
 		--disable-silent-rules \
-		$(CONFARGS)
+		$(CONFARGS) 
 	touch configure-stamp
 
 build: build-arch build-indep
@@ -69,7 +69,7 @@ install: build
 	dh_installdirs
 
 	make install bindir=`pwd`/debian/tar/bin prefix=`pwd`/debian/tar/usr \
-		libexecdir=`pwd`/debian/tar/usr/lib/tar
+		libexecdir=`pwd`/debian/tar/usr/lib/tar 
 	ln -s /usr/sbin/rmt debian/tar/etc/rmt
 	mv debian/tar/usr/lib/tar/rmt debian/tar/usr/sbin/rmt-tar
 	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
