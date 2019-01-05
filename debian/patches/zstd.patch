@@ -2,8 +2,8 @@ Description: zstd support
  Accept .tar.zst and .tzst, including magic sniffing.
 Forwarded: accepted upstream
 
---- tar-1.29b.orig/configure.ac
-+++ tar-1.29b/configure.ac
+--- tar-1.30+dfsg.orig/configure.ac
++++ tar-1.30+dfsg/configure.ac
 @@ -250,6 +250,7 @@ TAR_COMPR_PROGRAM(lzip)
  TAR_COMPR_PROGRAM(lzma)
  TAR_COMPR_PROGRAM(lzop)
@@ -12,9 +12,9 @@ Forwarded: accepted upstream
  
  AC_MSG_CHECKING(for default archive format)
  
---- tar-1.29b.orig/doc/tar.1
-+++ tar-1.29b/doc/tar.1
-@@ -825,6 +825,10 @@ Filter the archive through
+--- tar-1.30+dfsg.orig/doc/tar.1
++++ tar-1.30+dfsg/doc/tar.1
+@@ -831,6 +831,10 @@ Filter the archive through
  \fB\-Z\fR, \fB\-\-compress\fR, \fB\-\-uncompress\fR
  Filter the archive through
  .BR compress (1).
@@ -25,9 +25,9 @@ Forwarded: accepted upstream
  .SS Local file selection
  .TP
  \fB\-\-add\-file\fR=\fIFILE\fR
---- tar-1.29b.orig/src/buffer.c
-+++ tar-1.29b/src/buffer.c
-@@ -270,7 +270,8 @@ enum compress_type {
+--- tar-1.30+dfsg.orig/src/buffer.c
++++ tar-1.30+dfsg/src/buffer.c
+@@ -281,7 +281,8 @@ enum compress_type {
    ct_lzip,
    ct_lzma,
    ct_lzop,
@@ -37,7 +37,7 @@ Forwarded: accepted upstream
  };
  
  static enum compress_type archive_compression_type = ct_none;
-@@ -299,6 +300,7 @@ static struct zip_magic const magic[] =
+@@ -310,6 +311,7 @@ static struct zip_magic const magic[] =
    { ct_lzma,     6, "\xFFLZMA" },
    { ct_lzop,     4, "\211LZO" },
    { ct_xz,       6, "\xFD" "7zXZ" },
@@ -45,7 +45,7 @@ Forwarded: accepted upstream
  };
  
  #define NMAGIC (sizeof(magic)/sizeof(magic[0]))
-@@ -314,6 +316,7 @@ static struct zip_program zip_program[]
+@@ -325,6 +327,7 @@ static struct zip_program zip_program[]
    { ct_lzma,     XZ_PROGRAM,       "-J" },
    { ct_lzop,     LZOP_PROGRAM,     "--lzop" },
    { ct_xz,       XZ_PROGRAM,       "-J" },
@@ -53,9 +53,9 @@ Forwarded: accepted upstream
    { ct_none }
  };
  
---- tar-1.29b.orig/src/suffix.c
-+++ tar-1.29b/src/suffix.c
-@@ -45,6 +45,7 @@ static struct compression_suffix compres
+--- tar-1.30+dfsg.orig/src/suffix.c
++++ tar-1.30+dfsg/src/suffix.c
+@@ -46,6 +46,7 @@ static struct compression_suffix compres
    { S(lzo,  LZOP) },
    { S(xz,   XZ) },
    { S(txz,  XZ) }, /* Slackware */
@@ -63,8 +63,8 @@ Forwarded: accepted upstream
    { NULL }
  #undef S
  #undef __CAT2__
---- tar-1.29b.orig/src/tar.c
-+++ tar-1.29b/src/tar.c
+--- tar-1.30+dfsg.orig/src/tar.c
++++ tar-1.30+dfsg/src/tar.c
 @@ -348,7 +348,8 @@ enum
    WARNING_OPTION,
    XATTR_OPTION,
@@ -94,7 +94,7 @@ Forwarded: accepted upstream
      case ARGP_KEY_HELP_EXTRA:
        {
  	const char *tstr;
-@@ -1673,6 +1679,10 @@ parse_opt (int key, char *arg, struct ar
+@@ -1670,6 +1676,10 @@ parse_opt (int key, char *arg, struct ar
        set_use_compress_program_option (COMPRESS_PROGRAM, args->loc);
        break;
  
