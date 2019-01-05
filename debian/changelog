@@ -1,3 +1,11 @@
+tar (1.30+dfsg-4) unstable; urgency=medium
+
+  * merge NMU 
+  * update standards version
+  * include upstream homepage reference, closes: #888210
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 05 Jan 2019 16:15:25 -0700
+
 tar (1.30+dfsg-3.1) unstable; urgency=medium
 
   * Non-maintainer upload.

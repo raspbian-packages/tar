@@ -4,9 +4,10 @@ Priority: required
 Maintainer: Bdale Garbee <bdale@gag.com>
 Uploaders: Carl Worth <cworth@cworth.org>
 Build-Depends: debhelper (>> 10), gettext, autoconf, automake, autopoint, libacl1-dev, libattr1-dev, libselinux1-dev [linux-any]
-Standards-Version: 4.0.0
+Standards-Version: 4.3.0
 Vcs-Git: https://salsa.debian.org/debian/tar.git
 Vcs-Browser: https://salsa.debian.org/debian/tar
+Homepage: https://www.gnu.org/software/tar/
 
 Package: tar
 Architecture: any
