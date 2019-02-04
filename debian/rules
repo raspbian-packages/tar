@@ -78,7 +78,8 @@ install: build
 	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/tar-restore
 	mv debian/tar/usr/lib/tar/backup.sh debian/tar-scripts/usr/lib/tar/
 	mv debian/tar/usr/lib/tar/dump-remind debian/tar-scripts/usr/lib/tar/
-
+	rmdir debian/tar/usr/lib
+	
 # Build architecture-independent files here.
 binary-indep: build install
 
