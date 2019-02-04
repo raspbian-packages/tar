@@ -1,6 +1,10 @@
 tar (1.30+dfsg-5) unstable; urgency=medium
 
   * don't deliver empty /usr/lib/tar in tar package, closes: #919493
+  * switched to upstream man pages as of 1.29b, closes: #729980, #391060
+  * add references to the non-free tar-doc package, and the URL for the
+    tar documentation on the FSF's web site to README.Debian, 
+    closes: #711726
 
  -- Bdale Garbee <bdale@gag.com>  Sun, 03 Feb 2019 21:07:52 -0700
 
