@@ -1,3 +1,10 @@
+tar (1.30+dfsg-6) unstable; urgency=medium
+
+  * eliminate ancient prerm cleanup code that breaks with merged /usr, 
+    and is no longer considered useful, closes: #926722
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 23 Apr 2019 10:05:54 -0600
+
 tar (1.30+dfsg-5) unstable; urgency=medium
 
   * change libexecdir in configure to /usr/sbin, closes: #760247, #919493
