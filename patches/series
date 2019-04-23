@@ -1,0 +1,10 @@
+pristine-tar.diff
+listed03-linux-only
+rmt.8-header-wrong
+fix-for-difflink.at-failure.diff
+fix-race-in-dirrem01-and-dirrem02.diff
+elide-reference-to-section-5-manpage.diff
+oldgnu-unknown-mode-bits.patch
+zstd.patch
+proper_it_translation.patch
+Fix-CVE-2018-20482.patch
