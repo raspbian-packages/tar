@@ -1,3 +1,9 @@
+tar (1.30+dfsg-7) unstable; urgency=medium
+
+  * remove libattr1-dev build-dep, as we no longer use it, closes: #953902
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 14 Mar 2020 14:24:29 -0600
+
 tar (1.30+dfsg-6) unstable; urgency=medium
 
   * eliminate ancient prerm cleanup code that breaks with merged /usr, 
