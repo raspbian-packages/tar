@@ -384,7 +384,7 @@ static bool
 mode_to_chars (mode_t v, char *p, size_t s)
 {
   /* In the common case where the internal and external mode bits are the same,
-     and we are not using POSIX or GNU format,
+     and we are not using POSIX or GNU formats,
      propagate all unknown bits to the external mode.
      This matches historical practice.
      Otherwise, just copy the bits we know about.  */
@@ -396,6 +396,7 @@ mode_to_chars (mode_t v, char *p, size_t s)
       && S_IROTH == TOREAD && S_IWOTH == TOWRITE && S_IXOTH == TOEXEC
       && archive_format != POSIX_FORMAT
       && archive_format != USTAR_FORMAT
+      && archive_format != OLDGNU_FORMAT
       && archive_format != GNU_FORMAT)
     {
       negative = v < 0;
