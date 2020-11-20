@@ -16,9 +16,11 @@ Last-Update: 2018-10-14
 
 ---
 
---- tar-1.30+dfsg.orig/src/create.c
-+++ tar-1.30+dfsg/src/create.c
-@@ -384,7 +384,7 @@ static bool
+Index: tar.git/src/create.c
+===================================================================
+--- tar.git.orig/src/create.c	2020-11-20 14:29:25.259596846 +0000
++++ tar.git/src/create.c	2020-11-20 14:29:25.259596846 +0000
+@@ -383,7 +383,7 @@
  mode_to_chars (mode_t v, char *p, size_t s)
  {
    /* In the common case where the internal and external mode bits are the same,
@@ -27,7 +29,7 @@ Last-Update: 2018-10-14
       propagate all unknown bits to the external mode.
       This matches historical practice.
       Otherwise, just copy the bits we know about.  */
-@@ -396,6 +396,7 @@ mode_to_chars (mode_t v, char *p, size_t
+@@ -395,6 +395,7 @@
        && S_IROTH == TOREAD && S_IWOTH == TOWRITE && S_IXOTH == TOEXEC
        && archive_format != POSIX_FORMAT
        && archive_format != USTAR_FORMAT

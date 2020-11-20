@@ -1,3 +1,10 @@
+tar (1.32+dfsg-1) unstable; urgency=medium
+
+  * New upstream version; closes: #892273
+  * Huge thanks to Bdale for maintaining tar since 1995; closes: #973844
+
+ -- Janos Lenart <ocsi@debian.org>  Fri, 20 Nov 2020 09:52:51 +0000
+
 tar (1.30+dfsg-7) unstable; urgency=medium
 
   * remove libattr1-dev build-dep, as we no longer use it, closes: #953902
