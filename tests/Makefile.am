@@ -1,6 +1,6 @@
 # Makefile for GNU tar regression tests.
 
-# Copyright 1996-1997, 1999-2001, 2003-2007, 2009, 2012-2015 Free Software
+# Copyright 1996-2019 Free Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -17,9 +17,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-EXTRA_DIST = $(TESTSUITE_AT) testsuite package.m4 star/README star/quicktest.sh
+EXTRA_DIST = $(TESTSUITE_AT) \
+  testsuite package.m4 star/README star/quicktest.sh \
+  compress.m4
+
 DISTCLEANFILES       = atconfig $(check_SCRIPTS)
 MAINTAINERCLEANFILES = Makefile.in $(TESTSUITE)
+CLEANFILES =
 
 ## ------------ ##
 ## package.m4.  ##
@@ -43,6 +47,7 @@ $(srcdir)/package.m4: $(top_srcdir)/configure.ac
 
 TESTSUITE_AT = \
  testsuite.at\
+ compress.m4\
  T-cd.at\
  T-dir00.at\
  T-dir01.at\
@@ -66,6 +71,11 @@ TESTSUITE_AT = \
  chtype.at\
  comprec.at\
  comperr.at\
+ checkpoint/defaults.at\
+ checkpoint/interval.at\
+ checkpoint/dot.at\
+ checkpoint/dot-compat.at\
+ checkpoint/dot-int.at\
  delete01.at\
  delete02.at\
  delete03.at\
@@ -228,6 +238,9 @@ TESTSUITE_AT = \
  spmvp00.at\
  spmvp01.at\
  spmvp10.at\
+ sptrcreat.at\
+ sptrdiff00.at\
+ sptrdiff01.at\
  time01.at\
  time02.at\
  truncate.at\

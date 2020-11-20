@@ -1,6 +1,6 @@
 /* Unlink files.
 
-   Copyright 2009, 2013-2014, 2016-2017 Free Software Foundation, Inc.
+   Copyright 2009-2019 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -127,7 +127,9 @@ flush_deferred_unlinks (bool force)
 		    case EEXIST:
 		      /* OpenSolaris >=10 sets EEXIST instead of ENOTEMPTY
 			 if trying to remove a non-empty directory */
+#if defined ENOTEMPTY && ENOTEMPTY != EEXIST
 		    case ENOTEMPTY:
+#endif
 		      /* Keep the record in list, in the hope we'll
 			 be able to remove it later */
 		      prev = p;
