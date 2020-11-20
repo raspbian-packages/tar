@@ -1,7 +1,6 @@
 /* Charset handling for GNU tar.
 
-   Copyright 2004, 2006-2007, 2013-2014, 2016-2017 Free Software
-   Foundation, Inc.
+   Copyright 2004-2019 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -36,10 +35,13 @@
 # define iconv_open(tocode, fromcode) ((iconv_t) -1)
 
 # undef iconv
-# define iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft) ((size_t) 0)
+# define iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft) (errno = ENOSYS, (size_t) -1)
 
 # undef iconv_close
 # define iconv_close(cd) 0
+
+# undef iconv_t
+# define iconv_t int
 
 #endif
 
@@ -65,10 +67,9 @@ bool
 utf8_convert (bool to_utf, char const *input, char **output)
 {
   char ICONV_CONST *ib;
-  char *ob;
+  char *ob, *ret;
   size_t inlen;
   size_t outlen;
-  size_t rc;
   iconv_t cd = utf8_init (to_utf);
 
   if (cd == 0)
@@ -81,11 +82,27 @@ utf8_convert (bool to_utf, char const *input, char **output)
 
   inlen = strlen (input) + 1;
   outlen = inlen * MB_LEN_MAX + 1;
-  ob = *output = xmalloc (outlen);
+  ob = ret = xmalloc (outlen);
   ib = (char ICONV_CONST *) input;
-  rc = iconv (cd, &ib, &inlen, &ob, &outlen);
+  /* According to POSIX, "if iconv() encounters a character in the input
+     buffer that is valid, but for which an identical character does not
+     exist in the target codeset, iconv() shall perform an
+     implementation-defined conversion on this character." It will "update
+     the variables pointed to by the arguments to reflect the extent of the
+     conversion and return the number of non-identical conversions performed".
+     On error, it returns -1. 
+     In other words, non-zero return always indicates failure, either because
+     the input was not fully converted, or because it was converted in a
+     non-reversible way.
+   */
+  if (iconv (cd, &ib, &inlen, &ob, &outlen) != 0)
+    {
+      free (ret);
+      return false;
+    }
   *ob = 0;
-  return rc != -1;
+  *output = ret;
+  return true;
 }
 
 
