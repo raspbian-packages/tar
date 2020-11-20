@@ -439,7 +439,10 @@ wsnode_free (struct wordsplit_node *p)
 {
   if (p->flags & _WSNF_WORD)
     free (p->v.word);
+  _Pragma("GCC diagnostic push")
+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
   free (p);
+  _Pragma("GCC diagnostic pop")
 }
 
 static void
@@ -535,9 +538,12 @@ wordsplit_add_segm (struct wordsplit *wsp, size_t beg, size_t end, int flg)
   rc = wsnode_new (wsp, &node);
   if (rc)
     return rc;
+  _Pragma("GCC diagnostic push")
+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
   node->flags = flg & ~(_WSNF_WORD | _WSNF_EMPTYOK);
   node->v.segm.beg = beg;
   node->v.segm.end = end;
+  _Pragma("GCC diagnostic pop")
   wsnode_append (wsp, node);
   return 0;
 }
@@ -924,7 +930,10 @@ node_split_prefix (struct wordsplit *wsp,
       newnode->v.segm.end = newnode->v.segm.beg + len;
     }
   newnode->flags |= flg;
+  _Pragma("GCC diagnostic push")
+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
   *ptail = newnode;
+  _Pragma("GCC diagnostic pop")
   return 0;
 }
 
@@ -1199,6 +1208,8 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
 	return 1;
       wsnode_insert (wsp, newnode, *ptail, 0);
       *ptail = newnode;
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
       newnode->flags = _WSNF_WORD | flg;
       newnode->v.word = malloc (3);
       if (!newnode->v.word)
@@ -1206,6 +1217,7 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
       newnode->v.word[0] = '$';
       newnode->v.word[1] = str[0];
       newnode->v.word[2] = 0;
+      _Pragma("GCC diagnostic pop")
       *pend = str;
       return 0;
     }
@@ -1363,9 +1375,12 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
 	      return 1;
 	    }
 	  wsnode_insert (wsp, newnode, *ptail, 0);
+         _Pragma("GCC diagnostic push")
+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 	  *ptail = newnode;
 	  newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
 	  newnode->v.word = value;
+         _Pragma("GCC diagnostic pop")
 	}
       else if (*value == 0)
 	{
@@ -1374,8 +1389,11 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
 	  if (wsnode_new (wsp, &newnode))
 	    return 1;
 	  wsnode_insert (wsp, newnode, *ptail, 0);
+         _Pragma("GCC diagnostic push")
+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 	  *ptail = newnode;
 	  newnode->flags = _WSNF_NULL;
+         _Pragma("GCC diagnostic pop")
 	}
       else
 	{
@@ -1408,12 +1426,15 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
 	return 1;
       wsnode_insert (wsp, newnode, *ptail, 0);
       *ptail = newnode;
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
       newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
       newnode->v.word = malloc (size + 1);
       if (!newnode->v.word)
 	return _wsplt_nomem (wsp);
       memcpy (newnode->v.word, start, size);
       newnode->v.word[size] = 0;
+      _Pragma("GCC diagnostic pop")
     }
   else
     {
@@ -1421,7 +1442,10 @@ expvar (struct wordsplit *wsp, const char *str, size_t len,
 	return 1;
       wsnode_insert (wsp, newnode, *ptail, 0);
       *ptail = newnode;
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
       newnode->flags = _WSNF_NULL;
+      _Pragma("GCC diagnostic pop")
     }
   return 0;
 }
@@ -1589,8 +1613,11 @@ expcmd (struct wordsplit *wsp, const char *str, size_t len,
 	    return 1;
 	  wsnode_insert (wsp, newnode, *ptail, 0);
 	  *ptail = newnode;
+         _Pragma("GCC diagnostic push")
+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 	  newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
 	  newnode->v.word = value;
+         _Pragma("GCC diagnostic pop")
 	}
       else if (*value == 0)
 	{
@@ -1599,8 +1626,11 @@ expcmd (struct wordsplit *wsp, const char *str, size_t len,
 	  if (wsnode_new (wsp, &newnode))
 	    return 1;
 	  wsnode_insert (wsp, newnode, *ptail, 0);
+         _Pragma("GCC diagnostic push")
+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 	  *ptail = newnode;
 	  newnode->flags = _WSNF_NULL;
+         _Pragma("GCC diagnostic pop")
 	}
       else
 	{
@@ -1631,7 +1661,10 @@ expcmd (struct wordsplit *wsp, const char *str, size_t len,
 	return 1;
       wsnode_insert (wsp, newnode, *ptail, 0);
       *ptail = newnode;
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
       newnode->flags = _WSNF_NULL;
+      _Pragma("GCC diagnostic pop")
     }
   return 0;
 }
@@ -1868,7 +1901,10 @@ wordsplit_pathexpand (struct wordsplit *wsp)
 		}
 	      newnode->v.word = newstr;
 	      newnode->flags |= _WSNF_WORD|_WSNF_QUOTE;
+             _Pragma("GCC diagnostic push")
+             _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
 	      wsnode_insert (wsp, newnode, prev, 0);
+             _Pragma("GCC diagnostic pop")
 	      prev = newnode;
 	    }
 	  globfree (&g);
