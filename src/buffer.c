@@ -1505,8 +1505,11 @@ try_new_volume (void)
       ASSIGN_STRING_N (&volume_label, current_header->header.name);
       set_next_block_after (header);
       header = find_next_block ();
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wnull-dereference\"")
       if (header->header.typeflag != GNUTYPE_MULTIVOL)
         break;
+      _Pragma("GCC diagnostic pop")
       FALLTHROUGH;
     case GNUTYPE_MULTIVOL:
       if (!read_header0 (&dummy))
@@ -1695,7 +1698,10 @@ _write_volume_label (const char *str)
       current_stat_info.had_trailing_slash =
         strip_trailing_slashes (current_stat_info.file_name);
 
+      _Pragma("GCC diagnostic push")
+      _Pragma("GCC diagnostic ignored \"-Wnull-dereference\"")
       label->header.typeflag = GNUTYPE_VOLHDR;
+      _Pragma("GCC diagnostic pop")
       TIME_TO_CHARS (start_time.tv_sec, label->header.mtime);
       finish_header (&current_stat_info, label, -1);
       set_next_block_after (label);
