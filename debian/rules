@@ -30,7 +30,7 @@ configure-stamp:
 		--enable-backup-scripts \
 		--with-lzma=xz \
 		--disable-silent-rules \
-		$(CONFARGS) 
+		$(CONFARGS)
 	touch configure-stamp
 
 build: build-arch build-indep
@@ -69,7 +69,7 @@ install: build
 	dh_installdirs
 
 	make install bindir=`pwd`/debian/tar/bin prefix=`pwd`/debian/tar/usr \
-		libexecdir=`pwd`/debian/tar/usr/sbin 
+		libexecdir=`pwd`/debian/tar/usr/sbin
 	mv debian/tar/usr/sbin/rmt debian/tar/usr/sbin/rmt-tar
 	ln -s /usr/sbin/rmt debian/tar/etc/rmt
 	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
@@ -78,7 +78,7 @@ install: build
 	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/tar-restore
 	mv debian/tar/usr/sbin/backup.sh debian/tar-scripts/usr/sbin/
 	mv debian/tar/usr/sbin/dump-remind debian/tar-scripts/usr/sbin/
-	
+
 # Build architecture-independent files here.
 binary-indep: build install
 
