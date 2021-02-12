@@ -7,7 +7,7 @@ CONFARGS = --host=$(DEB_HOST_GNU_TYPE)
 endif
 
 CFLAGS = `dpkg-buildflags --get CFLAGS`
-CFLAGS += -Wall
+CFLAGS += -Wall -Wno-analyzer-null-argument
 LDFLAGS += `dpkg-buildflags --get LDFLAGS`
 CPPFLAGS = `dpkg-buildflags --get CPPFLAGS`
 

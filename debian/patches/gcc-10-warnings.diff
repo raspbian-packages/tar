@@ -1,7 +1,7 @@
 Index: tar.git/gnu/selinux-at.h
 ===================================================================
---- tar.git.orig/gnu/selinux-at.h	2020-11-20 16:59:39.604013293 +0000
-+++ tar.git/gnu/selinux-at.h	2020-11-20 17:01:36.231448174 +0000
+--- tar.git.orig/gnu/selinux-at.h	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/gnu/selinux-at.h	2021-02-12 16:50:15.510898194 +0000
 @@ -17,6 +17,9 @@
  #include <selinux/selinux.h>
  #include <selinux/context.h>
@@ -15,13 +15,13 @@ Index: tar.git/gnu/selinux-at.h
 @@ -50,3 +53,5 @@
     except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
     the symlink, while setfileconat operates on the referent of the symlink.  */
- int lsetfileconat (int dir_fd, char const *file, security_context_t con);
+ int lsetfileconat (int dir_fd, char const *file, char const *con);
 +
 +_Pragma("GCC diagnostic pop")
 Index: tar.git/lib/rtapelib.c
 ===================================================================
---- tar.git.orig/lib/rtapelib.c	2020-11-20 16:59:39.612013255 +0000
-+++ tar.git/lib/rtapelib.c	2020-11-20 17:01:36.231448174 +0000
+--- tar.git.orig/lib/rtapelib.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/lib/rtapelib.c	2021-02-12 16:50:15.510898194 +0000
 @@ -56,7 +56,10 @@
  #include <signal.h>
  
@@ -33,7 +33,18 @@ Index: tar.git/lib/rtapelib.c
  #endif
  
  #include <rmt.h>
-@@ -670,6 +673,8 @@
+@@ -526,7 +529,10 @@
+   /* Attempt to open the tape device.  */
+ 
+   {
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wanalyzer-null-argument\"")
+     size_t remote_file_len = strlen (remote_file);
++_Pragma("GCC diagnostic pop")
+     char *command_buffer = xmalloc (remote_file_len + 1000);
+     sprintf (command_buffer, "O%s\n", remote_file);
+     encode_oflag (command_buffer + remote_file_len + 2, open_mode);
+@@ -670,6 +676,8 @@
  #ifdef MTIOCTOP
      case MTIOCTOP:
        {
@@ -42,7 +53,7 @@ Index: tar.git/lib/rtapelib.c
  	char command_buffer[COMMAND_BUFFER_SIZE];
  	char operand_buffer[UINTMAX_STRSIZE_BOUND];
  	uintmax_t u = (((struct mtop *) argument)->mt_count < 0
-@@ -692,6 +697,7 @@
+@@ -692,6 +700,7 @@
  	  return -1;
  
  	return get_status (handle);
@@ -50,7 +61,7 @@ Index: tar.git/lib/rtapelib.c
        }
  #endif /* MTIOCTOP */
  
-@@ -732,8 +738,11 @@
+@@ -732,8 +741,11 @@
  	   than 256, we will assume that the bytes are swapped and go through
  	   and reverse all the bytes.  */
  
@@ -64,162 +75,27 @@ Index: tar.git/lib/rtapelib.c
  	  {
 Index: tar.git/lib/wordsplit.c
 ===================================================================
---- tar.git.orig/lib/wordsplit.c	2020-11-20 16:59:39.612013255 +0000
-+++ tar.git/lib/wordsplit.c	2020-11-20 17:01:36.231448174 +0000
-@@ -439,7 +439,10 @@
- {
-   if (p->flags & _WSNF_WORD)
-     free (p->v.word);
-+  _Pragma("GCC diagnostic push")
-+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-   free (p);
-+  _Pragma("GCC diagnostic pop")
+--- tar.git.orig/lib/wordsplit.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/lib/wordsplit.c	2021-02-12 16:50:25.010974696 +0000
+@@ -14,6 +14,9 @@
+    You should have received a copy of the GNU General Public License along
+    with this program. If not, see <http://www.gnu.org/licenses/>. */
+ 
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
++
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+@@ -2560,3 +2563,4 @@
+     }
  }
  
- static void
-@@ -535,9 +538,12 @@
-   rc = wsnode_new (wsp, &node);
-   if (rc)
-     return rc;
-+  _Pragma("GCC diagnostic push")
-+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-   node->flags = flg & ~(_WSNF_WORD | _WSNF_EMPTYOK);
-   node->v.segm.beg = beg;
-   node->v.segm.end = end;
-+  _Pragma("GCC diagnostic pop")
-   wsnode_append (wsp, node);
-   return 0;
- }
-@@ -924,7 +930,10 @@
-       newnode->v.segm.end = newnode->v.segm.beg + len;
-     }
-   newnode->flags |= flg;
-+  _Pragma("GCC diagnostic push")
-+  _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-   *ptail = newnode;
-+  _Pragma("GCC diagnostic pop")
-   return 0;
- }
- 
-@@ -1199,6 +1208,8 @@
- 	return 1;
-       wsnode_insert (wsp, newnode, *ptail, 0);
-       *ptail = newnode;
-+      _Pragma("GCC diagnostic push")
-+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-       newnode->flags = _WSNF_WORD | flg;
-       newnode->v.word = malloc (3);
-       if (!newnode->v.word)
-@@ -1206,6 +1217,7 @@
-       newnode->v.word[0] = '$';
-       newnode->v.word[1] = str[0];
-       newnode->v.word[2] = 0;
-+      _Pragma("GCC diagnostic pop")
-       *pend = str;
-       return 0;
-     }
-@@ -1363,9 +1375,12 @@
- 	      return 1;
- 	    }
- 	  wsnode_insert (wsp, newnode, *ptail, 0);
-+         _Pragma("GCC diagnostic push")
-+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
- 	  *ptail = newnode;
- 	  newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
- 	  newnode->v.word = value;
-+         _Pragma("GCC diagnostic pop")
- 	}
-       else if (*value == 0)
- 	{
-@@ -1374,8 +1389,11 @@
- 	  if (wsnode_new (wsp, &newnode))
- 	    return 1;
- 	  wsnode_insert (wsp, newnode, *ptail, 0);
-+         _Pragma("GCC diagnostic push")
-+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
- 	  *ptail = newnode;
- 	  newnode->flags = _WSNF_NULL;
-+         _Pragma("GCC diagnostic pop")
- 	}
-       else
- 	{
-@@ -1408,12 +1426,15 @@
- 	return 1;
-       wsnode_insert (wsp, newnode, *ptail, 0);
-       *ptail = newnode;
-+      _Pragma("GCC diagnostic push")
-+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-       newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
-       newnode->v.word = malloc (size + 1);
-       if (!newnode->v.word)
- 	return _wsplt_nomem (wsp);
-       memcpy (newnode->v.word, start, size);
-       newnode->v.word[size] = 0;
-+      _Pragma("GCC diagnostic pop")
-     }
-   else
-     {
-@@ -1421,7 +1442,10 @@
- 	return 1;
-       wsnode_insert (wsp, newnode, *ptail, 0);
-       *ptail = newnode;
-+      _Pragma("GCC diagnostic push")
-+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-       newnode->flags = _WSNF_NULL;
-+      _Pragma("GCC diagnostic pop")
-     }
-   return 0;
- }
-@@ -1589,8 +1613,11 @@
- 	    return 1;
- 	  wsnode_insert (wsp, newnode, *ptail, 0);
- 	  *ptail = newnode;
-+         _Pragma("GCC diagnostic push")
-+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
- 	  newnode->flags = _WSNF_WORD | _WSNF_NOEXPAND | flg;
- 	  newnode->v.word = value;
-+         _Pragma("GCC diagnostic pop")
- 	}
-       else if (*value == 0)
- 	{
-@@ -1599,8 +1626,11 @@
- 	  if (wsnode_new (wsp, &newnode))
- 	    return 1;
- 	  wsnode_insert (wsp, newnode, *ptail, 0);
-+         _Pragma("GCC diagnostic push")
-+         _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
- 	  *ptail = newnode;
- 	  newnode->flags = _WSNF_NULL;
-+         _Pragma("GCC diagnostic pop")
- 	}
-       else
- 	{
-@@ -1631,7 +1661,10 @@
- 	return 1;
-       wsnode_insert (wsp, newnode, *ptail, 0);
-       *ptail = newnode;
-+      _Pragma("GCC diagnostic push")
-+      _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-       newnode->flags = _WSNF_NULL;
-+      _Pragma("GCC diagnostic pop")
-     }
-   return 0;
- }
-@@ -1868,7 +1901,10 @@
- 		}
- 	      newnode->v.word = newstr;
- 	      newnode->flags |= _WSNF_WORD|_WSNF_QUOTE;
-+             _Pragma("GCC diagnostic push")
-+             _Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
- 	      wsnode_insert (wsp, newnode, prev, 0);
-+             _Pragma("GCC diagnostic pop")
- 	      prev = newnode;
- 	    }
- 	  globfree (&g);
++_Pragma("GCC diagnostic pop")
 Index: tar.git/src/buffer.c
 ===================================================================
---- tar.git.orig/src/buffer.c	2020-11-20 16:59:39.660013022 +0000
-+++ tar.git/src/buffer.c	2020-11-20 17:01:36.231448174 +0000
+--- tar.git.orig/src/buffer.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/src/buffer.c	2021-02-12 16:50:15.514898226 +0000
 @@ -1505,8 +1505,11 @@
        ASSIGN_STRING_N (&volume_label, current_header->header.name);
        set_next_block_after (header);
