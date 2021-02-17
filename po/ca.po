@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar-1.30\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2017-12-22 11:37+0100\n"
 "Last-Translator: Angel Mompo <mecatxis@mecatxis.cat>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -508,7 +508,7 @@ msgstr "exec/tcp: El servei no està disponible"
 msgid "stdin"
 msgstr "stdin"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "stdout"
@@ -608,7 +608,7 @@ msgid "Garbage command"
 msgstr "Ordre escombraria"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "No sembla un arxiu tar"
@@ -807,8 +807,8 @@ msgstr[1] "Només es poden llegir %lu de %lu bytes"
 msgid "Contents differ"
 msgstr "El contingut no coincideix"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Final de l'arxiu inesperat"
 
@@ -974,11 +974,11 @@ msgstr "%s: sòcol ignorat"
 msgid "%s: door ignored"
 msgstr "%s: porta ignorada"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Se salta fins a la propera capçalera"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "S'esborra la no-capçalera de l'arxiu"
 
@@ -1012,40 +1012,40 @@ msgstr ""
 msgid "Extracting contiguous files as regular files"
 msgstr "Els fitxers contigus s'extreuen com fitxers normals"
 
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Es prova d'extreure els enllaços simbòlics com enllaços durs"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: No espot extreure -- el fitxer continua des d'un altre volum"
 
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Nom de la capçalera inesperadament llarg"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Tipus de fitxer «%c» desconegut. S'extreu com un fitxer normal"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "L'actual %s és igual d'antic o més nou"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: el nom del membre conté «..»"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: No es pot fer la còpia de seguretat d'aquest fitxer"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "No es pot canviar el nom de %s a %s"
@@ -1209,20 +1209,20 @@ msgstr "bloc %s: ** Bloc de NULs **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "bloc %s: ** Final del Fitxer **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "bloc %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Capçalera amb blancs on hi hauria d'haver un valor numèric %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1230,68 +1230,68 @@ msgstr ""
 "complement a dos"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "El valor octal de l'arxiu %.*s està fora del rang %s"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "L'arxiu conté capçaleres amb base 64 que estan esdevenint obsoletes"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "La cadena de signatura %s amb base 64 de l'arxiu està fora del rang %s"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "El valor amb base 256 de l'arxiu està fora del rang %s "
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "L'arxiu conté %.*s on hi hauria d'haver un valor numèric de tipus %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "El valor %s de l'arxiu està fora del rang %s %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " enllaç cap a %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " tipus de fitxer desconegut %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Enllaç llarg--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Nom Llarg--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Capçalera del volum--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Continua al byte %s--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Es crea el directori:"
 
@@ -1310,16 +1310,16 @@ msgstr "%s: No es pot canviar el nom a %s"
 msgid "Renaming %s back to %s\n"
 msgstr "Es torna a canviar el nom %s a %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: El fitxer s'ha esborrat abans de poder-lo llegir"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "procés descendent"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "canal d'intercomunicació"
 
@@ -2600,12 +2600,16 @@ msgstr "S'està refusant covardament crear un arxiu buit"
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Les opcions «-Aru» no són compatibles amb «-f -»"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr "Heu d'especificar una opció «-Acdtrux», «--delete» o «--test-label»"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Se surt amb estat de fallida degut a errors prèvis"

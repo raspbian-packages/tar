@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.32.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2019-12-01 11:35+0100\n"
 "Last-Translator: Åka Sikrom <a4@hush.com>\n"
 "Language-Team: Norwegian Bokmaal <i18n-nb@lister.ping.uio.no>\n"
@@ -514,7 +514,7 @@ msgstr "exec/tcp: tjenesten er ikke tilgjengelig"
 msgid "stdin"
 msgstr "standard innkanal"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "standard utkanal"
@@ -614,7 +614,7 @@ msgid "Garbage command"
 msgstr "Ugyldig kommando"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "Dette ser ikke ut som et tar-arkiv"
@@ -813,8 +813,8 @@ msgstr[1] "Klarte bare å lese %lu av %lu byte"
 msgid "Contents differ"
 msgstr "Innholdet er ulikt"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Uventet slutt på fil i arkivet"
 
@@ -978,11 +978,11 @@ msgstr "%s: sokkel ignorert"
 msgid "%s: door ignored"
 msgstr "%s: dør ignorert"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Hopper til neste startseksjon"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "Tar bort ikke-hodedata fra arkivet"
 
@@ -1015,40 +1015,40 @@ msgstr "%s: Mappe fikk nytt navn før status kunne hentes"
 msgid "Extracting contiguous files as regular files"
 msgstr "Ekstraherer sammenhengende filer som vanlige filer"
 
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Forsøker å pakke ut symbolske lenker som harde lenker"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Klarte ikke å pakke ut -- fila fortsettes fra et annet volum"
 
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Uventet langt navnehode"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Ukjent filtype «%c», pakket ut som vanlig fil"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Gjeldende %s er nyere eller samme alder"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: Medlemsnavn inneholder «..»"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Klarte ikke å lage sikkerhetskopi av denne fila"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Klarte ikke å endre navn på %s til %s"
@@ -1209,87 +1209,87 @@ msgstr "blokk %s: ** Blokk med NUL-er **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "blokk %s: ** Slutt på fil **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "blokk %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Blankt hvor numerisk %s-verdi forventes"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr "Arkivoktalverdi %.*s er ut av %s rekkevidde; forutsatt toerkomplement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Arkivets oktalverdi %.*s er utenfor %s rekkevidde"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arkivet inneholder foreldede base-64-hoder"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Arkiv-signert base-64-streng %s er utenfor %s-rekkevidde"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Arkivets base-256-verdi er utenfor %s-rekkevidde"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arkivet inneholder %.*s hvor numerisk %s-verdi forventes"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Arkivverdi %s er utenfor %s-intervallet %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " lenke til %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " ukjent filtype %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Lang lenke--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Langt navn--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Volumhode--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Fortsatte ved byte %s--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Lager mappe:"
 
@@ -1308,16 +1308,16 @@ msgstr "%s: Klarte ikke å endre navn til %s"
 msgid "Renaming %s back to %s\n"
 msgstr "Endrer navn %s tilbake til %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Fila ble fjernet før programmet rakk å lese den"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "underprosess"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "mellomprosesskanal"
 
@@ -2563,12 +2563,16 @@ msgstr "Programmet nekter på feigt vis å lage et tomt arkiv"
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Valgene «-Aru» kan ikke brukes i kombinasjon med «-f -»"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr "Du må velge ett av «-Acdtrux», «--delete» eller «--test-label»"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Avslutter med feilkode på grunn av tidligere feil"

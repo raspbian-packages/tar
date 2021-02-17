@@ -2248,7 +2248,7 @@ parse_default_options (struct tar_args *args)
       if (argp_parse (&argp,
 		      ws.ws_offs + ws.ws_wordc,
 		      ws.ws_wordv,
-		      ARGP_IN_ORDER|ARGP_NO_EXIT, &idx, &args))
+		      ARGP_IN_ORDER|ARGP_NO_EXIT, &idx, args))
 	abort (); /* shouldn't happen */
       args->loc = save_loc_ptr;
       if (name_more_files ())
@@ -2751,8 +2751,11 @@ main (int argc, char **argv)
 
   set_quoting_style (0, DEFAULT_QUOTING_STYLE);
 
+  close_stdout_set_file_name (_("stdout"));
   /* Make sure we have first three descriptors available */
-  stdopen ();
+  if (stdopen ())
+    FATAL_ERROR ((0, 0, "%s",
+		  _("failed to assert availability of the standard file descriptors")));
 
   /* Pre-allocate a few structures.  */
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU tar 1.32.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2019-11-29 15:45+0100\n"
 "Last-Translator: Antonio Ceballos <aceballos@gmail.com>\n"
 "Language-Team: Spanish <es@tp.org.es>\n"
@@ -520,7 +520,7 @@ msgstr "exec/tcp: Servicio no disponible"
 msgid "stdin"
 msgstr "entrada estándar (stdin)"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "salida estándar (stdout)"
@@ -626,7 +626,7 @@ msgid "Garbage command"
 msgstr "Orden ininteligible"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "Esto no parece un archivo tar"
@@ -926,8 +926,8 @@ msgstr[1] "Sólo se pudieron leer %lu de %lu bytes"
 msgid "Contents differ"
 msgstr "El contenido es distinto"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Fin de fichero inesperado en el archivo"
 
@@ -1142,11 +1142,11 @@ msgstr "%s: el `socket' no se tendrá en cuenta"
 msgid "%s: door ignored"
 msgstr "%s: no se tendrá en cuenta la puerta"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Saltando a la siguiente cabecera"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "Borrando no-cabecera del archivo"
 
@@ -1189,42 +1189,42 @@ msgstr "Extrayendo ficheros contiguos como ficheros regulares"
 # Es una cuestión todavía no dirimida.
 # ¿Tienes algún dato más? ¿Qué dicen los libros? sv
 # Enlaces duros. Lo acabo de mirar en un libro. gag
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Intentando la extracción de enlaces simbólicos como enlaces duros"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: No se puede extraer -- el fichero es continuación de otro volumen"
 
 # ¿No se referirá al autor a "mangled filenames"?... jmg
 # FIXME. Preguntárselo.
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Cabecera de nombres largos inesperada"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Tipo de fichero '%c' desconocido, se extrae como fichero normal"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "El %s actual es más reciente o de la misma fecha"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: El nombre del miembro contiene '..'"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: No se pudo hacer copia de seguridad de este fichero"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "No se puede renombrar %s a %s"
@@ -1387,20 +1387,20 @@ msgstr "bloque %s: ** Bloque de NULos **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "bloque %s: ** Fin de Fichero **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "bloque %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Hay blancos en la cabecera cuando se esperaba el valor numérico %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1408,68 +1408,68 @@ msgstr ""
 "se supone complemento a dos"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "El valor octal %.*s del archivo está fuera del rango %s"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "El archivo contiene cabeceras base 64 obsoletas"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "La cadena firmada en base 64 %s del archivo está fuera del rango %s"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "El valor en base 256 del archivo está fuera del rango %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "El archivo contiene %.*s donde se esperaba el valor numérico %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "El valor del archivo %s está fuera del rango de %s %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " enlace a %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " tipo de fichero desconocido %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Enlace largo--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Nombre largo--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Cabecera de Volumen--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Continúa en el byte %s--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Creando el directorio:"
 
@@ -1488,16 +1488,16 @@ msgstr "%s: No se puede renombrar a %s"
 msgid "Renaming %s back to %s\n"
 msgstr "Se vuelve a renombrar %s como %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: El fichero fue borrado antes de leerlo"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "proceso hijo"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "canal de interproceso"
 
@@ -2872,13 +2872,17 @@ msgstr "Rechazo cobarde a crear un archivo vacío"
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Las opciones '-Aru' son incompatibles con '-f -'"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr ""
 "Debe especificar una de las opciones `-Acdtrux', '--delete' o '--test-label'"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Se sale con estado de fallo debido a errores anteriores"
