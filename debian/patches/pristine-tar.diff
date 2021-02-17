@@ -1,7 +1,7 @@
 Index: tar.git/src/common.h
 ===================================================================
---- tar.git.orig/src/common.h	2021-02-12 16:03:49.355786427 +0000
-+++ tar.git/src/common.h	2021-02-12 16:03:49.355786427 +0000
+--- tar.git.orig/src/common.h	2021-02-17 10:04:27.498157590 +0000
++++ tar.git/src/common.h	2021-02-17 10:04:27.498157590 +0000
 @@ -1024,4 +1024,8 @@
  int group_map_translate (gid_t gid, gid_t *new_gid, char const **new_name);
  
@@ -13,8 +13,8 @@ Index: tar.git/src/common.h
  _GL_INLINE_HEADER_END
 Index: tar.git/src/create.c
 ===================================================================
---- tar.git.orig/src/create.c	2021-02-12 16:03:49.355786427 +0000
-+++ tar.git/src/create.c	2021-02-12 16:03:49.355786427 +0000
+--- tar.git.orig/src/create.c	2021-02-17 10:04:27.498157590 +0000
++++ tar.git/src/create.c	2021-02-17 10:04:27.498157590 +0000
 @@ -27,6 +27,10 @@
  #include "common.h"
  #include <hash.h>
@@ -71,8 +71,8 @@ Index: tar.git/src/create.c
  	  st->stat.st_size = 0;
 Index: tar.git/src/tar.c
 ===================================================================
---- tar.git.orig/src/tar.c	2021-02-12 16:03:49.355786427 +0000
-+++ tar.git/src/tar.c	2021-02-12 16:03:49.355786427 +0000
+--- tar.git.orig/src/tar.c	2021-02-17 10:04:27.498157590 +0000
++++ tar.git/src/tar.c	2021-02-17 10:08:27.334916370 +0000
 @@ -1236,6 +1236,41 @@
    return res;
  }
@@ -123,6 +123,6 @@ Index: tar.git/src/tar.c
 +  debian_broken_numeric_owner_init ();
 +  pristine_tar_compat_init ();
 +
+   close_stdout_set_file_name (_("stdout"));
    /* Make sure we have first three descriptors available */
-   stdopen ();
- 
+   if (stdopen ())

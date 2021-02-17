@@ -1,3 +1,9 @@
+tar (1.34+dfsg-1) unstable; urgency=medium
+
+  * New upstream version
+
+ -- Janos Lenart <ocsi@debian.org>  Wed, 17 Feb 2021 09:55:26 +0000
+
 tar (1.33+dfsg-1) unstable; urgency=medium
 
   * New upstream version
