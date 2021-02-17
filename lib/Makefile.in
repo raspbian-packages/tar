@@ -267,8 +267,8 @@ am__v_AR_1 =
 libtar_a_AR = $(AR) $(ARFLAGS)
 libtar_a_LIBADD =
 am_libtar_a_OBJECTS = paxerror.$(OBJEXT) paxexit-status.$(OBJEXT) \
-	paxnames.$(OBJEXT) rtapelib.$(OBJEXT) stdopen.$(OBJEXT) \
-	wordsplit.$(OBJEXT) xattr-at.$(OBJEXT)
+	paxnames.$(OBJEXT) rtapelib.$(OBJEXT) wordsplit.$(OBJEXT) \
+	xattr-at.$(OBJEXT)
 libtar_a_OBJECTS = $(am_libtar_a_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -1417,7 +1417,6 @@ AM_CFLAGS = $(GNULIB_WARN_CFLAGS) $(WERROR_CFLAGS)
 noinst_HEADERS = \
  paxlib.h\
  rmt.h\
- stdopen.h\
  system.h\
  system-ioctl.h\
  wordsplit.h\
@@ -1427,7 +1426,6 @@ libtar_a_SOURCES = \
   paxerror.c paxexit-status.c paxlib.h paxnames.c \
   rtapelib.c \
   rmt.h \
-  stdopen.c stdopen.h \
   system.h system-ioctl.h \
   wordsplit.c\
   xattr-at.c
@@ -1487,7 +1485,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paxexit-status.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/paxnames.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtapelib.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stdopen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wordsplit.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xattr-at.Po@am__quote@
 

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.32.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2019-11-29 18:11+01:00\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
@@ -533,7 +533,7 @@ msgstr "exec/tcp: Služba není k dispozici"
 msgid "stdin"
 msgstr "stdin"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "stdout"
@@ -633,7 +633,7 @@ msgid "Garbage command"
 msgstr "Neznámý příkaz"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "Toto pravděpodobně není tar archiv"
@@ -830,8 +830,8 @@ msgstr[2] "Bylo možné načíst pouze %'lu z %'lu bajtů"
 msgid "Contents differ"
 msgstr "Obsahy se liší"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Neočekávaný konec archivu"
 
@@ -997,11 +997,11 @@ msgstr "%s: soket ignorován"
 msgid "%s: door ignored"
 msgstr "%s: dveře ignorovány"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Přeskakuji na další hlavičku"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "Z archivu je mazáno to, co není hlavička"
 
@@ -1034,40 +1034,40 @@ msgstr "%s: Adresář byl přejmenován dříve, než bylo možné získat jeho 
 msgid "Extracting contiguous files as regular files"
 msgstr "Souvisle uložené soubory rozbaluji jako obyčejné soubory"
 
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Zkouším rozbalit symbolické odkazy jako pevné odkazy"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Nelze rozbalit – soubor je pokračováním jiného svazku"
 
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Neočekávaná hlavička dlouhého názvu"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Neznámý typ souboru „%c“, rozbalen jako normální soubor"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Současný soubor %s je novější nebo stejně starý"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: Název souboru obsahuje „..“"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Tento soubor nebylo možné zálohovat"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "%s nelze přejmenovat na %s"
@@ -1228,88 +1228,88 @@ msgstr "blok %s: ** Blok NUL **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Konec souboru **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "Mezery v hlavičce na místě, kde je očekávána číselná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
 "Osmičková hodnota %.*s typu %s je mimo rozsah; přiřazuji dvojkový complement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Osmičková hodnota %.*s typu %s je mimo rozsah"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Archiv obsahuje zastaralé base-64 hlavičky"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Base-64 řetězec %s je mimo rozsah typu %s"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Hodnota base-256 je mimo rozsah typu %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Archiv obsahuje %.*s tam, kde je očekávána číselná hodnota typu %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Hodnota %s typu %s je mimo rozsah %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " odkaz na %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " neznámý souborový typ %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Dlouhý odkaz--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Dlouhý název--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Hlavička svazku--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Pokračováno od %s bajtu--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Vytvářím adresář:"
 
@@ -1328,16 +1328,16 @@ msgstr "%s: nelze přejmenovat na %s"
 msgid "Renaming %s back to %s\n"
 msgstr "Přejmenovávám %s zpět na %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Soubor smazán dříve než mohl být přečten"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "potomek"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "meziprocesový kanál"
 
@@ -2589,13 +2589,17 @@ msgstr "Vytvoření prázdného archivu odmítnuto."
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Přepínače „-Aru“ jsou neslučitelné s přepínačem „-f -“"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr ""
 "Musíte zadat jeden z přepínačů „-Acdtrux“, „--delete“ nebo „--test-label“"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Končí se chybovým kódem, protože byly zaznamenány chyby"

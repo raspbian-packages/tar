@@ -97,6 +97,7 @@
 #  stat-time \
 #  stdbool \
 #  stdint \
+#  stdopen \
 #  stpcpy \
 #  strdup-posix \
 #  strerror \
@@ -2738,6 +2739,14 @@ MOSTLYCLEANFILES += stdlib.h stdlib.h-t
 EXTRA_DIST += stdlib.in.h
 
 ## end   gnulib module stdlib
+
+## begin gnulib module stdopen
+
+libgnu_a_SOURCES += stdopen.c
+
+EXTRA_DIST += stdopen.h
+
+## end   gnulib module stdopen
 
 ## begin gnulib module stpcpy
 

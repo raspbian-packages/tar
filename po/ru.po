@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.32.90\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2019-12-24 19:03+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
@@ -516,7 +516,7 @@ msgstr "exec/tcp: Служба недоступна"
 msgid "stdin"
 msgstr "stdin"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "stdout"
@@ -618,7 +618,7 @@ msgid "Garbage command"
 msgstr "Неверная команда"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "Это не похоже на tar-архив"
@@ -819,8 +819,8 @@ msgstr[2] "Можно было прочитать только %lu байт из
 msgid "Contents differ"
 msgstr "Содержимое различно"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Неожиданный конец файла в архиве"
 
@@ -986,11 +986,11 @@ msgstr "%s: сокет проигнорирован"
 msgid "%s: door ignored"
 msgstr "%s: door проигнорирован"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Пропускается до следующего заголовка"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "Удаляется не-заголовок из архива"
 
@@ -1023,40 +1023,40 @@ msgstr "%s: Каталог переименован до того, как мог
 msgid "Extracting contiguous files as regular files"
 msgstr "Непрерывные файлы извлекаются как обычные"
 
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Выполняется попытка извлечь символические ссылки как жесткие"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Невозможно извлечь -- файл продолжается с другого тома"
 
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Непредвиденный длинный заголовок имени"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Неизвестный тип файла «%c», извлечён как обычный файл"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Текущий %s более новый или такого же возраста"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: в имени содержится «..»"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Невозможно было выполнить резервное копирование этот файла"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Невозможно переименовать %s в %s"
@@ -1217,20 +1217,20 @@ msgstr "блок %s: ** Блок нулей **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "блок %s: ** Конец файла **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "блок %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "В заголовке пустое поле вместо ожидаемого числового значения %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1238,68 +1238,68 @@ msgstr ""
 "дополнение до двух"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Восьмеричное значение архива %.*s за пределами диапазона %s"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Архив содержит устаревающие заголовки base-64"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Архив подписан строкой base-64 %s за пределами диапазона %s"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Значение base-256 архива за пределами диапазона %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Заголовок содержит %.*s вместо ожидаемого числового значения %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Значение архива %s за пределами %s диапазона %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " ссылка на %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " неизвестный тип файла %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Длинная ссылка--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Длинное имя--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Заголовок тома--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Продолжение с позиции %s--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Создание каталога:"
 
@@ -1318,16 +1318,16 @@ msgstr "%s: Невозможно переименовать в %s"
 msgid "Renaming %s back to %s\n"
 msgstr "%s переименовывается назад в %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Файла удален до его считывания"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "дочерний процесс"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "межпроцессорный канал"
 
@@ -2590,14 +2590,18 @@ msgstr "Робкий отказ от создания пустого архив�
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Параметры «-Aru» не совместимы с «-f -»"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr ""
 "Необходимо указать один из параметров «-Acdtrux», «--delete» или «--test-"
 "label»"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Завершение работы с состоянием неисправности из-за возникших ошибок"

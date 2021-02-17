@@ -274,6 +274,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module stdint:
   # Code from module stdio:
   # Code from module stdlib:
+  # Code from module stdopen:
   # Code from module stpcpy:
   # Code from module strcase:
   # Code from module strchrnul:
@@ -1735,6 +1736,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/stdio-impl.h
   lib/stdio.in.h
   lib/stdlib.in.h
+  lib/stdopen.c
+  lib/stdopen.h
   lib/stpcpy.c
   lib/strcasecmp.c
   lib/strchrnul.c

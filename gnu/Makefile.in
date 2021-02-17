@@ -111,6 +111,7 @@
 #  stat-time \
 #  stdbool \
 #  stdint \
+#  stdopen \
 #  stpcpy \
 #  strdup-posix \
 #  strerror \
@@ -394,13 +395,13 @@ am__libgnu_a_SOURCES_DIST = acl-errno-valid.c acl-internal.c \
 	malloc/scratch_buffer_set_array_size.c selinux-at.h \
 	selinux-at.c se-context.in.h se-label.in.h se-selinux.in.h \
 	se-context.c se-label.c se-selinux.c setlocale_null.c \
-	size_max.h stat-time.c statat.c strnlen1.h strnlen1.c \
-	tempname.c timespec.c timespec-sub.c unistd.c dup-safer.c \
-	fd-safer.c pipe-safer.c uniwidth/width.c unlinkdir.c utimens.c \
-	version-etc.h version-etc.c version-etc-fsf.c wctype-h.c \
-	xmalloc.c xalloc-die.c xgetcwd.c xsize.h xsize.c xstrndup.h \
-	xstrndup.c xstrtol.c xstrtoul.c xstrtoumax.c xvasprintf.h \
-	xvasprintf.c xasprintf.c
+	size_max.h stat-time.c statat.c stdopen.c strnlen1.h \
+	strnlen1.c tempname.c timespec.c timespec-sub.c unistd.c \
+	dup-safer.c fd-safer.c pipe-safer.c uniwidth/width.c \
+	unlinkdir.c utimens.c version-etc.h version-etc.c \
+	version-etc-fsf.c wctype-h.c xmalloc.c xalloc-die.c xgetcwd.c \
+	xsize.h xsize.c xstrndup.h xstrndup.c xstrtol.c xstrtoul.c \
+	xstrtoumax.c xvasprintf.h xvasprintf.c xasprintf.c
 am__dirstamp = $(am__leading_dot)dirstamp
 @LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH_TRUE@am__objects_1 = uniwidth/width.$(OBJEXT)
 am_libgnu_a_OBJECTS = acl-errno-valid.$(OBJEXT) acl-internal.$(OBJEXT) \
@@ -441,11 +442,11 @@ am_libgnu_a_OBJECTS = acl-errno-valid.$(OBJEXT) acl-internal.$(OBJEXT) \
 	malloc/scratch_buffer_set_array_size.$(OBJEXT) \
 	selinux-at.$(OBJEXT) se-context.$(OBJEXT) se-label.$(OBJEXT) \
 	se-selinux.$(OBJEXT) setlocale_null.$(OBJEXT) \
-	stat-time.$(OBJEXT) statat.$(OBJEXT) strnlen1.$(OBJEXT) \
-	tempname.$(OBJEXT) timespec.$(OBJEXT) timespec-sub.$(OBJEXT) \
-	unistd.$(OBJEXT) dup-safer.$(OBJEXT) fd-safer.$(OBJEXT) \
-	pipe-safer.$(OBJEXT) $(am__objects_1) unlinkdir.$(OBJEXT) \
-	utimens.$(OBJEXT) version-etc.$(OBJEXT) \
+	stat-time.$(OBJEXT) statat.$(OBJEXT) stdopen.$(OBJEXT) \
+	strnlen1.$(OBJEXT) tempname.$(OBJEXT) timespec.$(OBJEXT) \
+	timespec-sub.$(OBJEXT) unistd.$(OBJEXT) dup-safer.$(OBJEXT) \
+	fd-safer.$(OBJEXT) pipe-safer.$(OBJEXT) $(am__objects_1) \
+	unlinkdir.$(OBJEXT) utimens.$(OBJEXT) version-etc.$(OBJEXT) \
 	version-etc-fsf.$(OBJEXT) wctype-h.$(OBJEXT) xmalloc.$(OBJEXT) \
 	xalloc-die.$(OBJEXT) xgetcwd.$(OBJEXT) xsize.$(OBJEXT) \
 	xstrndup.$(OBJEXT) xstrtol.$(OBJEXT) xstrtoul.$(OBJEXT) \
@@ -1714,8 +1715,8 @@ EXTRA_DIST = acl-internal.h acl.h acl_entries.c alignof.h alloca.c \
 	unused-parameter.h warn-on-use.h snprintf.c stat-w32.c \
 	stat-w32.h stat.c stat-macros.h stat-time.h stdalign.in.h \
 	stdarg.in.h stdbool.in.h stddef.in.h stdint.in.h stdio.in.h \
-	stdlib.in.h stpcpy.c strcasecmp.c strncasecmp.c strchrnul.c \
-	strchrnul.valgrind strdup.c streq.h strerror.c \
+	stdlib.in.h stdopen.h stpcpy.c strcasecmp.c strncasecmp.c \
+	strchrnul.c strchrnul.valgrind strdup.c streq.h strerror.c \
 	strerror-override.c strerror-override.h string.in.h \
 	strings.in.h strndup.c strnlen.c strtoimax.c strtol.c strtol.c \
 	strtoll.c strtol.c strtoul.c strtol.c strtoul.c strtoull.c \
@@ -1796,13 +1797,13 @@ libgnu_a_SOURCES = acl-errno-valid.c acl-internal.c get-permissions.c \
 	malloc/scratch_buffer_set_array_size.c selinux-at.h \
 	selinux-at.c se-context.in.h se-label.in.h se-selinux.in.h \
 	se-context.c se-label.c se-selinux.c setlocale_null.c \
-	size_max.h stat-time.c statat.c strnlen1.h strnlen1.c \
-	tempname.c timespec.c timespec-sub.c unistd.c dup-safer.c \
-	fd-safer.c pipe-safer.c $(am__append_1) unlinkdir.c utimens.c \
-	version-etc.h version-etc.c version-etc-fsf.c wctype-h.c \
-	xmalloc.c xalloc-die.c xgetcwd.c xsize.h xsize.c xstrndup.h \
-	xstrndup.c xstrtol.c xstrtoul.c xstrtoumax.c xvasprintf.h \
-	xvasprintf.c xasprintf.c
+	size_max.h stat-time.c statat.c stdopen.c strnlen1.h \
+	strnlen1.c tempname.c timespec.c timespec-sub.c unistd.c \
+	dup-safer.c fd-safer.c pipe-safer.c $(am__append_1) \
+	unlinkdir.c utimens.c version-etc.h version-etc.c \
+	version-etc-fsf.c wctype-h.c xmalloc.c xalloc-die.c xgetcwd.c \
+	xsize.h xsize.c xstrndup.h xstrndup.c xstrtol.c xstrtoul.c \
+	xstrtoumax.c xvasprintf.h xvasprintf.c xasprintf.c
 libgnu_a_LIBADD = $(gl_LIBOBJS) @ALLOCA@
 libgnu_a_DEPENDENCIES = $(gl_LIBOBJS) @ALLOCA@
 EXTRA_libgnu_a_SOURCES = acl_entries.c alloca.c at-func.c at-func.c \
@@ -2153,6 +2154,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stat-w32.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/statat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stdopen.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stpcpy.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strcasecmp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/strchrnul.Po@am__quote@
