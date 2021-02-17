@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tar 1.28\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-01-07 16:35+0200\n"
+"POT-Creation-Date: 2021-02-13 13:06+0200\n"
 "PO-Revision-Date: 2014-11-16 21:24+0100\n"
 "Last-Translator: Primož Peterlin <primozz.peterlin@gmail.com>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
@@ -509,7 +509,7 @@ msgstr "exec/tcp: Storitev ni dosegljiva"
 msgid "stdin"
 msgstr "standardni vhod"
 
-#: lib/rtapelib.c:306
+#: lib/rtapelib.c:306 src/tar.c:2754
 #, c-format
 msgid "stdout"
 msgstr "standardni izhod"
@@ -609,7 +609,7 @@ msgid "Garbage command"
 msgstr "Neveljaven ukaz"
 
 #: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:210
+#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
 #: src/list.c:274 src/update.c:187
 msgid "This does not look like a tar archive"
 msgstr "To ne deluje kot arhiv ,tar'"
@@ -811,8 +811,8 @@ msgstr[3] "Prebrati je bilo moč samo %lu od %lu bajtov"
 msgid "Contents differ"
 msgstr "Vsebina se razlikuje"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:487
-#: src/list.c:1401 src/xheader.c:882
+#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
+#: src/list.c:1417 src/xheader.c:882
 msgid "Unexpected EOF in archive"
 msgstr "Nepričakovan znak za konec datoteke v arhivu"
 
@@ -981,11 +981,11 @@ msgstr "%s: vtičnica ignorirana"
 msgid "%s: door ignored"
 msgstr "%s: vrata ignorirana"
 
-#: src/delete.c:215 src/list.c:287 src/update.c:191
+#: src/delete.c:232 src/list.c:287 src/update.c:191
 msgid "Skipping to next header"
 msgstr "Preskok na naslednjo glavo"
 
-#: src/delete.c:280
+#: src/delete.c:370
 msgid "Deleting non-header from archive"
 msgstr "Brisanje ne-glave iz arhiva"
 
@@ -1021,40 +1021,40 @@ msgid "Extracting contiguous files as regular files"
 msgstr "Neprekinjene datoteke se restavrirajo kot navadne"
 
 # POZOR! Grdo!
-#: src/extract.c:1559
+#: src/extract.c:1568
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Simbolne povezave poskusimo dearhivirati kot trde"
 
-#: src/extract.c:1694
+#: src/extract.c:1703
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Dearhivacija ni mogoča - datoteka se nadaljuje iz prejšnjega dela"
 
-#: src/extract.c:1700 src/list.c:1164
+#: src/extract.c:1709 src/list.c:1180
 msgid "Unexpected long name header"
 msgstr "Nepričakovano zaglavje z dolgim imenom"
 
-#: src/extract.c:1706
+#: src/extract.c:1715
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Neznana vrsta datoteke »%c«, restavrira se kot navadna datoteka"
 
-#: src/extract.c:1731
+#: src/extract.c:1745
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Obstoječa »%s« je novejša ali enako stara"
 
-#: src/extract.c:1761
+#: src/extract.c:1775
 #, fuzzy, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: Ime elementa vsebuje ,..`"
 
-#: src/extract.c:1793
+#: src/extract.c:1807
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Varnostne kopije te datoteke ni moč napraviti"
 
-#: src/extract.c:1943
+#: src/extract.c:1957
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Preimenovanje %s v %s ni mogoče"
@@ -1219,89 +1219,89 @@ msgstr "blok %s: ** Blok znakov NUL **\n"
 msgid "block %s: ** End of File **\n"
 msgstr "blok %s: ** Konec datoteke **\n"
 
-#: src/list.c:284 src/list.c:1133 src/list.c:1369
+#: src/list.c:284 src/list.c:1149 src/list.c:1385
 #, c-format
 msgid "block %s: "
 msgstr "blok %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:752
+#: src/list.c:768
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr ""
 "Na mestu v glavi, kjer se pričakuje številčno vrednost %s, so presledki"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:807
+#: src/list.c:823
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
 "Osmiška vrednost arhiva %.*s izven obsega %s; privzema se dvojiški komplement"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:818
+#: src/list.c:834
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Osmiška vrednost arhiva %.*s izven obsega %s"
 
-#: src/list.c:839
+#: src/list.c:855
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Arhiv vsebuje zastarele glave oblike base-64"
 
-#: src/list.c:853
+#: src/list.c:869
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Podpis %s oblike base-64 v arhivu je izven obsega %s"
 
-#: src/list.c:884
+#: src/list.c:900
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Vrednost base-256 v arhivu izven obsega %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:913
+#: src/list.c:929
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Arhiv vsebuje %.*s na mestu, kjer se pričakuje številčno vrednost %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:935
+#: src/list.c:951
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Vrednost arhiva %s je izven obsega %s: %s..%s"
 
-#: src/list.c:1269
+#: src/list.c:1285
 #, c-format
 msgid " link to %s\n"
 msgstr " povezava na %s\n"
 
-#: src/list.c:1277
+#: src/list.c:1293
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " neznan tip datoteke %s\n"
 
-#: src/list.c:1295
+#: src/list.c:1311
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Dolga povezava--\n"
 
-#: src/list.c:1299
+#: src/list.c:1315
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Dolgo ime--\n"
 
-#: src/list.c:1303
+#: src/list.c:1319
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Glava dela--\n"
 
-#: src/list.c:1311
+#: src/list.c:1327
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Nadaljevanje pri bajtu %s--\n"
 
-#: src/list.c:1374
+#: src/list.c:1390
 msgid "Creating directory:"
 msgstr "Ustvarja se imenik:"
 
@@ -1320,16 +1320,16 @@ msgstr "%s: Preimenovanje v %s ni mogoče"
 msgid "Renaming %s back to %s\n"
 msgstr "Preimenovanje %s nazaj v %s\n"
 
-#: src/misc.c:1151
+#: src/misc.c:1167
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Datoteka je bila odstranjena, preden jo je bilo mogoče prebrati"
 
-#: src/misc.c:1165
+#: src/misc.c:1181
 msgid "child process"
 msgstr "proces naslednik"
 
-#: src/misc.c:1174
+#: src/misc.c:1190
 msgid "interprocess channel"
 msgstr "medprocesni kanal"
 
@@ -2580,12 +2580,16 @@ msgstr "Zahteva po odprtju praznega arhiva bojazljivo zavrnjena"
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Izbire »-Aru« so nezdružljive z »-f -«"
 
-#: src/tar.c:2785
+#: src/tar.c:2758
+msgid "failed to assert availability of the standard file descriptors"
+msgstr ""
+
+#: src/tar.c:2788
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr "Ena od izbir »-Acdtrux«, »--delete« ali »--test-label« je obvezna"
 
-#: src/tar.c:2842
+#: src/tar.c:2845
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Zaradi predhodnih napak zaključujemo s statusom napake"

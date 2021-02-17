@@ -1,3 +1,99 @@
+2021-02-13  Sergey Poznyakoff  <gray@gnu.org>
+
+	Version 1.34
+
+2021-02-08  Pavel Raiskup  <praiskup@redhat.com>
+
+	xattrs: fix capabilities root test
+
+	Related discussion in the Fedora pull-request:
+	https://src.fedoraproject.org/rpms/tar/pull-request/8
+
+	* tests/capabs_raw01.at: Newer systems (currently e.g. Fedora 34)
+	print getcap output in format CAP=VAL, not CAP+VAL.
+
+2021-02-08  Sergey Poznyakoff  <gray@gnu.org>
+
+	Gracefully handle duplicate symlinks when extracting
+
+	If the archive being extracted contains multiple copies
+	of the same symlink, extract only the first of them and
+	skip the rest.	The use case is described in
+
+	https://lists.gnu.org/archive/html/bug-tar/2021-01/msg00026.html
+
+	The bug was introduced by 2d3396c3ea.
+
+	* src/extract.c (create_placeholder_file): If placeholder already
+	exists and is registered in the delayed_link list, return
+	immediately.
+
+2021-02-04  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix savannah bug #60002
+
+	Bug was introduced by commit 34d15af1.
+
+	* src/extract.c (prepare_to_extract): When extracting over pipe,
+	process only regular files.
+	* tests/extrac24.at: New test case.
+	* tests/Makefile.am: Add new test case.
+	* tests/testsuite.at: Likewise.
+
+2021-01-17  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix memory leak in read_header
+
+	Bug reported in https://savannah.gnu.org/bugs/?59897
+
+	* src/list.c (read_header): Don't return directly from the loop.
+	Instead set the status and break.  Return the status.  Free
+	next_long_name and next_long_link before returning.
+
+2021-01-17  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix improper argument reference.
+
+	(bug introduced by 1ff0b63f)
+
+	* src/tar.c (parse_default_options): Pass args as is to the
+	argp_parse.
+
+2021-01-16  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fix regression itroduced by 66162927.
+
+	* src/misc.c (chdir_arg): Initialize the abspath field to NULL.
+	(tar_getcdpath): Actually initialize the abspath field here.
+
+2021-01-14  Sergey Poznyakoff  <gray@gnu.org>
+
+	Fixes in the delete_archive_members function
+
+	* src/delete.c (delete_archive_members): Clean-up the code. Avoid
+	entering the loop from the middle.  Free the memory allocated for
+	current_stat_info.
+
+2021-01-08  Sergey Poznyakoff  <gray@gnu.org>
+
+	Use stdopen from gnulib
+
+	* gnulib.modules: Request stdopen
+	* lib/Makefile.am: Remove stdopen.c and stdopen.h
+	* lib/stdopen.c: Remove.
+	* lib/stdopen.h: Remove.
+	* src/tar.c: stdopen returns 0 on success.
+
+2021-01-08  Sergey Poznyakoff  <gray@gnu.org>
+
+	Actually prefer /dev/full over /dev/null as a replacement
+	for stdin
+
+	* lib/stdopen.c (stdopen): Fix improper condition.
+	Avoid leaking extra file descriptor.
+	* src/tar.c (main): Set name of the stdout for diagnostics.
+	Bail out if stdopen fails.
+
 2021-01-07  Sergey Poznyakoff  <gray@gnu.org>
 
 	Version 1.33
