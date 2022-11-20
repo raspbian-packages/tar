@@ -56,7 +56,10 @@
 #include <signal.h>
 
 #if HAVE_NETDB_H
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wcast-align\"")
 # include <netdb.h>
+_Pragma("GCC diagnostic pop")
 #endif
 
 #include <rmt.h>
@@ -526,7 +529,10 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
   /* Attempt to open the tape device.  */
 
   {
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wanalyzer-null-argument\"")
     size_t remote_file_len = strlen (remote_file);
+_Pragma("GCC diagnostic pop")
     char *command_buffer = xmalloc (remote_file_len + 1000);
     sprintf (command_buffer, "O%s\n", remote_file);
     encode_oflag (command_buffer + remote_file_len + 2, open_mode);
@@ -670,6 +676,8 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 #ifdef MTIOCTOP
     case MTIOCTOP:
       {
+        _Pragma("GCC diagnostic push")
+        _Pragma("GCC diagnostic ignored \"-Wcast-align\"")
 	char command_buffer[COMMAND_BUFFER_SIZE];
 	char operand_buffer[UINTMAX_STRSIZE_BOUND];
 	uintmax_t u = (((struct mtop *) argument)->mt_count < 0
@@ -692,6 +700,7 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 	  return -1;
 
 	return get_status (handle);
+        _Pragma("GCC diagnostic pop")
       }
 #endif /* MTIOCTOP */
 
@@ -732,8 +741,11 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 	   than 256, we will assume that the bytes are swapped and go through
 	   and reverse all the bytes.  */
 
+        _Pragma("GCC diagnostic push")
+        _Pragma("GCC diagnostic ignored \"-Wcast-align\"")
 	if (((struct mtget *) argument)->MTIO_CHECK_FIELD < 256)
 	  return 0;
+        _Pragma("GCC diagnostic pop")
 
 	for (counter = 0; counter < status; counter += 2)
 	  {
