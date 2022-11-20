@@ -1,0 +1,23 @@
+Description: Proper translation for cowardly
+ Cowardly was inconrrectly translated, depriving the Italian message
+ of the funny tone that the original has.
+ .
+ This fixes it by properly translating cowardly, without paraphrasing it into
+ "total refusal".
+ .
+Author: Salvo Tomaselli <tiposchi@tiscali.it>
+Last-Update: 2017-01-24
+
+Index: tar.git/po/it.po
+===================================================================
+--- tar.git.orig/po/it.po	2021-02-12 16:04:45.936222815 +0000
++++ tar.git/po/it.po	2021-02-12 16:04:45.932222783 +0000
+@@ -2599,7 +2599,7 @@
+ 
+ #: src/tar.c:2648
+ msgid "Cowardly refusing to create an empty archive"
+-msgstr "Rifiuto totale di creare un archivio vuoto"
++msgstr "Rifiuto vigliaccamente di creare un archivio vuoto"
+ 
+ #: src/tar.c:2674
+ msgid "Options '-Aru' are incompatible with '-f -'"
