@@ -2599,7 +2599,7 @@ msgstr ""
 
 #: src/tar.c:2648
 msgid "Cowardly refusing to create an empty archive"
-msgstr "Rifiuto totale di creare un archivio vuoto"
+msgstr "Rifiuto vigliaccamente di creare un archivio vuoto"
 
 #: src/tar.c:2674
 msgid "Options '-Aru' are incompatible with '-f -'"
