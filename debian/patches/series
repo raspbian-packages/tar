@@ -1,0 +1,7 @@
+gcc-10-warnings.diff
+pristine-tar.diff
+listed03-linux-only
+oldgnu-unknown-mode-bits.patch
+proper_it_translation.patch
+Fix-handling-of-extended-header-prefixes.patch
+CVE-2022-48303.patch
