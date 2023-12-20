@@ -1,0 +1,5 @@
+#!/usr/bin/dh-exec
+usr/sbin/backup => usr/sbin/tar-backup
+usr/sbin/backup.sh usr/sbin/
+usr/sbin/dump-remind usr/sbin/
+usr/sbin/restore => usr/sbin/tar-restore
