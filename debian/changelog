@@ -10,6 +10,8 @@ tar (1.35+dfsg-1) unstable; urgency=medium
     - pristine-tar.diff
     - proper_it_translation.patch
   * Add myself to copyright file to please lintian
+  * Update copyright file
+  * Add new LGPL-2.1+ files to copyright
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 09:23:02 +0100
 
