@@ -1,7 +1,7 @@
 # Process this file with autom4te to create testsuite. -*- Autotest -*-
 #
 # Test suite for GNU tar.
-# Copyright 2012-2019 Free Software Foundation, Inc.
+# Copyright 2012-2021 Free Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -44,10 +44,11 @@ rm -rf dir
 # restore _all_ xattrs (not just the user.* domain)
 tar --xattrs --xattrs-include='*' -xf archive.tar
 
-getcap dir/file
+# Newer systems print = instead of + here
+getcap dir/file | sed 's/+/=/'
 ],
 [0],
-[dir/file = cap_chown+ei
+[dir/file = cap_chown=ei
 ])
 
 AT_CLEANUP

@@ -1,6 +1,6 @@
 /* Miscellaneous functions, not really specific to GNU tar.
 
-   Copyright 1988-2019 Free Software Foundation, Inc.
+   Copyright 1988-2021 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -314,8 +314,6 @@ normalize_filename (int cdidx, const char *name)
       size_t copylen;
       bool need_separator;
 
-      if (!cdpath)
-	call_arg_fatal ("getcwd", ".");
       copylen = strlen (cdpath);
       need_separator = ! (DOUBLE_SLASH_IS_DISTINCT_ROOT
 			  && copylen == 2 && ISSLASH (cdpath[1]));
@@ -910,8 +908,6 @@ chdir_count (void)
 int
 chdir_arg (char const *dir)
 {
-  char *absdir;
-
   if (wd_count == wd_alloc)
     {
       if (wd_alloc == 0)
@@ -921,7 +917,7 @@ chdir_arg (char const *dir)
       if (! wd_count)
 	{
 	  wd[wd_count].name = ".";
-	  wd[wd_count].abspath = xgetcwd ();
+	  wd[wd_count].abspath = NULL;
 	  wd[wd_count].fd = AT_FDCWD;
 	  wd_count++;
 	}
@@ -938,22 +934,8 @@ chdir_arg (char const *dir)
 	return wd_count - 1;
     }
 
-
-  /* If the given name is absolute, use it to represent this directory;
-     otherwise, construct a name based on the previous -C option.  */
-  if (IS_ABSOLUTE_FILE_NAME (dir))
-    absdir = xstrdup (dir);
-  else if (wd[wd_count - 1].abspath)
-    {
-      namebuf_t nbuf = namebuf_create (wd[wd_count - 1].abspath);
-      namebuf_add_dir (nbuf, dir);
-      absdir = namebuf_finish (nbuf);
-    }
-  else
-    absdir = 0;
-
   wd[wd_count].name = dir;
-  wd[wd_count].abspath = absdir;
+  wd[wd_count].abspath = NULL;
   wd[wd_count].fd = 0;
   return wd_count++;
 }
@@ -1047,9 +1029,47 @@ tar_getcdpath (int idx)
     {
       static char *cwd;
       if (!cwd)
-	cwd = xgetcwd ();
+	{
+	  cwd = xgetcwd ();
+	  if (!cwd)
+	    call_arg_fatal ("getcwd", ".");
+	}
       return cwd;
     }
+
+  if (!wd[idx].abspath)
+    {
+      int i;
+      int save_cwdi = chdir_current;
+      
+      for (i = idx; i >= 0; i--)
+	if (wd[i].abspath)
+	  break;
+      
+      while (++i <= idx)
+	{
+	  chdir_do (i);
+	  if (i == 0)
+	    {
+	      if ((wd[i].abspath = xgetcwd ()) == NULL)
+		call_arg_fatal ("getcwd", ".");
+	    }
+	  else if (IS_ABSOLUTE_FILE_NAME (wd[i].name))
+	    /* If the given name is absolute, use it to represent this
+	       directory; otherwise, construct a name based on the
+	       previous -C option.  */
+	    wd[i].abspath = xstrdup (wd[i].name);
+	  else
+	    {
+	      namebuf_t nbuf = namebuf_create (wd[i - 1].abspath);
+	      namebuf_add_dir (nbuf, wd[i].name);
+	      wd[i].abspath = namebuf_finish (nbuf);
+	    }
+	}
+
+      chdir_do (save_cwdi);
+    }
+	   
   return wd[idx].abspath;
 }
 
