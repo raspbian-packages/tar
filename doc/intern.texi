@@ -1,5 +1,5 @@
 @c This is part of the paxutils manual.
-@c Copyright (C) 2006--2021 Free Software Foundation, Inc.
+@c Copyright (C) 2006--2023 Free Software Foundation, Inc.
 @c This file is distributed under GFDL 1.1 or any later version
 @c published by the Free Software Foundation.
 
@@ -13,7 +13,7 @@
 
 @node Standard
 @unnumberedsec Basic Tar Format
-@UNREVISED
+@UNREVISED{}
 
 While an archive may contain many files, the archive itself is a
 single ordinary file.  Like any other file, an archive file can be
@@ -51,7 +51,10 @@ of the file.  At the end of the archive file there are two 512-byte blocks
 filled with binary zeros as an end-of-file marker.  A reasonable system
 should write such end-of-file marker at the end of an archive, but
 must not assume that such a block exists when reading an archive.  In
-particular @GNUTAR{} always issues a warning if it does not encounter it.
+particular, @GNUTAR{} does not treat missing end-of-file marker as an
+error and silently ignores the fact.  You can instruct it to issue
+a warning, however, by using the @option{--warning=missing-zero-blocks}
+option (@pxref{General Warnings, missing-zero-blocks}).
 
 The blocks may be @dfn{blocked} for physical I/O operations.
 Each record of @var{n} blocks (where @var{n} is set by the
@@ -111,8 +114,9 @@ The @code{uid} and @code{gid} fields are the numeric user and group
 not support numeric user or group @acronym{ID}s, these fields should
 be ignored.
 
-The @code{size} field is the size of the file in bytes; linked files
-are archived with this field specified as zero.
+The @code{size} field is the size of the file in bytes; for archive
+members that are symbolic or hard links to another file, this field
+is specified as zero.
 
 The @code{mtime} field represents the data modification time of the file at
 the time it was archived.  It represents the integer number of
@@ -123,7 +127,7 @@ the simple sum of all bytes in the header block.  Each 8-bit
 byte in the header is added to an unsigned integer, initialized to
 zero, the precision of which shall be no less than seventeen bits.
 When calculating the checksum, the @code{chksum} field is treated as
-if it were all blanks.
+if it were filled with spaces (ASCII 32).
 
 The @code{typeflag} field specifies the type of file archived.  If a
 particular implementation does not recognize or permit the specified
@@ -266,7 +270,7 @@ IEEE Std 1003.2-1992, pages 380-388 (section 4.48) and pages 936-940
 
 @node Extensions
 @unnumberedsec @acronym{GNU} Extensions to the Archive Format
-@UNREVISED
+@UNREVISED{}
 
 The @acronym{GNU} format uses additional file types to describe new types of
 files in an archive.  These are listed below.

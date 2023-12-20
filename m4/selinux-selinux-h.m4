@@ -1,5 +1,5 @@
-# serial 5   -*- Autoconf -*-
-# Copyright (C) 2006-2007, 2009-2021 Free Software Foundation, Inc.
+# serial 7   -*- Autoconf -*-
+# Copyright (C) 2006-2007, 2009-2023 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -14,6 +14,12 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   AC_REQUIRE([gl_LIBSELINUX])
   if test "$with_selinux" != no; then
     AC_CHECK_HEADERS([selinux/selinux.h])
+
+    if test $ac_cv_header_selinux_selinux_h = yes; then
+      HAVE_SELINUX_SELINUX_H=1
+    else
+      HAVE_SELINUX_SELINUX_H=0
+    fi
 
     if test "$ac_cv_header_selinux_selinux_h" = yes; then
       # We do have <selinux/selinux.h>, so do compile getfilecon.c
@@ -37,8 +43,9 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   else
     # Do as if <selinux/selinux.h> does not exist, even if
     # AC_CHECK_HEADERS_ONCE has already determined that it exists.
-    AC_DEFINE([HAVE_SELINUX_SELINUX_H], [0])
+    HAVE_SELINUX_SELINUX_H=0
   fi
+  AC_SUBST([HAVE_SELINUX_SELINUX_H])
 ])
 
 AC_DEFUN([gl_LIBSELINUX],
@@ -47,7 +54,7 @@ AC_DEFUN([gl_LIBSELINUX],
   AC_REQUIRE([AC_CANONICAL_BUILD])
 
   AC_ARG_WITH([selinux],
-    AS_HELP_STRING([--without-selinux], [do not use SELinux, even on systems with SELinux]),
+    AS_HELP_STRING([[--without-selinux]], [do not use SELinux, even on systems with SELinux]),
     [], [with_selinux=maybe])
 
   LIB_SELINUX=

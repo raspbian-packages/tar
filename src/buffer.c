@@ -1,6 +1,6 @@
 /* Buffer management for tar.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -20,7 +20,6 @@
    Written by John Gilmore, on 1985-08-25.  */
 
 #include <system.h>
-#include <system-ioctl.h>
 
 #include <signal.h>
 
@@ -28,9 +27,15 @@
 #include <fnmatch.h>
 #include <human.h>
 #include <quotearg.h>
+#include <verify.h>
 
 #include "common.h"
 #include <rmt.h>
+
+/* Work around GCC bug 109856.  */
+# if 13 <= __GNUC__
+#  pragma GCC diagnostic ignored "-Wnull-dereference"
+# endif
 
 /* Number of retries before giving up on read.  */
 #define READ_ERROR_MAX 10
@@ -308,6 +313,7 @@ static struct zip_magic const magic[] = {
   { ct_bzip2,    3, "BZh" },
   { ct_lzip,     4, "LZIP" },
   { ct_lzma,     6, "\xFFLZMA" },
+  { ct_lzma,     3, "\x5d\x00\x00" },
   { ct_lzop,     4, "\211LZO" },
   { ct_xz,       6, "\xFD" "7zXZ" },
   { ct_zstd,     4, "\x28\xB5\x2F\xFD" },
@@ -327,15 +333,15 @@ static struct zip_program zip_program[] = {
   { ct_lzop,     LZOP_PROGRAM,     "--lzop" },
   { ct_xz,       XZ_PROGRAM,       "-J" },
   { ct_zstd,     ZSTD_PROGRAM,     "--zstd" },
-  { ct_none }
 };
+enum { n_zip_programs = sizeof zip_program / sizeof *zip_program };
 
 static struct zip_program const *
 find_zip_program (enum compress_type type, int *pstate)
 {
   int i;
 
-  for (i = *pstate; zip_program[i].type != ct_none; i++)
+  for (i = *pstate; i < n_zip_programs; i++)
     {
       if (zip_program[i].type == type)
 	{
@@ -351,6 +357,8 @@ const char *
 first_decompress_program (int *pstate)
 {
   struct zip_program const *zp;
+
+  *pstate = n_zip_programs;
 
   if (use_compress_program_option)
     return use_compress_program_option;
@@ -368,8 +376,6 @@ next_decompress_program (int *pstate)
 {
   struct zip_program const *zp;
 
-  if (use_compress_program_option)
-    return NULL;
   zp = find_zip_program (archive_compression_type, pstate);
   return zp ? zp->program : NULL;
 }
@@ -418,37 +424,6 @@ check_compressed_archive (bool *pshort)
       return p->type;
 
   return ct_none;
-}
-
-/* Guess if the archive is seekable. */
-static void
-guess_seekable_archive (void)
-{
-  struct stat st;
-
-  if (subcommand_option == DELETE_SUBCOMMAND)
-    {
-      /* The current code in delete.c is based on the assumption that
-	 skip_member() reads all data from the archive. So, we should
-	 make sure it won't use seeks. On the other hand, the same code
-	 depends on the ability to backspace a record in the archive,
-	 so setting seekable_archive to false is technically incorrect.
-         However, it is tested only in skip_member(), so it's not a
-	 problem. */
-      seekable_archive = false;
-    }
-
-  if (seek_option != -1)
-    {
-      seekable_archive = !!seek_option;
-      return;
-    }
-
-  if (!multi_volume_option && !use_compress_program_option
-      && fstat (archive, &st) == 0)
-    seekable_archive = S_ISREG (st.st_mode);
-  else
-    seekable_archive = false;
 }
 
 /* Open an archive named archive_name_array[0]. Detect if it is
@@ -702,12 +677,41 @@ check_tty (enum access_mode mode)
     }
 }
 
+/* Fetch the status of the archive, accessed via WANTED_STATUS.  */
+
+static void
+get_archive_status (enum access_mode wanted_access, bool backed_up_flag)
+{
+  if (!sys_get_archive_stat ())
+    {
+      int saved_errno = errno;
+
+      if (backed_up_flag)
+        undo_last_backup ();
+      errno = saved_errno;
+      open_fatal (archive_name_array[0]);
+    }
+
+  seekable_archive
+    = (! (multi_volume_option || use_compress_program_option)
+       && (seek_option < 0
+	   ? (_isrmt (archive)
+	      || S_ISREG (archive_stat.st_mode)
+	      || S_ISBLK (archive_stat.st_mode))
+	   : seek_option));
+
+  if (wanted_access != ACCESS_READ)
+    sys_detect_dev_null_output ();
+
+  SET_BINARY_MODE (archive);
+}
+
 /* Open an archive file.  The argument specifies whether we are
    reading or writing, or both.  */
 static void
 _open_archive (enum access_mode wanted_access)
 {
-  int backed_up_flag = 0;
+  bool backed_up_flag = false;
 
   if (record_size == 0)
     FATAL_ERROR ((0, 0, _("Invalid value for record_size")));
@@ -796,15 +800,13 @@ _open_archive (enum access_mode wanted_access)
       {
       case ACCESS_READ:
         archive = open_compressed_archive ();
-	if (archive >= 0)
-	  guess_seekable_archive ();
         break;
 
       case ACCESS_WRITE:
         if (backup_option)
           {
             maybe_backup_file (archive_name_array[0], 1);
-            backed_up_flag = 1;
+            backed_up_flag = true;
           }
 	if (verify_option)
 	  archive = rmtopen (archive_name_array[0], O_RDWR | O_CREAT | O_BINARY,
@@ -832,20 +834,7 @@ _open_archive (enum access_mode wanted_access)
         break;
       }
 
-  if (archive < 0
-      || (! _isrmt (archive) && !sys_get_archive_stat ()))
-    {
-      int saved_errno = errno;
-
-      if (backed_up_flag)
-        undo_last_backup ();
-      errno = saved_errno;
-      open_fatal (archive_name_array[0]);
-    }
-
-  sys_detect_dev_null_output ();
-  sys_save_archive_dev_ino ();
-  SET_BINARY_MODE (archive);
+  get_archive_status (wanted_access, backed_up_flag);
 
   switch (wanted_access)
     {
@@ -998,7 +987,8 @@ short_read (size_t status)
     }
 
   record_end = record_start + (record_size - left) / BLOCKSIZE;
-  records_read++;
+  if (left == 0)
+    records_read++;
 }
 
 /*  Flush the current buffer to/from the archive.  */
@@ -1048,18 +1038,8 @@ flush_archive (void)
 static void
 backspace_output (void)
 {
-#ifdef MTIOCTOP
-  {
-    struct mtop operation;
-
-    operation.mt_op = MTBSR;
-    operation.mt_count = 1;
-    if (rmtioctl (archive, MTIOCTOP, (char *) &operation) >= 0)
-      return;
-    if (errno == EIO && rmtioctl (archive, MTIOCTOP, (char *) &operation) >= 0)
-      return;
-  }
-#endif
+  if (mtioseek (false, -1))
+    return;
 
   {
     off_t position = rmtlseek (archive, (off_t) 0, SEEK_CUR);
@@ -1325,8 +1305,8 @@ new_volume (enum access_mode mode)
   if (verify_option)
     verify_volume ();
 
-  assign_string (&volume_label, NULL);
-  assign_string (&continued_file_name, NULL);
+  assign_null (&volume_label);
+  assign_null (&continued_file_name);
   continued_file_size = continued_file_offset = 0;
   current_block = record_start;
 
@@ -1372,7 +1352,6 @@ new_volume (enum access_mode mode)
       case ACCESS_READ:
         archive = rmtopen (*archive_name_cursor, O_RDONLY, MODE_RW,
                            rsh_command_option);
-	guess_seekable_archive ();
         break;
 
       case ACCESS_WRITE:
@@ -1397,7 +1376,7 @@ new_volume (enum access_mode mode)
       goto tryagain;
     }
 
-  SET_BINARY_MODE (archive);
+  get_archive_status (mode, false);
 
   return true;
 }
@@ -1505,7 +1484,7 @@ try_new_volume (void)
       ASSIGN_STRING_N (&volume_label, current_header->header.name);
       set_next_block_after (header);
       header = find_next_block ();
-      if (header->header.typeflag != GNUTYPE_MULTIVOL)
+      if (! (header && header->header.typeflag == GNUTYPE_MULTIVOL))
         break;
       FALLTHROUGH;
     case GNUTYPE_MULTIVOL:
@@ -1688,6 +1667,7 @@ _write_volume_label (const char *str)
     {
       union block *label = find_next_block ();
 
+      assume (label);
       memset (label, 0, BLOCKSIZE);
 
       strcpy (label->header.name, str);
@@ -1848,7 +1828,7 @@ simple_flush_read (void)
 
 /* Simple flush write (no multi-volume or label extensions) */
 static void
-simple_flush_write (size_t level __attribute__((unused)))
+simple_flush_write (MAYBE_UNUSED size_t level)
 {
   ssize_t status;
 

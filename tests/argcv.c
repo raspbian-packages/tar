@@ -1,6 +1,6 @@
 /* argcv.c - simple functions for parsing input based on whitespace
-   Copyright (C) 1999, 2000, 2001, 2007, 2009, 2010 Free Software
-   Foundation, Inc.
+   Copyright (C) 1999-2001, 2007, 2009-2010, 2023 Free Software Foundation,
+   Inc.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -115,7 +115,7 @@ int
 argcv_escape_char (int c)
 {
   char *p;
-  
+
   for (p = escape_transtab + sizeof(escape_transtab) - 2;
        p > escape_transtab; p -= 2)
     {
@@ -124,19 +124,18 @@ argcv_escape_char (int c)
     }
   return -1;
 }
-  
+
 
 static int
 xtonum (const char *src, int base, size_t cnt)
 {
-  int val;
   char *p;
   char tmp[4]; /* At most three characters + zero */
-  
+
   /* Notice: No use to check `cnt'. It should be either 2 or 3 */
   memcpy (tmp, src, cnt);
   tmp[cnt] = 0;
-  val = strtoul (tmp, &p, base);
+  long int val = strtol (tmp, &p, base);
   return (*p == 0) ? val : -1;
 }
 
@@ -171,7 +170,7 @@ static void
 unescape_copy (char *dst, const char *src, size_t n)
 {
   int c;
-  
+
   while (n > 0)
     {
       n--;
@@ -204,7 +203,7 @@ unescape_copy (char *dst, const char *src, size_t n)
 		    }
 		}
 	      break;
-	      
+
 	    case '0':
 	      ++src;
 	      --n;
@@ -229,7 +228,7 @@ unescape_copy (char *dst, const char *src, size_t n)
 		    }
 		}
 	      break;
-	      
+
 	    default:
 	      *dst++ = argcv_unescape_char (*src++);
 	      n--;
@@ -254,7 +253,7 @@ escape_copy (char *dst, const char *src)
 	  *dst++ = '"';
 	}
       else if (*src != '\t' && isprint ((unsigned char) *src))
-	*dst++ = *src;      
+	*dst++ = *src;
       else
 	{
 	  int c = argcv_escape_char (*src);
@@ -353,11 +352,11 @@ argcv_string (int argc, char **argv, char **pstring)
       int toklen;
 
       toklen = escaped_length (argv[i], &quote);
-      
+
       len += toklen + 2;
       if (quote)
 	len += 2;
-      
+
       buffer = realloc (buffer, len);
       if (buffer == NULL)
         return 1;
@@ -388,7 +387,7 @@ main(int xargc, char **xargv)
   int i, argc;
   char **argv;
   char *s;
-  
+
   argcv_get (xargv[1] ? xargv[1]:command, "=", "#", &argc, &argv);
   printf ("%d args:\n", argc);
   for (i = 0; i < argc; i++)

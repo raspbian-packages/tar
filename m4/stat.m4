@@ -1,6 +1,6 @@
-# serial 17
+# serial 19
 
-# Copyright (C) 2009-2021 Free Software Foundation, Inc.
+# Copyright (C) 2009-2023 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -45,6 +45,8 @@ AC_DEFUN([gl_FUNC_STAT],
            [case "$host_os" in
                                # Guess yes on Linux systems.
               linux-* | linux) gl_cv_func_stat_file_slash="guessing yes" ;;
+                               # Guess yes on systems that emulate the Linux system calls.
+              midipix*)        gl_cv_func_stat_file_slash="guessing yes" ;;
                                # Guess yes on glibc systems.
               *-gnu* | gnu*)   gl_cv_func_stat_file_slash="guessing yes" ;;
                                # If we don't know, obey --enable-cross-guesses.
@@ -69,7 +71,7 @@ AC_DEFUN([gl_FUNC_STAT],
 
 # Prerequisites of lib/stat.c and lib/stat-w32.c.
 AC_DEFUN([gl_PREREQ_STAT], [
-  AC_REQUIRE([gl_HEADER_SYS_STAT_H])
+  AC_REQUIRE([gl_SYS_STAT_H])
   AC_REQUIRE([gl_PREREQ_STAT_W32])
   :
 ])

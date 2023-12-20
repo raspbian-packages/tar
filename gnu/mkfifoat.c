@@ -1,9 +1,9 @@
 /* Create a named fifo relative to an open directory.
-   Copyright (C) 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -66,8 +66,8 @@ rpl_mkfifoat (int fd, char const *file, mode_t mode)
 /* Mingw lacks mkfifo, so this wrapper is trivial.  */
 
 int
-mkfifoat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
-          mode_t mode _GL_UNUSED)
+mkfifoat (_GL_UNUSED int fd, _GL_UNUSED char const *path,
+          _GL_UNUSED mode_t mode)
 {
   errno = ENOSYS;
   return -1;

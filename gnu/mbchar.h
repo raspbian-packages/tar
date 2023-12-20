@@ -1,26 +1,26 @@
 /* Multibyte character data type.
-   Copyright (C) 2001, 2005-2007, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2005-2007, 2009-2023 Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>.  */
 
 /* A multibyte character is a short subsequence of a char* string,
-   representing a single wide character.
+   representing a single 32-bit wide character.
 
-   We use multibyte characters instead of wide characters because of
-   the following goals:
+   We use multibyte characters instead of 32-bit wide characters because
+   of the following goals:
    1) correct multibyte handling, i.e. operate according to the LC_CTYPE
       locale,
    2) ease of maintenance, i.e. the maintainer needs not know all details
@@ -28,8 +28,7 @@
    3) don't fail grossly if the input is not in the encoding set by the
       locale, because often different encodings are in use in the same
       countries (ISO-8859-1/UTF-8, EUC-JP/Shift_JIS, ...),
-   4) fast in the case of ASCII characters,
-   5) portability, i.e. don't make unportable assumptions about wchar_t.
+   4) fast in the case of ASCII characters.
 
    Multibyte characters are only accessed through the mb* macros.
 
@@ -144,14 +143,14 @@
 #ifndef _MBCHAR_H
 #define _MBCHAR_H 1
 
-#include <stdbool.h>
-#include <string.h>
-#include <wchar.h>
-#include <wctype.h>
-
-#ifndef _GL_INLINE_HEADER_BEGIN
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
  #error "Please include config.h first."
 #endif
+
+#include <string.h>
+#include <uchar.h>
+
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBCHAR_INLINE
 # define MBCHAR_INLINE _GL_INLINE
@@ -163,8 +162,8 @@ struct mbchar
 {
   const char *ptr;      /* pointer to current character */
   size_t bytes;         /* number of bytes of current character, > 0 */
-  bool wc_valid;        /* true if wc is a valid wide character */
-  wchar_t wc;           /* if wc_valid: the current character */
+  bool wc_valid;        /* true if wc is a valid 32-bit wide character */
+  char32_t wc;          /* if wc_valid: the current character */
   char buf[MBCHAR_BUF_SIZE]; /* room for the bytes, used for file input only */
 };
 
@@ -183,7 +182,7 @@ typedef struct mbchar mbchar_t;
 #define mb_cmp(mbc1, mbc2) \
   ((mbc1).wc_valid                                                      \
    ? ((mbc2).wc_valid                                                   \
-      ? (int) (mbc1).wc - (int) (mbc2).wc                               \
+      ? _GL_CMP ((mbc1).wc, (mbc2).wc)                                  \
       : -1)                                                             \
    : ((mbc2).wc_valid                                                   \
       ? 1                                                               \
@@ -195,7 +194,7 @@ typedef struct mbchar mbchar_t;
 #define mb_casecmp(mbc1, mbc2) \
   ((mbc1).wc_valid                                                      \
    ? ((mbc2).wc_valid                                                   \
-      ? (int) towlower ((mbc1).wc) - (int) towlower ((mbc2).wc)         \
+      ? _GL_CMP (c32tolower ((mbc1).wc), c32tolower ((mbc2).wc))        \
       : -1)                                                             \
    : ((mbc2).wc_valid                                                   \
       ? 1                                                               \
@@ -211,25 +210,25 @@ typedef struct mbchar mbchar_t;
      && memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) == 0)
 #define mb_caseequal(mbc1, mbc2) \
   ((mbc1).wc_valid && (mbc2).wc_valid                                   \
-   ? towlower ((mbc1).wc) == towlower ((mbc2).wc)                       \
+   ? c32tolower ((mbc1).wc) == c32tolower ((mbc2).wc)                   \
    : (mbc1).bytes == (mbc2).bytes                                       \
      && memcmp ((mbc1).ptr, (mbc2).ptr, (mbc1).bytes) == 0)
 
 /* <ctype.h>, <wctype.h> classification.  */
 #define mb_isascii(mbc) \
   ((mbc).wc_valid && (mbc).wc >= 0 && (mbc).wc <= 127)
-#define mb_isalnum(mbc) ((mbc).wc_valid && iswalnum ((mbc).wc))
-#define mb_isalpha(mbc) ((mbc).wc_valid && iswalpha ((mbc).wc))
-#define mb_isblank(mbc) ((mbc).wc_valid && iswblank ((mbc).wc))
-#define mb_iscntrl(mbc) ((mbc).wc_valid && iswcntrl ((mbc).wc))
-#define mb_isdigit(mbc) ((mbc).wc_valid && iswdigit ((mbc).wc))
-#define mb_isgraph(mbc) ((mbc).wc_valid && iswgraph ((mbc).wc))
-#define mb_islower(mbc) ((mbc).wc_valid && iswlower ((mbc).wc))
-#define mb_isprint(mbc) ((mbc).wc_valid && iswprint ((mbc).wc))
-#define mb_ispunct(mbc) ((mbc).wc_valid && iswpunct ((mbc).wc))
-#define mb_isspace(mbc) ((mbc).wc_valid && iswspace ((mbc).wc))
-#define mb_isupper(mbc) ((mbc).wc_valid && iswupper ((mbc).wc))
-#define mb_isxdigit(mbc) ((mbc).wc_valid && iswxdigit ((mbc).wc))
+#define mb_isalnum(mbc) ((mbc).wc_valid && c32isalnum ((mbc).wc))
+#define mb_isalpha(mbc) ((mbc).wc_valid && c32isalpha ((mbc).wc))
+#define mb_isblank(mbc) ((mbc).wc_valid && c32isblank ((mbc).wc))
+#define mb_iscntrl(mbc) ((mbc).wc_valid && c32iscntrl ((mbc).wc))
+#define mb_isdigit(mbc) ((mbc).wc_valid && c32isdigit ((mbc).wc))
+#define mb_isgraph(mbc) ((mbc).wc_valid && c32isgraph ((mbc).wc))
+#define mb_islower(mbc) ((mbc).wc_valid && c32islower ((mbc).wc))
+#define mb_isprint(mbc) ((mbc).wc_valid && c32isprint ((mbc).wc))
+#define mb_ispunct(mbc) ((mbc).wc_valid && c32ispunct ((mbc).wc))
+#define mb_isspace(mbc) ((mbc).wc_valid && c32isspace ((mbc).wc))
+#define mb_isupper(mbc) ((mbc).wc_valid && c32isupper ((mbc).wc))
+#define mb_isxdigit(mbc) ((mbc).wc_valid && c32isxdigit ((mbc).wc))
 
 /* Extra <wchar.h> function.  */
 
@@ -237,12 +236,12 @@ typedef struct mbchar mbchar_t;
 #define MB_UNPRINTABLE_WIDTH 1
 
 MBCHAR_INLINE int
-mb_width_aux (wint_t wc)
+mb_width_aux (char32_t wc)
 {
-  int w = wcwidth (wc);
+  int w = c32width (wc);
   /* For unprintable characters, arbitrarily return 0 for control characters
      and MB_UNPRINTABLE_WIDTH otherwise.  */
-  return (w >= 0 ? w : iswcntrl (wc) ? 0 : MB_UNPRINTABLE_WIDTH);
+  return (w >= 0 ? w : c32iscntrl (wc) ? 0 : MB_UNPRINTABLE_WIDTH);
 }
 
 #define mb_width(mbc) \

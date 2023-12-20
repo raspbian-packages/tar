@@ -1,7 +1,7 @@
-# serial 8
+# serial 11
 # See if we need to provide utimensat replacement.
 
-dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
+dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,9 +13,12 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CHECK_FUNCS_ONCE([utimensat])
+  gl_CHECK_FUNCS_ANDROID([utimensat], [[#include <sys/stat.h>]])
   if test $ac_cv_func_utimensat = no; then
     HAVE_UTIMENSAT=0
+    case "$gl_cv_onwards_func_utimensat" in
+      future*) REPLACE_UTIMENSAT=1 ;;
+    esac
   else
     AC_CACHE_CHECK([whether utimensat works],
       [gl_cv_func_utimensat_works],
@@ -94,7 +97,7 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
         ;;
       *nearly)
         AC_DEFINE([HAVE_NEARLY_WORKING_UTIMENSAT], [1],
-          [Define to 1 of utimensat works, except for the trailing slash handling.])
+          [Define to 1 if utimensat works, except for the trailing slash handling.])
         REPLACE_UTIMENSAT=1
         ;;
       *)

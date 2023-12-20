@@ -1,7 +1,6 @@
 /* System dependent definitions for GNU tar.
 
-   Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2003,
-   2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright 1994-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,13 +21,6 @@
 #endif
 
 #include <alloca.h>
-
-#ifndef __attribute__
-/* This feature is available in gcc versions 2.5 and later.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 5) || __STRICT_ANSI__
-#  define __attribute__(spec) /* empty */
-# endif
-#endif
 
 #include <sys/types.h>
 #include <ctype.h>
@@ -354,7 +346,7 @@ extern int errno;
 
 #define DEFAULT_ST_BLKSIZE 512
 
-#if !HAVE_ST_BLKSIZE
+#ifndef HAVE_STRUCT_STAT_ST_BLKSIZE
 # define ST_BLKSIZE(statbuf) DEFAULT_ST_BLKSIZE
 #else
 # define ST_BLKSIZE(statbuf) \
@@ -409,7 +401,6 @@ void *malloc ();
 char *getenv ();
 #endif
 
-#include <stdbool.h>
 #include <stddef.h>
 
 #include <stdio.h>
@@ -431,8 +422,6 @@ char *getenv ();
 #include <inttypes.h>
 
 #include <intprops.h>
-
-#define UINTMAX_STRSIZE_BOUND INT_BUFSIZE_BOUND (uintmax_t)
 
 /* Prototypes for external functions.  */
 
@@ -444,7 +433,7 @@ char *getenv ();
 #endif
 
 #include <time.h>
-#ifdef TIME_WITH_SYS_TIME
+#ifdef HAVE_SYS_TIME_H
 # include <sys/time.h>
 #endif
 
@@ -472,35 +461,10 @@ char *getenv ();
 # define SET_BINARY_MODE(arc) setmode(arc, O_BINARY)
 # define mkdir(file, mode) (mkdir) (file)
 # define TTY_NAME "con"
-# define sys_reset_uid_gid()
 #else
 # define SET_BINARY_MODE(arc)
 # define TTY_NAME "/dev/tty"
 # include <paxlib.h>
-static inline void
-sys_reset_uid_gid (void)
-{
-  struct passwd *pw;
-  uid_t uid = getuid ();
-  gid_t gid = getgid ();
-  
-  if ((pw = getpwuid (uid)) == NULL)
-    {
-      FATAL_ERROR ((0, errno, "%s(%lu)", "getpwuid", (unsigned long)uid));
-    }
-  if (initgroups (pw->pw_name, getgid ()))
-    {
-      FATAL_ERROR ((0, errno, "%s", "initgroups"));
-    }
-  if (gid != getegid () && setgid (gid) && errno != EPERM)
-    {
-      FATAL_ERROR ((0, errno, "%s", "setgid"));
-    }
-  if (uid != geteuid () && setuid (uid) && errno != EPERM)
-    {
-      FATAL_ERROR ((0, errno, "%s", "setuid"));
-    }
-}
 #endif
 
 #if XENIX

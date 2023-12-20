@@ -1,6 +1,6 @@
 /* Support for extended attributes.
 
-   Copyright (C) 2006-2021 Free Software Foundation, Inc.
+   Copyright (C) 2006-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -30,6 +30,83 @@
 #include "xattr-at.h"
 #include "selinux-at.h"
 
+#define XATTRS_PREFIX "SCHILY.xattr."
+#define XATTRS_PREFIX_LEN (sizeof XATTRS_PREFIX - 1)
+
+void
+xheader_xattr_init (struct tar_stat_info *st)
+{
+  xattr_map_init (&st->xattr_map);
+
+  st->acls_a_ptr = NULL;
+  st->acls_a_len = 0;
+  st->acls_d_ptr = NULL;
+  st->acls_d_len = 0;
+  st->cntx_name = NULL;
+}
+
+void
+xattr_map_init (struct xattr_map *map)
+{
+  memset (map, 0, sizeof *map);
+}
+
+void
+xattr_map_free (struct xattr_map *xattr_map)
+{
+  size_t i;
+
+  for (i = 0; i < xattr_map->xm_size; i++)
+    {
+      free (xattr_map->xm_map[i].xkey);
+      free (xattr_map->xm_map[i].xval_ptr);
+    }
+  free (xattr_map->xm_map);
+}
+
+void
+xattr_map_add (struct xattr_map *map,
+	       const char *key, const char *val, size_t len)
+{
+  struct xattr_array *p;
+
+  if (map->xm_size == map->xm_max)
+    map->xm_map = x2nrealloc (map->xm_map, &map->xm_max,
+			      sizeof (map->xm_map[0]));
+  p = &map->xm_map[map->xm_size];
+  p->xkey = xstrdup (key);
+  p->xval_ptr = xmemdup (val, len + 1);
+  p->xval_len = len;
+  map->xm_size++;
+}
+
+void
+xheader_xattr_add (struct tar_stat_info *st,
+		   const char *key, const char *val, size_t len)
+{
+  size_t klen = strlen (key);
+  char *xkey = xmalloc (XATTRS_PREFIX_LEN + klen + 1);
+  char *tmp = xkey;
+
+  tmp = stpcpy (tmp, XATTRS_PREFIX);
+  stpcpy (tmp, key);
+
+  xattr_map_add (&st->xattr_map, xkey, val, len);
+
+  free (xkey);
+}
+
+void
+xattr_map_copy (struct xattr_map *dst, const struct xattr_map *src)
+{
+  size_t i;
+
+  for (i = 0; i < src->xm_size; i++)
+    xattr_map_add (dst, src->xm_map[i].xkey,
+		   src->xm_map[i].xval_ptr,
+		   src->xm_map[i].xval_len);
+}
+
 struct xattrs_mask_map
 {
   const char **masks;
@@ -53,6 +130,10 @@ static struct
 #ifdef HAVE_POSIX_ACLS
 # include "acl.h"
 # include <sys/acl.h>
+# ifdef HAVE_ACL_LIBACL_H
+#  /* needed for numeric-owner support */
+#  include <acl/libacl.h>
+# endif
 #endif
 
 #ifdef HAVE_POSIX_ACLS
@@ -204,13 +285,12 @@ fixup_extra_acl_fields (char *ptr)
 static void
 xattrs__acls_set (struct tar_stat_info const *st,
                   char const *file_name, int type,
-                  char *ptr, size_t len, bool def)
+		  char *ptr, bool def)
 {
   acl_t acl;
 
   if (ptr)
     {
-      /* assert (strlen (ptr) == len); */
       ptr = fixup_extra_acl_fields (ptr);
       acl = acl_from_text (ptr);
     }
@@ -271,21 +351,35 @@ xattrs_acls_cleanup (char *val, size_t *plen)
 }
 
 static void
-xattrs__acls_get_a (int parentfd, const char *file_name,
-                    struct tar_stat_info *st,
-                    char **ret_ptr, size_t * ret_len)
+acls_get_text (int parentfd, const char *file_name, acl_type_t type,
+	       char **ret_ptr, size_t * ret_len)
 {
   char *val = NULL;
   acl_t acl;
 
-  if (!(acl = acl_get_file_at (parentfd, file_name, ACL_TYPE_ACCESS)))
+  if (!(acl = acl_get_file_at (parentfd, file_name, type)))
     {
       if (errno != ENOTSUP)
         call_arg_warn ("acl_get_file_at", file_name);
       return;
     }
 
-  val = acl_to_text (acl, NULL);
+  if (numeric_owner_option)
+    {
+#ifdef HAVE_ACL_LIBACL_H
+      val = acl_to_any_text (acl, NULL, '\n',
+			     TEXT_SOME_EFFECTIVE | TEXT_NUMERIC_IDS);
+#else
+      static int warned;
+      if (!warned)
+	{
+	  WARN ((0, 0, _("--numeric-owner is ignored for ACLs: libacl is not available")));
+	  warned = 1;
+	}
+#endif
+    }
+  else
+    val = acl_to_text (acl, NULL);
   acl_free (acl);
 
   if (!val)
@@ -299,34 +393,19 @@ xattrs__acls_get_a (int parentfd, const char *file_name,
   acl_free (val);
 }
 
+static void
+xattrs__acls_get_a (int parentfd, const char *file_name,
+                    char **ret_ptr, size_t *ret_len)
+{
+  acls_get_text (parentfd, file_name, ACL_TYPE_ACCESS, ret_ptr, ret_len);
+}
+
 /* "system.posix_acl_default" */
 static void
 xattrs__acls_get_d (int parentfd, char const *file_name,
-                    struct tar_stat_info *st,
                     char **ret_ptr, size_t * ret_len)
 {
-  char *val = NULL;
-  acl_t acl;
-
-  if (!(acl = acl_get_file_at (parentfd, file_name, ACL_TYPE_DEFAULT)))
-    {
-      if (errno != ENOTSUP)
-        call_arg_warn ("acl_get_file_at", file_name);
-      return;
-    }
-
-  val = acl_to_text (acl, NULL);
-  acl_free (acl);
-
-  if (!val)
-    {
-      call_arg_warn ("acl_to_text", file_name);
-      return;
-    }
-
-  *ret_ptr = xstrdup (val);
-  xattrs_acls_cleanup (*ret_ptr, ret_len);
-  acl_free (val);
+  acls_get_text (parentfd, file_name, ACL_TYPE_DEFAULT, ret_ptr, ret_len);
 }
 #endif /* HAVE_POSIX_ACLS */
 
@@ -369,7 +448,7 @@ acls_one_line (const char *prefix, char delim,
 
 void
 xattrs_acls_get (int parentfd, char const *file_name,
-                 struct tar_stat_info *st, int fd, int xisfile)
+		 struct tar_stat_info *st, int xisfile)
 {
   if (acls_option > 0)
     {
@@ -388,10 +467,10 @@ xattrs_acls_get (int parentfd, char const *file_name,
           return;
         }
 
-      xattrs__acls_get_a (parentfd, file_name, st,
+      xattrs__acls_get_a (parentfd, file_name,
                           &st->acls_a_ptr, &st->acls_a_len);
       if (!xisfile)
-        xattrs__acls_get_d (parentfd, file_name, st,
+	xattrs__acls_get_d (parentfd, file_name,
                             &st->acls_d_ptr, &st->acls_d_len);
 #endif
     }
@@ -410,10 +489,10 @@ xattrs_acls_set (struct tar_stat_info const *st,
       done = 1;
 #else
       xattrs__acls_set (st, file_name, ACL_TYPE_ACCESS,
-                        st->acls_a_ptr, st->acls_a_len, false);
+			st->acls_a_ptr, false);
       if (typeflag == DIRTYPE || typeflag == GNUTYPE_DUMPDIR)
         xattrs__acls_set (st, file_name, ACL_TYPE_DEFAULT,
-                          st->acls_d_ptr, st->acls_d_len, true);
+			  st->acls_d_ptr, true);
 #endif
     }
 }
@@ -533,8 +612,7 @@ xattrs_xattrs_get (int parentfd, char const *file_name,
 
 #ifdef HAVE_XATTRS
 static void
-xattrs__fd_set (struct tar_stat_info const *st,
-                char const *file_name, char typeflag,
+xattrs__fd_set (char const *file_name, char typeflag,
                 const char *attr, const char *ptr, size_t len)
 {
   if (ptr)
@@ -650,7 +728,7 @@ xattrs_kw_included (const char *kw, bool archiving)
 }
 
 static bool
-xattrs_kw_excluded (const char *kw, bool archiving)
+xattrs_kw_excluded (const char *kw)
 {
   return xattrs_setup.excl.size ?
     xattrs_matches_mask (kw, &xattrs_setup.excl) : false;
@@ -662,8 +740,7 @@ xattrs_kw_excluded (const char *kw, bool archiving)
 static bool
 xattrs_masked_out (const char *kw, bool archiving)
 {
-  return xattrs_kw_included (kw, archiving) ?
-    xattrs_kw_excluded (kw, archiving) : true;
+  return xattrs_kw_included (kw, archiving) ? xattrs_kw_excluded (kw) : true;
 }
 
 void
@@ -678,15 +755,14 @@ xattrs_xattrs_set (struct tar_stat_info const *st,
         WARN ((0, 0, _("XATTR support is not available")));
       done = 1;
 #else
-      size_t scan = 0;
+      size_t i;
 
-      if (!st->xattr_map_size)
+      if (!st->xattr_map.xm_size)
         return;
 
-      for (; scan < st->xattr_map_size; ++scan)
+      for (i = 0; i < st->xattr_map.xm_size; i++)
         {
-          char *keyword = st->xattr_map[scan].xkey;
-          keyword += strlen ("SCHILY.xattr.");
+          char *keyword = st->xattr_map.xm_map[i].xkey + XATTRS_PREFIX_LEN;
 
           /* TODO: this 'later_run' workaround is temporary solution -> once
              capabilities should become fully supported by it's API and there
@@ -702,9 +778,9 @@ xattrs_xattrs_set (struct tar_stat_info const *st,
             /* we don't want to restore this keyword */
             continue;
 
-          xattrs__fd_set (st, file_name, typeflag, keyword,
-                          st->xattr_map[scan].xval_ptr,
-                          st->xattr_map[scan].xval_len);
+	  xattrs__fd_set (file_name, typeflag, keyword,
+                          st->xattr_map.xm_map[i].xval_ptr,
+                          st->xattr_map.xm_map[i].xval_len);
         }
 #endif
     }
@@ -728,10 +804,10 @@ xattrs_print_char (struct tar_stat_info const *st, char *output)
       output[1] = 0;
     }
 
-  if (xattrs_option > 0 && st->xattr_map_size)
-    for (i = 0; i < st->xattr_map_size; ++i)
+  if (xattrs_option > 0 && st->xattr_map.xm_size)
+    for (i = 0; i < st->xattr_map.xm_size; ++i)
       {
-        char *keyword = st->xattr_map[i].xkey + strlen ("SCHILY.xattr.");
+        char *keyword = st->xattr_map.xm_map[i].xkey + XATTRS_PREFIX_LEN;
         if (!xattrs_masked_out (keyword, false /* like extracting */ ))
 	  {
 	    *output = '*';
@@ -768,16 +844,16 @@ xattrs_print (struct tar_stat_info const *st)
     }
 
   /* xattrs */
-  if (xattrs_option > 0 && st->xattr_map_size)
+  if (xattrs_option > 0 && st->xattr_map.xm_size)
     {
       int i;
 
-      for (i = 0; i < st->xattr_map_size; ++i)
+      for (i = 0; i < st->xattr_map.xm_size; ++i)
         {
-          char *keyword = st->xattr_map[i].xkey + strlen ("SCHILY.xattr.");
+          char *keyword = st->xattr_map.xm_map[i].xkey + XATTRS_PREFIX_LEN;
           if (!xattrs_masked_out (keyword, false /* like extracting */ ))
 	    fprintf (stdlis, "  x: %lu %s\n",
-		     (unsigned long) st->xattr_map[i].xval_len, keyword);
+		     (unsigned long) st->xattr_map.xm_map[i].xval_len, keyword);
         }
     }
 }

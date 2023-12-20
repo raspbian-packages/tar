@@ -1,6 +1,6 @@
 /* List a tar archive, with support routines for reading a tar archive.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -256,6 +256,13 @@ read_and (void (*do_something) (void))
 	  continue;
 
 	case HEADER_END_OF_FILE:
+	  if (!ignore_zeros_option)
+	    {
+	      char buf[UINTMAX_STRSIZE_BOUND];
+	      WARNOPT (WARN_MISSING_ZERO_BLOCKS,
+		       (0, 0, _("Terminating zero blocks missing at %s"),
+			STRINGIFY_BIGINT (current_block_ordinal (), buf)));
+	    }
 	  if (block_number_option)
 	    {
 	      char buf[UINTMAX_STRSIZE_BOUND];
@@ -416,7 +423,7 @@ read_header (union block **return_block, struct tar_stat_info *info,
   size_t next_long_name_blocks = 0;
   size_t next_long_link_blocks = 0;
   enum read_header status = HEADER_SUCCESS;
-  
+
   while (1)
     {
       header = find_next_block ();
@@ -874,8 +881,9 @@ from_header (char const *where0, size_t digs, char const *type,
 	  where++;
 	}
     }
-  else if (*where == '\200' /* positive base-256 */
-	   || *where == '\377' /* negative base-256 */)
+  else if (where <= lim - 2
+	   && (*where == '\200' /* positive base-256 */
+	       || *where == '\377' /* negative base-256 */))
     {
       /* Parse base-256 output.  A nonnegative number N is
 	 represented as (256**DIGS)/2 + N; a negative number -N is
@@ -1368,7 +1376,7 @@ print_header (struct tar_stat_info *st, union block *blk,
 
 /* Print a similar line when we make a directory automatically.  */
 void
-print_for_mkdir (char *dirname, int length, mode_t mode)
+print_for_mkdir (char *dirname, mode_t mode)
 {
   char modes[11];
 
@@ -1391,15 +1399,17 @@ print_for_mkdir (char *dirname, int length, mode_t mode)
     }
 }
 
-/* Skip over SIZE bytes of data in blocks in the archive.  */
+/* Skip over SIZE bytes of data in blocks in the archive.
+   This may involve copying the data.
+   If MUST_COPY, always copy instead of skipping.  */
 void
-skip_file (off_t size)
+skim_file (off_t size, bool must_copy)
 {
   union block *x;
 
   /* FIXME: Make sure mv_begin_read is always called before it */
 
-  if (seekable_archive)
+  if (seekable_archive && !must_copy)
     {
       off_t nblk = seek_archive (size);
       if (nblk >= 0)
@@ -1427,6 +1437,14 @@ skip_file (off_t size)
 void
 skip_member (void)
 {
+  skim_member (false);
+}
+
+/* Skip the current member in the archive.
+   If MUST_COPY, always copy instead of skipping.  */
+void
+skim_member (bool must_copy)
+{
   if (!current_stat_info.skipped)
     {
       char save_typeflag = current_header->header.typeflag;
@@ -1435,9 +1453,9 @@ skip_member (void)
       mv_begin_read (&current_stat_info);
 
       if (current_stat_info.is_sparse)
-	sparse_skip_file (&current_stat_info);
+	sparse_skim_file (&current_stat_info, must_copy);
       else if (save_typeflag != DIRTYPE)
-	skip_file (current_stat_info.stat.st_size);
+	skim_file (current_stat_info.stat.st_size, must_copy);
 
       mv_end ();
     }
