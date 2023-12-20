@@ -1,6 +1,6 @@
 /* System-dependent calls for tar.
 
-   Copyright 2003-2021 Free Software Foundation, Inc.
+   Copyright 2003-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -16,6 +16,7 @@
    with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <system.h>
+#include <system-ioctl.h>
 
 #include "common.h"
 #include <priv-set.h>
@@ -37,6 +38,35 @@ xexec (const char *cmd)
   exec_fatal (cmd);
 }
 
+/* True if the archive is seekable via ioctl and MTIOCTOP,
+   or if it is not known whether it is seekable.
+   False if it is known to be not seekable.  */
+static bool mtioseekable_archive;
+
+bool
+mtioseek (bool count_files, off_t count)
+{
+  if (mtioseekable_archive)
+    {
+#ifdef MTIOCTOP
+      struct mtop operation;
+      operation.mt_op = (count_files
+			 ? (count < 0 ? MTBSF : MTFSF)
+			 : (count < 0 ? MTBSR : MTFSR));
+      if (! (count < 0
+	     ? INT_SUBTRACT_WRAPV (0, count, &operation.mt_count)
+	     : INT_ADD_WRAPV (count, 0, &operation.mt_count))
+	  && (0 <= rmtioctl (archive, MTIOCTOP, &operation)
+	      || (errno == EIO
+		  && 0 <= rmtioctl (archive, MTIOCTOP, &operation))))
+	return true;
+#endif
+
+      mtioseekable_archive = false;
+    }
+  return false;
+}
+
 #if MSDOS
 
 bool
@@ -49,11 +79,6 @@ bool
 sys_file_is_archive (struct tar_stat_info *p)
 {
   return false;
-}
-
-void
-sys_save_archive_dev_ino (void)
-{
 }
 
 void
@@ -128,31 +153,34 @@ sys_child_open_for_uncompress (void)
 
 extern union block *record_start; /* FIXME */
 
-static struct stat archive_stat; /* stat block for archive file */
-
 bool
 sys_get_archive_stat (void)
 {
-  return fstat (archive, &archive_stat) == 0;
+  bool remote = _isrmt (archive);
+  mtioseekable_archive = true;
+  if (!remote && 0 <= archive && fstat (archive, &archive_stat) == 0)
+    {
+      if (!S_ISCHR (archive_stat.st_mode))
+	mtioseekable_archive = false;
+      return true;
+    }
+  else
+    {
+      /* FIXME: This memset should not be needed.  It is present only
+	 because other parts of tar may incorrectly access
+	 archive_stat even if it's not the archive status.  */
+      memset (&archive_stat, 0, sizeof archive_stat);
+
+      return remote;
+    }
 }
 
 bool
 sys_file_is_archive (struct tar_stat_info *p)
 {
-  return (ar_dev && p->stat.st_dev == ar_dev && p->stat.st_ino == ar_ino);
-}
-
-/* Save archive file inode and device numbers */
-void
-sys_save_archive_dev_ino (void)
-{
-  if (!_isrmt (archive) && S_ISREG (archive_stat.st_mode))
-    {
-      ar_dev = archive_stat.st_dev;
-      ar_ino = archive_stat.st_ino;
-    }
-  else
-    ar_dev = 0;
+  return (!dev_null_output && !_isrmt (archive)
+	  && p->stat.st_dev == archive_stat.st_dev
+	  && p->stat.st_ino == archive_stat.st_ino);
 }
 
 /* Detect if outputting to "/dev/null".  */
@@ -160,14 +188,15 @@ void
 sys_detect_dev_null_output (void)
 {
   static char const dev_null[] = "/dev/null";
-  struct stat dev_null_stat;
+  static struct stat dev_null_stat;
 
   dev_null_output = (strcmp (archive_name_array[0], dev_null) == 0
 		     || (! _isrmt (archive)
 			 && S_ISCHR (archive_stat.st_mode)
-			 && stat (dev_null, &dev_null_stat) == 0
-			 && archive_stat.st_dev == dev_null_stat.st_dev
-			 && archive_stat.st_ino == dev_null_stat.st_ino));
+			 && (dev_null_stat.st_ino != 0
+			     || stat (dev_null, &dev_null_stat) == 0)
+			 && archive_stat.st_ino == dev_null_stat.st_ino
+			 && archive_stat.st_dev == dev_null_stat.st_dev));
 }
 
 void
@@ -270,6 +299,11 @@ sys_write_archive_buffer (void)
 #define	PREAD 0			/* read file descriptor from pipe() */
 #define	PWRITE 1		/* write file descriptor from pipe() */
 
+/* Work around GCC bug 109839.  */
+#if 13 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+#endif
+
 /* Duplicate file descriptor FROM into becoming INTO.
    INTO is closed first and has to be the next available slot.  */
 static void
@@ -277,31 +311,17 @@ xdup2 (int from, int into)
 {
   if (from != into)
     {
-      int status = close (into);
-
-      if (status != 0 && errno != EBADF)
+      if (dup2 (from, into) < 0)
 	{
 	  int e = errno;
-	  FATAL_ERROR ((0, e, _("Cannot close")));
-	}
-      status = dup (from);
-      if (status != into)
-	{
-	  if (status < 0)
-	    {
-	      int e = errno;
-	      FATAL_ERROR ((0, e, _("Cannot dup")));
-	    }
-	  abort ();
+	  FATAL_ERROR ((0, e, _("Cannot dup2")));
 	}
       xclose (from);
     }
 }
 
-static void wait_for_grandchild (pid_t pid) __attribute__ ((__noreturn__));
-
 /* Propagate any failure of the grandchild back to the parent.  */
-static void
+static _Noreturn void
 wait_for_grandchild (pid_t pid)
 {
   int wait_status;
@@ -540,7 +560,7 @@ sys_child_open_for_uncompress (void)
       && !_remdev (archive_name_array[0])
       && is_regular_file (archive_name_array[0]))
     {
-      /* We don't need a grandchild tar.  Open the archive and lauch the
+      /* We don't need a grandchild tar.  Open the archive and launch the
 	 uncompressor.  */
 
       archive = open (archive_name_array[0], O_RDONLY | O_BINARY, MODE_RW);

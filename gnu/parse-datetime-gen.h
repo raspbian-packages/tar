@@ -73,7 +73,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 564 "parse-datetime.y" /* yacc.c:1909  */
+#line 565 "parse-datetime.y" /* yacc.c:1909  */
 
   intmax_t intval;
   textint textintval;

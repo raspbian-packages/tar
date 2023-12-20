@@ -1,6 +1,6 @@
 /* Miscellaneous functions, not really specific to GNU tar.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -43,10 +43,27 @@ quote_n_colon (int n, char const *arg)
 /* Assign STRING to a copy of VALUE if not zero, or to zero.  If
    STRING was nonzero, it is freed first.  */
 void
+assign_string_or_null (char **string, const char *value)
+{
+  if (value)
+    assign_string (string, value);
+  else
+    assign_null (string);
+}
+
+void
 assign_string (char **string, const char *value)
 {
   free (*string);
-  *string = value ? xstrdup (value) : 0;
+  *string = xstrdup (value);
+}
+
+void
+assign_null (char **string)
+{
+  char *old = *string;
+  *string = NULL;
+  free (old);
 }
 
 void
@@ -61,6 +78,8 @@ assign_string_n (char **string, const char *value, size_t n)
       p[l] = 0;
       *string = p;
     }
+  else
+    *string = NULL;
 }
 
 #if 0
@@ -676,13 +695,11 @@ remove_any_file (const char *file_name, enum remove_option option)
 		char *file_name_buffer = make_file_name (file_name, entry);
 		int r = remove_any_file (file_name_buffer,
                                          RECURSIVE_REMOVE_OPTION);
-		int e = errno;
 		free (file_name_buffer);
 
 		if (! r)
 		  {
 		    free (directory);
-		    errno = e;
 		    return 0;
 		  }
 	      }
@@ -715,7 +732,7 @@ maybe_backup_file (const char *file_name, bool this_is_the_archive)
      possible, real problems are unlikely.  Doing any better would require a
      convention, GNU-wide, for all programs doing backups.  */
 
-  assign_string (&after_backup_name, 0);
+  assign_null (&after_backup_name);
 
   /* Check if we really need to backup the file.  */
 
@@ -758,7 +775,7 @@ maybe_backup_file (const char *file_name, bool this_is_the_archive)
       ERROR ((0, e, _("%s: Cannot rename to %s"),
 	      quotearg_colon (before_backup_name),
 	      quote_n (1, after_backup_name)));
-      assign_string (&after_backup_name, 0);
+      assign_null (&after_backup_name);
       return false;
     }
 }
@@ -782,7 +799,7 @@ undo_last_backup (void)
 	fprintf (stdlis, _("Renaming %s back to %s\n"),
 		 quote_n (0, after_backup_name),
 		 quote_n (1, before_backup_name));
-      assign_string (&after_backup_name, 0);
+      assign_null (&after_backup_name);
     }
 }
 
@@ -804,7 +821,7 @@ deref_stat (char const *name, struct stat *buf)
 size_t
 blocking_read (int fd, void *buf, size_t count)
 {
-  size_t bytes = safe_read (fd, buf, count);
+  size_t bytes = full_read (fd, buf, count);
 
 #if defined F_SETFL && O_NONBLOCK
   if (bytes == SAFE_READ_ERROR && errno == EAGAIN)
@@ -812,10 +829,12 @@ blocking_read (int fd, void *buf, size_t count)
       int flags = fcntl (fd, F_GETFL);
       if (0 <= flags && flags & O_NONBLOCK
 	  && fcntl (fd, F_SETFL, flags & ~O_NONBLOCK) != -1)
-	bytes = safe_read (fd, buf, count);
+	bytes = full_read (fd, buf, count);
     }
 #endif
 
+  if (bytes == 0 && errno != 0)
+    bytes = SAFE_READ_ERROR;
   return bytes;
 }
 
@@ -1041,11 +1060,11 @@ tar_getcdpath (int idx)
     {
       int i;
       int save_cwdi = chdir_current;
-      
+
       for (i = idx; i >= 0; i--)
 	if (wd[i].abspath)
 	  break;
-      
+
       while (++i <= idx)
 	{
 	  chdir_do (i);
@@ -1069,7 +1088,7 @@ tar_getcdpath (int idx)
 
       chdir_do (save_cwdi);
     }
-	   
+
   return wd[idx].abspath;
 }
 
@@ -1195,7 +1214,7 @@ xpipe (int fd[2])
    PTR) through ((char *) PTR + ALIGNMENT - 1) to be addressable
    locations.  */
 
-static inline void *
+static void *
 ptr_align (void *ptr, size_t alignment)
 {
   char *p0 = ptr;

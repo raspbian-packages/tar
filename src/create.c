@@ -1,6 +1,6 @@
 /* Create a tar archive.
 
-   Copyright 1985-2021 Free Software Foundation, Inc.
+   Copyright 1985-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -22,6 +22,7 @@
 #include <system.h>
 
 #include <areadlink.h>
+#include <flexmember.h>
 #include <quotearg.h>
 
 #include "common.h"
@@ -36,7 +37,7 @@ struct link
     dev_t dev;
     ino_t ino;
     nlink_t nlink;
-    char name[1];
+    char name[FLEXIBLE_ARRAY_MEMBER];
   };
 
 struct exclusion_tag
@@ -174,13 +175,13 @@ tar_name_copy_str (char *dst, const char *src, size_t len)
 }
 
 /* Convert NEGATIVE VALUE to a base-256 representation suitable for
-   tar headers.  NEGATIVE is 1 if VALUE was negative before being cast
-   to uintmax_t, 0 otherwise.  Output to buffer WHERE with size SIZE.
+   tar headers.  NEGATIVE is true iff VALUE was negative before being
+   cast to uintmax_t.  Output to buffer WHERE with size SIZE.
    The result is undefined if SIZE is 0 or if VALUE is too large to
    fit.  */
 
 static void
-to_base256 (int negative, uintmax_t value, char *where, size_t size)
+to_base256 (bool negative, uintmax_t value, char *where, size_t size)
 {
   uintmax_t v = value;
   uintmax_t propagated_sign_bits =
@@ -205,13 +206,13 @@ to_base256 (int negative, uintmax_t value, char *where, size_t size)
 #define GNAME_TO_CHARS(name, buf) string_to_chars (name, buf, sizeof (buf))
 
 static bool
-to_chars (int negative, uintmax_t value, size_t valsize,
-	  uintmax_t (*substitute) (int *),
+to_chars (bool negative, uintmax_t value, size_t valsize,
+	  uintmax_t (*substitute) (bool *),
 	  char *where, size_t size, const char *type);
 
 static bool
-to_chars_subst (int negative, int gnu_format, uintmax_t value, size_t valsize,
-		uintmax_t (*substitute) (int *),
+to_chars_subst (bool negative, bool gnu_format, uintmax_t value, size_t valsize,
+		uintmax_t (*substitute) (bool *),
 		char *where, size_t size, const char *type)
 {
   uintmax_t maxval = (gnu_format
@@ -245,7 +246,7 @@ to_chars_subst (int negative, int gnu_format, uintmax_t value, size_t valsize,
 
   if (substitute)
     {
-      int negsub;
+      bool negsub;
       uintmax_t sub = substitute (&negsub) & maxval;
       /* NOTE: This is one of the few places where GNU_FORMAT differs from
 	 OLDGNU_FORMAT.  The actual differences are:
@@ -272,25 +273,25 @@ to_chars_subst (int negative, int gnu_format, uintmax_t value, size_t valsize,
 
 /* Convert NEGATIVE VALUE (which was originally of size VALSIZE) to
    external form, using SUBSTITUTE (...) if VALUE won't fit.  Output
-   to buffer WHERE with size SIZE.  NEGATIVE is 1 iff VALUE was
+   to buffer WHERE with size SIZE.  NEGATIVE is true iff VALUE was
    negative before being cast to uintmax_t; its original bitpattern
    can be deduced from VALSIZE, its original size before casting.
    TYPE is the kind of value being output (useful for diagnostics).
    Prefer the POSIX format of SIZE - 1 octal digits (with leading zero
    digits), followed by '\0'.  If this won't work, and if GNU or
    OLDGNU format is allowed, use '\200' followed by base-256, or (if
-   NEGATIVE is nonzero) '\377' followed by two's complement base-256.
+   NEGATIVE) '\377' followed by two's complement base-256.
    If neither format works, use SUBSTITUTE (...)  instead.  Pass to
    SUBSTITUTE the address of an 0-or-1 flag recording whether the
    substitute value is negative.  */
 
 static bool
-to_chars (int negative, uintmax_t value, size_t valsize,
-	  uintmax_t (*substitute) (int *),
+to_chars (bool negative, uintmax_t value, size_t valsize,
+	  uintmax_t (*substitute) (bool *),
 	  char *where, size_t size, const char *type)
 {
-  int gnu_format = (archive_format == GNU_FORMAT
-		    || archive_format == OLDGNU_FORMAT);
+  bool gnu_format = (archive_format == GNU_FORMAT
+		     || archive_format == OLDGNU_FORMAT);
 
   /* Generate the POSIX octal representation if the number fits.  */
   if (! negative && value <= MAX_VAL_WITH_DIGITS (size - 1, LG_8))
@@ -308,7 +309,7 @@ to_chars (int negative, uintmax_t value, size_t valsize,
       if (((negative ? -1 - value : value)
 	   <= MAX_VAL_WITH_DIGITS (size - 1, LG_256)))
 	{
-	  where[0] = negative ? -1 : 1 << (LG_256 - 1);
+	  where[0] = (char) (negative ? -1 : 1 << (LG_256 - 1));
 	  to_base256 (negative, value, where + 1, size - 1);
 	  return true;
 	}
@@ -321,10 +322,10 @@ to_chars (int negative, uintmax_t value, size_t valsize,
 	 But this is the traditional behavior.  */
       else if (negative && valsize * CHAR_BIT <= (size - 1) * LG_8)
 	{
-	  static int warned_once;
+	  static bool warned_once;
 	  if (! warned_once)
 	    {
-	      warned_once = 1;
+	      warned_once = true;
 	      WARN ((0, 0, _("Generating negative octal headers")));
 	    }
 	  where[size - 1] = '\0';
@@ -342,7 +343,7 @@ to_chars (int negative, uintmax_t value, size_t valsize,
 }
 
 static uintmax_t
-gid_substitute (int *negative)
+gid_substitute (bool *negative)
 {
   gid_t r;
 #ifdef GID_NOBODY
@@ -383,7 +384,7 @@ mode_to_chars (mode_t v, char *p, size_t s)
      propagate all unknown bits to the external mode.
      This matches historical practice.
      Otherwise, just copy the bits we know about.  */
-  int negative;
+  bool negative;
   uintmax_t u;
   if (S_ISUID == TSUID && S_ISGID == TSGID && S_ISVTX == TSVTX
       && S_IRUSR == TUREAD && S_IWUSR == TUWRITE && S_IXUSR == TUEXEC
@@ -398,7 +399,7 @@ mode_to_chars (mode_t v, char *p, size_t s)
     }
   else
     {
-      negative = 0;
+      negative = false;
       u = ((v & S_ISUID ? TSUID : 0)
 	   | (v & S_ISGID ? TSGID : 0)
 	   | (v & S_ISVTX ? TSVTX : 0)
@@ -428,7 +429,7 @@ time_to_chars (time_t v, char *p, size_t s)
 }
 
 static uintmax_t
-uid_substitute (int *negative)
+uid_substitute (bool *negative)
 {
   uid_t r;
 #ifdef UID_NOBODY
@@ -452,7 +453,7 @@ uid_to_chars (uid_t v, char *p, size_t s)
 static bool
 uintmax_to_chars (uintmax_t v, char *p, size_t s)
 {
-  return to_chars (0, v, sizeof v, 0, p, s, "uintmax_t");
+  return to_chars (false, v, sizeof v, 0, p, s, "uintmax_t");
 }
 
 static void
@@ -881,12 +882,6 @@ start_header (struct tar_stat_info *st)
       if (!MINOR_TO_CHARS (devminor, header->header.devminor))
 	return NULL;
     }
-  else if (archive_format != GNU_FORMAT && archive_format != OLDGNU_FORMAT)
-    {
-      if (!(MAJOR_TO_CHARS (0, header->header.devmajor)
-	    && MINOR_TO_CHARS (0, header->header.devminor)))
-	return NULL;
-    }
 
   if (archive_format == POSIX_FORMAT)
     {
@@ -966,14 +961,9 @@ start_header (struct tar_stat_info *st)
         xheader_store ("RHT.security.selinux", st, NULL);
       if (xattrs_option > 0)
         {
-          size_t scan_xattr = 0;
-          struct xattr_array *xattr_map = st->xattr_map;
-
-          while (scan_xattr < st->xattr_map_size)
-            {
-              xheader_store (xattr_map[scan_xattr].xkey, st, &scan_xattr);
-              ++scan_xattr;
-            }
+          size_t i;
+	  for (i = 0; i < st->xattr_map.xm_size; i++)
+	    xheader_store (st->xattr_map.xm_map[i].xkey, st, &i);
         }
     }
 
@@ -1529,8 +1519,7 @@ file_count_links (struct tar_stat_info *st)
 						   absolute_names_option));
       transform_name (&linkname, XFORM_LINK);
 
-      lp = xmalloc (offsetof (struct link, name)
-				 + strlen (linkname) + 1);
+      lp = xmalloc (FLEXNSIZEOF (struct link, name, strlen (linkname) + 1));
       lp->ino = st->stat.st_ino;
       lp->dev = st->stat.st_dev;
       lp->nlink = st->stat.st_nlink;
@@ -1650,8 +1639,6 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
 {
   union block *header;
   char type;
-  off_t original_size;
-  struct timespec original_ctime;
   off_t block_ordinal = -1;
   int fd = 0;
   bool is_dir;
@@ -1694,10 +1681,11 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
       return;
     }
 
-  st->archive_file_size = original_size = st->stat.st_size;
+  struct stat st1 = st->stat;
+  st->archive_file_size = st->stat.st_size;
   st->atime = get_stat_atime (&st->stat);
   st->mtime = get_stat_mtime (&st->stat);
-  st->ctime = original_ctime = get_stat_ctime (&st->stat);
+  st->ctime = get_stat_ctime (&st->stat);
 
 #ifdef S_ISHIDDEN
   if (S_ISHIDDEN (st->stat.st_mode))
@@ -1734,7 +1722,7 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
   if (sys_file_is_archive (st))
     {
       WARNOPT (WARN_IGNORE_ARCHIVE,
-	       (0, 0, _("%s: file is the archive; not dumped"),
+	       (0, 0, _("%s: archive cannot contain itself; not dumped"),
 		quotearg_colon (p)));
       return;
     }
@@ -1747,9 +1735,9 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
   if (is_dir || S_ISREG (st->stat.st_mode) || S_ISCTG (st->stat.st_mode))
     {
       bool ok;
-      struct stat final_stat;
+      struct stat st2;
 
-      xattrs_acls_get (parentfd, name, st, 0, !is_dir);
+      xattrs_acls_get (parentfd, name, st, !is_dir);
       xattrs_selinux_get (parentfd, name, st, fd);
       xattrs_xattrs_get (parentfd, name, st, fd);
 
@@ -1815,31 +1803,54 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
 		  errno = - parentfd;
 		  ok = false;
 		}
-	      else
-		ok = fstatat (parentfd, name, &final_stat, fstatat_flags) == 0;
 	    }
 	  else
-	    ok = fstat (fd, &final_stat) == 0;
+	    ok = fstat (fd, &st2) == 0;
 
 	  if (! ok)
 	    file_removed_diag (p, top_level, stat_diag);
 	}
 
-      if (ok)
+      if (ok && fd)
 	{
-	  if ((timespec_cmp (get_stat_ctime (&final_stat), original_ctime) != 0
-	       /* Original ctime will change if the file is a directory and
-		  --remove-files is given */
-	       && !(remove_files_option && is_dir))
-	      || original_size < final_stat.st_size)
+	  /* Heuristically check whether the file is the same in all
+	     attributes that tar cares about and can easily check.
+	     Although the check is not perfect since it does not
+	     consult file contents, it is typically good enough.
+	     Do not check atime which is saved only to replace it later.
+	     Do not check ctime where changes might be benign (e.g.,
+	     another process creates a hard link to the file).  */
+
+	  /* If the file's user ID, group ID or mode changed, tar may
+	     have output the wrong info for the file.  */
+	  ok &= st1.st_uid == st2.st_uid;
+	  ok &= st1.st_gid == st2.st_gid;
+	  ok &= st1.st_mode == st2.st_mode;
+
+	  /* Likewise for the file's mtime, but skip this check if it
+	     is a directory possibly updated by --remove-files.  */
+	  if (! (is_dir && remove_files_option))
+	    ok &= ! timespec_cmp (get_stat_mtime (&st1),
+				  get_stat_mtime (&st2));
+
+	  /* Likewise for the file's size, but skip this check if it
+	     is a directory as tar does not output directory sizes.
+	     Although dump_regular_file caught regular file shrinkage,
+	     it shouldn't hurt to check for shrinkage again now;
+	     plus, the file may have grown.  */
+	  if (!is_dir)
+	    ok &= st1.st_size == st2.st_size;
+
+	  if (!ok)
 	    {
 	      WARNOPT (WARN_FILE_CHANGED,
 		       (0, 0, _("%s: file changed as we read it"),
 			quotearg_colon (p)));
-	      set_exit_status (TAREXIT_DIFFERS);
+	      if (! ignore_failed_read_option)
+		set_exit_status (TAREXIT_DIFFERS);
 	    }
 	  else if (atime_preserve_option == replace_atime_preserve
-		   && fd && (is_dir || original_size != 0)
+		   && timespec_cmp (st->atime, get_stat_atime (&st2)) != 0
 		   && set_file_atime (fd, parentfd, name, st->atime) != 0)
 	    utime_error (p);
 	}
@@ -1889,21 +1900,21 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
   else if (S_ISCHR (st->stat.st_mode))
     {
       type = CHRTYPE;
-      xattrs_acls_get (parentfd, name, st, 0, true);
+      xattrs_acls_get (parentfd, name, st, true);
       xattrs_selinux_get (parentfd, name, st, 0);
       xattrs_xattrs_get (parentfd, name, st, 0);
     }
   else if (S_ISBLK (st->stat.st_mode))
     {
       type = BLKTYPE;
-      xattrs_acls_get (parentfd, name, st, 0, true);
+      xattrs_acls_get (parentfd, name, st, true);
       xattrs_selinux_get (parentfd, name, st, 0);
       xattrs_xattrs_get (parentfd, name, st, 0);
     }
   else if (S_ISFIFO (st->stat.st_mode))
     {
       type = FIFOTYPE;
-      xattrs_acls_get (parentfd, name, st, 0, true);
+      xattrs_acls_get (parentfd, name, st, true);
       xattrs_selinux_get (parentfd, name, st, 0);
       xattrs_xattrs_get (parentfd, name, st, 0);
     }
@@ -1937,15 +1948,6 @@ dump_file0 (struct tar_stat_info *st, char const *name, char const *p)
   if (!header)
     return;
   header->header.typeflag = type;
-
-  if (type != FIFOTYPE)
-    {
-      MAJOR_TO_CHARS (major (st->stat.st_rdev),
-		      header->header.devmajor);
-      MINOR_TO_CHARS (minor (st->stat.st_rdev),
-		      header->header.devminor);
-    }
-
   finish_header (st, header, block_ordinal);
   if (remove_files_option)
     queue_deferred_unlink (p, false);

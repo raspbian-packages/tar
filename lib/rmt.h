@@ -1,6 +1,6 @@
 /* Definitions for communicating with a remote tape drive.
 
-   Copyright (C) 1988, 1992, 1996, 1997, 2001, 2003, 2004, 2007 Free
+   Copyright (C) 1988, 1992, 1996-1997, 2001, 2003-2004, 2007, 2023 Free
    Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@ int rmt_close__ (int);
 size_t rmt_read__ (int, char *, size_t);
 size_t rmt_write__ (int, char *, size_t);
 off_t rmt_lseek__ (int, off_t, int);
-int rmt_ioctl__ (int, int, char *);
+int rmt_ioctl__ (int, unsigned long int, void *);
 
 extern bool force_local_option;
 

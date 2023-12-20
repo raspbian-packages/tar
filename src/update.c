@@ -1,6 +1,6 @@
 /* Update a tar archive.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -42,13 +42,14 @@ bool time_to_start_writing;
    first part of the record.  */
 char *output_start;
 
+static bool acting_as_filter;
+
 /* Catenate file FILE_NAME to the archive without creating a header for it.
    It had better be a tar file or the archive is screwed.  */
 static void
 append_file (char *file_name)
 {
   int handle = openat (chdir_fd, file_name, O_RDONLY | O_BINARY);
-  struct stat stat_data;
 
   if (handle < 0)
     {
@@ -56,47 +57,46 @@ append_file (char *file_name)
       return;
     }
 
-  if (fstat (handle, &stat_data) != 0)
-    stat_error (file_name);
-  else
+  while (true)
     {
-      off_t bytes_left = stat_data.st_size;
-
-      while (bytes_left > 0)
+      union block *start = find_next_block ();
+      size_t status = full_read (handle, start->buffer,
+				 available_space_after (start));
+      if (status == 0)
 	{
-	  union block *start = find_next_block ();
-	  size_t buffer_size = available_space_after (start);
-	  size_t status;
-	  char buf[UINTMAX_STRSIZE_BOUND];
-
-	  if (bytes_left < buffer_size)
-	    {
-	      buffer_size = bytes_left;
-	      status = buffer_size % BLOCKSIZE;
-	      if (status)
-		memset (start->buffer + bytes_left, 0, BLOCKSIZE - status);
-	    }
-
-	  status = safe_read (handle, start->buffer, buffer_size);
-	  if (status == SAFE_READ_ERROR)
-	    read_fatal_details (file_name, stat_data.st_size - bytes_left,
-				buffer_size);
-	  if (status == 0)
-	    FATAL_ERROR ((0, 0,
-			  ngettext ("%s: File shrank by %s byte",
-				    "%s: File shrank by %s bytes",
-				    bytes_left),
-			  quotearg_colon (file_name),
-			  STRINGIFY_BIGINT (bytes_left, buf)));
-
-	  bytes_left -= status;
-
-	  set_next_block_after (start + (status - 1) / BLOCKSIZE);
+	  if (errno == 0)
+	    break;
+	  read_fatal (file_name);
 	}
+      if (status == SAFE_READ_ERROR)
+	read_fatal (file_name);
+      if (status % BLOCKSIZE)
+	memset (start->buffer + status - status % BLOCKSIZE, 0,
+		BLOCKSIZE - status % BLOCKSIZE);
+      set_next_block_after (start + (status - 1) / BLOCKSIZE);
     }
 
   if (close (handle) != 0)
     close_error (file_name);
+}
+
+/* If NAME is not a pattern, remove it from the namelist.  Otherwise,
+   remove the FILE_NAME that matched it.  Take care to look for exact
+   match when removing it. */
+static void
+remove_exact_name (struct name *name, char const *file_name)
+{
+  if (name->is_wildcard)
+    {
+      struct name *match = name_scan (file_name, true);
+      name->found_count++;
+      if (match)
+	name = match;
+      else
+	return;
+    }
+
+  remname (name);
 }
 
 /* Implement the 'r' (add files to end of archive), and 'u' (add files
@@ -110,6 +110,7 @@ update_archive (void)
 
   name_gather ();
   open_archive (ACCESS_UPDATE);
+  acting_as_filter = strcmp (archive_name_array[0], "-") == 0;
   xheader_forbid_global ();
 
   while (!found_end)
@@ -135,7 +136,7 @@ update_archive (void)
 	    archive_format = current_format;
 
 	    if (subcommand_option == UPDATE_SUBCOMMAND
-		&& (name = name_scan (current_stat_info.file_name)) != NULL)
+		&& (name = name_scan (current_stat_info.file_name, false)) != NULL)
 	      {
 		struct stat s;
 
@@ -144,10 +145,10 @@ update_archive (void)
 		  {
 		    if (S_ISDIR (s.st_mode))
 		      {
-			char *p, *dirp = tar_savedir (name->name, 1);
+			char *p, *dirp = tar_savedir (current_stat_info.file_name, 1);
 			if (dirp)
 			  {
-			    namebuf_t nbuf = namebuf_create (name->name);
+			    namebuf_t nbuf = namebuf_create (current_stat_info.file_name);
 
 			    for (p = dirp; *p; p += strlen (p) + 1)
 			      addname (namebuf_name (nbuf, p),
@@ -156,17 +157,22 @@ update_archive (void)
 			    namebuf_free (nbuf);
 			    free (dirp);
 
-			    remname (name);
+			    remove_exact_name (name, current_stat_info.file_name);
 			  }
 		      }
 		    else if (tar_timespec_cmp (get_stat_mtime (&s),
 					       current_stat_info.mtime)
 			     <= 0)
-		      remname (name);
+		      {
+			remove_exact_name (name, current_stat_info.file_name);
+		      }
+		    else if (name->is_wildcard)
+		      addname (current_stat_info.file_name,
+			       name->change_dir, false, NULL);
 		  }
 	      }
 
-	    skip_member ();
+	    skim_member (acting_as_filter);
 	    break;
 	  }
 

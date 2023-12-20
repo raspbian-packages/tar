@@ -1,7 +1,6 @@
 /* Functions for communicating with a remote tape drive.
 
-   Copyright (C) 1988, 1992, 1994, 1996, 1997, 1999, 2000, 2001, 2004,
-   2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,6 +36,7 @@
 
 #include <safe-read.h>
 #include <full-write.h>
+#include <verify.h>
 
 /* Try hard to get EOPNOTSUPP defined.  486/ISC has it in net/errno.h,
    3B2/SVR3 has it in sys/inet.h.  Otherwise, like on MSDOS, use EINVAL.  */
@@ -67,10 +67,6 @@
 
 /* FIXME: Size of buffers for reading and writing commands to rmt.  */
 #define COMMAND_BUFFER_SIZE 64
-
-#ifndef RETSIGTYPE
-# define RETSIGTYPE void
-#endif
 
 /* FIXME: Maximum number of simultaneous remote tape connections.  */
 #define MAXUNIT	4
@@ -121,7 +117,7 @@ do_command (int handle, const char *buffer)
   /* Save the current pipe handler and try to make the request.  */
 
   size_t length = strlen (buffer);
-  RETSIGTYPE (*pipe_handler) (int) = signal (SIGPIPE, SIG_IGN);
+  void (*pipe_handler) (int) = signal (SIGPIPE, SIG_IGN);
   ssize_t written = full_write (WRITE_SIDE (handle), buffer, length);
   signal (SIGPIPE, pipe_handler);
 
@@ -309,6 +305,13 @@ _rmt_rexec (char *host, char *user)
   return result;
 }
 
+#else
+
+/* GCC 13 misunderstands the dup2 trickery below.  */
+# if 13 <= __GNUC__
+#  pragma GCC diagnostic ignored "-Wanalyzer-fd-leak"
+# endif
+
 #endif /* WITH_REXEC */
 
 /* Place into BUF a string representing OFLAG, which must be suitable
@@ -350,6 +353,29 @@ encode_oflag (char *buf, int oflag)
   if (oflag & O_SYNC) strcat (buf, "|O_SYNC");
 #endif
   if (oflag & O_TRUNC) strcat (buf, "|O_TRUNC");
+}
+
+/* Reset user and group IDs to be those of the real user.
+   Return NULL on success, a failing syscall name (setting errno) on error.  */
+static char const *
+sys_reset_uid_gid (void)
+{
+#if !MSDOS
+  uid_t uid = getuid ();
+  gid_t gid = getgid ();
+  struct passwd *pw = getpwuid (uid);
+
+  if (!pw)
+    return "getpwuid";
+  if (initgroups (pw->pw_name, gid) != 0 && errno != EPERM)
+    return "initgroups";
+  if (gid != getegid () && setgid (gid) != 0 && errno != EPERM)
+    return "setgid";
+  if (uid != geteuid () && setuid (uid) != 0 && errno != EPERM)
+    return "setuid";
+#endif
+
+  return NULL;
 }
 
 /* Open a file (a magnetic tape device?) on the system specified in
@@ -424,6 +450,8 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
 	}
   }
 
+  assume (remote_file);
+
   /* FIXME: Should somewhat validate the decoding, here.  */
   if (gethostbyname (remote_host) == NULL)
     error (EXIT_ON_EXEC_ERROR, 0, _("Cannot connect to %s: resolve failed"),
@@ -439,9 +467,7 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
   READ_SIDE (remote_pipe_number) = _rmt_rexec (remote_host, remote_user);
   if (READ_SIDE (remote_pipe_number) < 0)
     {
-      int e = errno;
       free (file_name_copy);
-      errno = e;
       return -1;
     }
 
@@ -468,10 +494,17 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
 
     /* Set up the pipes for the `rsh' command, and fork.  */
 
-    if (pipe (to_remote[remote_pipe_number]) == -1
-	|| pipe (from_remote[remote_pipe_number]) == -1)
+    if (pipe (to_remote[remote_pipe_number]) < 0)
+      {
+	free (file_name_copy);
+	return -1;
+      }
+
+    if (pipe (from_remote[remote_pipe_number]) < 0)
       {
 	int e = errno;
+	close (to_remote[remote_pipe_number][PREAD]);
+	close (to_remote[remote_pipe_number][PWRITE]);
 	free (file_name_copy);
 	errno = e;
 	return -1;
@@ -481,6 +514,10 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
     if (status == -1)
       {
 	int e = errno;
+	close (from_remote[remote_pipe_number][PREAD]);
+	close (from_remote[remote_pipe_number][PWRITE]);
+	close (to_remote[remote_pipe_number][PREAD]);
+	close (to_remote[remote_pipe_number][PWRITE]);
 	free (file_name_copy);
 	errno = e;
 	return -1;
@@ -501,7 +538,10 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
 	  error (EXIT_ON_EXEC_ERROR, errno,
 		 _("Cannot redirect files for remote shell"));
 
-	sys_reset_uid_gid ();
+	char const *reseterr = sys_reset_uid_gid ();
+	if (reseterr)
+	  error (EXIT_ON_EXEC_ERROR, errno,
+		 _("Cannot reset uid and gid: %s"), reseterr);
 
 	if (remote_user)
 	  execl (remote_shell, remote_shell_basename, remote_host,
@@ -534,10 +574,9 @@ rmt_open__ (const char *file_name, int open_mode, int bias,
     if (do_command (remote_pipe_number, command_buffer) == -1
 	|| get_status (remote_pipe_number) == -1)
       {
-	int e = errno;
 	free (command_buffer);
 	free (file_name_copy);
-	_rmt_shutdown (remote_pipe_number, e);
+	_rmt_shutdown (remote_pipe_number, errno);
 	return -1;
       }
     free (command_buffer);
@@ -567,12 +606,12 @@ rmt_close__ (int handle)
 size_t
 rmt_read__ (int handle, char *buffer, size_t length)
 {
-  char command_buffer[COMMAND_BUFFER_SIZE];
+  char command_buffer[sizeof "R\n" + INT_STRLEN_BOUND (size_t)];
   size_t status;
   size_t rlen;
   size_t counter;
 
-  sprintf (command_buffer, "R%lu\n", (unsigned long) length);
+  sprintf (command_buffer, "R%zu\n", length);
   if (do_command (handle, command_buffer) == -1
       || (status = get_status (handle)) == SAFE_READ_ERROR
       || status > length)
@@ -596,11 +635,11 @@ rmt_read__ (int handle, char *buffer, size_t length)
 size_t
 rmt_write__ (int handle, char *buffer, size_t length)
 {
-  char command_buffer[COMMAND_BUFFER_SIZE];
-  RETSIGTYPE (*pipe_handler) (int);
+  char command_buffer[sizeof "W\n" + INT_STRLEN_BOUND (size_t)];
+  void (*pipe_handler) (int);
   size_t written;
 
-  sprintf (command_buffer, "W%lu\n", (unsigned long) length);
+  sprintf (command_buffer, "W%zu\n", length);
   if (do_command (handle, command_buffer) == -1)
     return 0;
 
@@ -628,17 +667,7 @@ rmt_write__ (int handle, char *buffer, size_t length)
 off_t
 rmt_lseek__ (int handle, off_t offset, int whence)
 {
-  char command_buffer[COMMAND_BUFFER_SIZE];
-  char operand_buffer[UINTMAX_STRSIZE_BOUND];
-  uintmax_t u = offset < 0 ? - (uintmax_t) offset : (uintmax_t) offset;
-  char *p = operand_buffer + sizeof operand_buffer;
-
-  *--p = 0;
-  do
-    *--p = '0' + (int) (u % 10);
-  while ((u /= 10) != 0);
-  if (offset < 0)
-    *--p = '-';
+  char command_buffer[sizeof "L0\n\n" + INT_STRLEN_BOUND (offset)];
 
   switch (whence)
     {
@@ -648,7 +677,7 @@ rmt_lseek__ (int handle, off_t offset, int whence)
     default: abort ();
     }
 
-  sprintf (command_buffer, "L%s\n%d\n", p, whence);
+  sprintf (command_buffer, "L%d\n%jd\n", whence, (intmax_t) offset);
 
   if (do_command (handle, command_buffer) == -1)
     return -1;
@@ -659,7 +688,7 @@ rmt_lseek__ (int handle, off_t offset, int whence)
 /* Perform a raw tape operation on remote tape connection HANDLE.
    Return the results of the ioctl, or -1 on error.  */
 int
-rmt_ioctl__ (int handle, int operation, char *argument)
+rmt_ioctl__ (int handle, unsigned long int operation, void *argument)
 {
   switch (operation)
     {
@@ -670,24 +699,15 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 #ifdef MTIOCTOP
     case MTIOCTOP:
       {
-	char command_buffer[COMMAND_BUFFER_SIZE];
-	char operand_buffer[UINTMAX_STRSIZE_BOUND];
-	uintmax_t u = (((struct mtop *) argument)->mt_count < 0
-		       ? - (uintmax_t) ((struct mtop *) argument)->mt_count
-		       : (uintmax_t) ((struct mtop *) argument)->mt_count);
-	char *p = operand_buffer + sizeof operand_buffer;
-
-        *--p = 0;
-	do
-	  *--p = '0' + (int) (u % 10);
-	while ((u /= 10) != 0);
-	if (((struct mtop *) argument)->mt_count < 0)
-	  *--p = '-';
+	struct mtop *mtop = argument;
+	enum { oplen = INT_STRLEN_BOUND (mtop->mt_op) };
+	enum { countlen = INT_STRLEN_BOUND (mtop->mt_count) };
+	char command_buffer[sizeof "I\n\n" + oplen + countlen];
 
 	/* MTIOCTOP is the easy one.  Nothing is transferred in binary.  */
 
-	sprintf (command_buffer, "I%d\n%s\n",
-		 ((struct mtop *) argument)->mt_op, p);
+	intmax_t count = mtop->mt_count;
+	sprintf (command_buffer, "I%d\n%jd\n", mtop->mt_op, count);
 	if (do_command (handle, command_buffer) == -1)
 	  return -1;
 
@@ -717,9 +737,9 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 	    return -1;
 	  }
 
-	for (; status > 0; status -= counter, argument += counter)
+	for (char *p = argument; status > 0; status -= counter, p += counter)
 	  {
-	    counter = safe_read (READ_SIDE (handle), argument, status);
+	    counter = safe_read (READ_SIDE (handle), p, status);
 	    if (counter == SAFE_READ_ERROR || counter == 0)
 	      {
 		_rmt_shutdown (handle, EIO);
@@ -732,15 +752,17 @@ rmt_ioctl__ (int handle, int operation, char *argument)
 	   than 256, we will assume that the bytes are swapped and go through
 	   and reverse all the bytes.  */
 
-	if (((struct mtget *) argument)->MTIO_CHECK_FIELD < 256)
+	struct mtget *mtget = argument;
+	if (mtget->MTIO_CHECK_FIELD < 256)
 	  return 0;
 
+	char *buf = argument;
 	for (counter = 0; counter < status; counter += 2)
 	  {
-	    char copy = argument[counter];
+	    char copy = buf[counter];
 
-	    argument[counter] = argument[counter + 1];
-	    argument[counter + 1] = copy;
+	    buf[counter] = buf[counter + 1];
+	    buf[counter + 1] = copy;
 	  }
 
 	return 0;

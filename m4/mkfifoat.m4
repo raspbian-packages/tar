@@ -1,7 +1,7 @@
-# serial 5
+# serial 10
 # See if we need to provide mkfifoat/mknodat replacement.
 
-dnl Copyright (C) 2009-2021 Free Software Foundation, Inc.
+dnl Copyright (C) 2009-2023 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -18,7 +18,8 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
 
   AC_REQUIRE([gl_FUNC_OPENAT])
 
-  AC_CHECK_FUNCS_ONCE([mkfifoat mknodat])
+  gl_CHECK_FUNCS_ANDROID_MACOS([mknodat], [[#include <sys/stat.h>]])
+  gl_CHECK_FUNCS_ANDROID_MACOS([mkfifoat], [[#include <sys/stat.h>]])
   if test $ac_cv_func_mkfifoat = yes; then
     dnl Check for AIX 7.2 bug with trailing slash.
     AC_CACHE_CHECK([whether mkfifoat rejects trailing slashes],
@@ -61,6 +62,12 @@ AC_DEFUN([gl_FUNC_MKFIFOAT],
   else
     # No known system has mkfifoat but not mknodat
     HAVE_MKFIFOAT=0
+    case "$gl_cv_onwards_func_mkfifoat" in
+      future*) REPLACE_MKFIFOAT=1 ;;
+    esac
     HAVE_MKNODAT=0
+    case "$gl_cv_onwards_func_mknodat" in
+      future*) REPLACE_MKNODAT=1 ;;
+    esac
   fi
 ])

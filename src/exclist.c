@@ -1,6 +1,6 @@
 /* Per-directory exclusion files for tar.
 
-   Copyright 2014-2021 Free Software Foundation, Inc.
+   Copyright 2014-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -19,6 +19,7 @@
 */
 #include <system.h>
 #include <quotearg.h>
+#include <flexmember.h>
 #include <fnmatch.h>
 #include <wordsplit.h>
 #include "common.h"
@@ -40,7 +41,7 @@ struct excfile
 {
   struct excfile *next;
   int flags;
-  char name[1];
+  char name[FLEXIBLE_ARRAY_MEMBER];
 };
 
 static struct excfile *excfile_head, *excfile_tail;
@@ -48,7 +49,8 @@ static struct excfile *excfile_head, *excfile_tail;
 void
 excfile_add (const char *name, int flags)
 {
-  struct excfile *p = xmalloc (sizeof (*p) + strlen (name));
+  struct excfile *p = xmalloc (FLEXNSIZEOF (struct excfile, name,
+					    strlen (name) + 1));
   p->next = NULL;
   p->flags = flags;
   strcpy (p->name, name);
@@ -198,11 +200,13 @@ excluded_name (char const *name, struct tar_stat_info *st)
 }
 
 static void
-cvs_addfn (struct exclude *ex, char const *pattern, int options, void *data)
+cvs_addfn (struct exclude *ex, char const *pattern, int options,
+	   MAYBE_UNUSED void *data)
 {
   struct wordsplit ws;
   size_t i;
 
+  options |= EXCLUDE_ALLOC;
   if (wordsplit (pattern, &ws,
 		 WRDSF_NOVAR | WRDSF_NOCMD | WRDSF_SQUEEZE_DELIMS))
     return;
@@ -212,7 +216,8 @@ cvs_addfn (struct exclude *ex, char const *pattern, int options, void *data)
 }
 
 static void
-git_addfn (struct exclude *ex, char const *pattern, int options, void *data)
+git_addfn (struct exclude *ex, char const *pattern, int options,
+	   MAYBE_UNUSED void *data)
 {
   while (isspace (*pattern))
     ++pattern;
@@ -224,7 +229,8 @@ git_addfn (struct exclude *ex, char const *pattern, int options, void *data)
 }
 
 static void
-bzr_addfn (struct exclude *ex, char const *pattern, int options, void *data)
+bzr_addfn (struct exclude *ex, char const *pattern, int options,
+	   MAYBE_UNUSED void *data)
 {
   while (isspace (*pattern))
     ++pattern;

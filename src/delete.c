@@ -1,6 +1,6 @@
 /* Delete entries from a tar archive.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -18,7 +18,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <system.h>
-#include <system-ioctl.h>
 
 #include "common.h"
 #include <rmt.h>
@@ -50,41 +49,31 @@ move_archive (off_t count)
   if (count == 0)
     return;
 
-#ifdef MTIOCTOP
-  {
-    struct mtop operation;
-
-    if (count < 0
-	? (operation.mt_op = MTBSR,
-	   operation.mt_count = -count,
-	   operation.mt_count == -count)
-	: (operation.mt_op = MTFSR,
-	   operation.mt_count = count,
-	   operation.mt_count == count))
-      {
-	if (0 <= rmtioctl (archive, MTIOCTOP, (char *) &operation))
-	  return;
-
-	if (errno == EIO
-	    && 0 <= rmtioctl (archive, MTIOCTOP, (char *) &operation))
-	  return;
-      }
-  }
-#endif /* MTIOCTOP */
-
-  {
-    off_t position0 = rmtlseek (archive, (off_t) 0, SEEK_CUR);
-    off_t increment = record_size * (off_t) count;
-    off_t position = position0 + increment;
-
-    if (increment / count != record_size
-	|| (position < position0) != (increment < 0)
-	|| (position = position < 0 ? 0 : position,
-	    rmtlseek (archive, position, SEEK_SET) != position))
-      seek_error_details (archive_name_array[0], position);
-
+  if (mtioseek (false, count))
     return;
-  }
+
+  off_t position0 = rmtlseek (archive, 0, SEEK_CUR), position = 0;
+  if (0 <= position0)
+    {
+      /* Pretend the starting position is at the first record
+	 boundary after POSITION0.  This is useful at EOF after
+	 a short read.  */
+      idx_t short_size = position0 % record_size;
+      idx_t start_offset = short_size ? record_size - short_size : 0;
+      off_t increment, move_start;
+      if (INT_MULTIPLY_WRAPV (record_size, count, &increment)
+	  || INT_ADD_WRAPV (position0, start_offset, &move_start)
+	  || INT_ADD_WRAPV (move_start, increment, &position)
+	  || position < 0)
+	{
+	  ERROR ((0, EOVERFLOW, "lseek: %s", archive_name_array[0]));
+	  return;
+	}
+      else if (rmtlseek (archive, position, SEEK_SET) == position)
+	return;
+    }
+  if (!_isrmt (archive))
+    seek_error_details (archive_name_array[0], position);
 }
 
 /* Write out the record which has been filled.  If MOVE_BACK_FLAG,
@@ -147,7 +136,7 @@ write_recent_bytes (char *data, size_t bytes)
     write_record (1);
 }
 
-static inline void
+static void
 flush_file (void)
 {
   off_t blocks_to_skip;
@@ -160,6 +149,9 @@ flush_file (void)
     {
       blocks_to_skip -= (record_end - current_block);
       flush_archive ();
+      if (record_end == current_block)
+	/* Hit EOF */
+	break;
     }
   current_block += blocks_to_skip;
 }
@@ -192,15 +184,15 @@ delete_archive_members (void)
 	  abort ();
 
 	case HEADER_SUCCESS:
-	  if ((name = name_scan (current_stat_info.file_name)) == NULL)
+	  if ((name = name_scan (current_stat_info.file_name, false)) == NULL)
 	    {
-	      skip_member ();
+	      skim_member (acting_as_filter);
 	      break;
 	    }
 	  name->found_count++;
 	  if (!ISFOUND (name))
 	    {
-	      skip_member ();
+	      skim_member (acting_as_filter);
 	      break;
 	    }
 	  FALLTHROUGH;
@@ -287,7 +279,7 @@ delete_archive_members (void)
 	      /* Found another header.  */
 	      xheader_decode (&current_stat_info);
 
-	      if ((name = name_scan (current_stat_info.file_name)) != NULL)
+	      if ((name = name_scan (current_stat_info.file_name, false)) != NULL)
 		{
 		  name->found_count++;
 		  if (ISFOUND (name))
