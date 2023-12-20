@@ -1,5 +1,6 @@
 tar (1.35+dfsg-1) unstable; urgency=medium
 
+  * Team upload (salsa.debian.org/debian namespace)
   * New upstream version
   * Drop patches now part of upstream codebase:
     - CVE-2022-48303.patch
