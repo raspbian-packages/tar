@@ -51,7 +51,7 @@ tar (1.34+dfsg-1.1) unstable; urgency=medium
   * Non-maintainer upload
 
   [ Mechtilde ]
-  * [730f266] Improved d/copyright with patch 
+  * [730f266] Improved d/copyright with patch
     from Bastian Germann <bage@debian.org> (Closes:  #1024084)
 
  -- Mechtilde Stehmann <mechtilde@debian.org>  Sun, 20 Nov 2022 15:52:41 +0100
