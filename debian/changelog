@@ -1,8 +1,16 @@
 tar (1.35+dfsg-1) UNRELEASED; urgency=medium
 
   * New upstream version
+  * Drop patches now part of upstream codebase:
+    - CVE-2022-48303.patch
+    - Fix-handling-of-extended-header-prefixes.patch CVE-2023-39804
+    - gcc-10-warnings.diff
+  * Refresh patches:
+    - oldgnu-unknown-mode-bits.patch
+    - pristine-tar.diff
+    - proper_it_translation.patch
 
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 08:15:45 +0100
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 08:21:10 +0100
 
 tar (1.34+dfsg-1.4) unstable; urgency=medium
 
