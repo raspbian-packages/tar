@@ -3,7 +3,7 @@ Section: utils
 Priority: required
 Maintainer: Janos Lenart <ocsi@debian.org>
 Uploaders: Carl Worth <cworth@cworth.org>
-Build-Depends: debhelper (>> 10), dh-exec, gettext, autoconf, automake, autopoint, bison, libacl1-dev, libselinux1-dev [linux-any]
+Build-Depends: debhelper-compat (= 13), dh-exec, gettext, autoconf, automake, autopoint, bison, libacl1-dev, libselinux1-dev [linux-any]
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Vcs-Git: https://salsa.debian.org/debian/tar.git
