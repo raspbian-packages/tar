@@ -1,3 +1,20 @@
+tar (1.34+dfsg-1.4) unstable; urgency=medium
+
+  [ Chirayu Desai ]
+  * Import upstream patch to fix '--delete' (Closes: #944118)
+
+  [ Gioele Barabucci ]
+  * d/control: Build tar-scripts as Architecture: all (Closes: #1050568)
+  * d/tar-scripts.lintian-overrides: Update to new syntax
+  * d/tar-scripts.lintian-overrides: Ignore no-manual-page warnings
+  * d/rules: Use standard dh sequence (Closes: #1048718, #1050565, #1050566)
+
+  [ Gianfranco Costamagna ]
+  * Non-maintainer upload.
+  * Add fix from Ubuntu for CVE-2022-48303
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 08:03:20 +0100
+
 tar (1.34+dfsg-1.3) unstable; urgency=medium
 
   * Non-maintainer upload.
