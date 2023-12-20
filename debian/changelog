@@ -2,6 +2,7 @@ tar (1.34+dfsg-1.4) unstable; urgency=medium
 
   [ Chirayu Desai ]
   * Import upstream patch to fix '--delete' (Closes: #944118)
+    (Already fixed in 1.34)
 
   [ Gioele Barabucci ]
   * d/control: Build tar-scripts as Architecture: all (Closes: #1050568)
