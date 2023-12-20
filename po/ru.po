@@ -4,15 +4,15 @@
 #
 # Const Kaplinsky <const@ce.cctpu.edu.ru>, 1998, 1999.
 # Pavel Maryanov <acid_jack@ukr.net>, 2004, 2006, 2008.
-# Yuri Kozlov <yuray@komyakino.ru>, 2009, 2013, 2014, 2016, 2018, 2019.
+# Yuri Kozlov <yuray@komyakino.ru>, 2009, 2013, 2014, 2016, 2018, 2019, 2023.
 # Pavel Maryanov <acid@jack.kiev.ua>, 2010, 2014.
-#: src/create.c:1590
+#: src/create.c:1579
 msgid ""
 msgstr ""
-"Project-Id-Version: tar 1.32.90\n"
+"Project-Id-Version: tar 1.34\n"
 "Report-Msgid-Bugs-To: bug-tar@gnu.org\n"
-"POT-Creation-Date: 2021-02-13 13:06+0200\n"
-"PO-Revision-Date: 2019-12-24 19:03+0300\n"
+"POT-Creation-Date: 2023-07-18 09:55+0300\n"
+"PO-Revision-Date: 2023-05-05 05:12+0300\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <gnu@d07.ru>\n"
 "Language: ru\n"
@@ -20,21 +20,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 22.12.3\n"
 
-#: gnu/argmatch.c:132
+#: gnu/argmatch.c:145
 #, c-format
 msgid "invalid argument %s for %s"
 msgstr "недопустимый аргумент %s для %s"
 
-#: gnu/argmatch.c:133
+#: gnu/argmatch.c:146
 #, c-format
 msgid "ambiguous argument %s for %s"
 msgstr "неоднозначный аргумент %s для %s"
 
-#: gnu/argmatch.c:152
+#: gnu/argmatch.c:165
 msgid "Valid arguments are:"
 msgstr "Допустимые аргументы:"
 
@@ -91,53 +91,53 @@ msgstr ""
 msgid "Report bugs to %s.\n"
 msgstr "Сообщения об ошибках отправляйте по адресу: %s.\n"
 
-#: gnu/argp-help.c:2001 gnu/error.c:195
+#: gnu/argp-help.c:2001 gnu/error.c:194
 msgid "Unknown system error"
 msgstr "Неизвестная системная ошибка"
 
-#: gnu/argp-parse.c:81
+#: gnu/argp-parse.c:80
 msgid "give this help list"
 msgstr "вывод этой справки"
 
-#: gnu/argp-parse.c:82
+#: gnu/argp-parse.c:81
 msgid "give a short usage message"
 msgstr "вывод короткого сообщения об использовании"
 
-#: gnu/argp-parse.c:83 src/tar.c:553 src/tar.c:555 src/tar.c:660
-#: tests/genfile.c:131
+#: gnu/argp-parse.c:82 src/tar.c:554 src/tar.c:556 src/tar.c:661
+#: tests/genfile.c:134
 msgid "NAME"
 msgstr "ИМЯ"
 
-#: gnu/argp-parse.c:84
+#: gnu/argp-parse.c:83
 msgid "set the program name"
 msgstr "определяет название программы"
 
-#: gnu/argp-parse.c:85
+#: gnu/argp-parse.c:84
 msgid "SECS"
 msgstr "СЕК"
 
-#: gnu/argp-parse.c:86
+#: gnu/argp-parse.c:85
 msgid "hang for SECS seconds (default 3600)"
 msgstr "ожидание в течение заданных СЕКУНД (по умолчанию 3600)"
 
-#: gnu/argp-parse.c:143
+#: gnu/argp-parse.c:142
 msgid "print program version"
 msgstr "вывод версии программы"
 
-#: gnu/argp-parse.c:160
+#: gnu/argp-parse.c:159
 msgid "(PROGRAM ERROR) No version known!?"
 msgstr "(ОШИБКА ПРОГРАММЫ) Неизвестная версия?!"
 
-#: gnu/argp-parse.c:613
+#: gnu/argp-parse.c:612
 #, c-format
 msgid "%s: Too many arguments\n"
 msgstr "%s: Слишком много аргументов\n"
 
-#: gnu/argp-parse.c:759
+#: gnu/argp-parse.c:758
 msgid "(PROGRAM ERROR) Option should have been recognized!?"
 msgstr "(ОШИБКА ПРОГРАММЫ) Параметр должен был быть распознан?!"
 
-#: gnu/closeout.c:122
+#: gnu/closeout.c:121
 msgid "write error"
 msgstr "ошибка записи"
 
@@ -176,7 +176,7 @@ msgstr "%s: недопустимый параметр -- «%c»\n"
 msgid "%s: option requires an argument -- '%c'\n"
 msgstr "%s: для параметра требуется аргумент -- «%c»\n"
 
-#: gnu/obstack.c:338 gnu/obstack.c:340 gnu/xalloc-die.c:34
+#: gnu/obstack.c:337 gnu/obstack.c:339 gnu/xalloc-die.c:34
 msgid "memory exhausted"
 msgstr "недостаточно памяти"
 
@@ -211,11 +211,11 @@ msgstr "не удалось вернуться в первоначальный �
 #. If you don't know what to put here, please see
 #. <https://en.wikipedia.org/wiki/Quotation_marks_in_other_languages>
 #. and use glyphs suitable for your language.
-#: gnu/quotearg.c:355
+#: gnu/quotearg.c:354
 msgid "`"
 msgstr "«"
 
-#: gnu/quotearg.c:356
+#: gnu/quotearg.c:355
 msgid "'"
 msgstr "»"
 
@@ -225,7 +225,7 @@ msgstr "»"
 #. To enquire the regular expression that your system uses for this
 #. purpose, you can use the command
 #. locale -k LC_MESSAGES | grep '^yesexpr='
-#: gnu/rpmatch.c:150
+#: gnu/rpmatch.c:149
 msgid "^[yY]"
 msgstr "^[yY]"
 
@@ -235,7 +235,7 @@ msgstr "^[yY]"
 #. To enquire the regular expression that your system uses for this
 #. purpose, you can use the command
 #. locale -k LC_MESSAGES | grep '^noexpr='
-#: gnu/rpmatch.c:163
+#: gnu/rpmatch.c:162
 msgid "^[nN]"
 msgstr "^[nN]"
 
@@ -258,25 +258,15 @@ msgstr "(C)"
 
 #. TRANSLATORS: The %s placeholder is the web address of the GPL license.
 #: gnu/version-etc.c:88
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl."
-#| "html>.\n"
-#| "This is free software: you are free to change and redistribute it.\n"
-#| "There is NO WARRANTY, to the extent permitted by law.\n"
-#| "\n"
+#, c-format
 msgid ""
 "License GPLv3+: GNU GPL version 3 or later <%s>.\n"
 "This is free software: you are free to change and redistribute it.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
-"\n"
-"Лицензия GPLv3+: GNU GPL версии 3 или новее <https://gnu.org/licenses/gpl."
-"html>\n"
+"Лицензия GPLv3+: GNU GPL версии 3 или новее <%s>.\n"
 "Это свободное ПО: вы можете изменять и распространять его.\n"
-"Нет НИКАКИХ ГАРАНТИЙ до степени, разрешённой законом.\n"
-"\n"
+"Нет НИКАКИХ ГАРАНТИЙ в пределах действующего законодательства.\n"
 
 #. TRANSLATORS: %s denotes an author name.
 #: gnu/version-etc.c:105
@@ -391,14 +381,9 @@ msgstr ""
 #. "Report translation bugs to <...>\n" with the address for translation
 #. bugs (typically your translation team's web or email address).
 #: gnu/version-etc.c:249
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "Report bugs to: %s\n"
+#, c-format
 msgid "Report bugs to: %s\n"
-msgstr ""
-"\n"
-"Отчёты об ошибках отправляйте по адресу: %s\n"
+msgstr "Об ошибках сообщайте по адресу: %s\n"
 
 #: gnu/version-etc.c:251
 #, c-format
@@ -411,10 +396,9 @@ msgid "%s home page: <%s>\n"
 msgstr "Домашняя страница %s: %s\n"
 
 #: gnu/version-etc.c:260
-#, fuzzy, c-format
-#| msgid "General help using GNU software: <https://www.gnu.org/gethelp/>\n"
+#, c-format
 msgid "General help using GNU software: <%s>\n"
-msgstr "Справка по работе с программами GNU: <https://www.gnu.org/gethelp/>\n"
+msgstr "Справка по работе с программами GNU: <%s>\n"
 
 #. TRANSLATORS: %s after `Cannot' is a function name, e.g. `Cannot open'.
 #. Directly translating this to another language will not work, first because
@@ -439,51 +423,60 @@ msgstr "%s: Предупреждение: Функция %s завершилас
 msgid "%s: Cannot change mode to %s"
 msgstr "%s: Невозможно изменить права доступа на %s"
 
-#: lib/paxerror.c:103
-#, c-format
-msgid "%s: Cannot change ownership to uid %lu, gid %lu"
+#: lib/paxerror.c:104
+#, fuzzy, c-format
+#| msgid "%s: Cannot change ownership to uid %lu, gid %lu"
+msgid "%s: Cannot change ownership to uid %ju, gid %ju"
 msgstr "%s: Невозможно изменить владельца на uid %lu, gid %lu"
 
-#: lib/paxerror.c:129
+#: lib/paxerror.c:130
 #, c-format
 msgid "%s: Cannot hard link to %s"
 msgstr "%s: Невозможно создать жёсткую ссылку на %s"
 
-#: lib/paxerror.c:181 lib/paxerror.c:213
-#, c-format
-msgid "%s: Read error at byte %s, while reading %lu byte"
-msgid_plural "%s: Read error at byte %s, while reading %lu bytes"
+#: lib/paxerror.c:182 lib/paxerror.c:212
+#, fuzzy, c-format
+#| msgid "%s: Read error at byte %s, while reading %lu byte"
+#| msgid_plural "%s: Read error at byte %s, while reading %lu bytes"
+msgid "%s: Read error at byte %jd, while reading %zu byte"
+msgid_plural "%s: Read error at byte %jd, while reading %zu bytes"
 msgstr[0] "%s: Ошибка чтения с позиции %s при чтении %lu байта"
 msgstr[1] "%s: Ошибка чтения с позиции %s при чтении %lu байт"
 msgstr[2] "%s: Ошибка чтения с позиции %s при чтении %lu байт"
 
 #: lib/paxerror.c:194
-#, c-format
-msgid "%s: Warning: Read error at byte %s, while reading %lu byte"
-msgid_plural "%s: Warning: Read error at byte %s, while reading %lu bytes"
+#, fuzzy, c-format
+#| msgid "%s: Warning: Read error at byte %s, while reading %lu byte"
+#| msgid_plural "%s: Warning: Read error at byte %s, while reading %lu bytes"
+msgid "%s: Warning: Read error at byte %jd, while reading %zu byte"
+msgid_plural "%s: Warning: Read error at byte %jd, while reading %zu bytes"
 msgstr[0] "%s: Предупреждение: Ошибка чтения с позиции %s при чтении %lu байта"
 msgstr[1] "%s: Предупреждение: Ошибка чтения с позиции %s при чтении %lu байт"
 msgstr[2] "%s: Предупреждение: Ошибка чтения с позиции %s при чтении %lu байт"
 
-#: lib/paxerror.c:261
-#, c-format
-msgid "%s: Cannot seek to %s"
+#: lib/paxerror.c:259
+#, fuzzy, c-format
+#| msgid "%s: Cannot seek to %s"
+msgid "%s: Cannot seek to %jd"
 msgstr "%s: Невозможно найти в %s"
 
-#: lib/paxerror.c:277
-#, c-format
-msgid "%s: Warning: Cannot seek to %s"
+#: lib/paxerror.c:273
+#, fuzzy, c-format
+#| msgid "%s: Warning: Cannot seek to %s"
+msgid "%s: Warning: Cannot seek to %jd"
 msgstr "%s: Предупреждение: Невозможно найти в %s"
 
-#: lib/paxerror.c:286
+#: lib/paxerror.c:281
 #, c-format
 msgid "%s: Cannot create symlink to %s"
 msgstr "%s: Невозможно создать символическую ссылку на %s"
 
-#: lib/paxerror.c:351
-#, c-format
-msgid "%s: Wrote only %lu of %lu byte"
-msgid_plural "%s: Wrote only %lu of %lu bytes"
+#: lib/paxerror.c:346
+#, fuzzy, c-format
+#| msgid "%s: Wrote only %lu of %lu byte"
+#| msgid_plural "%s: Wrote only %lu of %lu bytes"
+msgid "%s: Wrote only %zu of %zu byte"
+msgid_plural "%s: Wrote only %zu of %zu bytes"
 msgstr[0] "%s: Записан только %lu байт из %lu"
 msgstr[1] "%s: Записано только %lu байта из %lu"
 msgstr[2] "%s: Записано только %lu байт из %lu"
@@ -506,177 +499,183 @@ msgstr "`.' заменяются пустыми именами объектов"
 msgid "Substituting `.' for empty hard link target"
 msgstr "`.' заменяются пустыми целями жестких ссылок"
 
-#: lib/rtapelib.c:299
+#: lib/rtapelib.c:295
 #, c-format
 msgid "exec/tcp: Service not available"
 msgstr "exec/tcp: Служба недоступна"
 
-#: lib/rtapelib.c:303
+#: lib/rtapelib.c:299
 #, c-format
 msgid "stdin"
 msgstr "stdin"
 
-#: lib/rtapelib.c:306 src/tar.c:2754
+#: lib/rtapelib.c:302 src/tar.c:2771
 #, c-format
 msgid "stdout"
 msgstr "stdout"
 
-#: lib/rtapelib.c:429
+#: lib/rtapelib.c:457
 #, c-format
 msgid "Cannot connect to %s: resolve failed"
 msgstr "Не удаётся подключиться к %s: ошибка разрешения"
 
-#: lib/rtapelib.c:502
+#: lib/rtapelib.c:539
 #, c-format
 msgid "Cannot redirect files for remote shell"
 msgstr "Не удалось перенаправить файлы для удалённого командного процессора"
 
-#: lib/rtapelib.c:516
+#: lib/rtapelib.c:544
+#, fuzzy, c-format
+#| msgid "cannot set time on `%s'"
+msgid "Cannot reset uid and gid: %s"
+msgstr "невозможно установить время в «%s»"
+
+#: lib/rtapelib.c:556
 #, c-format
 msgid "Cannot execute remote shell"
 msgstr "Не удаётся запустить удалённый командный процессор"
 
-#: rmt/rmt.c:436
+#: rmt/rmt.c:434
 msgid "Seek direction out of range"
 msgstr "Направление поиска за пределами диапазона"
 
-#: rmt/rmt.c:442
+#: rmt/rmt.c:440
 msgid "Invalid seek direction"
 msgstr "Недопустимое направление поиска"
 
-#: rmt/rmt.c:450
+#: rmt/rmt.c:448
 msgid "Invalid seek offset"
 msgstr "Недопустимое смещение поиска"
 
-#: rmt/rmt.c:456
+#: rmt/rmt.c:454
 msgid "Seek offset out of range"
 msgstr "Смещение поиска за пределами диапазона"
 
-#: rmt/rmt.c:497 rmt/rmt.c:548 rmt/rmt.c:612
+#: rmt/rmt.c:495 rmt/rmt.c:546 rmt/rmt.c:610
 msgid "Invalid byte count"
 msgstr "Недопустимое число байт"
 
-#: rmt/rmt.c:503 rmt/rmt.c:554 rmt/rmt.c:618 rmt/rmt.c:629
+#: rmt/rmt.c:501 rmt/rmt.c:552 rmt/rmt.c:616 rmt/rmt.c:627
 msgid "Byte count out of range"
 msgstr "Число байт за пределами диапазона"
 
-#: rmt/rmt.c:562
+#: rmt/rmt.c:560
 msgid "Premature eof"
 msgstr "Неожиданный конец файла"
 
-#: rmt/rmt.c:605
+#: rmt/rmt.c:603
 msgid "Invalid operation code"
 msgstr "Недопустимый код операции"
 
-#: rmt/rmt.c:640 rmt/rmt.c:684
+#: rmt/rmt.c:638 rmt/rmt.c:682
 msgid "Operation not supported"
 msgstr "Операция не поддерживается"
 
-#: rmt/rmt.c:668
+#: rmt/rmt.c:666
 msgid "Unexpected arguments"
 msgstr "Неожиданные аргументы"
 
-#: rmt/rmt.c:693
+#: rmt/rmt.c:691
 msgid "Manipulate a tape drive, accepting commands from a remote process"
 msgstr ""
 "Работа с накопителем на магнитной ленте с приёмом команд от удалённого "
 "процесса"
 
-#: rmt/rmt.c:700 src/tar.c:484 src/tar.c:488 src/tar.c:657 src/tar.c:673
-#: src/tar.c:762 src/tar.c:773 tests/genfile.c:168
+#: rmt/rmt.c:698 src/tar.c:485 src/tar.c:489 src/tar.c:658 src/tar.c:674
+#: src/tar.c:763 src/tar.c:774 tests/genfile.c:179
 msgid "NUMBER"
 msgstr "N"
 
-#: rmt/rmt.c:701
+#: rmt/rmt.c:699
 msgid "set debug level"
 msgstr "задайте уровень отладки"
 
-#: rmt/rmt.c:702 src/names.c:77 src/names.c:81 src/names.c:99 src/names.c:109
+#: rmt/rmt.c:700 src/names.c:77 src/names.c:81 src/names.c:99 src/names.c:109
 #: src/names.c:112 src/names.c:115 src/names.c:118 src/names.c:120
-#: src/tar.c:482 src/tar.c:557 src/tar.c:559 src/tar.c:664 src/tar.c:790
-#: tests/genfile.c:133 tests/genfile.c:182 tests/genfile.c:186
-#: tests/genfile.c:189 tests/genfile.c:195
+#: src/tar.c:483 src/tar.c:558 src/tar.c:560 src/tar.c:665 src/tar.c:791
+#: tests/genfile.c:136 tests/genfile.c:193 tests/genfile.c:197
+#: tests/genfile.c:200 tests/genfile.c:206
 msgid "FILE"
 msgstr "ФАЙЛ"
 
-#: rmt/rmt.c:703
+#: rmt/rmt.c:701
 msgid "set debug output file name"
 msgstr "задайте имя выходного файла отладки"
 
-#: rmt/rmt.c:719 rmt/rmt.c:787
+#: rmt/rmt.c:717 rmt/rmt.c:785
 #, c-format
 msgid "cannot open %s"
 msgstr "не удаётся открыть %s"
 
-#: rmt/rmt.c:784 tests/genfile.c:979
+#: rmt/rmt.c:782 tests/genfile.c:1036
 #, c-format
 msgid "too many arguments"
 msgstr "слишком много аргументов"
 
-#: rmt/rmt.c:826
+#: rmt/rmt.c:824
 msgid "Garbage command"
 msgstr "Неверная команда"
 
-#: src/buffer.c:476 src/buffer.c:481 src/buffer.c:775 src/buffer.c:1417
-#: src/buffer.c:1454 src/buffer.c:1466 src/buffer.c:1495 src/delete.c:227
-#: src/list.c:274 src/update.c:187
+#: src/buffer.c:451 src/buffer.c:456 src/buffer.c:779 src/buffer.c:1396
+#: src/buffer.c:1433 src/buffer.c:1445 src/buffer.c:1474 src/delete.c:219
+#: src/list.c:281 src/update.c:193
 msgid "This does not look like a tar archive"
 msgstr "Это не похоже на tar-архив"
 
-#: src/buffer.c:592
+#: src/buffer.c:567
 msgid "Total bytes read"
 msgstr "Всего прочитано байт"
 
-#: src/buffer.c:594
+#: src/buffer.c:569
 msgid "Total bytes written"
 msgstr "Всего записано байт"
 
-#: src/buffer.c:595
+#: src/buffer.c:570
 msgid "Total bytes deleted"
 msgstr "Всего удалено байт"
 
-#: src/buffer.c:674
+#: src/buffer.c:649
 msgid "(pipe)"
 msgstr "(канал)"
 
-#: src/buffer.c:698
+#: src/buffer.c:673
 msgid "Refusing to read archive contents from terminal (missing -f option?)"
 msgstr "Отказ чтения содержимого архива с терминала (пропущен параметр -f?)"
 
-#: src/buffer.c:700
+#: src/buffer.c:675
 msgid "Refusing to write archive contents to terminal (missing -f option?)"
 msgstr "Отказ записи содержимого архива в терминал (пропущен параметр -f?)"
 
-#: src/buffer.c:713
+#: src/buffer.c:717
 msgid "Invalid value for record_size"
 msgstr "Недопустимое значение для record_size"
 
-#: src/buffer.c:716
+#: src/buffer.c:720
 msgid "No archive name given"
 msgstr "Не указано имя архива"
 
-#: src/buffer.c:759
+#: src/buffer.c:763
 msgid "Cannot verify stdin/stdout archive"
 msgstr "Не удаётся проверить архив на stdin/stdout"
 
-#: src/buffer.c:772
+#: src/buffer.c:776
 #, c-format
 msgid "Archive is compressed. Use %s option"
 msgstr "Архив сжат. Используйте параметр %s"
 
-#: src/buffer.c:830 src/tar.c:2506
+#: src/buffer.c:832 src/tar.c:2523
 msgid "Cannot update compressed archives"
 msgstr "Не удаётся обновить сжатые архивы"
 
-#: src/buffer.c:930
+#: src/buffer.c:919
 msgid "At beginning of tape, quitting now"
 msgstr "Начало ленты, завершение работы"
 
-#: src/buffer.c:936
+#: src/buffer.c:925
 msgid "Too many errors, quitting"
 msgstr "Слишком много ошибок, завершение работы"
 
-#: src/buffer.c:969
+#: src/buffer.c:958
 #, c-format
 msgid "Record size = %lu block"
 msgid_plural "Record size = %lu blocks"
@@ -684,7 +683,7 @@ msgstr[0] "Размер записи = %lu блок"
 msgstr[1] "Размер записи = %lu блока"
 msgstr[2] "Размер записи = %lu блоков"
 
-#: src/buffer.c:990
+#: src/buffer.c:979
 #, c-format
 msgid "Unaligned block (%lu byte) in archive"
 msgid_plural "Unaligned block (%lu bytes) in archive"
@@ -692,39 +691,39 @@ msgstr[0] "Невыровненный блок (%lu байт) в архиве"
 msgstr[1] "Невыровненный блок (%lu байта) в архиве"
 msgstr[2] "Невыровненный блок (%lu байт) в архиве"
 
-#: src/buffer.c:1077
+#: src/buffer.c:1057
 msgid "Cannot backspace archive file; it may be unreadable without -i"
 msgstr ""
 "Невозможно вернуться назад на один архивный файл; он может быть нечитаемым "
 "без -i"
 
-#: src/buffer.c:1109
+#: src/buffer.c:1089
 msgid "rmtlseek not stopped at a record boundary"
 msgstr "rmtlseek не остановился на границе записи"
 
-#: src/buffer.c:1170
+#: src/buffer.c:1150
 #, c-format
 msgid "%s: contains invalid volume number"
 msgstr "%s: содержит неверный номер тома"
 
-#: src/buffer.c:1205
+#: src/buffer.c:1185
 msgid "Volume number overflow"
 msgstr "Переполнение номера тома"
 
-#: src/buffer.c:1220
+#: src/buffer.c:1200
 #, c-format
 msgid "Prepare volume #%d for %s and hit return: "
 msgstr "Приготовьте том Номер %d для %s и нажмите Enter: "
 
-#: src/buffer.c:1226
+#: src/buffer.c:1206
 msgid "EOF where user reply was expected"
 msgstr "Конец файла вместо ожидаемого ответа пользователя"
 
-#: src/buffer.c:1231 src/buffer.c:1263
+#: src/buffer.c:1211 src/buffer.c:1243
 msgid "WARNING: Archive is incomplete"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: Архив не полный"
 
-#: src/buffer.c:1245
+#: src/buffer.c:1225
 #, c-format
 msgid ""
 " n name        Give a new file name for the next (and subsequent) volume(s)\n"
@@ -736,66 +735,66 @@ msgstr ""
 " q             Выход из tar\n"
 " y или [нов.строка] Продолжение операции\n"
 
-#: src/buffer.c:1250
+#: src/buffer.c:1230
 #, c-format
 msgid " !             Spawn a subshell\n"
 msgstr " !             Порождение подпроцесса командного процессора\n"
 
-#: src/buffer.c:1251
+#: src/buffer.c:1231
 #, c-format
 msgid " ?             Print this list\n"
 msgstr " ?             Вывод этого списка\n"
 
-#: src/buffer.c:1258
+#: src/buffer.c:1238
 msgid "No new volume; exiting.\n"
 msgstr "Нет нового тома, завершение работы.\n"
 
-#: src/buffer.c:1291
+#: src/buffer.c:1271
 msgid "File name not specified. Try again.\n"
 msgstr "Не указано имя имя файла. Попробуйте ещё раз.\n"
 
-#: src/buffer.c:1303
+#: src/buffer.c:1283
 #, c-format
 msgid "Invalid input. Type ? for help.\n"
 msgstr "Неверные входные данные. Наберите ? для получения справки.\n"
 
-#: src/buffer.c:1354
+#: src/buffer.c:1334
 #, c-format
 msgid "%s command failed"
 msgstr "Сбой команды %s"
 
-#: src/buffer.c:1531 src/buffer.c:1547
+#: src/buffer.c:1510 src/buffer.c:1526
 #, c-format
 msgid "%s is not continued on this volume"
 msgstr "%s не продолжается на этом томе"
 
-#: src/buffer.c:1543
+#: src/buffer.c:1522
 #, c-format
 msgid "%s is possibly continued on this volume: header contains truncated name"
 msgstr ""
 "%s, возможно, продолжается на этом томе - в заголовке находится усечённое имя"
 
-#: src/buffer.c:1561
+#: src/buffer.c:1540
 #, c-format
 msgid "%s is the wrong size (%s != %s + %s)"
 msgstr "%s является неверным размером (%s != %s + %s)"
 
-#: src/buffer.c:1576
+#: src/buffer.c:1555
 #, c-format
 msgid "This volume is out of sequence (%s - %s != %s)"
 msgstr "Этот том вне последовательности (%s - %s != %s)"
 
-#: src/buffer.c:1654 src/buffer.c:1672
+#: src/buffer.c:1633 src/buffer.c:1651
 #, c-format
 msgid "Archive not labeled to match %s"
 msgstr "Метка архива не соответствует %s"
 
-#: src/buffer.c:1676
+#: src/buffer.c:1655
 #, c-format
 msgid "Volume %s does not match %s"
 msgstr "Том %s не соответствует %s"
 
-#: src/buffer.c:1769
+#: src/buffer.c:1749
 #, c-format
 msgid ""
 "%s: file name too long to be stored in a GNU multivolume header, truncated"
@@ -803,11 +802,11 @@ msgstr ""
 "%s: слишком длинное имя файла для сохранения в многотомном заголовке GNU; "
 "обрезано"
 
-#: src/buffer.c:1962
+#: src/buffer.c:1942
 msgid "write did not end on a block boundary"
 msgstr "запись не остановилась на границе блока"
 
-#: src/compare.c:97
+#: src/compare.c:96
 #, c-format
 msgid "Could only read %lu of %lu byte"
 msgid_plural "Could only read %lu of %lu bytes"
@@ -815,75 +814,75 @@ msgstr[0] "Можно было прочитать только %lu байт из
 msgstr[1] "Можно было прочитать только %lu байта из %lu"
 msgstr[2] "Можно было прочитать только %lu байт из %lu"
 
-#: src/compare.c:107 src/compare.c:397
+#: src/compare.c:106 src/compare.c:396
 msgid "Contents differ"
 msgstr "Содержимое различно"
 
-#: src/compare.c:133 src/extract.c:1277 src/incremen.c:1511 src/list.c:495
-#: src/list.c:1417 src/xheader.c:882
+#: src/compare.c:132 src/extract.c:1316 src/incremen.c:1511 src/list.c:502
+#: src/list.c:1427 src/xheader.c:801
 msgid "Unexpected EOF in archive"
 msgstr "Неожиданный конец файла в архиве"
 
-#: src/compare.c:181 src/compare.c:197 src/compare.c:316 src/compare.c:421
+#: src/compare.c:180 src/compare.c:196 src/compare.c:315 src/compare.c:420
 msgid "File type differs"
 msgstr "Типы файлов отличаются"
 
-#: src/compare.c:184 src/compare.c:204 src/compare.c:330
+#: src/compare.c:183 src/compare.c:203 src/compare.c:329
 msgid "Mode differs"
 msgstr "Права доступа отличаются"
 
-#: src/compare.c:207
+#: src/compare.c:206
 msgid "Uid differs"
 msgstr "Uid отличаются"
 
-#: src/compare.c:209
+#: src/compare.c:208
 msgid "Gid differs"
 msgstr "Gid отличаются"
 
-#: src/compare.c:213
+#: src/compare.c:212
 msgid "Mod time differs"
 msgstr "Время изменения отличается"
 
-#: src/compare.c:217 src/compare.c:431
+#: src/compare.c:216 src/compare.c:430
 msgid "Size differs"
 msgstr "Размеры отличаются"
 
-#: src/compare.c:266
+#: src/compare.c:265
 #, c-format
 msgid "Not linked to %s"
 msgstr "Не ссылается на %s"
 
-#: src/compare.c:292
+#: src/compare.c:291
 msgid "Symlink differs"
 msgstr "Символические ссылки отличаются"
 
-#: src/compare.c:324
+#: src/compare.c:323
 msgid "Device number differs"
 msgstr "Номера устройств отличаются"
 
-#: src/compare.c:472
+#: src/compare.c:471
 #, c-format
 msgid "Verify "
 msgstr "Проверка "
 
-#: src/compare.c:479
+#: src/compare.c:478
 #, c-format
 msgid "%s: Unknown file type '%c', diffed as normal file"
 msgstr "%s: Неизвестный тип файла «%c», сравнён как обычный файл"
 
-#: src/compare.c:534
+#: src/compare.c:533
 msgid "Archive contains file names with leading prefixes removed."
 msgstr "Архив содержит файлы с именами, из которых удалены префиксы."
 
-#: src/compare.c:540
+#: src/compare.c:539
 msgid "Archive contains transformed file names."
 msgstr "Архив содержит преобразованные имена файлов."
 
-#: src/compare.c:545
+#: src/compare.c:544
 msgid "Verification may fail to locate original files."
 msgstr "При проверке оригинальные файлы могут быть не найдены."
 
-#: src/compare.c:619
+#: src/compare.c:599
 #, c-format
 msgid "VERIFY FAILURE: %d invalid header detected"
 msgid_plural "VERIFY FAILURE: %d invalid headers detected"
@@ -891,46 +890,46 @@ msgstr[0] "СБОЙ ПРОВЕРКИ: обнаружен %d неверный з�
 msgstr[1] "СБОЙ ПРОВЕРКИ: обнаружено %d неверных заголовка"
 msgstr[2] "СБОЙ ПРОВЕРКИ: обнаружено %d неверных заголовков"
 
-#: src/compare.c:637 src/list.c:251
+#: src/compare.c:617 src/list.c:251
 #, c-format
 msgid "A lone zero block at %s"
 msgstr "Нулевой блок в %s"
 
-#: src/create.c:73
+#: src/create.c:74
 #, c-format
 msgid "%s: contains a cache directory tag %s; %s"
 msgstr "%s: содержит каталог с кэшем тегов %s; %s"
 
-#: src/create.c:262
+#: src/create.c:263
 #, c-format
 msgid "value %s out of %s range %s..%s; substituting %s"
 msgstr "значение %s за пределами %s диапазона %s..%s; заменяется на %s"
 
-#: src/create.c:268
+#: src/create.c:269
 #, c-format
 msgid "value %s out of %s range %s..%s"
 msgstr "значение %s за пределами %s диапазона %s..%s"
 
-#: src/create.c:328
+#: src/create.c:329
 msgid "Generating negative octal headers"
 msgstr "Создаются отрицательные восьмеричные заголовки"
 
-#: src/create.c:605 src/create.c:668
+#: src/create.c:606 src/create.c:669
 #, c-format
 msgid "%s: file name is too long (max %d); not dumped"
 msgstr "%s: имя файла слишком длинное (максимум %d); не сброшено"
 
-#: src/create.c:615
+#: src/create.c:616
 #, c-format
 msgid "%s: file name is too long (cannot be split); not dumped"
 msgstr "%s: имя файла слишком длинное (не может быть разделено); не сброшено"
 
-#: src/create.c:642
+#: src/create.c:643
 #, c-format
 msgid "%s: link name is too long; not dumped"
 msgstr "%s: имя ссылки слишком длинное; не сброшено"
 
-#: src/create.c:1105
+#: src/create.c:1095
 #, c-format
 msgid "%s: File shrank by %s byte; padding with zeros"
 msgid_plural "%s: File shrank by %s bytes; padding with zeros"
@@ -938,125 +937,126 @@ msgstr[0] "%s: Файл урезан на %s байт; дополнен нуля
 msgstr[1] "%s: Файл урезан на %s байта; дополнен нулями"
 msgstr[2] "%s: Файл урезан на %s байт; дополнен нулями"
 
-#: src/create.c:1203
+#: src/create.c:1193
 #, c-format
 msgid "%s: file is on a different filesystem; not dumped"
 msgstr "%s: файл находится на другой файловой системе; не сброшен"
 
-#: src/create.c:1246 src/create.c:1257 src/incremen.c:619 src/incremen.c:626
+#: src/create.c:1236 src/create.c:1247 src/incremen.c:619 src/incremen.c:626
 msgid "contents not dumped"
 msgstr "содержимое не сброшено"
 
-#: src/create.c:1455
+#: src/create.c:1445
 #, c-format
 msgid "%s: Unknown file type; file ignored"
 msgstr "%s: Неизвестный тип файла; файл проигнорирован"
 
-#: src/create.c:1567
+#: src/create.c:1556
 #, c-format
 msgid "Missing links to %s."
 msgstr "Отсутствуют ссылки на %s."
 
-#: src/create.c:1728
+#: src/create.c:1716
 #, c-format
 msgid "%s: file is unchanged; not dumped"
 msgstr "%s: файл не изменён; не сброшен"
 
-#: src/create.c:1737
-#, c-format
-msgid "%s: file is the archive; not dumped"
-msgstr "%s: файл является архивом; не сброшен"
+#: src/create.c:1725
+#, fuzzy, c-format
+#| msgid "%s: file is on a different filesystem; not dumped"
+msgid "%s: archive cannot contain itself; not dumped"
+msgstr "%s: файл находится на другой файловой системе; не сброшен"
 
-#: src/create.c:1765 src/incremen.c:612
+#: src/create.c:1753 src/incremen.c:612
 msgid "directory not dumped"
 msgstr "каталог не сброшен"
 
-#: src/create.c:1837
+#: src/create.c:1847
 #, c-format
 msgid "%s: file changed as we read it"
 msgstr "%s: файл изменился во время чтения"
 
-#: src/create.c:1913
+#: src/create.c:1924
 #, c-format
 msgid "%s: socket ignored"
 msgstr "%s: сокет проигнорирован"
 
-#: src/create.c:1919
+#: src/create.c:1930
 #, c-format
 msgid "%s: door ignored"
 msgstr "%s: door проигнорирован"
 
-#: src/delete.c:232 src/list.c:287 src/update.c:191
+#: src/delete.c:224 src/list.c:294 src/update.c:197
 msgid "Skipping to next header"
 msgstr "Пропускается до следующего заголовка"
 
-#: src/delete.c:370
+#: src/delete.c:362
 msgid "Deleting non-header from archive"
 msgstr "Удаляется не-заголовок из архива"
 
-#: src/extract.c:310
+#: src/extract.c:354
 #, c-format
 msgid "%s: implausibly old time stamp %s"
 msgstr "%s: невероятно старая временная метка %s"
 
-#: src/extract.c:328
+#: src/extract.c:372
 #, c-format
 msgid "%s: time stamp %s is %s s in the future"
 msgstr "%s: временная метка %s - %s с в будущем "
 
-#: src/extract.c:590
+#: src/extract.c:630
 #, c-format
 msgid "%s: Unexpected inconsistency when making directory"
 msgstr "%s: Неожиданная противоречивость при создании каталога"
 
-#: src/extract.c:808
+#: src/extract.c:864
 #, c-format
 msgid "%s: skipping existing file"
 msgstr "%s: пропускается существующий файл"
 
-#: src/extract.c:939
+#: src/extract.c:976
 #, c-format
 msgid "%s: Directory renamed before its status could be extracted"
 msgstr "%s: Каталог переименован до того, как мог быть извлечен его статус"
 
-#: src/extract.c:1159
+#: src/extract.c:1198
 msgid "Extracting contiguous files as regular files"
 msgstr "Непрерывные файлы извлекаются как обычные"
 
-#: src/extract.c:1568
+#: src/extract.c:1597
 msgid "Attempting extraction of symbolic links as hard links"
 msgstr "Выполняется попытка извлечь символические ссылки как жесткие"
 
-#: src/extract.c:1703
+#: src/extract.c:1732
 #, c-format
 msgid "%s: Cannot extract -- file is continued from another volume"
 msgstr "%s: Невозможно извлечь -- файл продолжается с другого тома"
 
-#: src/extract.c:1709 src/list.c:1180
+#: src/extract.c:1738 src/list.c:1188
 msgid "Unexpected long name header"
 msgstr "Непредвиденный длинный заголовок имени"
 
-#: src/extract.c:1715
+#: src/extract.c:1744
 #, c-format
 msgid "%s: Unknown file type '%c', extracted as normal file"
 msgstr "%s: Неизвестный тип файла «%c», извлечён как обычный файл"
 
-#: src/extract.c:1745
+#: src/extract.c:1774
 #, c-format
 msgid "Current %s is newer or same age"
 msgstr "Текущий %s более новый или такого же возраста"
 
-#: src/extract.c:1775
+#: src/extract.c:1804
 #, c-format
 msgid "%s: Member name contains '..'"
 msgstr "%s: в имени содержится «..»"
 
-#: src/extract.c:1807
+#: src/extract.c:1836
 #, c-format
 msgid "%s: Was unable to backup this file"
 msgstr "%s: Невозможно было выполнить резервное копирование этот файла"
 
-#: src/extract.c:1957
+#: src/extract.c:1994
 #, c-format
 msgid "Cannot rename %s to %s"
 msgstr "Невозможно переименовать %s в %s"
@@ -1212,25 +1212,31 @@ msgstr "%s: Пропускается"
 msgid "block %s: ** Block of NULs **\n"
 msgstr "блок %s: ** Блок нулей **\n"
 
-#: src/list.c:262
+#: src/list.c:263
+#, fuzzy, c-format
+#| msgid "A lone zero block at %s"
+msgid "Terminating zero blocks missing at %s"
+msgstr "Нулевой блок в %s"
+
+#: src/list.c:269
 #, c-format
 msgid "block %s: ** End of File **\n"
 msgstr "блок %s: ** Конец файла **\n"
 
-#: src/list.c:284 src/list.c:1149 src/list.c:1385
+#: src/list.c:291 src/list.c:1157 src/list.c:1393
 #, c-format
 msgid "block %s: "
 msgstr "блок %s: "
 
 #. TRANSLATORS: %s is type of the value (gid_t, uid_t,
 #. etc.)
-#: src/list.c:768
+#: src/list.c:775
 #, c-format
 msgid "Blanks in header where numeric %s value expected"
 msgstr "В заголовке пустое поле вместо ожидаемого числового значения %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:823
+#: src/list.c:830
 #, c-format
 msgid "Archive octal value %.*s is out of %s range; assuming two's complement"
 msgstr ""
@@ -1238,96 +1244,96 @@ msgstr ""
 "дополнение до двух"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:834
+#: src/list.c:841
 #, c-format
 msgid "Archive octal value %.*s is out of %s range"
 msgstr "Восьмеричное значение архива %.*s за пределами диапазона %s"
 
-#: src/list.c:855
+#: src/list.c:862
 msgid "Archive contains obsolescent base-64 headers"
 msgstr "Архив содержит устаревающие заголовки base-64"
 
-#: src/list.c:869
+#: src/list.c:876
 #, c-format
 msgid "Archive signed base-64 string %s is out of %s range"
 msgstr "Архив подписан строкой base-64 %s за пределами диапазона %s"
 
-#: src/list.c:900
+#: src/list.c:908
 #, c-format
 msgid "Archive base-256 value is out of %s range"
 msgstr "Значение base-256 архива за пределами диапазона %s"
 
 #. TRANSLATORS: Second %s is a type name (gid_t,uid_t,etc.)
-#: src/list.c:929
+#: src/list.c:937
 #, c-format
 msgid "Archive contains %.*s where numeric %s value expected"
 msgstr "Заголовок содержит %.*s вместо ожидаемого числового значения %s"
 
 #. TRANSLATORS: Second %s is type name (gid_t,uid_t,etc.)
-#: src/list.c:951
+#: src/list.c:959
 #, c-format
 msgid "Archive value %s is out of %s range %s..%s"
 msgstr "Значение архива %s за пределами %s диапазона %s..%s"
 
-#: src/list.c:1285
+#: src/list.c:1293
 #, c-format
 msgid " link to %s\n"
 msgstr " ссылка на %s\n"
 
-#: src/list.c:1293
+#: src/list.c:1301
 #, c-format
 msgid " unknown file type %s\n"
 msgstr " неизвестный тип файла %s\n"
 
-#: src/list.c:1311
+#: src/list.c:1319
 #, c-format
 msgid "--Long Link--\n"
 msgstr "--Длинная ссылка--\n"
 
-#: src/list.c:1315
+#: src/list.c:1323
 #, c-format
 msgid "--Long Name--\n"
 msgstr "--Длинное имя--\n"
 
-#: src/list.c:1319
+#: src/list.c:1327
 #, c-format
 msgid "--Volume Header--\n"
 msgstr "--Заголовок тома--\n"
 
-#: src/list.c:1327
+#: src/list.c:1335
 #, c-format
 msgid "--Continued at byte %s--\n"
 msgstr "--Продолжение с позиции %s--\n"
 
-#: src/list.c:1390
+#: src/list.c:1398
 msgid "Creating directory:"
 msgstr "Создание каталога:"
 
-#: src/misc.c:749
+#: src/misc.c:766
 #, c-format
 msgid "Renaming %s to %s\n"
 msgstr "%s переименован в %s\n"
 
-#: src/misc.c:758 src/misc.c:777
+#: src/misc.c:775 src/misc.c:794
 #, c-format
 msgid "%s: Cannot rename to %s"
 msgstr "%s: Невозможно переименовать в %s"
 
-#: src/misc.c:782
+#: src/misc.c:799
 #, c-format
 msgid "Renaming %s back to %s\n"
 msgstr "%s переименовывается назад в %s\n"
 
-#: src/misc.c:1167
+#: src/misc.c:1186
 #, c-format
 msgid "%s: File removed before we read it"
 msgstr "%s: Файла удален до его считывания"
 
-#: src/misc.c:1181
+#: src/misc.c:1200
 msgid "child process"
 msgstr "дочерний процесс"
 
-#: src/misc.c:1190
+#: src/misc.c:1209
 msgid "interprocess channel"
 msgstr "межпроцессорный канал"
 
@@ -1340,7 +1346,7 @@ msgid "add given FILE to the archive (useful if its name starts with a dash)"
 msgstr ""
 "добавить указанный ФАЙЛ в архив (полезно, если имя начинается с дефиса)"
 
-#: src/names.c:79 src/tar.c:534
+#: src/names.c:79 src/tar.c:535
 msgid "DIR"
 msgstr "КАТАЛОГ"
 
@@ -1379,7 +1385,7 @@ msgid "-T treats file names starting with dash as options (default)"
 msgstr ""
 "-T считает имена файлов, начинающихся с переноса, параметрами (по умолчанию)"
 
-#: src/names.c:97 tests/genfile.c:137
+#: src/names.c:97 tests/genfile.c:140
 msgid "PATTERN"
 msgstr "ШАБЛОН"
 
@@ -1491,16 +1497,20 @@ msgid "wildcards do not match '/'"
 msgstr "маски не соответствуют «/»"
 
 #: src/names.c:208
-#, fuzzy, c-format
-#| msgid "%s: unrecognized option '%s%s'\n"
+#, c-format
 msgid "%s:%lu: unrecognized option"
-msgstr "%s: нераспознанный параметр «%s%s»\n"
+msgstr "%s:%lu: нераспознанный параметр"
 
 #: src/names.c:747
+#, fuzzy
+#| msgid ""
+#| "The following options were used after any non-optional arguments in "
+#| "archive create or update mode.  These options are positional and affect "
+#| "only arguments that follow them.  Please, rearrange them properly."
 msgid ""
-"The following options were used after any non-optional arguments in archive "
-"create or update mode.  These options are positional and affect only "
-"arguments that follow them.  Please, rearrange them properly."
+"The following options were used after non-option arguments.  These options "
+"are positional and affect only arguments that follow them.  Please, "
+"rearrange them properly."
 msgstr ""
 "Следующие параметры используются после обязательных аргументов в режиме "
 "создания или обновления архива. Эти параметры зависят от места и влияют "
@@ -1530,21 +1540,21 @@ msgstr "командная строка"
 msgid "%s: file list requested from %s already read from %s"
 msgstr "%s: список файлов, запрошенный из %s, уже прочитан из %s"
 
-#: src/names.c:1001 src/checkpoint.c:308
+#: src/names.c:1000 src/checkpoint.c:308
 #, c-format
 msgid "cannot split string '%s': %s"
 msgstr "невозможно разделить строку «%s»: %s"
 
-#: src/names.c:1048
+#: src/names.c:1049
 #, c-format
 msgid "%s: file name read contains nul character"
 msgstr "%s: в прочитанном имени файла присутствует пустой символ"
 
-#: src/names.c:1401
+#: src/names.c:1412
 msgid "Pattern matching characters used in file names"
 msgstr "В именах файлов используются символы подстановки"
 
-#: src/names.c:1403
+#: src/names.c:1414
 msgid ""
 "Use --wildcards to enable pattern matching, or --no-wildcards to suppress "
 "this warning"
@@ -1552,48 +1562,48 @@ msgstr ""
 "Используйте --wildcards, чтобы задействовать эти символы, или --no-"
 "wildcards, чтобы убрать это предупреждение"
 
-#: src/names.c:1421 src/names.c:1437
+#: src/names.c:1432 src/names.c:1448
 #, c-format
 msgid "%s: Not found in archive"
 msgstr "%s: Не найден в архиве"
 
-#: src/names.c:1422
+#: src/names.c:1433
 #, c-format
 msgid "%s: Required occurrence not found in archive"
 msgstr "%s: Требуемое вхождение не найдено в архиве"
 
-#: src/names.c:1456
+#: src/names.c:1467
 #, c-format
 msgid "Archive label mismatch"
 msgstr "Несоответствие метки архива"
 
-#: src/names.c:1751
+#: src/names.c:1762
 msgid ""
 "Using -C option inside file list is not allowed with --listed-incremental"
 msgstr ""
 "Параметра -C в списке файлов нельзя Использовать с параметром --listed-"
 "incremental"
 
-#: src/names.c:1757
+#: src/names.c:1768
 msgid "Only one -C option is allowed with --listed-incremental"
 msgstr ""
 "С параметром --listed-incremental можно использовать только параметр -C"
 
-#: src/tar.c:87
+#: src/tar.c:88
 #, c-format
 msgid "Options '%s' and '%s' both want standard input"
 msgstr "Для обоих параметров «%s» и «%s» требуется стандартный ввод"
 
-#: src/tar.c:164
+#: src/tar.c:165
 #, c-format
 msgid "%s: Invalid archive format"
 msgstr "%s: Неверный формат архива"
 
-#: src/tar.c:196
+#: src/tar.c:197
 msgid "GNU features wanted on incompatible archive format"
 msgstr "Запрошены расширения GNU для несовместимого формата архива"
 
-#: src/tar.c:264
+#: src/tar.c:265
 #, c-format
 msgid ""
 "Unknown quoting style '%s'. Try '%s --quoting-style=help' to get a list."
@@ -1601,7 +1611,7 @@ msgstr ""
 "Неизвестный стиль цитирования «%s». Воспользуйтесь «%s --quoting-style=help» "
 "для получения полного списка."
 
-#: src/tar.c:354
+#: src/tar.c:355
 msgid ""
 "GNU 'tar' saves many files together into a single tape or disk archive, and "
 "can restore individual files from the archive.\n"
@@ -1620,7 +1630,7 @@ msgstr ""
 "                               в архиве archive.tar.\n"
 "  tar -xf archive.tar          # Извлекает все файлы из archive.tar.\n"
 
-#: src/tar.c:363
+#: src/tar.c:364
 msgid ""
 "The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n"
 "The version control may be set with --backup or VERSION_CONTROL, values "
@@ -1641,88 +1651,88 @@ msgstr ""
 "                   иначе простые\n"
 "  never, simple   всегда создавать простые резервные копии\n"
 
-#: src/tar.c:446
+#: src/tar.c:447
 msgid "Main operation mode:"
 msgstr "Основной режим работы:"
 
-#: src/tar.c:449
+#: src/tar.c:450
 msgid "list the contents of an archive"
 msgstr "вывод списка содержимого архива"
 
-#: src/tar.c:451
+#: src/tar.c:452
 msgid "extract files from an archive"
 msgstr "извлечение файлов из архива"
 
-#: src/tar.c:454
+#: src/tar.c:455
 msgid "create a new archive"
 msgstr "создание нового архива"
 
-#: src/tar.c:456
+#: src/tar.c:457
 msgid "find differences between archive and file system"
 msgstr "поиск различий между архивом и файловой системой"
 
-#: src/tar.c:459
+#: src/tar.c:460
 msgid "append files to the end of an archive"
 msgstr "добавление файлов в конец архива"
 
-#: src/tar.c:461
+#: src/tar.c:462
 msgid "only append files newer than copy in archive"
 msgstr "добавление в архив только более новых файлов"
 
-#: src/tar.c:463
+#: src/tar.c:464
 msgid "append tar files to an archive"
 msgstr "присоединение tar-файлов к архиву"
 
-#: src/tar.c:466
+#: src/tar.c:467
 msgid "delete from the archive (not on mag tapes!)"
 msgstr "удаление из архива (не на магнитных лентах!)"
 
-#: src/tar.c:468
+#: src/tar.c:469
 msgid "test the archive volume label and exit"
 msgstr "проверка метки тома архива и выход"
 
-#: src/tar.c:471
+#: src/tar.c:472
 msgid "Operation modifiers:"
 msgstr "Модификаторы:"
 
-#: src/tar.c:474
+#: src/tar.c:475
 msgid "handle sparse files efficiently"
 msgstr "эффективная обработка разрежённых файлов"
 
-#: src/tar.c:475
+#: src/tar.c:476
 msgid "TYPE"
 msgstr "ТИП"
 
-#: src/tar.c:476
+#: src/tar.c:477
 msgid "technique to detect holes"
 msgstr "метод определения дыр"
 
-#: src/tar.c:477
+#: src/tar.c:478
 msgid "MAJOR[.MINOR]"
 msgstr "MAJOR[.MINOR]"
 
-#: src/tar.c:478
+#: src/tar.c:479
 msgid "set version of the sparse format to use (implies --sparse)"
 msgstr ""
 "установить версию используемого формата разрежения (подразумевает --sparse)"
 
-#: src/tar.c:481
+#: src/tar.c:482
 msgid "handle old GNU-format incremental backup"
 msgstr "обработка добавочного резервирования старого формата GNU"
 
-#: src/tar.c:483
+#: src/tar.c:484
 msgid "handle new GNU-format incremental backup"
 msgstr "обработка добавочного резервирования нового формата GNU"
 
-#: src/tar.c:485
+#: src/tar.c:486
 msgid "dump level for created listed-incremental archive"
 msgstr "уровень копирования для созданного разностного архива со списком"
 
-#: src/tar.c:487
+#: src/tar.c:488
 msgid "do not exit with nonzero on unreadable files"
 msgstr "не завершать работу при ненулевом статусе для нечитаемых файлов"
 
-#: src/tar.c:489
+#: src/tar.c:490
 msgid ""
 "process only the NUMBERth occurrence of each file in the archive; this "
 "option is valid only in conjunction with one of the subcommands --delete, --"
@@ -1734,153 +1744,153 @@ msgstr ""
 "list, и когда список файлов задан либо в командной строке, либо через опцию -"
 "T. По умолчанию N равен 1."
 
-#: src/tar.c:495
+#: src/tar.c:496
 msgid "archive is seekable"
 msgstr "доступен поиск по архиву"
 
-#: src/tar.c:497
+#: src/tar.c:498
 msgid "archive is not seekable"
 msgstr "поиск по архиву недоступен"
 
-#: src/tar.c:499
+#: src/tar.c:500
 msgid "do not check device numbers when creating incremental archives"
 msgstr "не проверять номера устройств при создании инкрементных архивов"
 
-#: src/tar.c:502
+#: src/tar.c:503
 msgid "check device numbers when creating incremental archives (default)"
 msgstr ""
 "проверять номера устройств при создании инкрементных архивов (по умолчанию)"
 
-#: src/tar.c:506
+#: src/tar.c:507
 msgid "Overwrite control:"
 msgstr "Управление перезаписью:"
 
-#: src/tar.c:509
+#: src/tar.c:510
 msgid "attempt to verify the archive after writing it"
 msgstr "попытка проверить архив после его записи"
 
-#: src/tar.c:511
+#: src/tar.c:512
 msgid "remove files after adding them to the archive"
 msgstr "удаление файлов после их добавления в архив"
 
-#: src/tar.c:513
+#: src/tar.c:514
 msgid "don't replace existing files when extracting, treat them as errors"
 msgstr ""
 "не перезаписывать существующие файлы при извлечении, считать это ошибкой"
 
-#: src/tar.c:516
+#: src/tar.c:517
 msgid "don't replace existing files when extracting, silently skip over them"
 msgstr ""
 "не перезаписывать существующие файлы при извлечении, просто пропускать их"
 
-#: src/tar.c:519
+#: src/tar.c:520
 msgid "don't replace existing files that are newer than their archive copies"
 msgstr ""
 "не перезаписывать существующие файлы, которые более новые, чем их копии в "
 "архиве"
 
-#: src/tar.c:521
+#: src/tar.c:522
 msgid "overwrite existing files when extracting"
 msgstr "перезапись существующих файлов при извлечении"
 
-#: src/tar.c:523
+#: src/tar.c:524
 msgid "remove each file prior to extracting over it"
 msgstr "удаление каждого файла до извлечения поверх него"
 
-#: src/tar.c:525
+#: src/tar.c:526
 msgid "empty hierarchies prior to extracting directory"
 msgstr "очистка всей иерархии до извлечения каталога"
 
-#: src/tar.c:527
+#: src/tar.c:528
 msgid "preserve metadata of existing directories"
 msgstr "сохранение метаданных существующих каталогов"
 
-#: src/tar.c:529
+#: src/tar.c:530
 msgid "overwrite metadata of existing directories when extracting (default)"
 msgstr "перезапись существующих файлов при извлечении (по умолчанию)"
 
-#: src/tar.c:532
+#: src/tar.c:533
 msgid "preserve existing symlinks to directories when extracting"
 msgstr "сохранить существующие символьные файлы на каталоги при извлечении"
 
-#: src/tar.c:535
+#: src/tar.c:536
 msgid "create a subdirectory to avoid having loose files extracted"
 msgstr "создавать подкаталог, чтобы избежать потери извлекаемых файлов"
 
-#: src/tar.c:539
+#: src/tar.c:540
 msgid "Select output stream:"
 msgstr "Выбор выходного потока:"
 
-#: src/tar.c:542
+#: src/tar.c:543
 msgid "extract files to standard output"
 msgstr "извлекать файлы на стандартный вывод"
 
-#: src/tar.c:543 src/tar.c:647 src/tar.c:650 tests/genfile.c:192
+#: src/tar.c:544 src/tar.c:648 src/tar.c:651 tests/genfile.c:203
 msgid "COMMAND"
 msgstr "КОМАНДА"
 
-#: src/tar.c:544
+#: src/tar.c:545
 msgid "pipe extracted files to another program"
 msgstr "перенаправлять извлечённые файлы в другую программу"
 
-#: src/tar.c:546
+#: src/tar.c:547
 msgid "ignore exit codes of children"
 msgstr "игнорировать коды завершения дочерних процессов"
 
-#: src/tar.c:548
+#: src/tar.c:549
 msgid "treat non-zero exit codes of children as error"
 msgstr "считать ненулевые коды завершения дочерних процессов как ошибку"
 
-#: src/tar.c:551
+#: src/tar.c:552
 msgid "Handling of file attributes:"
 msgstr "Обработка атрибутов файлов:"
 
-#: src/tar.c:554
+#: src/tar.c:555
 msgid "force NAME as owner for added files"
 msgstr ""
 "принудительно устанавливать ИМЯ в качестве владельца для добавленных файлов"
 
-#: src/tar.c:556
+#: src/tar.c:557
 msgid "force NAME as group for added files"
 msgstr ""
 "принудительно устанавливать ИМЯ в качестве группы для добавленных файлов"
 
-#: src/tar.c:558
+#: src/tar.c:559
 msgid "use FILE to map file owner UIDs and names"
 msgstr "использовать ФАЙЛ для сопоставления UID владельцев файла и имён"
 
-#: src/tar.c:560
+#: src/tar.c:561
 msgid "use FILE to map file owner GIDs and names"
 msgstr "использовать ФАЙЛ для сопоставления GID владельцев файла и имён"
 
-#: src/tar.c:561 src/tar.c:749
+#: src/tar.c:562 src/tar.c:750
 msgid "DATE-OR-FILE"
 msgstr "ДАТА-ИЛИ-ФАЙЛ"
 
-#: src/tar.c:562
+#: src/tar.c:563
 msgid "set mtime for added files from DATE-OR-FILE"
 msgstr "устанавливать mtime для добавленных файлов из ДАТЫ-ИЛИ-ФАЙЛА"
 
-#: src/tar.c:564
+#: src/tar.c:565
 msgid ""
 "only set time when the file is more recent than what was given with --mtime"
 msgstr ""
 "устанавливать mtime только, если файл новее, чем указанное значение --mtime"
 
-#: src/tar.c:565
+#: src/tar.c:566
 msgid "CHANGES"
 msgstr "РЕЖИМ"
 
-#: src/tar.c:566
+#: src/tar.c:567
 msgid "force (symbolic) mode CHANGES for added files"
 msgstr ""
 "принудительно устанавливать (символьный) РЕЖИМ доступа для добавляемых файлов"
 
-#: src/tar.c:568
+#: src/tar.c:569
 msgid "METHOD"
 msgstr "СПОСОБ"
 
-#: src/tar.c:569
+#: src/tar.c:570
 msgid ""
 "preserve access times on dumped files, either by restoring the times after "
 "reading (METHOD='replace'; default) or by not setting the times in the first "
@@ -1890,11 +1900,11 @@ msgstr ""
 "после чтения (СПОСОБ='replace'; используется по умолчанию) или не установки "
 "времени в первую очередь (СПОСОБ='system')"
 
-#: src/tar.c:573
+#: src/tar.c:574
 msgid "don't extract file modified time"
 msgstr "не извлекать время изменения файла"
 
-#: src/tar.c:575
+#: src/tar.c:576
 msgid ""
 "try extracting files with the same ownership as exists in the archive "
 "(default for superuser)"
@@ -1902,22 +1912,22 @@ msgstr ""
 "попытаться извлечь файлы с тем же владельцем, что и в архиве (по умолчанию "
 "для супепользователя)"
 
-#: src/tar.c:577
+#: src/tar.c:578
 msgid "extract files as yourself (default for ordinary users)"
 msgstr ""
 "извлекать файлы как свои собственные (по умолчанию для обычных пользователей)"
 
-#: src/tar.c:579
+#: src/tar.c:580
 msgid "always use numbers for user/group names"
 msgstr "использовать числа вместо имён владельца/группы"
 
-#: src/tar.c:581
+#: src/tar.c:582
 msgid "extract information about file permissions (default for superuser)"
 msgstr ""
 "извлекать информацию о правах доступа к файлу (по умолчанию для "
 "суперпользователя)"
 
-#: src/tar.c:585
+#: src/tar.c:586
 msgid ""
 "apply the user's umask when extracting permissions from the archive (default "
 "for ordinary users)"
@@ -1925,12 +1935,12 @@ msgstr ""
 "применять umask пользователя при извлечении прав доступа из архива (по "
 "умолчанию для обычных пользователей)"
 
-#: src/tar.c:587
+#: src/tar.c:588
 msgid ""
 "member arguments are listed in the same order as the files in the archive"
 msgstr "члены-аргументы перечислены в том же порядке как файлы в архиве"
 
-#: src/tar.c:591
+#: src/tar.c:592
 msgid ""
 "delay setting modification times and permissions of extracted directories "
 "until the end of extraction"
@@ -1938,192 +1948,192 @@ msgstr ""
 "не устанавливать время изменения и права доступа извлечённых каталогов до "
 "завершения процесса извлечения"
 
-#: src/tar.c:594
+#: src/tar.c:595
 msgid "cancel the effect of --delay-directory-restore option"
 msgstr "отменить действие параметра --delay-directory-restore"
 
-#: src/tar.c:595
+#: src/tar.c:596
 msgid "ORDER"
 msgstr "ПОРЯДОК"
 
-#: src/tar.c:597
+#: src/tar.c:598
 msgid "directory sorting order: none (default), name or inode"
 msgstr "порядок сортировки каталога: none (по умолчанию), name или inode"
 
-#: src/tar.c:599
+#: src/tar.c:600
 msgid "directory sorting order: none (default) or name"
 msgstr "порядок сортировки каталога: none (по умолчанию) или name"
 
-#: src/tar.c:604
+#: src/tar.c:605
 msgid "Handling of extended file attributes:"
 msgstr "Обработка расширенных атрибутов файлов:"
 
-#: src/tar.c:607
+#: src/tar.c:608
 msgid "Enable extended attributes support"
 msgstr "Включить поддержку расширенных атрибутов"
 
-#: src/tar.c:609
+#: src/tar.c:610
 msgid "Disable extended attributes support"
 msgstr "Отключить поддержку расширенных атрибутов"
 
-#: src/tar.c:610 src/tar.c:612
+#: src/tar.c:611 src/tar.c:613
 msgid "MASK"
 msgstr "МАСКА"
 
-#: src/tar.c:611
+#: src/tar.c:612
 msgid "specify the include pattern for xattr keys"
 msgstr "задаёт шаблон включаемых ключей xattr"
 
-#: src/tar.c:613
+#: src/tar.c:614
 msgid "specify the exclude pattern for xattr keys"
 msgstr "задаёт шаблон исключаемых ключей xattr"
 
-#: src/tar.c:615
+#: src/tar.c:616
 msgid "Enable the SELinux context support"
 msgstr "Включить поддержку контекста SELinux"
 
-#: src/tar.c:617
+#: src/tar.c:618
 msgid "Disable the SELinux context support"
 msgstr "Отключить поддержку контекста SELinux"
 
-#: src/tar.c:619
+#: src/tar.c:620
 msgid "Enable the POSIX ACLs support"
 msgstr "Включить поддержку POSIX ACL"
 
-#: src/tar.c:621
+#: src/tar.c:622
 msgid "Disable the POSIX ACLs support"
 msgstr "Отключить поддержку POSIX ACL"
 
-#: src/tar.c:624
+#: src/tar.c:625
 msgid "Device selection and switching:"
 msgstr "Выбор и переключение устройств:"
 
-#: src/tar.c:626
+#: src/tar.c:627
 msgid "ARCHIVE"
 msgstr "АРХИВ"
 
-#: src/tar.c:627
+#: src/tar.c:628
 msgid "use archive file or device ARCHIVE"
 msgstr "использовать файл или устройство АРХИВ"
 
-#: src/tar.c:631
+#: src/tar.c:632
 msgid "specify drive and density"
 msgstr "указать устройство и плотность"
 
-#: src/tar.c:645
+#: src/tar.c:646
 msgid "archive file is local even if it has a colon"
 msgstr "файл архива является локальным, даже если содержит двоеточие"
 
-#: src/tar.c:648
+#: src/tar.c:649
 msgid "use given rmt COMMAND instead of rmt"
 msgstr "использовать указанную КОМАНДУ rmt вместо rmt"
 
-#: src/tar.c:651
+#: src/tar.c:652
 msgid "use remote COMMAND instead of rsh"
 msgstr "использовать удалённую КОМАНДУ вместо rsh"
 
-#: src/tar.c:655
+#: src/tar.c:656
 msgid "create/list/extract multi-volume archive"
 msgstr "создание/листинг/извлечение многотомных архивов"
 
-#: src/tar.c:658
+#: src/tar.c:659
 msgid "change tape after writing NUMBER x 1024 bytes"
 msgstr "сменить ленту после записи ЧИСЛО x 1024 байт"
 
-#: src/tar.c:661
+#: src/tar.c:662
 msgid "run script at end of each tape (implies -M)"
 msgstr ""
 "запустить скрипт по окончании каждой ленты (подразумевается использование -М)"
 
-#: src/tar.c:665
+#: src/tar.c:666
 msgid "use/update the volume number in FILE"
 msgstr "использовать/обновлять номера тома в ФАЙЛЕ"
 
-#: src/tar.c:669
+#: src/tar.c:670
 msgid "Device blocking:"
 msgstr "Разбиение на блоки:"
 
-#: src/tar.c:671
+#: src/tar.c:672
 msgid "BLOCKS"
 msgstr "БЛОКИ"
 
-#: src/tar.c:672
+#: src/tar.c:673
 msgid "BLOCKS x 512 bytes per record"
 msgstr "число БЛОКОВ x 512 байт на запись"
 
-#: src/tar.c:674
+#: src/tar.c:675
 msgid "NUMBER of bytes per record, multiple of 512"
 msgstr "ЧИСЛО байт на запись, кратное 512"
 
-#: src/tar.c:676
+#: src/tar.c:677
 msgid "ignore zeroed blocks in archive (means EOF)"
 msgstr "игнорировать нулевые блоки в архиве (т.е. EOF)"
 
-#: src/tar.c:678
+#: src/tar.c:679
 msgid "reblock as we read (for 4.2BSD pipes)"
 msgstr "заново разбивать на блоки при чтении (для каналов 4.2BSD)"
 
-#: src/tar.c:681
+#: src/tar.c:682
 msgid "Archive format selection:"
 msgstr "Формата архива:"
 
-#: src/tar.c:683 tests/genfile.c:155
+#: src/tar.c:684 tests/genfile.c:158
 msgid "FORMAT"
 msgstr "ФОРМАТ"
 
-#: src/tar.c:684
+#: src/tar.c:685
 msgid "create archive of the given format"
 msgstr "создать архив в указанном формате"
 
-#: src/tar.c:686
+#: src/tar.c:687
 msgid "FORMAT is one of the following:"
 msgstr "ФОРМАТОМ может быть:"
 
-#: src/tar.c:687
+#: src/tar.c:688
 msgid "old V7 tar format"
 msgstr "старый формат tar V7"
 
-#: src/tar.c:690
+#: src/tar.c:691
 msgid "GNU format as per tar <= 1.12"
 msgstr "формат GNU как в tar <= 1.12"
 
-#: src/tar.c:692
+#: src/tar.c:693
 msgid "GNU tar 1.13.x format"
 msgstr "формат GNU tar 1.13.х"
 
-#: src/tar.c:694
+#: src/tar.c:695
 msgid "POSIX 1003.1-1988 (ustar) format"
 msgstr "формат POSIX 1003.1-1988 (ustar)"
 
-#: src/tar.c:696
+#: src/tar.c:697
 msgid "POSIX 1003.1-2001 (pax) format"
 msgstr "формат POSIX 1003.1-2001 (pax)"
 
-#: src/tar.c:697
+#: src/tar.c:698
 msgid "same as pax"
 msgstr "эквивалент pax"
 
-#: src/tar.c:701
+#: src/tar.c:702
 msgid "same as --format=v7"
 msgstr "эквивалент --format=v7"
 
-#: src/tar.c:704
+#: src/tar.c:705
 msgid "same as --format=posix"
 msgstr "эквивалент --format=posix"
 
-#: src/tar.c:705
+#: src/tar.c:706
 msgid "keyword[[:]=value][,keyword[[:]=value]]..."
 msgstr "keyword[[:]=значение][,keyword[[:]=значение]]..."
 
-#: src/tar.c:706
+#: src/tar.c:707
 msgid "control pax keywords"
 msgstr "управляющие ключевые слова pax"
 
-#: src/tar.c:707
+#: src/tar.c:708
 msgid "TEXT"
 msgstr "ТЕКСТ"
 
-#: src/tar.c:708
+#: src/tar.c:709
 msgid ""
 "create archive with volume name TEXT; at list/extract time, use TEXT as a "
 "globbing pattern for volume name"
@@ -2131,81 +2141,81 @@ msgstr ""
 "создать архив с именем тома ТЕКСТ; при листинге/извлечении использовать "
 "ТЕКСТ в качестве шаблона подстановки"
 
-#: src/tar.c:712
+#: src/tar.c:713
 msgid "Compression options:"
 msgstr "Опции сжатия:"
 
-#: src/tar.c:714
+#: src/tar.c:715
 msgid "use archive suffix to determine the compression program"
 msgstr "использовать суффикс архива для определения программы сжатия"
 
-#: src/tar.c:717
+#: src/tar.c:718
 msgid "do not use archive suffix to determine the compression program"
 msgstr "не использовать суффикс архива для определения программы сжатия"
 
-#: src/tar.c:719
+#: src/tar.c:720
 msgid "PROG"
 msgstr "ПРОГ"
 
-#: src/tar.c:720
+#: src/tar.c:721
 msgid "filter through PROG (must accept -d)"
 msgstr "пропустить архив через ПРОГ (должна поддерживать -d)"
 
-#: src/tar.c:735
+#: src/tar.c:736
 msgid "Local file selection:"
 msgstr "Выбор локальных файлов:"
 
-#: src/tar.c:737
+#: src/tar.c:738
 msgid "stay in local file system when creating archive"
 msgstr "оставаться в локальной файловой системе при создании архива"
 
-#: src/tar.c:739
+#: src/tar.c:740
 msgid "don't strip leading '/'s from file names"
 msgstr "не удалять начальные «/» из имён файлов"
 
-#: src/tar.c:741
+#: src/tar.c:742
 msgid "follow symlinks; archive and dump the files they point to"
 msgstr ""
 "следовать по символьным ссылкам и сохранять файлы, на которые они указывают"
 
-#: src/tar.c:744
+#: src/tar.c:745
 msgid "follow hard links; archive and dump the files they refer to"
 msgstr ""
 "следовать по жёстким ссылкам и сохранять файлы, на которые они указывают"
 
-#: src/tar.c:746
+#: src/tar.c:747
 msgid "MEMBER-NAME"
 msgstr "ИМЯ-ЧЛЕНА"
 
-#: src/tar.c:747
+#: src/tar.c:748
 msgid "begin at member MEMBER-NAME when reading the archive"
 msgstr "начинать с члена ИМЯ-ЧЛЕНА при чтении архива"
 
-#: src/tar.c:750
+#: src/tar.c:751
 msgid "only store files newer than DATE-OR-FILE"
 msgstr "сохранять только те файлы, которые новее ДАТЫ-ИЛИ-ФАЙЛА"
 
-#: src/tar.c:752
+#: src/tar.c:753
 msgid "DATE"
 msgstr "ДАТА"
 
-#: src/tar.c:753
+#: src/tar.c:754
 msgid "compare date and time when data changed only"
 msgstr "сравнивать дату и время, только если изменены данные"
 
-#: src/tar.c:754
+#: src/tar.c:755
 msgid "CONTROL"
 msgstr "УПРАВЛЕНИЕ"
 
-#: src/tar.c:755
+#: src/tar.c:756
 msgid "backup before removal, choose version CONTROL"
 msgstr "делать копию перед удалением, УПРАВЛЕНИЕ выбора версий"
 
-#: src/tar.c:756 src/tar.c:806 src/tar.c:808 tests/genfile.c:171
+#: src/tar.c:757 src/tar.c:807 src/tar.c:809 tests/genfile.c:182
 msgid "STRING"
 msgstr "СТРОКА"
 
-#: src/tar.c:757
+#: src/tar.c:758
 msgid ""
 "backup before removal, override usual suffix ('~' unless overridden by "
 "environment variable SIMPLE_BACKUP_SUFFIX)"
@@ -2213,51 +2223,51 @@ msgstr ""
 "делать копию перед удалением, переопределяет обычный суффикс ('~', если "
 "только он не переопределён переменной окружения SIMPLE_BACKUP_SUFFIX)"
 
-#: src/tar.c:761
+#: src/tar.c:762
 msgid "File name transformations:"
 msgstr "Преобразование имён файлов:"
 
-#: src/tar.c:763
+#: src/tar.c:764
 msgid "strip NUMBER leading components from file names on extraction"
 msgstr ""
 "удалять указанное ЧИСЛО начальных компонентов из имён файлов перед "
 "извлечением"
 
-#: src/tar.c:765
+#: src/tar.c:766
 msgid "EXPRESSION"
 msgstr "РАСШИРЕНИЕ"
 
-#: src/tar.c:766
+#: src/tar.c:767
 msgid "use sed replace EXPRESSION to transform file names"
 msgstr "использовать замену РАСШИРЕНИЯ sed'ом для преобразования имён файлов"
 
-#: src/tar.c:771
+#: src/tar.c:772
 msgid "Informative output:"
 msgstr "Вывод информации:"
 
-#: src/tar.c:774
+#: src/tar.c:775
 msgid "display progress messages every NUMBERth record (default 10)"
 msgstr ""
 "вывод сообщений о ходе выполнения через каждые ЧИСЛО записей (по умолчанию "
 "10)"
 
-#: src/tar.c:776
+#: src/tar.c:777
 msgid "ACTION"
 msgstr "ДЕЙСТВИЕ"
 
-#: src/tar.c:777
+#: src/tar.c:778
 msgid "execute ACTION on each checkpoint"
 msgstr "выполнять ДЕЙСТВИЕ на каждой контрольной точке"
 
-#: src/tar.c:780
+#: src/tar.c:781
 msgid "print a message if not all links are dumped"
 msgstr "вывод сообщений, если сохранены не все ссылки"
 
-#: src/tar.c:781
+#: src/tar.c:782
 msgid "SIGNAL"
 msgstr "СИГНАЛ"
 
-#: src/tar.c:782
+#: src/tar.c:783
 msgid ""
 "print total bytes after processing the archive; with an argument - print "
 "total bytes when this SIGNAL is delivered; Allowed signals are: SIGHUP, "
@@ -2269,31 +2279,31 @@ msgstr ""
 "SIGQUIT, SIGINT, SIGUSR1 и SIGUSR2. Также разрешается использовать имена без "
 "префикса SIG"
 
-#: src/tar.c:787
+#: src/tar.c:788
 msgid "print file modification times in UTC"
 msgstr "вывод времени изменения файла в формате UTC"
 
-#: src/tar.c:789
+#: src/tar.c:790
 msgid "print file time to its full resolution"
 msgstr "вывод имени файла и его полного разрешения"
 
-#: src/tar.c:791
+#: src/tar.c:792
 msgid "send verbose output to FILE"
 msgstr "отправить подробный вывод данных в FILE"
 
-#: src/tar.c:793
+#: src/tar.c:794
 msgid "show block number within archive with each message"
 msgstr "выводить номера блоков архива в каждом сообщении"
 
-#: src/tar.c:795
+#: src/tar.c:796
 msgid "show tar defaults"
 msgstr "показать значения tar по умолчанию"
 
-#: src/tar.c:797
+#: src/tar.c:798
 msgid "show valid ranges for snapshot-file fields"
 msgstr "показать допустимые диапазоны для полей snapshot-файла"
 
-#: src/tar.c:799
+#: src/tar.c:800
 msgid ""
 "when listing or extracting, list each directory that does not match search "
 "criteria"
@@ -2301,47 +2311,47 @@ msgstr ""
 "при выводе листинга или извлечении показывать все каталоги, не "
 "соответствующем условию поиска"
 
-#: src/tar.c:801
+#: src/tar.c:802
 msgid "show file or archive names after transformation"
 msgstr "показывать имена файлов или архивов после преобразования"
 
-#: src/tar.c:804
+#: src/tar.c:805
 msgid "STYLE"
 msgstr "СТИЛЬ"
 
-#: src/tar.c:805
+#: src/tar.c:806
 msgid "set name quoting style; see below for valid STYLE values"
 msgstr "установить стиль цитирования имён. Значения для СТИЛЯ см. ниже"
 
-#: src/tar.c:807
+#: src/tar.c:808
 msgid "additionally quote characters from STRING"
 msgstr "дополнительно цитировать символы из СТРОКИ"
 
-#: src/tar.c:809
+#: src/tar.c:810
 msgid "disable quoting for characters from STRING"
 msgstr "отключить цитирование символов из СТРОКИ"
 
-#: src/tar.c:811
+#: src/tar.c:812
 msgid "ask for confirmation for every action"
 msgstr "запрашивать подтверждение для каждого действия"
 
-#: src/tar.c:814
+#: src/tar.c:815
 msgid "verbosely list files processed"
 msgstr "подробный листинг обрабатываемых файлов"
 
-#: src/tar.c:815
+#: src/tar.c:816
 msgid "KEYWORD"
 msgstr "КЛЮЧЕВОЕ СЛОВО"
 
-#: src/tar.c:816
+#: src/tar.c:817
 msgid "warning control"
 msgstr "управление предупреждением"
 
-#: src/tar.c:819
+#: src/tar.c:820
 msgid "Compatibility options:"
 msgstr "Опции совместимости:"
 
-#: src/tar.c:822
+#: src/tar.c:823
 msgid ""
 "when creating, same as --old-archive; when extracting, same as --no-same-"
 "owner"
@@ -2349,22 +2359,22 @@ msgstr ""
 "при создании, эквивалент --old-archive; при извлечении, эквивалент --no-same-"
 "owner"
 
-#: src/tar.c:825
+#: src/tar.c:826
 msgid "Other options:"
 msgstr "Другие опции:"
 
-#: src/tar.c:828
+#: src/tar.c:829
 msgid "disable use of some potentially harmful options"
 msgstr "отключить использование некоторых потенциально опасных опций"
 
 #. TRANSLATORS: Both %s in this statement are replaced with
 #. option names.
-#: src/tar.c:872
+#: src/tar.c:888
 #, c-format
 msgid "'%s' cannot be used with '%s'"
 msgstr "«%s» не может быть использован с «%s»"
 
-#: src/tar.c:960
+#: src/tar.c:977
 msgid ""
 "You may not specify more than one '-Acdtrux', '--delete' or  '--test-label' "
 "option"
@@ -2372,40 +2382,40 @@ msgstr ""
 "Указать можно только один из параметров «-Acdtrux», «--delete» или «--test-"
 "label»"
 
-#: src/tar.c:972
+#: src/tar.c:989
 msgid "Conflicting compression options"
 msgstr "Конфликт опций сжатия"
 
-#: src/tar.c:1026
+#: src/tar.c:1043
 #, c-format
 msgid "Unknown signal name: %s"
 msgstr "Неизвестное название сигнала: %s"
 
-#: src/tar.c:1056
+#: src/tar.c:1073
 msgid "Date sample file not found"
 msgstr "Файл с образцом даты не найден"
 
-#: src/tar.c:1064
+#: src/tar.c:1081
 #, c-format
 msgid "Substituting %s for unknown date format %s"
 msgstr "%s заменяется на неизвестный формат даты %s"
 
-#: src/tar.c:1093
+#: src/tar.c:1110
 #, c-format
 msgid "Option %s: Treating date '%s' as %s"
 msgstr "Опция %s: дата «%s» рассматривается как %s"
 
-#: src/tar.c:1133 src/tar.c:1137 src/tar.c:1141 src/tar.c:1145 src/tar.c:1149
-#: src/tar.c:1153 src/tar.c:1157 src/tar.c:1161
+#: src/tar.c:1150 src/tar.c:1154 src/tar.c:1158 src/tar.c:1162 src/tar.c:1166
+#: src/tar.c:1170 src/tar.c:1174 src/tar.c:1178
 #, c-format
 msgid "filter the archive through %s"
 msgstr "пропустить архив через %s"
 
-#: src/tar.c:1169
+#: src/tar.c:1186
 msgid "Valid arguments for the --quoting-style option are:"
 msgstr "Допустимые аргументы для параметра --quoting-style:"
 
-#: src/tar.c:1173
+#: src/tar.c:1190
 msgid ""
 "\n"
 "*This* tar defaults to:\n"
@@ -2413,120 +2423,120 @@ msgstr ""
 "\n"
 "Значения по умолчанию *этого* tar:\n"
 
-#: src/tar.c:1285
+#: src/tar.c:1302
 msgid "Invalid owner or group ID"
 msgstr "Неверный владелец или группа"
 
-#: src/tar.c:1388
+#: src/tar.c:1405
 msgid "Invalid blocking factor"
 msgstr "Неверный размер ёмкости блока"
 
-#: src/tar.c:1449
+#: src/tar.c:1466
 #, c-format
 msgid "Malformed density argument: %s"
 msgstr "Неверно сформирован аргумент плотности: %s"
 
-#: src/tar.c:1475
+#: src/tar.c:1492
 #, c-format
 msgid "Unknown density: '%c'"
 msgstr "Неизвестная плотность: «%c»"
 
-#: src/tar.c:1492
+#: src/tar.c:1509
 #, c-format
 msgid "Options '-[0-7][lmh]' not supported by *this* tar"
 msgstr "Опции «-[0-7][lmh]» не поддерживаются *этим* tar-ом"
 
-#: src/tar.c:1573
+#: src/tar.c:1590
 msgid "Invalid tape length"
 msgstr "Неверная длина ленты"
 
-#: src/tar.c:1587
+#: src/tar.c:1604
 msgid "Invalid incremental level value"
 msgstr "Недопустимое значение добавочного уровня"
 
-#: src/tar.c:1633
+#: src/tar.c:1650
 msgid "More than one threshold date"
 msgstr "Больше одной пороговой даты"
 
-#: src/tar.c:1700 src/tar.c:1703
+#: src/tar.c:1717 src/tar.c:1720
 msgid "Invalid sparse version value"
 msgstr "Неверное значение версии разрежения"
 
-#: src/tar.c:1779
+#: src/tar.c:1796
 msgid "--atime-preserve='system' is not supported on this platform"
 msgstr "--atime-preserve='system' не поддерживается на этой платформе"
 
-#: src/tar.c:1804
+#: src/tar.c:1821
 msgid "--checkpoint value is not an integer"
 msgstr "значение --checkpoint не является целым числом"
 
-#: src/tar.c:1882
+#: src/tar.c:1899
 msgid "Invalid mode given on option"
 msgstr "В опции указан неверный режим доступа"
 
-#: src/tar.c:1915
+#: src/tar.c:1932
 msgid "Invalid number"
 msgstr "Неверное число"
 
-#: src/tar.c:1979
+#: src/tar.c:1996
 msgid "Invalid record size"
 msgstr "Неверный размер записи"
 
-#: src/tar.c:1982
+#: src/tar.c:1999
 #, c-format
 msgid "Record size must be a multiple of %d."
 msgstr "Размер записи должен быть кратен %d."
 
-#: src/tar.c:2028
+#: src/tar.c:2045
 msgid "Invalid number of elements"
 msgstr "Неверное число элементов"
 
-#: src/tar.c:2053
+#: src/tar.c:2070
 msgid "Only one --to-command option allowed"
 msgstr "Разрешается использовать только одну опцию --to-command"
 
-#: src/tar.c:2118
+#: src/tar.c:2135
 #, c-format
 msgid "%s:%lu: location of the error"
 msgstr "%s:%lu: место ошибки"
 
-#: src/tar.c:2121
+#: src/tar.c:2138
 #, c-format
 msgid "error parsing %s"
 msgstr "ошибка разбора %s"
 
-#: src/tar.c:2139
+#: src/tar.c:2156
 msgid "[FILE]..."
 msgstr "[ФАЙЛ]…"
 
-#: src/tar.c:2240
+#: src/tar.c:2257
 #, c-format
 msgid "cannot split TAR_OPTIONS: %s"
 msgstr "невозможно разделить TAR_OPTIONS: %s"
 
-#: src/tar.c:2255
+#: src/tar.c:2272
 #, c-format
 msgid "non-option arguments in %s"
 msgstr "аргументы, не являющиеся параметрами, в %s"
 
-#: src/tar.c:2343
+#: src/tar.c:2360
 #, c-format
 msgid "Old option '%c' requires an argument."
 msgstr "Для старой опции «%c» нужно указать аргумент."
 
-#: src/tar.c:2415
+#: src/tar.c:2432
 msgid "--occurrence is meaningless without a file list"
 msgstr "--occurrence бесполезна без списка файлов"
 
-#: src/tar.c:2441
+#: src/tar.c:2458
 msgid "Multiple archive files require '-M' option"
 msgstr "Для нескольких файлов архивов требуется опция «-M»"
 
-#: src/tar.c:2458
+#: src/tar.c:2475
 msgid "--level is meaningless without --listed-incremental"
 msgstr "параметр --level не имеет смыла без --listed-incremental"
 
-#: src/tar.c:2475
+#: src/tar.c:2492
 #, c-format
 msgid "%s: Volume label is too long (limit is %lu byte)"
 msgid_plural "%s: Volume label is too long (limit is %lu bytes)"
@@ -2534,43 +2544,43 @@ msgstr[0] "%s: Метка тома слишком длинная (максиму
 msgstr[1] "%s: Метка тома слишком длинная (максимум %lu байта)"
 msgstr[2] "%s: Метка тома слишком длинная (максимум %lu байт)"
 
-#: src/tar.c:2488
+#: src/tar.c:2505
 msgid "Cannot verify multi-volume archives"
 msgstr "Невозможно проверить многотомные архивы"
 
-#: src/tar.c:2490
+#: src/tar.c:2507
 msgid "Cannot verify compressed archives"
 msgstr "Невозможно проверить сжатые архивы"
 
-#: src/tar.c:2504
+#: src/tar.c:2521
 msgid "Cannot use multi-volume compressed archives"
 msgstr "Невозможно использовать многотомные сжатые архивы"
 
-#: src/tar.c:2508
+#: src/tar.c:2525
 msgid "Cannot concatenate compressed archives"
 msgstr "Невозможно объединить сжатые архивы"
 
-#: src/tar.c:2515
+#: src/tar.c:2532
 msgid "--clamp-mtime needs a date specified using --mtime"
 msgstr "--clamp-mtime требуется дата, задаваемая через --mtime"
 
-#: src/tar.c:2525
+#: src/tar.c:2542
 msgid "--pax-option can be used only on POSIX archives"
 msgstr "--pax-option может быть использована только с архивами POSIX"
 
-#: src/tar.c:2532
+#: src/tar.c:2549
 msgid "--acls can be used only on POSIX archives"
 msgstr "--acls может быть использована только с архивами POSIX"
 
-#: src/tar.c:2537
+#: src/tar.c:2554
 msgid "--selinux can be used only on POSIX archives"
 msgstr "--selinux может быть использована только с архивами POSIX"
 
-#: src/tar.c:2542
+#: src/tar.c:2559
 msgid "--xattrs can be used only on POSIX archives"
 msgstr "--xattrs может быть использована только с архивами POSIX"
 
-#: src/tar.c:2591
+#: src/tar.c:2608
 msgid ""
 "Cannot deduce top-level directory name; please set it explicitly with --one-"
 "top-level=DIR"
@@ -2578,99 +2588,92 @@ msgstr ""
 "Невозможно определить имя каталога верхнего уровня; укажите его явно с "
 "помощью --one-top-level=КАТАЛОГ"
 
-#: src/tar.c:2624
+#: src/tar.c:2641
 msgid "Volume length cannot be less than record size"
 msgstr "Размер тома не может быть меньше размера записи"
 
-#: src/tar.c:2648
+#: src/tar.c:2665
 msgid "Cowardly refusing to create an empty archive"
 msgstr "Робкий отказ от создания пустого архива"
 
-#: src/tar.c:2674
+#: src/tar.c:2691
 msgid "Options '-Aru' are incompatible with '-f -'"
 msgstr "Параметры «-Aru» не совместимы с «-f -»"
 
-#: src/tar.c:2758
+#: src/tar.c:2775
 msgid "failed to assert availability of the standard file descriptors"
-msgstr ""
+msgstr "не удалось подтвердить наличие стандартных файловых дескрипторов"
 
-#: src/tar.c:2788
+#: src/tar.c:2805
 msgid ""
 "You must specify one of the '-Acdtrux', '--delete' or '--test-label' options"
 msgstr ""
 "Необходимо указать один из параметров «-Acdtrux», «--delete» или «--test-"
 "label»"
 
-#: src/tar.c:2845
+#: src/tar.c:2865
 #, c-format
 msgid "Exiting with failure status due to previous errors"
 msgstr "Завершение работы с состоянием неисправности из-за возникших ошибок"
 
-#: src/update.c:86
-#, c-format
-msgid "%s: File shrank by %s byte"
-msgid_plural "%s: File shrank by %s bytes"
-msgstr[0] "%s: Файл урезан на %s байт"
-msgstr[1] "%s: Файл урезан на %s байта"
-msgstr[2] "%s: Файл урезан на %s байт"
-
-#: src/xheader.c:164
+#: src/xheader.c:163
 #, c-format
 msgid "Keyword %s is unknown or not yet implemented"
 msgstr "Неизвестное или ещё не реализованное ключевое слово %s"
 
-#: src/xheader.c:173
+#: src/xheader.c:172
 msgid "Time stamp is out of allowed range"
 msgstr "Метка времени за пределами допустимого диапазона"
 
-#: src/xheader.c:188
+#: src/xheader.c:187
 #, c-format
 msgid "Malformed pax option: %s"
 msgstr "Некорректный параметр pax: %s"
 
-#: src/xheader.c:207
+#: src/xheader.c:206
 #, c-format
 msgid "Pattern %s cannot be used"
 msgstr "Шаблон %s не может быть использован"
 
-#: src/xheader.c:221
+#: src/xheader.c:220
 #, c-format
 msgid "Keyword %s cannot be overridden"
 msgstr "Ключевое слово %s не может быть перекрыто"
 
-#: src/xheader.c:493
+#: src/xheader.c:492
 msgid "can't update global extended header record"
 msgstr "невозможно обновить запись глобального расширенного заголовка"
 
-#: src/xheader.c:703
+#: src/xheader.c:622
 msgid "Malformed extended header: missing length"
 msgstr "Неверно сформирован расширенный заголовок: отсутствует длина"
 
-#: src/xheader.c:712
-#, c-format
-msgid "Extended header length %*s is out of range"
+#: src/xheader.c:631
+#, fuzzy, c-format
+#| msgid "Extended header length %*s is out of range"
+msgid "Extended header length %.*s is out of range"
 msgstr "Длина расширенного заголовка %*s за пределами допустимого диапазона"
 
-#: src/xheader.c:724
+#: src/xheader.c:643
 msgid "Malformed extended header: missing blank after length"
 msgstr ""
 "Неверно сформирован расширенный заголовок: после длины отсутствует пробел"
 
-#: src/xheader.c:732
+#: src/xheader.c:651
 msgid "Malformed extended header: missing equal sign"
 msgstr "Неверно сформирован расширенный заголовок: отсутствует знак равенства"
 
-#: src/xheader.c:738
+#: src/xheader.c:657
 msgid "Malformed extended header: missing newline"
 msgstr ""
 "Неверно сформирован расширенный заголовок: отсутствует знак новой строки"
 
-#: src/xheader.c:776
+#: src/xheader.c:695
 #, c-format
 msgid "Ignoring unknown extended header keyword '%s'"
 msgstr "Игнорируется неизвестное ключевое слово расширенного заголовка «%s»"
 
-#: src/xheader.c:1058
+#: src/xheader.c:977
 #, c-format
 msgid "Generated keyword/value pair is too long (keyword=%s, length=%s)"
 msgstr ""
@@ -2679,29 +2682,29 @@ msgstr ""
 
 #. TRANSLATORS: The first %s is the pax extended header keyword
 #. (atime, gid, etc.).
-#: src/xheader.c:1088
+#: src/xheader.c:1007
 #, c-format
 msgid "Extended header %s=%s is out of range %s..%s"
 msgstr "Расширенный заголовок %s=%s за пределами диапазона %s..%s"
 
-#: src/xheader.c:1139 src/xheader.c:1172 src/xheader.c:1522
+#: src/xheader.c:1058 src/xheader.c:1064 src/xheader.c:1097 src/xheader.c:1450
 #, c-format
 msgid "Malformed extended header: invalid %s=%s"
 msgstr "Неверно сформирован расширенный заголовок: неверный %s=%s"
 
-#: src/xheader.c:1475 src/xheader.c:1500 src/xheader.c:1555
+#: src/xheader.c:1403 src/xheader.c:1428 src/xheader.c:1483
 #, c-format
 msgid "Malformed extended header: excess %s=%s"
 msgstr "Неверно сформирован расширенный заголовок: превышен %s=%s"
 
-#: src/xheader.c:1568
+#: src/xheader.c:1496
 #, c-format
 msgid "Malformed extended header: invalid %s: unexpected delimiter %c"
 msgstr ""
 "Неверно сформирован расширенный заголовок: неверный %s: непредвиденный "
 "разделитель %c"
 
-#: src/xheader.c:1578
+#: src/xheader.c:1506
 #, c-format
 msgid "Malformed extended header: invalid %s: odd number of values"
 msgstr ""
@@ -2744,7 +2747,7 @@ msgstr "Контрольная точка записи %u"
 msgid "Read checkpoint %u"
 msgstr "Контрольная точка чтения %u"
 
-#: tests/genfile.c:112
+#: tests/genfile.c:115
 msgid ""
 "genfile manipulates data files for GNU paxutils test suite.\n"
 "OPTIONS are:\n"
@@ -2753,74 +2756,84 @@ msgstr ""
 "от GNU.\n"
 "ОПЦИИ:\n"
 
-#: tests/genfile.c:128
+#: tests/genfile.c:131
 msgid "File creation options:"
 msgstr "Опции создания файла:"
 
-#: tests/genfile.c:129 tests/genfile.c:140
+#: tests/genfile.c:132 tests/genfile.c:143
 msgid "SIZE"
 msgstr "РАЗМЕР"
 
-#: tests/genfile.c:130
+#: tests/genfile.c:133
 msgid "Create file of the given SIZE"
 msgstr "Создание файла указанного РАЗМЕРА"
 
-#: tests/genfile.c:132
+#: tests/genfile.c:135
 msgid "Write to file NAME, instead of standard output"
 msgstr "Запись в файл с ИМЕНЕМ, а не на стандартный вывод"
 
-#: tests/genfile.c:134
+#: tests/genfile.c:137
 msgid "Read file names from FILE"
 msgstr "Чтение имён файла из ФАЙЛА"
 
-#: tests/genfile.c:136
+#: tests/genfile.c:139
 msgid "-T reads null-terminated names"
 msgstr "-T читает строки, оканчивающиеся нулём"
 
-#: tests/genfile.c:138
+#: tests/genfile.c:141
 msgid "Fill the file with the given PATTERN. PATTERN is 'default' or 'zeros'"
 msgstr "Заполнение файла заданным ШАБЛОНОМ. ШАБЛОН - это 'default' или 'zeros'"
 
-#: tests/genfile.c:141
+#: tests/genfile.c:144
 msgid "Size of a block for sparse file"
 msgstr "Размер блока для разрежённого файла"
 
-#: tests/genfile.c:143
+#: tests/genfile.c:146
 msgid "Generate sparse file. Rest of the command line gives the file map."
 msgstr ""
 "Создание разрежённого файла. Остальная часть команды определяет карту файла."
 
-#: tests/genfile.c:145
+#: tests/genfile.c:148
 msgid "OFFSET"
 msgstr "СМЕЩЕНИЕ"
 
-#: tests/genfile.c:146
+#: tests/genfile.c:149
 msgid "Seek to the given offset before writing data"
 msgstr "Искать до указанного смещения перед записью данных"
 
-#: tests/genfile.c:149
+#: tests/genfile.c:152
 msgid "Suppress non-fatal diagnostic messages"
 msgstr "Подавлять некритичные диагностические сообщения"
 
-#: tests/genfile.c:153
+#: tests/genfile.c:156
 msgid "File statistics options:"
 msgstr "Параметры статистики по файлам:"
 
-#: tests/genfile.c:156
+#: tests/genfile.c:159
 msgid "Print contents of struct stat for each given file. Default FORMAT is: "
 msgstr ""
 "Вывод содержимого структуры stat для всех указанных файлов. ФОРМАТ по "
 "умолчанию:"
 
 #: tests/genfile.c:163
+msgid "stat symbolic links instead of referenced files"
+msgstr ""
+
+#: tests/genfile.c:167
+msgid ""
+"Set access and modification times of the files to the time supplied by --"
+"date option"
+msgstr ""
+
+#: tests/genfile.c:174
 msgid "Synchronous execution options:"
 msgstr "Параметры синхронного выполнения:"
 
-#: tests/genfile.c:165
+#: tests/genfile.c:176
 msgid "N"
 msgstr "Н"
 
-#: tests/genfile.c:166
+#: tests/genfile.c:177
 msgid ""
 "Execute ARGS. Trigger checkpoints every Nth record (default 1). Useful with "
 "--checkpoint and one of --cut, --append, --touch, --unlink"
@@ -2829,21 +2842,21 @@ msgstr ""
 "(по умолчанию 1). Полезно с параметром --checkpoint и одним из --cut, --"
 "append или --touch"
 
-#: tests/genfile.c:169
+#: tests/genfile.c:180
 msgid "Perform given action (see below) upon reaching checkpoint NUMBER"
 msgstr ""
 "Выполнение указанного действия (см. ниже) до достижения контрольной точки с "
 "заданным НОМЕРОМ"
 
-#: tests/genfile.c:172
+#: tests/genfile.c:183
 msgid "Set date for next --touch option"
 msgstr "Указание даты для следующего параметра --touch"
 
-#: tests/genfile.c:175
+#: tests/genfile.c:186
 msgid "Display executed checkpoints and exit status of COMMAND"
 msgstr "Показать выполненные контрольные точки и статус выхода КОМАНДЫ"
 
-#: tests/genfile.c:180
+#: tests/genfile.c:191
 msgid ""
 "Synchronous execution actions. These are executed when checkpoint number "
 "given by --checkpoint option is reached."
@@ -2851,7 +2864,7 @@ msgstr ""
 "Синхронное выполнение действий. Они выполняются при достижении контрольной "
 "точки с номером, определённым опцией --checkpoint."
 
-#: tests/genfile.c:183
+#: tests/genfile.c:194
 msgid ""
 "Truncate FILE to the size specified by previous --length option (or 0, if it "
 "is not given)"
@@ -2859,163 +2872,181 @@ msgstr ""
 "Усечь ФАЙЛ до размера, определённого предыдущей опцией --length (или 0, если "
 "не указан)"
 
-#: tests/genfile.c:187
+#: tests/genfile.c:198
 msgid "Append SIZE bytes to FILE. SIZE is given by previous --length option."
 msgstr ""
 "Добавить РАЗМЕР байт к ФАЙЛУ. РАЗМЕР определяется предыдущей опцией --length."
 
-#: tests/genfile.c:190
+#: tests/genfile.c:201
 msgid "Update the access and modification times of FILE"
 msgstr "Обновить время последнего доступа и изменения ФАЙЛА."
 
-#: tests/genfile.c:193
+#: tests/genfile.c:204
 msgid "Execute COMMAND"
 msgstr "Выполнить КОМАНДУ"
 
-#: tests/genfile.c:196
+#: tests/genfile.c:207
 msgid "Delete FILE"
 msgstr "Удалить ФАЙЛ"
 
-#: tests/genfile.c:247
+#: tests/genfile.c:258
 #, c-format
 msgid "Invalid size: %s"
 msgstr "Недопустимый размер: %s"
 
-#: tests/genfile.c:252
+#: tests/genfile.c:263
 #, c-format
 msgid "Number out of allowed range: %s"
 msgstr "Число за пределами допустимого диапазона: %s"
 
-#: tests/genfile.c:255
+#: tests/genfile.c:266
 #, c-format
 msgid "Negative size: %s"
 msgstr "Отрицательный размер: %s"
 
-#: tests/genfile.c:268 tests/genfile.c:635
+#: tests/genfile.c:279 tests/genfile.c:672
 #, c-format
 msgid "stat(%s) failed"
 msgstr "Сбой stat(%s)"
 
-#: tests/genfile.c:271
-#, c-format
-msgid "requested file length %lu, actual %lu"
+#: tests/genfile.c:284
+#, fuzzy, c-format
+#| msgid "requested file length %lu, actual %lu"
+msgid "requested file length %jd, actual %jd"
 msgstr "запрошенная длина файла %lu, реальная %lu"
 
-#: tests/genfile.c:275
+#: tests/genfile.c:289
 #, c-format
 msgid "created file is not sparse"
 msgstr "созданный файл не является разреженным"
 
-#: tests/genfile.c:368
+#: tests/genfile.c:390
 #, c-format
 msgid "Error parsing number near `%s'"
 msgstr "Ошибка разбора числа возле «%s»"
 
-#: tests/genfile.c:374
+#: tests/genfile.c:396
 #, c-format
 msgid "Unknown date format"
 msgstr "Неизвестный формат даты"
 
-#: tests/genfile.c:398
+#: tests/genfile.c:420
 msgid "[ARGS...]"
 msgstr "[АРГУМЕНТЫ…]"
 
-#: tests/genfile.c:435 tests/genfile.c:475 tests/genfile.c:576
-#: tests/genfile.c:739 tests/genfile.c:753
+#: tests/genfile.c:457 tests/genfile.c:497 tests/genfile.c:598
+#: tests/genfile.c:787 tests/genfile.c:801
 #, c-format
 msgid "cannot open `%s'"
 msgstr "невозможно открыть «%s»"
 
-#: tests/genfile.c:441
+#: tests/genfile.c:463
 msgid "cannot seek"
 msgstr "невозможно найти"
 
-#: tests/genfile.c:458
+#: tests/genfile.c:480
 #, c-format
 msgid "file name contains null character"
 msgstr "в имени файла присутствует пустой символ"
 
-#: tests/genfile.c:571
+#: tests/genfile.c:593
 #, c-format
 msgid "cannot generate sparse files on standard output, use --file option"
 msgstr ""
 "невозможно вывести разрежённые файлы на стандартный вывод; используйте опцию "
 "--file"
 
-#: tests/genfile.c:662
+#: tests/genfile.c:699
 #, c-format
 msgid "incorrect mask (near `%s')"
 msgstr "неверная маска (возле `%s')"
 
-#: tests/genfile.c:668 tests/genfile.c:701
+#: tests/genfile.c:705 tests/genfile.c:738
 #, c-format
 msgid "Unknown field `%s'"
 msgstr "Неизвестное поле «%s»"
 
-#: tests/genfile.c:728
+#: tests/genfile.c:756 tests/genfile.c:776
 #, c-format
 msgid "cannot set time on `%s'"
 msgstr "невозможно установить время в «%s»"
 
-#: tests/genfile.c:758
+#: tests/genfile.c:806
 #, c-format
 msgid "cannot truncate `%s'"
 msgstr "не удалось обрезать «%s»"
 
-#: tests/genfile.c:767
+#: tests/genfile.c:815
 #, c-format
 msgid "command failed: %s"
 msgstr "сбой команды: %s"
 
-#: tests/genfile.c:774
+#: tests/genfile.c:822
 #, c-format
 msgid "cannot stat `%s'"
 msgstr "не удалось выполнить stat для «%s»"
 
-#: tests/genfile.c:778
+#: tests/genfile.c:826
 #, c-format
 msgid "cannot remove directory `%s'"
 msgstr "не удалось удалить каталог «%s»"
 
-#: tests/genfile.c:781
+#: tests/genfile.c:829
 #, c-format
 msgid "cannot unlink `%s'"
 msgstr "не удалось удалить «%s»"
 
-#: tests/genfile.c:920
+#: tests/genfile.c:969
 #, c-format
 msgid "Command exited successfully\n"
 msgstr "Команда успешно выполнена\n"
 
-#: tests/genfile.c:922
+#: tests/genfile.c:971
 #, c-format
 msgid "Command failed with status %d\n"
 msgstr "Сбой команды; состояние: %d\n"
 
-#: tests/genfile.c:926
+#: tests/genfile.c:975
 #, c-format
 msgid "Command terminated on signal %d\n"
 msgstr "Команда завершена по сигналу %d\n"
 
-#: tests/genfile.c:928
+#: tests/genfile.c:977
 #, c-format
 msgid "Command stopped on signal %d\n"
 msgstr "Команда остановлена по сигналу %d\n"
 
-#: tests/genfile.c:931
+#: tests/genfile.c:980
 #, c-format
 msgid "Command dumped core\n"
 msgstr "Команда сбросила дамп памяти\n"
 
-#: tests/genfile.c:934
+#: tests/genfile.c:983
 #, c-format
 msgid "Command terminated\n"
 msgstr "Команда завершена\n"
 
-#: tests/genfile.c:966
+#: tests/genfile.c:1015
 #, c-format
 msgid "--stat requires file names"
 msgstr "для опции --stat нужны имена файлов"
+
+#: tests/genfile.c:1023
+#, fuzzy, c-format
+#| msgid "--stat requires file names"
+msgid "--set-times requires file names"
+msgstr "для опции --stat нужны имена файлов"
+
+#, c-format
+#~ msgid "%s: file is the archive; not dumped"
+#~ msgstr "%s: файл является архивом; не сброшен"
+
+#, c-format
+#~ msgid "%s: File shrank by %s byte"
+#~ msgid_plural "%s: File shrank by %s bytes"
+#~ msgstr[0] "%s: Файл урезан на %s байт"
+#~ msgstr[1] "%s: Файл урезан на %s байта"
+#~ msgstr[2] "%s: Файл урезан на %s байт"
 
 #~ msgid "%s home page: <https://www.gnu.org/software/%s/>\n"
 #~ msgstr "Домашняя страница %s: <https://www.gnu.org/software/%s/>\n"

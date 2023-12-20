@@ -1,9 +1,9 @@
 /* Create a symlink relative to an open directory.
-   Copyright (C) 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -52,8 +52,8 @@ rpl_symlinkat (char const *contents, int fd, char const *name)
    wrapper than to go through at-func.c to call rpl_symlink.  */
 
 int
-symlinkat (char const *path1 _GL_UNUSED, int fd _GL_UNUSED,
-           char const *path2 _GL_UNUSED)
+symlinkat (_GL_UNUSED char const *path1, _GL_UNUSED int fd,
+           _GL_UNUSED char const *path2)
 {
   errno = ENOSYS;
   return -1;

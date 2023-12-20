@@ -1,6 +1,6 @@
 # Configure template for GNU tar.  -*- autoconf -*-
 
-# Copyright 1991, 1994-2010, 2013-2021 Free Software Foundation, Inc.
+# Copyright 1991, 1994-2010, 2013-2023 Free Software Foundation, Inc.
 
 # This file is part of GNU tar.
 
@@ -17,17 +17,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([GNU tar], [1.34], [bug-tar@gnu.org])
+AC_INIT([GNU tar], [1.35], [bug-tar@gnu.org])
 AC_CONFIG_SRCDIR([src/tar.c])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
-AC_PREREQ([2.64])
+AC_PREREQ([2.71])
 AM_INIT_AUTOMAKE([1.15 gnits tar-ustar dist-bzip2 dist-xz std-options silent-rules])
 
 # Enable silent rules by default:
 AM_SILENT_RULES([yes])
 
-AC_PROG_CC_STDC
+AC_PROG_CC
 AC_EXEEXT
 AC_PROG_RANLIB
 AC_PROG_YACC
@@ -35,7 +35,6 @@ gl_EARLY
 AC_CHECK_TOOLS([AR], [ar])
 
 AC_SYS_LARGEFILE
-AC_C_INLINE
 
 AC_CHECK_HEADERS_ONCE(fcntl.h linux/fd.h memory.h net/errno.h \
   sgtty.h string.h \
@@ -53,10 +52,14 @@ AC_HEADER_MAJOR
 
 AC_MSG_CHECKING([for st_fstype string in struct stat])
 AC_CACHE_VAL(diff_cv_st_fstype_string,
-  [AC_TRY_COMPILE([#include <sys/types.h>
-#include <sys/stat.h>], [struct stat s; s.st_fstype[0] = 'x';],
-   diff_cv_st_fstype_string=yes,
-   diff_cv_st_fstype_string=no)])
+  [AC_COMPILE_IFELSE(
+     [AC_LANG_PROGRAM(
+        [[#include <sys/types.h>
+          #include <sys/stat.h>
+	]],
+	[[struct stat s; s.st_fstype[0] = 'x';]])],
+     [diff_cv_st_fstype_string=yes],
+     [diff_cv_st_fstype_string=no])])
 AC_MSG_RESULT($diff_cv_st_fstype_string)
 if test $diff_cv_st_fstype_string = yes; then
   AC_DEFINE(HAVE_ST_FSTYPE_STRING, 1,
@@ -103,6 +106,20 @@ gt_TYPE_SSIZE_T
 # gnulib modules
 gl_INIT
 
+AC_DEFINE([GNULIB_EXCLUDE_SINGLE_THREAD], [1],
+  [Define if all programs in this package call functions of the Gnulib
+   'exclude' module only from a single thread.])
+AC_DEFINE([GNULIB_MBRTOWC_SINGLE_THREAD], [1],
+  [Define if all programs in this package call functions of the Gnulib
+   'mbtowc' module only from a single thread.])
+AC_DEFINE([GNULIB_REGEX_SINGLE_THREAD], [1],
+  [Define if all programs in this package call functions of the Gnulib
+   'regex' module only from a single thread.])
+AC_DEFINE([GNULIB_WCHAR_SINGLE_LOCALE], [1],
+  [Define if all programs in this package call locale-sensitive functions
+   like mbrtowc only after setting the locale, and never change the
+   locale once set.])
+
 if test $ac_cv_lib_error_at_line = no; then
   # This means that the error() function is not present in libc, so
   # the one from gnulib will be used instead. This function precedes
@@ -112,7 +129,7 @@ if test $ac_cv_lib_error_at_line = no; then
   AC_DEFINE([ENABLE_ERROR_PRINT_PROGNAME],[1],
             [Enable the use of error_print_progname to print program name with error messages.
 	     See comment to function tar_print_progname in src/tar.c])
-fi  
+fi
 
 # paxutils modules
 tar_PAXUTILS
@@ -145,7 +162,7 @@ AC_ARG_ENABLE([gcc-warnings],
    gl_gcc_warnings=$enableval],
   [gl_gcc_warnings=no
    if test -d "$srcdir"/.git; then
-     gl_GCC_VERSION_IFELSE([4], [6], [gl_gcc_warnings=yes])
+     gl_GCC_VERSION_IFELSE([11], [2], [gl_gcc_warnings=yes])
    fi]
 )
 
@@ -162,6 +179,7 @@ if test "$gl_gcc_warnings" = yes; then
   nw="$nw -Winline"                 # It's OK to not inline.
   nw="$nw -Wstrict-overflow"	    # It's OK to optimize strictly.
   nw="$nw -Wsuggest-attribute=pure" # Too many warnings for now.
+  nw="$nw -Wsystem-headers"         # Don't let system headers trigger warnings
   nw="$nw -Wstack-protector"
 
   gl_MANYWARN_ALL_GCC([ws])
@@ -171,12 +189,11 @@ if test "$gl_gcc_warnings" = yes; then
   done
   gl_WARN_ADD([-Wno-sign-compare])     # Too many warnings for now
   gl_WARN_ADD([-Wno-type-limits])      # It's OK to optimize based on types.
-  gl_WARN_ADD([-Wno-unused-parameter]) # Too many warnings for now
   gl_WARN_ADD([-Wno-format-nonliteral])
-  
+
   gl_WARN_ADD([-fdiagnostics-show-option])
   gl_WARN_ADD([-funit-at-a-time])
-  
+
 
   AC_SUBST([WARN_CFLAGS])
 
@@ -356,7 +373,7 @@ AC_CHECK_TYPE(iconv_t,:,
 
 # Gettext.
 AM_GNU_GETTEXT([external], [need-formatstring-macros])
-AM_GNU_GETTEXT_VERSION([0.16])
+AM_GNU_GETTEXT_VERSION([0.21])
 
 # Initialize the test suite.
 AC_CONFIG_TESTDIR(tests)
@@ -366,8 +383,8 @@ AM_MISSING_PROG([AUTOM4TE], [autom4te])
 AC_SUBST(BACKUP_LIBEXEC_SCRIPTS)
 AC_SUBST(BACKUP_SBIN_SCRIPTS)
 AC_ARG_ENABLE(backup-scripts,
-	      AC_HELP_STRING([--enable-backup-scripts],
-                             [Create and install backup and restore scripts]),
+	      AS_HELP_STRING([--enable-backup-scripts],
+			     [Create and install backup and restore scripts]),
               [case $enableval in
 	       yes) BACKUP_LIBEXEC_SCRIPTS='$(BACKUP_LIBEXEC_SCRIPTS_LIST)'
                     BACKUP_SBIN_SCRIPTS='$(BACKUP_SBIN_SCRIPTS_LIST)'
@@ -381,7 +398,7 @@ else
 	BACKUP_SED_COND='/^\#IF_DATE_FORMAT_OK/,/^\#ELSE_DATE_FORMAT_OK/d;/^\#ENDIF_DATE_FORMAT_OK/d'
 fi
 
-AC_OUTPUT([Makefile\
+AC_CONFIG_FILES([Makefile\
            doc/Makefile\
 	   gnu/Makefile\
            lib/Makefile\
@@ -389,3 +406,4 @@ AC_OUTPUT([Makefile\
            scripts/Makefile\
            rmt/Makefile\
            src/Makefile])
+AC_OUTPUT

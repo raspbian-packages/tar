@@ -1,19 +1,19 @@
 /* A substitute for ISO C99 <wchar.h>, for platforms that have issues.
 
-   Copyright (C) 2007-2021 Free Software Foundation, Inc.
+   Copyright (C) 2007-2023 Free Software Foundation, Inc.
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3, or (at your option)
-   any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation; either version 2.1 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, see <https://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Eric Blake.  */
 
@@ -84,6 +84,48 @@
 #ifndef _@GUARD_PREFIX@_WCHAR_H
 #define _@GUARD_PREFIX@_WCHAR_H
 
+/* This file uses _GL_ATTRIBUTE_DEALLOC, _GL_ATTRIBUTE_MALLOC,
+   _GL_ATTRIBUTE_PURE, GNULIB_POSIXCHECK, HAVE_RAW_DECL_*.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
+/* _GL_ATTRIBUTE_DEALLOC (F, I) declares that the function returns pointers
+   that can be freed by passing them as the Ith argument to the
+   function F.  */
+#ifndef _GL_ATTRIBUTE_DEALLOC
+# if __GNUC__ >= 11
+#  define _GL_ATTRIBUTE_DEALLOC(f, i) __attribute__ ((__malloc__ (f, i)))
+# else
+#  define _GL_ATTRIBUTE_DEALLOC(f, i)
+# endif
+#endif
+
+/* _GL_ATTRIBUTE_DEALLOC_FREE declares that the function returns pointers that
+   can be freed via 'free'; it can be used only after declaring 'free'.  */
+/* Applies to: functions.  Cannot be used on inline functions.  */
+#ifndef _GL_ATTRIBUTE_DEALLOC_FREE
+# if defined __cplusplus && defined __GNUC__ && !defined __clang__
+/* Work around GCC bug <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108231> */
+#  define _GL_ATTRIBUTE_DEALLOC_FREE \
+     _GL_ATTRIBUTE_DEALLOC ((void (*) (void *)) free, 1)
+# else
+#  define _GL_ATTRIBUTE_DEALLOC_FREE \
+     _GL_ATTRIBUTE_DEALLOC (free, 1)
+# endif
+#endif
+
+/* _GL_ATTRIBUTE_MALLOC declares that the function returns a pointer to freshly
+   allocated memory.  */
+/* Applies to: functions.  */
+#ifndef _GL_ATTRIBUTE_MALLOC
+# if __GNUC__ >= 3 || defined __clang__
+#  define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+# else
+#  define _GL_ATTRIBUTE_MALLOC
+# endif
+#endif
+
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The attribute __pure__ was added in gcc 2.96.  */
 #ifndef _GL_ATTRIBUTE_PURE
@@ -111,7 +153,7 @@
 /* mingw and MSVC define wint_t as 'unsigned short' in <crtdefs.h> or
    <stddef.h>.  This is too small: ISO C 99 section 7.24.1.(2) says that
    wint_t must be "unchanged by default argument promotions".  Override it.  */
-# if @GNULIB_OVERRIDES_WINT_T@
+# if @GNULIBHEADERS_OVERRIDE_WINT_T@
 #  if !GNULIB_defined_wint_t
 #   if @HAVE_CRTDEFS_H@
 #    include <crtdefs.h>
@@ -146,6 +188,49 @@ typedef int rpl_mbstate_t;
 # endif
 #endif
 
+/* Make _GL_ATTRIBUTE_DEALLOC_FREE work, even though <stdlib.h> may not have
+   been included yet.  */
+#if @GNULIB_FREE_POSIX@
+# if (@REPLACE_FREE@ && !defined free \
+      && !(defined __cplusplus && defined GNULIB_NAMESPACE))
+/* We can't do '#define free rpl_free' here.  */
+#  if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void rpl_free (void *) throw ();
+#  else
+_GL_EXTERN_C void rpl_free (void *);
+#  endif
+#  undef _GL_ATTRIBUTE_DEALLOC_FREE
+#  define _GL_ATTRIBUTE_DEALLOC_FREE _GL_ATTRIBUTE_DEALLOC (rpl_free, 1)
+# else
+#  if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+#  else
+#   if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) throw ();
+#   else
+_GL_EXTERN_C void free (void *);
+#   endif
+#  endif
+# endif
+#else
+# if defined _MSC_VER && !defined free
+_GL_EXTERN_C
+#   if defined _DLL
+     __declspec (dllimport)
+#   endif
+     void __cdecl free (void *);
+# else
+#  if defined __cplusplus && (__GLIBC__ + (__GLIBC_MINOR__ >= 14) > 2)
+_GL_EXTERN_C void free (void *) throw ();
+#  else
+_GL_EXTERN_C void free (void *);
+#  endif
+# endif
+#endif
 
 /* Convert a single-byte character to a wide character.  */
 #if @GNULIB_BTOWC@
@@ -366,7 +451,9 @@ _GL_CXXALIAS_SYS (mbsnrtowcs, size_t,
                    const char **restrict srcp, size_t srclen, size_t len,
                    mbstate_t *restrict ps));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mbsnrtowcs);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbsnrtowcs
 # if HAVE_RAW_DECL_MBSNRTOWCS
@@ -554,13 +641,25 @@ _GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
 
 /* Compare N wide characters of S1 and S2.  */
 #if @GNULIB_WMEMCMP@
-# if !@HAVE_WMEMCMP@
+# if @REPLACE_WMEMCMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wmemcmp
+#   define wmemcmp rpl_wmemcmp
+#  endif
+_GL_FUNCDECL_RPL (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n)
+                  _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# else
+#  if !@HAVE_WMEMCMP@
 _GL_FUNCDECL_SYS (wmemcmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n)
                   _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wmemcmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wmemcmp);
 # endif
@@ -619,14 +718,27 @@ _GL_WARN_ON_USE (wmemmove, "wmemmove is unportable - "
 /* Copy N wide characters of SRC to DEST.
    Return pointer to wide characters after the last written wide character.  */
 #if @GNULIB_WMEMPCPY@
-# if !@HAVE_WMEMPCPY@
+# if @REPLACE_WMEMPCPY@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wmempcpy
+#   define wmempcpy rpl_wmempcpy
+#  endif
+_GL_FUNCDECL_RPL (wmempcpy, wchar_t *,
+                  (wchar_t *restrict dest,
+                   const wchar_t *restrict src, size_t n));
+_GL_CXXALIAS_RPL (wmempcpy, wchar_t *,
+                  (wchar_t *restrict dest,
+                   const wchar_t *restrict src, size_t n));
+# else
+#  if !@HAVE_WMEMPCPY@
 _GL_FUNCDECL_SYS (wmempcpy, wchar_t *,
                   (wchar_t *restrict dest,
                    const wchar_t *restrict src, size_t n));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wmempcpy, wchar_t *,
                   (wchar_t *restrict dest,
                    const wchar_t *restrict src, size_t n));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wmempcpy);
 # endif
@@ -677,7 +789,10 @@ _GL_WARN_ON_USE (wcslen, "wcslen is unportable - "
 
 /* Return the number of wide characters in S, but at most MAXLEN.  */
 #if @GNULIB_WCSNLEN@
-# if !@HAVE_WCSNLEN@
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+# if !@HAVE_WCSNLEN@ || (defined __sun && defined __cplusplus)
 _GL_FUNCDECL_SYS (wcsnlen, size_t, (const wchar_t *s, size_t maxlen)
                                    _GL_ATTRIBUTE_PURE);
 # endif
@@ -714,7 +829,10 @@ _GL_WARN_ON_USE (wcscpy, "wcscpy is unportable - "
 
 /* Copy SRC to DEST, returning the address of the terminating L'\0' in DEST.  */
 #if @GNULIB_WCPCPY@
-# if !@HAVE_WCPCPY@
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+# if !@HAVE_WCPCPY@ || (defined __sun && defined __cplusplus)
 _GL_FUNCDECL_SYS (wcpcpy, wchar_t *,
                   (wchar_t *restrict dest, const wchar_t *restrict src));
 # endif
@@ -755,7 +873,10 @@ _GL_WARN_ON_USE (wcsncpy, "wcsncpy is unportable - "
 /* Copy no more than N characters of SRC to DEST, returning the address of
    the last character written into DEST.  */
 #if @GNULIB_WCPNCPY@
-# if !@HAVE_WCPNCPY@
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+# if !@HAVE_WCPNCPY@ || (defined __sun && defined __cplusplus)
 _GL_FUNCDECL_SYS (wcpncpy, wchar_t *,
                   (wchar_t *restrict dest,
                    const wchar_t *restrict src, size_t n));
@@ -817,11 +938,21 @@ _GL_WARN_ON_USE (wcsncat, "wcsncat is unportable - "
 
 /* Compare S1 and S2.  */
 #if @GNULIB_WCSCMP@
-# if !@HAVE_WCSCMP@
+# if @REPLACE_WCSCMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcscmp
+#   define wcscmp rpl_wcscmp
+#  endif
+_GL_FUNCDECL_RPL (wcscmp, int, (const wchar_t *s1, const wchar_t *s2)
+                               _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+# else
+#  if !@HAVE_WCSCMP@
 _GL_FUNCDECL_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2)
                                _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcscmp);
 # endif
@@ -836,13 +967,25 @@ _GL_WARN_ON_USE (wcscmp, "wcscmp is unportable - "
 
 /* Compare no more than N wide characters of S1 and S2.  */
 #if @GNULIB_WCSNCMP@
-# if !@HAVE_WCSNCMP@
+# if @REPLACE_WCSNCMP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcsncmp
+#   define wcsncmp rpl_wcsncmp
+#  endif
+_GL_FUNCDECL_RPL (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n)
+                  _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# else
+#  if !@HAVE_WCSNCMP@
 _GL_FUNCDECL_SYS (wcsncmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n)
                   _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wcsncmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcsncmp);
 # endif
@@ -857,7 +1000,10 @@ _GL_WARN_ON_USE (wcsncmp, "wcsncmp is unportable - "
 
 /* Compare S1 and S2, ignoring case.  */
 #if @GNULIB_WCSCASECMP@
-# if !@HAVE_WCSCASECMP@
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+# if !@HAVE_WCSCASECMP@ || (defined __sun && defined __cplusplus)
 _GL_FUNCDECL_SYS (wcscasecmp, int, (const wchar_t *s1, const wchar_t *s2)
                                    _GL_ATTRIBUTE_PURE);
 # endif
@@ -874,7 +1020,10 @@ _GL_WARN_ON_USE (wcscasecmp, "wcscasecmp is unportable - "
 
 /* Compare no more than N chars of S1 and S2, ignoring case.  */
 #if @GNULIB_WCSNCASECMP@
-# if !@HAVE_WCSNCASECMP@
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+# if !@HAVE_WCSNCASECMP@ || (defined __sun && defined __cplusplus)
 _GL_FUNCDECL_SYS (wcsncasecmp, int,
                   (const wchar_t *s1, const wchar_t *s2, size_t n)
                   _GL_ATTRIBUTE_PURE);
@@ -941,36 +1090,51 @@ _GL_WARN_ON_USE (wcsxfrm, "wcsxfrm is unportable - "
 #  endif
 _GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
 # else
-#  if !@HAVE_WCSDUP@
-_GL_FUNCDECL_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+/* On Solaris 11.3, the header files declare the function in the std::
+   namespace, not in the global namespace.  So, force a declaration in
+   the global namespace.  */
+#  if !@HAVE_WCSDUP@ || (defined __sun && defined __cplusplus) || __GNUC__ >= 11
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
 #  endif
 _GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
 # endif
 _GL_CXXALIASWARN (wcsdup);
-#elif defined GNULIB_POSIXCHECK
-# undef wcsdup
-# if HAVE_RAW_DECL_WCSDUP
+#else
+# if __GNUC__ >= 11 && !defined wcsdup
+/* For -Wmismatched-dealloc: Associate wcsdup with free or rpl_free.  */
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+# endif
+# if defined GNULIB_POSIXCHECK
+#  undef wcsdup
+#  if HAVE_RAW_DECL_WCSDUP
 _GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
                  "use gnulib module wcsdup for portability");
-# endif
-#elif @GNULIB_MDA_WCSDUP@
+#  endif
+# elif @GNULIB_MDA_WCSDUP@
 /* On native Windows, map 'wcsdup' to '_wcsdup', so that -loldnames is not
    required.  In C++ with GNULIB_NAMESPACE, avoid differences between
    platforms by defining GNULIB_NAMESPACE::wcsdup always.  */
-# if defined _WIN32 && !defined __CYGWIN__
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef wcsdup
-#   define wcsdup _wcsdup
-#  endif
+#  if defined _WIN32 && !defined __CYGWIN__
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef wcsdup
+#    define wcsdup _wcsdup
+#   endif
 _GL_CXXALIAS_MDA (wcsdup, wchar_t *, (const wchar_t *s));
-# else
-_GL_FUNCDECL_SYS (wcsdup, wchar_t *, (const wchar_t *s));
-#  if @HAVE_DECL_WCSDUP@
+#  else
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *,
+                  (const wchar_t *s)
+                  _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_DEALLOC_FREE);
+#   if @HAVE_DECL_WCSDUP@
 _GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+#   endif
 #  endif
-# endif
-# if (defined _WIN32 && !defined __CYGWIN__) || @HAVE_DECL_WCSDUP@
+#  if (defined _WIN32 && !defined __CYGWIN__) || @HAVE_DECL_WCSDUP@
 _GL_CXXALIASWARN (wcsdup);
+#  endif
 # endif
 #endif
 
@@ -1035,7 +1199,7 @@ _GL_WARN_ON_USE (wcsrchr, "wcsrchr is unportable - "
 #endif
 
 
-/* Return the length of the initial segmet of WCS which consists entirely
+/* Return the length of the initial segment of WCS which consists entirely
    of wide characters not in REJECT.  */
 #if @GNULIB_WCSCSPN@
 # if !@HAVE_WCSCSPN@
@@ -1055,7 +1219,7 @@ _GL_WARN_ON_USE (wcscspn, "wcscspn is unportable - "
 #endif
 
 
-/* Return the length of the initial segmet of WCS which consists entirely
+/* Return the length of the initial segment of WCS which consists entirely
    of wide characters in ACCEPT.  */
 #if @GNULIB_WCSSPN@
 # if !@HAVE_WCSSPN@
@@ -1110,12 +1274,25 @@ _GL_WARN_ON_USE (wcspbrk, "wcspbrk is unportable - "
 
 /* Find the first occurrence of NEEDLE in HAYSTACK.  */
 #if @GNULIB_WCSSTR@
-# if !@HAVE_WCSSTR@
+# if @REPLACE_WCSSTR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcsstr
+#   define wcsstr rpl_wcsstr
+#  endif
+_GL_FUNCDECL_RPL (wcsstr, wchar_t *,
+                  (const wchar_t *restrict haystack,
+                   const wchar_t *restrict needle)
+                  _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_RPL (wcsstr, wchar_t *,
+                  (const wchar_t *restrict haystack,
+                   const wchar_t *restrict needle));
+# else
+#  if !@HAVE_WCSSTR@
 _GL_FUNCDECL_SYS (wcsstr, wchar_t *,
                   (const wchar_t *restrict haystack,
                    const wchar_t *restrict needle)
                   _GL_ATTRIBUTE_PURE);
-# endif
+#  endif
   /* On some systems, this function is defined as an overloaded function:
        extern "C++" {
          const wchar_t * std::wcsstr (const wchar_t *, const wchar_t *);
@@ -1126,6 +1303,7 @@ _GL_CXXALIAS_SYS_CAST2 (wcsstr,
                         (const wchar_t *restrict, const wchar_t *restrict),
                         const wchar_t *,
                         (const wchar_t *restrict, const wchar_t *restrict));
+# endif
 # if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (wcsstr, wchar_t *,

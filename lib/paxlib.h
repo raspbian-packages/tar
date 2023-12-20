@@ -1,7 +1,7 @@
 /* This file is part of GNU paxutils
 
-   Copyright (C) 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2003,
-   2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1994-2001, 2003, 2005, 2007, 2023 Free Software Foundation,
+   Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 
 #ifndef _paxlib_h_
 #define _paxlib_h_
-
-#include <inttostr.h>
 
 /* Error reporting functions and definitions */
 
@@ -73,30 +71,30 @@ extern int exit_status;
 
 void pax_decode_mode (mode_t mode, char *string);
 void call_arg_error (char const *call, char const *name);
-void call_arg_fatal (char const *call, char const *name) __attribute__ ((noreturn));
+_Noreturn void call_arg_fatal (char const *call, char const *name);
 void call_arg_warn (char const *call, char const *name);
 void chmod_error_details (char const *name, mode_t mode);
 void chown_error_details (char const *name, uid_t uid, gid_t gid);
 
 void decode_mode (mode_t, char *);
 
-void chdir_fatal (char const *) __attribute__ ((noreturn));
+_Noreturn void chdir_fatal (char const *);
 void chmod_error_details (char const *, mode_t);
 void chown_error_details (char const *, uid_t, gid_t);
 void close_error (char const *);
 void close_warn (char const *);
-void exec_fatal (char const *) __attribute__ ((noreturn));
+_Noreturn void exec_fatal (char const *);
 void link_error (char const *, char const *);
 void mkdir_error (char const *);
 void mkfifo_error (char const *);
 void mknod_error (char const *);
 void open_error (char const *);
-void open_fatal (char const *) __attribute__ ((noreturn));
+_Noreturn void open_fatal (char const *);
 void open_warn (char const *);
 void read_error (char const *);
 void read_error_details (char const *, off_t, size_t);
-void read_fatal (char const *) __attribute__ ((noreturn));
-void read_fatal_details (char const *, off_t, size_t) __attribute__ ((noreturn));
+_Noreturn void read_fatal (char const *);
+_Noreturn void read_fatal_details (char const *, off_t, size_t);
 void read_warn_details (char const *, off_t, size_t);
 void readlink_error (char const *);
 void readlink_warn (char const *);
@@ -107,7 +105,7 @@ void seek_error (char const *);
 void seek_error_details (char const *, off_t);
 void seek_warn (char const *);
 void seek_warn_details (char const *, off_t);
-void stat_fatal (char const *) __attribute__ ((noreturn));
+_Noreturn void stat_fatal (char const *);
 void stat_error (char const *);
 void stat_warn (char const *);
 void symlink_error (char const *, char const *);
@@ -119,11 +117,8 @@ void waitpid_error (char const *);
 void write_error (char const *);
 void write_error_details (char const *, size_t, size_t);
 
-void pax_exit (void) __attribute__ ((noreturn));
-void fatal_exit (void) __attribute__ ((noreturn));
-
-#define STRINGIFY_BIGINT(i, b) umaxtostr (i, b)
-
+_Noreturn void pax_exit (void);
+_Noreturn void fatal_exit (void);
 
 /* Name-related functions */
 bool removed_prefixes_p (void);

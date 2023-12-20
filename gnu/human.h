@@ -1,10 +1,10 @@
 /* human.h -- print human readable file size
 
-   Copyright (C) 1996-2007, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 1996-2007, 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -21,7 +21,6 @@
 # define HUMAN_H_ 1
 
 # include <limits.h>
-# include <stdbool.h>
 # include <stdint.h>
 # include <unistd.h>
 

@@ -1,6 +1,6 @@
 /* Various processing of names.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
@@ -199,7 +199,7 @@ names_parse_opt (int key, char *arg, struct argp_state *state)
     case ADD_FILE_OPTION:
       name_add_name (arg);
       break;
-      
+
     case ARGP_KEY_ERROR:
       {
 	struct tar_args *args = state->input;
@@ -217,7 +217,7 @@ names_parse_opt (int key, char *arg, struct argp_state *state)
 	name_add_option (key, arg);
       else
 	return ARGP_ERR_UNKNOWN;
-      
+
     }
   return 0;
 }
@@ -348,7 +348,7 @@ handle_file_selection_option (int key, const char *arg)
       break;
 
     case EXCLUDE_VCS_OPTION:
-      add_exclude_array (vcs_file_table, 0);
+      add_exclude_array (vcs_file_table, FNM_LEADING_DIR);
       break;
 
     case EXCLUDE_VCS_IGNORES_OPTION:
@@ -395,7 +395,7 @@ handle_file_selection_option (int key, const char *arg)
       break;
 
     case NO_ANCHORED_OPTION:
-      include_anchored = 0; /* Clear the default for comman line args */
+      include_anchored = 0; /* Clear the default for command line args */
       matching_flags &= ~ EXCLUDE_ANCHORED;
       break;
 
@@ -744,7 +744,7 @@ unconsumed_option_report (void)
     {
       struct name_elt *elt;
 
-      ERROR ((0, 0, _("The following options were used after any non-optional arguments in archive create or update mode.  These options are positional and affect only arguments that follow them.  Please, rearrange them properly.")));
+      ERROR ((0, 0, _("The following options were used after non-option arguments.  These options are positional and affect only arguments that follow them.  Please, rearrange them properly.")));
 
       elt = unconsumed_option_tail;
       while (elt->prev)
@@ -980,7 +980,6 @@ read_name_from_file (struct name_elt *ent)
   if (counter == name_buffer_length)
     name_buffer = x2realloc (name_buffer, &name_buffer_length);
   name_buffer[counter] = 0;
-  chopslash (name_buffer);
   return (counter == 0 && c == EOF) ? file_list_end : file_list_success;
 }
 
@@ -1029,8 +1028,10 @@ read_next_name (struct name_elt *ent, struct name_elt *ret)
 	      name_list_advance ();
 	      return 1;
 	    }
-	  if ((ent->v.file.fp = fopen (ent->v.file.name, "r")) == NULL)
+	  FILE *fp = fopen (ent->v.file.name, "r");
+	  if (!fp)
 	    open_fatal (ent->v.file.name);
+	  ent->v.file.fp = fp;
 	}
       ent->v.file.term = filename_terminator;
       ent->v.file.verbatim = verbatim_files_from_option;
@@ -1060,6 +1061,7 @@ read_next_name (struct name_elt *ent, struct name_elt *ret)
 		  return 1;
 		}
 	    }
+	  chopslash (name_buffer);
 	  ret->type = NELT_NAME;
 	  ret->v.name = name_buffer;
 	  return 0;
@@ -1151,6 +1153,13 @@ name_next (int change_dirs)
   return nelt ? nelt->v.name : NULL;
 }
 
+static bool
+name_is_wildcard (struct name const *name)
+{
+  return (name->matching_flags & EXCLUDE_WILDCARDS) &&
+    fnmatch_pattern_has_wildcards (name->name, name->matching_flags);
+}
+
 /* Gather names in a list for scanning.  Could hash them later if we
    really care.
 
@@ -1187,6 +1196,7 @@ name_gather (void)
 	  buffer->directory = NULL;
 	  buffer->parent = NULL;
 	  buffer->cmdline = true;
+	  buffer->is_wildcard = name_is_wildcard (buffer);
 
 	  namelist = nametail = buffer;
 	}
@@ -1230,6 +1240,7 @@ addname (char const *string, int change_dir, bool cmdline, struct name *parent)
   name->directory = NULL;
   name->parent = parent;
   name->cmdline = cmdline;
+  name->is_wildcard = name_is_wildcard (name);
 
   if (nametail)
     nametail->next = name;
@@ -1250,33 +1261,35 @@ add_starting_file (char const *file_name)
       remname (head);
       free_name (head);
     }
-  
+
   name->prev = NULL;
   name->next = namelist;
   namelist = name;
   if (!nametail)
     nametail = namelist;
-  
+
   name->found_count = 0;
   name->matching_flags = INCLUDE_OPTIONS;
   name->change_dir = 0;
   name->directory = NULL;
   name->parent = NULL;
   name->cmdline = true;
+  name->is_wildcard = name_is_wildcard (name);
 
   starting_file_option = true;
 }
 
-/* Find a match for FILE_NAME (whose string length is LENGTH) in the name
-   list.  */
+/* Find a match for FILE_NAME in the name list.  If EXACT is true,
+   look for exact match (no wildcards). */
 static struct name *
-namelist_match (char const *file_name, size_t length)
+namelist_match (char const *file_name, bool exact)
 {
   struct name *p;
 
   for (p = namelist; p; p = p->next)
     {
       if (p->name[0]
+	  && (exact ? !p->is_wildcard : true)
 	  && exclude_fnmatch (p->name, file_name, p->matching_flags))
 	return p;
     }
@@ -1305,8 +1318,6 @@ remname (struct name *name)
 bool
 name_match (const char *file_name)
 {
-  size_t length = strlen (file_name);
-
   while (1)
     {
       struct name *cursor = namelist;
@@ -1322,7 +1333,7 @@ name_match (const char *file_name)
 	  return true;
 	}
 
-      cursor = namelist_match (file_name, length);
+      cursor = namelist_match (file_name, false);
       if (starting_file_option)
 	{
 	  /* If starting_file_option is set, the head of the list is the name
@@ -1871,15 +1882,14 @@ collect_and_sort_names (void)
     1. It returns a pointer to the name it matched, and doesn't set FOUND
     in structure. The caller will have to do that if it wants to.
     2. If the namelist is empty, it returns null, unlike name_match, which
-    returns TRUE. */
+    returns TRUE.
+    3. If EXACT is true, it looks for exact matches only (no wildcards). */
 struct name *
-name_scan (const char *file_name)
+name_scan (const char *file_name, bool exact)
 {
-  size_t length = strlen (file_name);
-
   while (1)
     {
-      struct name *cursor = namelist_match (file_name, length);
+      struct name *cursor = namelist_match (file_name, exact);
       if (cursor)
 	return cursor;
 
@@ -1899,9 +1909,10 @@ name_scan (const char *file_name)
     }
 }
 
-/* This returns a name from the namelist which doesn't have ->found
-   set.  It sets ->found before returning, so successive calls will
-   find and return all the non-found names in the namelist.  */
+/* This returns a name from the namelist which is an exact match (i.e.
+   not a pattern) and doesn't have ->found set.  It sets ->found before
+   returning, so successive calls will find and return all the non-found
+   names in the namelist.  */
 struct name *gnu_list_name;
 
 struct name const *
@@ -1910,11 +1921,13 @@ name_from_list (void)
   if (!gnu_list_name)
     gnu_list_name = namelist;
   while (gnu_list_name
-	 && (gnu_list_name->found_count || gnu_list_name->name[0] == 0))
+	 && (gnu_list_name->is_wildcard ||
+	     gnu_list_name->found_count || gnu_list_name->name[0] == 0))
     gnu_list_name = gnu_list_name->next;
   if (gnu_list_name)
     {
-      gnu_list_name->found_count++;
+      if (!gnu_list_name->is_wildcard)
+	gnu_list_name->found_count++;
       chdir_do (gnu_list_name->change_dir);
       return gnu_list_name;
     }
