@@ -9,12 +9,12 @@ Comment:
 Upstream-Contact: bug-tar@gnu.org
 Source:
   ftp://ftp.gnu.org/gnu/tar/
-  http://git.savannah.gnu.org/cgit/tar.git
+  https://git.savannah.gnu.org/cgit/tar.git
 
 Files: *
 Copyright:
    Copyright (C) 1988, 1992, 1993, 1994, 1995, 1996, 1997, 1999, 2000,
-   2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   2001, 2003, 2004, 2005, 2006, 2007, 2014-2023 Free Software Foundation, Inc.
 License: GPL-3+
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the
