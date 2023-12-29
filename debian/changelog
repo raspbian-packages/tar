@@ -1,3 +1,12 @@
+tar (1.35+dfsg-2) unstable; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * Drop workaround for tar < 1.35
+  * Add files to not-installed to fix FTBFS on arch:all
+    and arch:any when they are not built together
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 29 Dec 2023 14:15:35 +0100
+
 tar (1.35+dfsg-1) unstable; urgency=medium
 
   * Team upload (salsa.debian.org/debian namespace)
