@@ -1,6 +1,7 @@
 tar (1.35+dfsg-2) unstable; urgency=medium
 
   * Team upload (salsa.debian.org/debian namespace)
+  * Add missing changelog entries from previous upload
   * Drop workaround for tar < 1.35
   * Add files to not-installed to fix FTBFS on arch:all
     and arch:any when they are not built together
@@ -22,6 +23,9 @@ tar (1.35+dfsg-1) unstable; urgency=medium
   * Add myself to copyright file to please lintian
   * Update copyright file
   * Add new LGPL-2.1+ files to copyright
+  * Bump compat level to 13
+  * Add R^3: no
+  * Bump std-version to 4.6.2
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 09:23:02 +0100
 
