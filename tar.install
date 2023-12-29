@@ -1,0 +1,6 @@
+#!/usr/bin/dh-exec
+debian/tarcat usr/sbin/
+# Can be removed once the /bin -> /usr/bin moratorium is lifted.
+usr/bin/tar bin/
+usr/sbin/rmt => usr/sbin/rmt-tar
+usr/share/locale/
