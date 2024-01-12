@@ -1,3 +1,14 @@
+tar (1.35+dfsg-3) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Team upload (salsa.debian.org/debian namespace)
+
+  [ Helmut Grohne ]
+  * Non-maintainer upload.
+  * Move tar to /usr for DEP17. (Closes: #1059818)
+
+ -- Helmut Grohne <helmut@subdivi.de>  Mon, 01 Jan 2024 22:15:10 +0100
+
 tar (1.35+dfsg-2) unstable; urgency=medium
 
   * Team upload (salsa.debian.org/debian namespace)
