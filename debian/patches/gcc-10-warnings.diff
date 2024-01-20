@@ -1,0 +1,121 @@
+Index: tar.git/gnu/selinux-at.h
+===================================================================
+--- tar.git.orig/gnu/selinux-at.h	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/gnu/selinux-at.h	2021-02-12 16:50:15.510898194 +0000
+@@ -17,6 +17,9 @@
+ #include <selinux/selinux.h>
+ #include <selinux/context.h>
+ 
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
++
+ /* These are the dir-fd-relative variants of the functions without the
+    "at" suffix.  For example, getfileconat (AT_FDCWD, file, &c) is usually
+    equivalent to getfilecon (file, &c).  The emulation is accomplished
+@@ -50,3 +53,5 @@
+    except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
+    the symlink, while setfileconat operates on the referent of the symlink.  */
+ int lsetfileconat (int dir_fd, char const *file, char const *con);
++
++_Pragma("GCC diagnostic pop")
+Index: tar.git/lib/rtapelib.c
+===================================================================
+--- tar.git.orig/lib/rtapelib.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/lib/rtapelib.c	2021-02-12 16:50:15.510898194 +0000
+@@ -56,7 +56,10 @@
+ #include <signal.h>
+ 
+ #if HAVE_NETDB_H
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wcast-align\"")
+ # include <netdb.h>
++_Pragma("GCC diagnostic pop")
+ #endif
+ 
+ #include <rmt.h>
+@@ -526,7 +529,10 @@
+   /* Attempt to open the tape device.  */
+ 
+   {
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wanalyzer-null-argument\"")
+     size_t remote_file_len = strlen (remote_file);
++_Pragma("GCC diagnostic pop")
+     char *command_buffer = xmalloc (remote_file_len + 1000);
+     sprintf (command_buffer, "O%s\n", remote_file);
+     encode_oflag (command_buffer + remote_file_len + 2, open_mode);
+@@ -670,6 +676,8 @@
+ #ifdef MTIOCTOP
+     case MTIOCTOP:
+       {
++        _Pragma("GCC diagnostic push")
++        _Pragma("GCC diagnostic ignored \"-Wcast-align\"")
+ 	char command_buffer[COMMAND_BUFFER_SIZE];
+ 	char operand_buffer[UINTMAX_STRSIZE_BOUND];
+ 	uintmax_t u = (((struct mtop *) argument)->mt_count < 0
+@@ -692,6 +700,7 @@
+ 	  return -1;
+ 
+ 	return get_status (handle);
++        _Pragma("GCC diagnostic pop")
+       }
+ #endif /* MTIOCTOP */
+ 
+@@ -732,8 +741,11 @@
+ 	   than 256, we will assume that the bytes are swapped and go through
+ 	   and reverse all the bytes.  */
+ 
++        _Pragma("GCC diagnostic push")
++        _Pragma("GCC diagnostic ignored \"-Wcast-align\"")
+ 	if (((struct mtget *) argument)->MTIO_CHECK_FIELD < 256)
+ 	  return 0;
++        _Pragma("GCC diagnostic pop")
+ 
+ 	for (counter = 0; counter < status; counter += 2)
+ 	  {
+Index: tar.git/lib/wordsplit.c
+===================================================================
+--- tar.git.orig/lib/wordsplit.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/lib/wordsplit.c	2021-02-12 16:50:25.010974696 +0000
+@@ -14,6 +14,9 @@
+    You should have received a copy of the GNU General Public License along
+    with this program. If not, see <http://www.gnu.org/licenses/>. */
+ 
++_Pragma("GCC diagnostic push")
++_Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
++
+ #ifdef HAVE_CONFIG_H
+ # include <config.h>
+ #endif
+@@ -2560,3 +2563,4 @@
+     }
+ }
+ 
++_Pragma("GCC diagnostic pop")
+Index: tar.git/src/buffer.c
+===================================================================
+--- tar.git.orig/src/buffer.c	2021-02-12 16:50:15.514898226 +0000
++++ tar.git/src/buffer.c	2021-02-12 16:50:15.514898226 +0000
+@@ -1505,8 +1505,11 @@
+       ASSIGN_STRING_N (&volume_label, current_header->header.name);
+       set_next_block_after (header);
+       header = find_next_block ();
++      _Pragma("GCC diagnostic push")
++      _Pragma("GCC diagnostic ignored \"-Wnull-dereference\"")
+       if (header->header.typeflag != GNUTYPE_MULTIVOL)
+         break;
++      _Pragma("GCC diagnostic pop")
+       FALLTHROUGH;
+     case GNUTYPE_MULTIVOL:
+       if (!read_header0 (&dummy))
+@@ -1695,7 +1698,10 @@
+       current_stat_info.had_trailing_slash =
+         strip_trailing_slashes (current_stat_info.file_name);
+ 
++      _Pragma("GCC diagnostic push")
++      _Pragma("GCC diagnostic ignored \"-Wnull-dereference\"")
+       label->header.typeflag = GNUTYPE_VOLHDR;
++      _Pragma("GCC diagnostic pop")
+       TIME_TO_CHARS (start_time.tv_sec, label->header.mtime);
+       finish_header (&current_stat_info, label, -1);
+       set_next_block_after (label);
