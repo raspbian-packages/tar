@@ -14,6 +14,9 @@
    You should have received a copy of the GNU General Public License along
    with this program. If not, see <http://www.gnu.org/licenses/>. */
 
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -2560,3 +2563,4 @@ wordsplit_perror (struct wordsplit *wsp)
     }
 }
 
+_Pragma("GCC diagnostic pop")
