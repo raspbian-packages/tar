@@ -27,6 +27,10 @@
 #include "common.h"
 #include <hash.h>
 
+extern int debian_longlink_hack;
+extern int debian_broken_numeric_owner;
+extern int pristine_tar_compat;
+
 /* Error number to use when an impostor is discovered.
    Pretend the impostor isn't there.  */
 enum { IMPOSTOR_ERRNO = ENOENT };
@@ -534,6 +538,11 @@ write_short_name (struct tar_stat_info *st)
   return header;
 }
 
+#define FILL(field,byte) do {            \
+  memset(field, byte, sizeof(field)-1);  \
+  (field)[sizeof(field)-1] = 0;          \
+} while (0)
+
 /* Write a GNUTYPE_LONGLINK or GNUTYPE_LONGNAME block.  */
 static void
 write_gnu_long_link (struct tar_stat_info *st, const char *p, char type)
@@ -543,7 +552,11 @@ write_gnu_long_link (struct tar_stat_info *st, const char *p, char type)
   union block *header;
 
   header = start_private_header ("././@LongLink", size, 0);
-  if (! numeric_owner_option)
+  if (pristine_tar_compat) {
+         FILL (header->header.mtime, '0');
+         FILL (header->header.mode, '0');
+  }
+  if ((pristine_tar_compat && debian_broken_numeric_owner) || ! numeric_owner_option)
     {
       static char *uname, *gname;
       if (!uname)
@@ -728,7 +741,7 @@ write_header_name (struct tar_stat_info *st)
       return write_short_name (st);
     }
   else if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
-	   < strlen (st->file_name))
+	   < strlen (st->file_name) + debian_longlink_hack)
     return write_long_name (st);
   else
     return write_short_name (st);
@@ -1493,7 +1506,7 @@ dump_hard_link (struct tar_stat_info *st)
 	  block_ordinal = current_block_ordinal ();
 	  assign_string (&st->link_name, link_name);
 	  if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
-	      < strlen (link_name))
+	      < strlen (link_name) + debian_longlink_hack)
 	    write_long_link (st);
 
 	  st->stat.st_size = 0;
