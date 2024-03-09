@@ -1,0 +1,12 @@
+diff --git a/doc/tar.1 b/doc/tar.1
+index ddf4fdcf..4163461e 100644
+--- a/doc/tar.1
++++ b/doc/tar.1
+@@ -1296,7 +1296,6 @@ failure during backup to a remote device.
+ .BR lzop (1),
+ .BR rmt (8),
+ .BR symlink (7),
+-.BR tar (5),
+ .BR xz (1).
+ .PP
+ Complete \fBtar\fR manual: run
