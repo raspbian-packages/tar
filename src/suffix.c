@@ -46,6 +46,7 @@ static struct compression_suffix compression_suffixes[] = {
   { S(lzo,  LZOP) },
   { S(xz,   XZ) },
   { S(txz,  XZ) }, /* Slackware */
+  { S(zst,  ZSTD) },
   { NULL }
 #undef S
 #undef __CAT2__
