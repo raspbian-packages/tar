@@ -1,0 +1,5 @@
+tar-scripts: no-manual-page [usr/sbin/backup.sh]
+tar-scripts: no-manual-page [usr/sbin/dump-remind]
+tar-scripts: no-manual-page [usr/sbin/tar-backup]
+tar-scripts: no-manual-page [usr/sbin/tar-restore]
+tar-scripts: script-with-language-extension [usr/sbin/backup.sh]
