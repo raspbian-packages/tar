@@ -1,0 +1,5 @@
+#!/usr/bin/dh-exec
+debian/tarcat usr/sbin/
+usr/bin/tar
+usr/sbin/rmt => usr/sbin/rmt-tar
+usr/share/locale/
