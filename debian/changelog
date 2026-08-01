@@ -1,3 +1,93 @@
+tar (1.35+dfsg-5) unstable; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * Add libacl FTBFS fix from bug-tar mailing list (Closes: #1141146)
+  * Slight tweak of upstream patch to apply cleanly to 1.35
+
+ -- Simon Josefsson <simon@josefsson.org>  Sat, 01 Aug 2026 14:00:00 +0200
+
+tar (1.35+dfsg-4) unstable; urgency=medium
+
+  * Team upload. (salsa.debian.org/debian namespace)
+  * Do not fail prerm if update-alternatives is missing
+
+ -- Luca Boccassi <bluca@debian.org>  Thu, 19 Feb 2026 20:05:54 +0000
+
+tar (1.35+dfsg-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix deletion from archives, Closes: #748244
+
+ -- Reinhard Tartler <siretart@tauware.de>  Wed, 18 Dec 2024 09:37:14 -0500
+
+tar (1.35+dfsg-3) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Team upload (salsa.debian.org/debian namespace)
+
+  [ Helmut Grohne ]
+  * Non-maintainer upload.
+  * Move tar to /usr for DEP17. (Closes: #1059818)
+
+ -- Helmut Grohne <helmut@subdivi.de>  Mon, 01 Jan 2024 22:15:10 +0100
+
+tar (1.35+dfsg-2) unstable; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * Add missing changelog entries from previous upload
+  * Drop workaround for tar < 1.35
+  * Add files to not-installed to fix FTBFS on arch:all
+    and arch:any when they are not built together
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 29 Dec 2023 14:15:35 +0100
+
+tar (1.35+dfsg-1) unstable; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * New upstream version
+  * Drop patches now part of upstream codebase:
+    - CVE-2022-48303.patch
+    - Fix-handling-of-extended-header-prefixes.patch CVE-2023-39804
+    - gcc-10-warnings.diff
+  * Refresh patches:
+    - oldgnu-unknown-mode-bits.patch
+    - pristine-tar.diff
+    - proper_it_translation.patch
+  * Add myself to copyright file to please lintian
+  * Update copyright file
+  * Add new LGPL-2.1+ files to copyright
+  * Bump compat level to 13
+  * Add R^3: no
+  * Bump std-version to 4.6.2
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 09:23:02 +0100
+
+tar (1.34+dfsg-1.4) unstable; urgency=medium
+
+  [ Chirayu Desai ]
+  * Import upstream patch to fix '--delete' (Closes: #944118)
+    (Already fixed in 1.34)
+
+  [ Gioele Barabucci ]
+  * d/control: Build tar-scripts as Architecture: all (Closes: #1050568)
+  * d/tar-scripts.lintian-overrides: Update to new syntax
+  * d/tar-scripts.lintian-overrides: Ignore no-manual-page warnings
+  * d/rules: Use standard dh sequence (Closes: #1048718, #1050565, #1050566)
+
+  [ Gianfranco Costamagna ]
+  * Non-maintainer upload.
+  * Add fix from Ubuntu for CVE-2022-48303
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 20 Dec 2023 08:03:20 +0100
+
+tar (1.34+dfsg-1.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix handling of extended header prefixes (CVE-2023-39804)
+    (Closes: #1058079)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 13 Dec 2023 16:22:08 +0100
+
 tar (1.34+dfsg-1.2) unstable; urgency=medium
 
   * Non-maintainer upload.
@@ -11,7 +101,7 @@ tar (1.34+dfsg-1.1) unstable; urgency=medium
   * Non-maintainer upload
 
   [ Mechtilde ]
-  * [730f266] Improved d/copyright with patch 
+  * [730f266] Improved d/copyright with patch
     from Bastian Germann <bage@debian.org> (Closes:  #1024084)
 
  -- Mechtilde Stehmann <mechtilde@debian.org>  Sun, 20 Nov 2022 15:52:41 +0100

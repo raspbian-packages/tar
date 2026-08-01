@@ -1,17 +1,17 @@
 /* Iterating through multibyte strings: macros for multi-byte encodings.
-   Copyright (C) 2001, 2005, 2007, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2005, 2007, 2009-2023 Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   This file is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as
+   published by the Free Software Foundation, either version 3 of the
+   License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   This file is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>.  */
@@ -89,19 +89,20 @@
 #ifndef _MBUITER_H
 #define _MBUITER_H 1
 
+/* This file uses _GL_INLINE_HEADER_BEGIN, _GL_INLINE.  */
+#if !_GL_CONFIG_H_INCLUDED
+ #error "Please include config.h first."
+#endif
+
 #include <assert.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wchar.h>
+#include <uchar.h>
 
 #include "mbchar.h"
 #include "strnlen1.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBUITER_INLINE
 # define MBUITER_INLINE _GL_INLINE
@@ -113,11 +114,11 @@ struct mbuiter_multi
   mbstate_t state;      /* if in_shift: current shift state */
   bool next_done;       /* true if mbui_avail has already filled the following */
   struct mbchar cur;    /* the current character:
-        const char *cur.ptr             pointer to current character
+        const char *cur.ptr          pointer to current character
         The following are only valid after mbui_avail.
-        size_t cur.bytes                number of bytes of current character
-        bool cur.wc_valid               true if wc is a valid wide character
-        wchar_t cur.wc                  if wc_valid: the current character
+        size_t cur.bytes             number of bytes of current character
+        bool cur.wc_valid            true if wc is a valid 32-bit wide character
+        char32_t cur.wc              if wc_valid: the current character
         */
 };
 
@@ -143,9 +144,9 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
       assert (mbsinit (&iter->state));
       iter->in_shift = true;
     with_shift:
-      iter->cur.bytes = mbrtowc (&iter->cur.wc, iter->cur.ptr,
-                                 strnlen1 (iter->cur.ptr, MB_CUR_MAX),
-                                 &iter->state);
+      iter->cur.bytes = mbrtoc32 (&iter->cur.wc, iter->cur.ptr,
+                                  strnlen1 (iter->cur.ptr, MB_CUR_MAX),
+                                  &iter->state);
       if (iter->cur.bytes == (size_t) -1)
         {
           /* An invalid multibyte sequence was encountered.  */

@@ -3,8 +3,9 @@ Section: utils
 Priority: required
 Maintainer: Janos Lenart <ocsi@debian.org>
 Uploaders: Carl Worth <cworth@cworth.org>
-Build-Depends: debhelper (>> 10), gettext, autoconf, automake, autopoint, bison, libacl1-dev, libselinux1-dev [linux-any]
-Standards-Version: 4.3.0
+Build-Depends: debhelper-compat (= 13), dh-exec, gettext, autoconf, automake, autopoint, bison, libacl1-dev, libselinux1-dev [linux-any]
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
 Vcs-Git: https://salsa.debian.org/debian/tar.git
 Vcs-Browser: https://salsa.debian.org/debian/tar
 Homepage: https://www.gnu.org/software/tar/
@@ -26,10 +27,10 @@ Description: GNU version of the tar archiving utility
  sets of files with others.
 
 Package: tar-scripts
-Architecture: any
+Architecture: all
 Priority: optional
 Multi-Arch: foreign
-Depends: ${shlibs:Depends}, ${misc:Depends}, tar (>= 1.26+dfsg-9)
+Depends: ${misc:Depends}, tar (>= 1.26+dfsg-9)
 Conflicts: dump, openafs-client, tar (<< 1.26+dfsg-9)
 Description: optional scripts for GNU version of the tar archiving utility
  This package provides the backup, restore, backup.sh, and dump-remind

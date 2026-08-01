@@ -1,5 +1,5 @@
 /* Prototypes for openat-style fd-relative SELinux functions
-   Copyright (C) 2007, 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
 
 #include <selinux/selinux.h>
 #include <selinux/context.h>
-
-_Pragma("GCC diagnostic push")
-_Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
 
 /* These are the dir-fd-relative variants of the functions without the
    "at" suffix.  For example, getfileconat (AT_FDCWD, file, &c) is usually
@@ -53,5 +50,3 @@ int  setfileconat (int dir_fd, char const *file, char const *con);
    except when DIR_FD and FILE specify a symlink:  lsetfileconat operates on
    the symlink, while setfileconat operates on the referent of the symlink.  */
 int lsetfileconat (int dir_fd, char const *file, char const *con);
-
-_Pragma("GCC diagnostic pop")

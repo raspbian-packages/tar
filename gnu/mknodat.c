@@ -1,9 +1,9 @@
 /* Create an inode relative to an open directory.
-   Copyright (C) 2009-2021 Free Software Foundation, Inc.
+   Copyright (C) 2009-2023 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
+   the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -66,8 +66,8 @@ rpl_mknodat (int fd, char const *file, mode_t mode, dev_t dev)
 /* Mingw lacks mknod, so this wrapper is trivial.  */
 
 int
-mknodat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
-         mode_t mode _GL_UNUSED, dev_t dev _GL_UNUSED)
+mknodat (_GL_UNUSED int fd, _GL_UNUSED char const *path,
+         _GL_UNUSED mode_t mode, _GL_UNUSED dev_t dev)
 {
   errno = ENOSYS;
   return -1;

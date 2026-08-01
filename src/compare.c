@@ -1,6 +1,6 @@
 /* Diff files from a tar archive.
 
-   Copyright 1988-2021 Free Software Foundation, Inc.
+   Copyright 1988-2023 Free Software Foundation, Inc.
 
    This file is part of GNU tar.
 
@@ -73,8 +73,7 @@ report_difference (struct tar_stat_info *st, const char *fmt, ...)
 
 /* Take a buffer returned by read_and_process and do nothing with it.  */
 static int
-process_noop (size_t size __attribute__ ((unused)),
-	      char *data __attribute__ ((unused)))
+process_noop (MAYBE_UNUSED size_t size, MAYBE_UNUSED char *data)
 {
   return 1;
 }
@@ -566,31 +565,12 @@ verify_volume (void)
   ioctl (archive, FDFLUSH);
 #endif
 
-#ifdef MTIOCTOP
-  {
-    struct mtop operation;
-    int status;
-
-    operation.mt_op = MTBSF;
-    operation.mt_count = 1;
-    if (status = rmtioctl (archive, MTIOCTOP, (char *) &operation), status < 0)
-      {
-	if (errno != EIO
-	    || (status = rmtioctl (archive, MTIOCTOP, (char *) &operation),
-		status < 0))
-	  {
-#endif
-	    if (rmtlseek (archive, (off_t) 0, SEEK_SET) != 0)
-	      {
-		/* Lseek failed.  Try a different method.  */
-		seek_warn (archive_name_array[0]);
-		return;
-	      }
-#ifdef MTIOCTOP
-	  }
-      }
-  }
-#endif
+  if (!mtioseek (true, -1) && rmtlseek (archive, 0, SEEK_SET) != 0)
+    {
+      /* Lseek failed.  Try a different method.  */
+      seek_warn (archive_name_array[0]);
+      return;
+    }
 
   access_mode = ACCESS_READ;
   now_verifying = 1;

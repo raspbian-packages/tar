@@ -2,53 +2,25 @@
 
 include /usr/share/dpkg/architecture.mk
 
-DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-DEB_HOST_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
-CONFARGS = --host=$(DEB_HOST_GNU_TYPE)
-endif
-
 export DEB_BUILD_MAINT_OPTIONS = future=+lfs
 export DEB_CFLAGS_MAINT_APPEND = -Wall -Wno-analyzer-null-argument
-# Workaround gnulib issue: The below three lines can be dropped once
-# tar >= 1.35 is used.
-ifeq (32,$(DEB_HOST_ARCH_BITS))
-export DEB_CPPFLAGS_MAINT_APPEND = -D_TIME_BITS=64
-endif
 
-DPKG_EXPORT_BUILDFLAGS = 1
-include /usr/share/dpkg/buildflags.mk
+%:
+	dh $@
 
-export BUILD_DATE = $(shell dpkg-parsechangelog | sed -n -e 's/^Date: //p')
+override_dh_clean:
+	-mv debian/testsuite.orig tests/testsuite
+	dh_clean
 
-ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-  NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
-  MAKEFLAGS += -j$(NUMJOBS)
-endif
-
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	cp -f /usr/share/misc/config.sub build-aux/config.sub
-	cp -f /usr/share/misc/config.guess build-aux/config.guess
-	autoreconf --force -v --install
-	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure \
-		--prefix=/usr \
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		RSH="/usr/bin/rsh" \
 		--libexecdir=/usr/sbin \
 		--enable-backup-scripts \
 		--with-lzma=xz \
-		--disable-silent-rules \
-		$(CONFARGS)
-	touch configure-stamp
+		--disable-silent-rules
 
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-build-stamp: configure-stamp
-	dh_testdir
-	RSH="/usr/bin/rsh" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" \
-		LDFLAGS="$(LDFLAGS)" $(MAKE) $(MAKEFLAGS)
-
+override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 	@runas=`whoami` ; \
@@ -57,67 +29,15 @@ ifeq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
 	  echo "Sorry, but the test suite is not designed to be run as root."; \
 	  exit 1 ;\
 	fi
-	$(MAKE) check TESTSUITEFLAGS=-v || { cat tests/testsuite.log; false; }
+	cp tests/testsuite debian/testsuite.orig
+	dh_auto_test
 endif
 endif
 
-	touch build-stamp
+override_dh_install:
+	dh_install
+	cp doc/rmt.8 debian/rmt-tar.8
 
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-	[ ! -f Makefile ] || $(MAKE) distclean
-	dh_clean
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-
-	make install bindir=`pwd`/debian/tar/bin prefix=`pwd`/debian/tar/usr \
-		libexecdir=`pwd`/debian/tar/usr/sbin
-	mv debian/tar/usr/sbin/rmt debian/tar/usr/sbin/rmt-tar
-	ln -s /usr/sbin/rmt debian/tar/etc/rmt
-	install -m 755 debian/tarcat debian/tar/usr/sbin/tarcat
-
-	mv debian/tar/usr/sbin/backup debian/tar-scripts/usr/sbin/tar-backup
-	mv debian/tar/usr/sbin/restore debian/tar-scripts/usr/sbin/tar-restore
-	mv debian/tar/usr/sbin/backup.sh debian/tar-scripts/usr/sbin/
-	mv debian/tar/usr/sbin/dump-remind debian/tar-scripts/usr/sbin/
-
-# Build architecture-independent files here.
-binary-indep: build install
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
+override_dh_installdocs:
+	cp -a ChangeLog.1 debian/changelog.1
 	dh_installdocs
-	mv -f debian/tar/usr/share/doc/tar/ChangeLog \
-		debian/tar/usr/share/doc/tar/changelog
-	mv -f debian/tar/usr/share/doc/tar/ChangeLog.1 \
-		debian/tar/usr/share/doc/tar/changelog.1
-	dh_installexamples
-	dh_installmenu
-	dh_installcron
-	dh_installman doc/tar.1 doc/rmt.8 debian/tarcat.1
-	mv debian/tar/usr/share/man/man8/rmt.8 \
-	   debian/tar/usr/share/man/man8/rmt-tar.8
-	dh_installinfo
-	rm -f debian/tar/usr/share/info/dir*
-	dh_installmime
-	dh_installchangelogs #CHANGELOGS#
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
