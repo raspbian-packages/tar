@@ -1,3 +1,11 @@
+tar (1.35+dfsg-5) unstable; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * Add libacl FTBFS fix from bug-tar mailing list (Closes: #1141146)
+  * Slight tweak of upstream patch to apply cleanly to 1.35
+
+ -- Simon Josefsson <simon@josefsson.org>  Sat, 01 Aug 2026 14:00:00 +0200
+
 tar (1.35+dfsg-4) unstable; urgency=medium
 
   * Team upload. (salsa.debian.org/debian namespace)
