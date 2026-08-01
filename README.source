@@ -1,0 +1,74 @@
+The tar upstream developers prefer to document using the 'info' format, but 
+unfortunately the info docs are under a license Debian considers non-free.  As
+a result, we deliver a DFSG-compliant tar package in main, and a tar-doc
+package in non-free.  
+
+Here is how the git repository for packaging is organized:
+
+        upstream        "real" upstream sources
+        pristine-tar    deltas for recreating tarballs from git repos
+        dfsg-orig       branch for DFSG-compliant upstream
+        dfsg-debian     branch for Debian packaging of DFSG-compliant parts
+        doc-orig        branch for non-free upstream
+        doc-debian      branch for Debian packaging of non-free parts
+
+And here's a command log showing how upstream release 1.33 was incorporated,
+which may be used as a pattern for processing future releases:
+
+        git checkout upstream
+        pristine-tar commit /tmp/tar-1.33.tar.xz
+        rm -r *
+        tar xv --strip-components=1 -f /tmp/tar-1.33.tar.xz
+        git add *
+        git commit -a -m "Import upstream version 1.33"
+
+        git checkout dfsg-orig
+        git merge upstream             # ignore warnings about doc/*
+        ./cleanup-script.sh
+        git commit -a -m "Elide non-DFSG compliant upstream components"
+        git tag upstream/1.33+dfsg
+
+        git checkout dfsg-debian
+        git merge dfsg-orig
+        dch -v 1.33+dfsg-1
+        git commit -a
+
+        # check patches
+        quilt push -a
+        rm -r .pc
+        git checkout .
+        # update patches that don't apply cleanly due to release-induced fuzz
+        quilt push -f gcc-10-warnings.diff
+        # manually apply gnu/selinux-at.h.rej changes to changed upstream file
+        rm gnu/selinux-at.h.rej
+        quilt refresh gcc-10-warnings.diff
+        quilt pop -a
+        rm -r .pc
+        git commit -a
+
+        gbp buildpackage --git-no-pristine-tar --changes-option=-S \
+                --git-upstream-branch=dfsg-orig \
+                --git-upstream-tag=upstream/1.33+dfsg
+        pristine-tar commit ../build-area/tar_1.33+dfsg.orig.tar.xz dfsg-orig
+        git tag debian/1.33+dfsg-1
+
+        git checkout doc-orig
+        git merge upstream             # ignore all the warnings
+        ./cleanup-script.sh
+        git commit -a -m "Prepare upstream tarball for tar-doc"
+        tar cvJf /tmp/tar-doc_1.33.orig.tar.xz COPYING doc
+        pristine-tar commit /tmp/tar-doc_1.33.orig.tar.xz
+
+        git checkout doc-debian
+        git merge doc-orig
+        dch -v 1.33-1
+        git commit -a
+        gbp buildpackage
+        git tag non-free/1.33-1
+        cd ../build-area
+
+        debsign tar_1.33+dfsg-1_amd64.changes
+        debsign tar-doc_1.33-1_amd64.changes
+        dput tar_1.33+dfsg-1_amd64.changes
+        dput tar-doc_1.33-1_amd64.changes
+
