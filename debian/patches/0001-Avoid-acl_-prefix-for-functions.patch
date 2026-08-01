@@ -54,29 +54,31 @@ index 4f5872c1..f98e8e0f 100644
  #define AT_FUNC_F1 acl_delete_def_file
  #define AT_FUNC_POST_FILE_PARAM_DECLS
  #define AT_FUNC_POST_FILE_ARGS
-@@ -294,9 +294,9 @@ xattrs__acls_set (struct tar_stat_info const *st,
+@@ -299,10 +299,10 @@ xattrs__acls_set (struct tar_stat_info const *st,
+       /* No "default" IEEE 1003.1e ACL set for directory.  At this moment,
           FILE_NAME may already have inherited default acls from parent
           directory;  clean them up. */
-       struct fdbase f1 = fdbase (file_name);
--      if (f1.fd == BADFD || acl_delete_def_file_at (f1.fd, f1.base) < 0)
-+      if (f1.fd == BADFD || tar_acl_delete_def_file_at (f1.fd, f1.base) < 0)
- 	warnopt (WARN_XATTR_WRITE, errno,
+-      if (acl_delete_def_file_at (chdir_fd, file_name))
++      if (tar_acl_delete_def_file_at (chdir_fd, file_name))
+         WARNOPT (WARN_XATTR_WRITE,
+                 (0, errno,
 -                 _("acl_delete_def_file_at: Cannot drop default POSIX ACLs "
 +                 _("tar_acl_delete_def_file_at: Cannot drop default POSIX ACLs "
                     "for file '%s'"),
- 		 quote (file_name));
+                  file_name));
        return;
-@@ -311,10 +311,10 @@ xattrs__acls_set (struct tar_stat_info const *st,
+@@ -316,11 +316,11 @@ xattrs__acls_set (struct tar_stat_info const *st,
+       return;
      }
  
-   struct fdbase f = fdbase (file_name);
--  if (f.fd == BADFD || acl_set_file_at (f.fd, f.base, type, acl) < 0)
-+  if (f.fd == BADFD || tar_acl_set_file_at (f.fd, f.base, type, acl) < 0)
+-  if (acl_set_file_at (chdir_fd, file_name, type, acl) == -1)
++  if (tar_acl_set_file_at (chdir_fd, file_name, type, acl) == -1)
      /* warn even if filesystem does not support acls */
-     warnopt (WARN_XATTR_WRITE, errno,
--	     _ ("acl_set_file_at: Cannot set POSIX ACLs for file '%s'"),
-+	     _ ("tar_acl_set_file_at: Cannot set POSIX ACLs for file '%s'"),
- 	     quote (file_name));
+     WARNOPT (WARN_XATTR_WRITE,
+ 	     (0, errno,
+-	      _ ("acl_set_file_at: Cannot set POSIX ACLs for file '%s'"),
++	      _ ("tar_acl_set_file_at: Cannot set POSIX ACLs for file '%s'"),
+ 	      file_name));
  
    acl_free (acl);
 @@ -351,10 +351,10 @@ acls_get_text (int parentfd, const char *file_name, acl_type_t type,
