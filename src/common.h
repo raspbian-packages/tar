@@ -1036,4 +1036,8 @@ void group_map_read (char const *file);
 int group_map_translate (gid_t gid, gid_t *new_gid, char const **new_name);
 
 
+GLOBAL int debian_longlink_hack;
+GLOBAL int debian_broken_numeric_owner;
+GLOBAL int pristine_tar_compat;
+
 _GL_INLINE_HEADER_END
