@@ -1,3 +1,10 @@
+tar (1.35+dfsg-6) UNRELEASED; urgency=medium
+
+  * Team upload (salsa.debian.org/debian namespace)
+  * 
+
+ -- Johannes Schauer Marin Rodrigues <josch@debian.org>  Thu, 17 Sep 2026 00:03:40 +0200
+
 tar (1.35+dfsg-5) unstable; urgency=medium
 
   * Team upload (salsa.debian.org/debian namespace)
