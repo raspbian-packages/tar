@@ -1,9 +1,12 @@
 tar (1.35+dfsg-6) UNRELEASED; urgency=medium
 
+  [ Johannes Schauer Marin Rodrigues ]
   * Team upload (salsa.debian.org/debian namespace)
-  * 
 
- -- Johannes Schauer Marin Rodrigues <josch@debian.org>  Thu, 17 Sep 2026 00:03:40 +0200
+  [ Samuel Thibault ]
+  * debian/rules: disable Y2038 on hurd-i386 (Closes: #1078002)
+
+ -- Johannes Schauer Marin Rodrigues <josch@debian.org>  Thu, 17 Sep 2026 00:10:44 +0200
 
 tar (1.35+dfsg-5) unstable; urgency=medium
 

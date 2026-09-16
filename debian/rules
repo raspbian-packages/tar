@@ -5,6 +5,13 @@ include /usr/share/dpkg/architecture.mk
 export DEB_BUILD_MAINT_OPTIONS = future=+lfs
 export DEB_CFLAGS_MAINT_APPEND = -Wall -Wno-analyzer-null-argument
 
+# With the hurd-amd64 port coming up, we do not plan to introduce a 64bit time
+# interface to hurd-i386, so disable requiring it until we completely replace
+# hurd-i386 with hurd-amd64
+ifeq ($(DEB_HOST_ARCH),hurd-i386)
+  Y2038 = --disable-year2038
+endif
+
 %:
 	dh $@
 
@@ -18,7 +25,8 @@ override_dh_auto_configure:
 		--libexecdir=/usr/sbin \
 		--enable-backup-scripts \
 		--with-lzma=xz \
-		--disable-silent-rules
+		--disable-silent-rules \
+		$(Y2038)
 
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
